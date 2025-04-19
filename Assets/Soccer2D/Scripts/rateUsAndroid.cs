@@ -5,7 +5,7 @@ public class rateUsAndroid : MonoBehaviour
 {
 
 
-    public TweenAlpha rateUsWindow;
+    //public TweenAlpha rateUsWindow;
 
     bool popupFlag = false;
     void Start()
@@ -16,7 +16,7 @@ public class rateUsAndroid : MonoBehaviour
 
     public void Rate()
     {
-        rateUsWindow.PlayForward();
+        //rateUsWindow.PlayForward();
     }
 
     public void RemindLater()
@@ -55,7 +55,7 @@ public class rateUsAndroid : MonoBehaviour
         if (PlayerPrefs.GetInt("canRate") == 0 && PlayerPrefs.GetInt("acilisSayisi") >= 5)
         {
             // Rate popup fonksiyon çağır panpa
-            GameObject.Find("RateUsMenu").GetComponent<TweenAlpha>().PlayForward();
+            //GameObject.Find("RateUsMenu").GetComponent<TweenAlpha>().PlayForward();
             popupFlag = true;
 
         }

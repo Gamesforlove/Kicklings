@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerFlagDisplay : MonoBehaviour {
 
     public string prefsName;
-    private UISprite sprite;
+    private Sprite sprite;
 
     private void Start()
     {
-        sprite = GetComponent<UISprite>();
+        sprite = GetComponent<Sprite>();
     }
 
     void Update () {
-        sprite.spriteName = PlayerPrefs.GetString(prefsName, transform.parent.name == "Player1 Country Button" ? "USA" : "RUS");
+        sprite.name = PlayerPrefs.GetString(prefsName, transform.parent.name == "Player1 Country Button" ? "USA" : "RUS");
     }
 }

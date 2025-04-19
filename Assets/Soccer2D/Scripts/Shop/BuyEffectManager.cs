@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuyEffectManager : MonoBehaviour {
 
-    public TweenAlpha effect;
+    /*public TweenAlpha effect;
     public UIWidget itemContiainer;
     public TweenAlpha noMoneyEffect;
 
@@ -43,5 +43,5 @@ public class BuyEffectManager : MonoBehaviour {
         _.DestroyAllChildren(itemContiainer.transform);
 
         effect.PlayReverse();
-    }
+    }*/
 }

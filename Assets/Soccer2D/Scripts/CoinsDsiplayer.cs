@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CoinsDsiplayer : MonoBehaviour {
 
 
-    private UILabel label;
+    private Text label;
 	// Use this for initialization
 	void Start () 
     {
-        label = GetComponent<UILabel>();
+        label = GetComponent<Text>();
         label.text = PlayerPurchaseManager.Instance.coinsAmount.ToString();
 
         PlayerPurchaseManager.Instance.onCoinsAmountChange += OnCoinsAmountChange;

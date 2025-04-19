@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameHandler {
 
@@ -12,11 +13,11 @@ public class GameHandler {
         }
     }
 
-    public static UILabel ScoreLabel
+    public static Text ScoreLabel
     {
         get
         {
-            return GameObject.Find("ScoreLabel").GetComponent<UILabel>();
+            return GameObject.Find("ScoreLabel").GetComponent<Text>();
         }
     }
 
@@ -24,13 +25,13 @@ public class GameHandler {
     {
         get
         {
-            return GameObject.Find("ScoreLabel").GetComponent<UILabel>().text;
+            return GameObject.Find("ScoreLabel").GetComponent<Text>().text;
         }
 
         set
         {
-           GameObject.Find("ScoreLabel").GetComponent<UILabel>().text = value;
-           GameObject.Find("ScoreLabel2").GetComponent<UILabel>().text = value;
+           GameObject.Find("ScoreLabel").GetComponent<Text>().text = value;
+           GameObject.Find("ScoreLabel2").GetComponent<Text>().text = value;
         }
     }
 
@@ -60,7 +61,7 @@ public class GameHandler {
     public static void RuneCounter(int sec)
     {
 
-        GameObject.Find("RuneCounter2").GetComponent<UILabel>().text = sec.ToString();
-        GameObject.Find("RuneCounter").GetComponent<UILabel>().text = sec.ToString();
+        GameObject.Find("RuneCounter2").GetComponent<Text>().text = sec.ToString();
+        GameObject.Find("RuneCounter").GetComponent<Text>().text = sec.ToString();
     }
 }

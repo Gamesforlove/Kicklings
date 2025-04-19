@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SpriteSwitcher : MonoBehaviour {
 
@@ -8,14 +9,14 @@ public class SpriteSwitcher : MonoBehaviour {
     public float switchTime;
     public Sprite[] sprites;
     private int spriteIndex = 0;
-    private UI2DSprite sprite;
-    private UIButton button;
+    private Sprite sprite;
+    private Button button;
 
 	// Use this for initialization
 	void Start () {
         lastSwitcTime = Time.unscaledTime;
-        sprite = GetComponent<UI2DSprite>();
-        button = GetComponent<UIButton>();
+        sprite = GetComponent<Sprite>();
+        button = GetComponent<Button>();
     }
 	
 	void Update () {
@@ -26,8 +27,8 @@ public class SpriteSwitcher : MonoBehaviour {
                 spriteIndex = 0;
 
             lastSwitcTime = Time.unscaledTime;
-            sprite.sprite2D = sprites[spriteIndex];
-            button.normalSprite2D = sprites[spriteIndex];
+            sprite = sprites[spriteIndex];
+            //button.image = sprites[spriteIndex];
         }
 	}
 }

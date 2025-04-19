@@ -1,39 +1,41 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventBusSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Scene = CommonDataTypes.Scene;
 
 public class SceneHandler : MonoBehaviour
 {
-    public static SceneHandler Instance { get; private set; }
-
     [Header("Loading Screen Settings")]
-    [SerializeField] private GameObject loadingCanvas;
-    [SerializeField] private Image progressBar;
+    //[SerializeField] private GameObject loadingCanvas;
+    //[SerializeField] private Image progressBar;
     private float targetProgress;
 
-    private void Awake()
+    void OnEnable()
     {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }else {
-            Destroy(gameObject);
-        }
+        EventBus<CreateMatch>.OnEvent += CreateMatch;
+    }
+
+    void OnDisable()
+    {
+        EventBus<CreateMatch>.OnEvent -= CreateMatch;
+    }
+
+    void CreateMatch(CreateMatch _)
+    {
+        LoadScene(Scene.Gameplay);
     }
 
     public async void LoadScene(Scene selectedScene)
     {
         targetProgress = 0;
-        progressBar.fillAmount = 0;
+        //progressBar.fillAmount = 0;
 
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(selectedScene.ToString());
         asyncOperation.allowSceneActivation = false;
 
-        loadingCanvas.SetActive(true);
+        //loadingCanvas.SetActive(true);
             
         do {
             await Task.Delay(100);
@@ -43,18 +45,11 @@ public class SceneHandler : MonoBehaviour
 
 
         asyncOperation.allowSceneActivation = true;
-        loadingCanvas.SetActive(false);
+        //loadingCanvas.SetActive(false);
     }
 
-    private void Update()
+    /*private void Update()
     {
         progressBar.fillAmount = Mathf.MoveTowards(progressBar.fillAmount, targetProgress, 2 * Time.deltaTime);
-    }
-}
-
-[Serializable]
-public enum Scene
-{
-    MainMenu,
-    GameScene
+    }*/
 }

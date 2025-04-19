@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CountrySelectionWindow : MonoBehaviour {
 
-    public const string COUNTRY_PLAYER = "currentCountryIOC";
+    /*public const string COUNTRY_PLAYER = "currentCountryIOC";
 
     [SerializeField]
     private Transform buttonsContainer;
@@ -40,5 +40,5 @@ public class CountrySelectionWindow : MonoBehaviour {
             currentPlayer = 2;
 
         TweenAlpha.Begin(gameObject, 0.2f, 1f);
-    }
+    }*/
 }

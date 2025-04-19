@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MagicMachineScript : MonoBehaviour
 {
-    public TweenAlpha noMoneyWindow;
+    /*public TweenAlpha noMoneyWindow;
     public UI2DSprite prize;
     public UI2DSprite popup;
     public UI2DSprite openChest;
@@ -297,5 +297,5 @@ public class MagicMachineScript : MonoBehaviour
         flashSprite.PlayForward();
         yield return new WaitForSeconds(0.1f);
         flashSprite.PlayReverse();
-    }
+    }*/
 }
