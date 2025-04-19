@@ -50,24 +50,34 @@ static public class NGUITools
 	/// Helper function -- whether the disk access is allowed.
 	/// </summary>
 
+	static public bool fileAccess
+	{
+		get
+		{
+            return true;
+        }
+	}
 
-	/// <summary>
-	/// Play the specified audio clip.
-	/// </summary>
+    /// <summary>
+    /// Play the specified audio clip.
+    /// </summary>
 
-	static public AudioSource PlaySound (AudioClip clip) { return PlaySound(clip, 1f, 1f); }
+    [Obsolete]
+    static public AudioSource PlaySound (AudioClip clip) { return PlaySound(clip, 1f, 1f); }
 
-	/// <summary>
-	/// Play the specified audio clip with the specified volume.
-	/// </summary>
+    /// <summary>
+    /// Play the specified audio clip with the specified volume.
+    /// </summary>
 
-	static public AudioSource PlaySound (AudioClip clip, float volume) { return PlaySound(clip, volume, 1f); }
+    [Obsolete]
+    static public AudioSource PlaySound (AudioClip clip, float volume) { return PlaySound(clip, volume, 1f); }
 
-	/// <summary>
-	/// Play the specified audio clip with the specified volume and pitch.
-	/// </summary>
+    /// <summary>
+    /// Play the specified audio clip with the specified volume and pitch.
+    /// </summary>
 
-	static public AudioSource PlaySound (AudioClip clip, float volume, float pitch)
+    [Obsolete]
+    static public AudioSource PlaySound (AudioClip clip, float volume, float pitch)
 	{
 		volume *= soundVolume;
 
@@ -173,11 +183,12 @@ static public class NGUITools
 		return path;
 	}
 
-	/// <summary>
-	/// Find all active objects of specified type.
-	/// </summary>
+    /// <summary>
+    /// Find all active objects of specified type.
+    /// </summary>
 
-	static public T[] FindActive<T> () where T : Component
+    [Obsolete]
+    static public T[] FindActive<T> () where T : Component
 	{
 		return GameObject.FindObjectsOfType(typeof(T)) as T[];
 	}
@@ -590,43 +601,47 @@ static public class NGUITools
 		return 0;
 	}
 
-	/// <summary>
-	/// Bring all of the widgets on the specified object forward.
-	/// </summary>
+    /// <summary>
+    /// Bring all of the widgets on the specified object forward.
+    /// </summary>
 
-	static public void BringForward (GameObject go)
+    [Obsolete]
+    static public void BringForward (GameObject go)
 	{
 		int val = AdjustDepth(go, 1000);
 		if (val == 1) NormalizePanelDepths();
 		else if (val == 2) NormalizeWidgetDepths();
 	}
 
-	/// <summary>
-	/// Push all of the widgets on the specified object back, making them appear behind everything else.
-	/// </summary>
+    /// <summary>
+    /// Push all of the widgets on the specified object back, making them appear behind everything else.
+    /// </summary>
 
-	static public void PushBack (GameObject go)
+    [Obsolete]
+    static public void PushBack (GameObject go)
 	{
 		int val = AdjustDepth(go, -1000);
 		if (val == 1) NormalizePanelDepths();
 		else if (val == 2) NormalizeWidgetDepths();
 	}
 
-	/// <summary>
-	/// Normalize the depths of all the widgets and panels in the scene, making them start from 0 and remain in order.
-	/// </summary>
+    /// <summary>
+    /// Normalize the depths of all the widgets and panels in the scene, making them start from 0 and remain in order.
+    /// </summary>
 
-	static public void NormalizeDepths ()
+    [Obsolete]
+    static public void NormalizeDepths ()
 	{
 		NormalizeWidgetDepths();
 		NormalizePanelDepths();
 	}
 
-	/// <summary>
-	/// Normalize the depths of all the widgets in the scene, making them start from 0 and remain in order.
-	/// </summary>
+    /// <summary>
+    /// Normalize the depths of all the widgets in the scene, making them start from 0 and remain in order.
+    /// </summary>
 
-	static public void NormalizeWidgetDepths ()
+    [Obsolete]
+    static public void NormalizeWidgetDepths ()
 	{
 		UIWidget[] list = FindActive<UIWidget>();
 		int size = list.Length;
@@ -655,11 +670,12 @@ static public class NGUITools
 		}
 	}
 
-	/// <summary>
-	/// Normalize the depths of all the panels in the scene, making them start from 0 and remain in order.
-	/// </summary>
+    /// <summary>
+    /// Normalize the depths of all the panels in the scene, making them start from 0 and remain in order.
+    /// </summary>
 
-	static public void NormalizePanelDepths ()
+    [Obsolete]
+    static public void NormalizePanelDepths ()
 	{
 		UIPanel[] list = FindActive<UIPanel>();
 		int size = list.Length;
@@ -688,23 +704,26 @@ static public class NGUITools
 		}
 	}
 
-	/// <summary>
-	/// Create a new UI.
-	/// </summary>
+    /// <summary>
+    /// Create a new UI.
+    /// </summary>
 
-	static public UIPanel CreateUI (bool advanced3D) { return CreateUI(null, advanced3D, -1); }
+    [Obsolete]
+    static public UIPanel CreateUI (bool advanced3D) { return CreateUI(null, advanced3D, -1); }
 
-	/// <summary>
-	/// Create a new UI.
-	/// </summary>
+    /// <summary>
+    /// Create a new UI.
+    /// </summary>
 
-	static public UIPanel CreateUI (bool advanced3D, int layer) { return CreateUI(null, advanced3D, layer); }
+    [Obsolete]
+    static public UIPanel CreateUI (bool advanced3D, int layer) { return CreateUI(null, advanced3D, layer); }
 
-	/// <summary>
-	/// Create a new UI.
-	/// </summary>
+    /// <summary>
+    /// Create a new UI.
+    /// </summary>
 
-	static public UIPanel CreateUI (Transform trans, bool advanced3D, int layer)
+    [Obsolete]
+    static public UIPanel CreateUI (Transform trans, bool advanced3D, int layer)
 	{
 		// Find the existing UI Root
 		UIRoot root = (trans != null) ? NGUITools.FindInParents<UIRoot>(trans.gameObject) : null;
@@ -1026,21 +1045,23 @@ static public class NGUITools
 		}
 	}
 
-	/// <summary>
-	/// Call the specified function on all objects in the scene.
-	/// </summary>
+    /// <summary>
+    /// Call the specified function on all objects in the scene.
+    /// </summary>
 
-	static public void Broadcast (string funcName)
+    [Obsolete]
+    static public void Broadcast (string funcName)
 	{
 		GameObject[] gos = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
 		for (int i = 0, imax = gos.Length; i < imax; ++i) gos[i].SendMessage(funcName, SendMessageOptions.DontRequireReceiver);
 	}
 
-	/// <summary>
-	/// Call the specified function on all objects in the scene.
-	/// </summary>
+    /// <summary>
+    /// Call the specified function on all objects in the scene.
+    /// </summary>
 
-	static public void Broadcast (string funcName, object param)
+    [Obsolete]
+    static public void Broadcast (string funcName, object param)
 	{
 		GameObject[] gos = GameObject.FindObjectsOfType(typeof(GameObject)) as GameObject[];
 		for (int i = 0, imax = gos.Length; i < imax; ++i) gos[i].SendMessage(funcName, param, SendMessageOptions.DontRequireReceiver);
@@ -1272,7 +1293,7 @@ static public class NGUITools
 #if UNITY_WEBPLAYER || UNITY_FLASH || UNITY_METRO || UNITY_WP8
 		return false;
 #else
-		
+		if (!NGUITools.fileAccess) return false;
 
 		string path = Application.persistentDataPath + "/" + fileName;
 
@@ -1309,7 +1330,7 @@ static public class NGUITools
 #if UNITY_WEBPLAYER || UNITY_FLASH || UNITY_METRO || UNITY_WP8
 		return null;
 #else
-		
+		if (!NGUITools.fileAccess) return null;
 
 		string path = Application.persistentDataPath + "/" + fileName;
 
@@ -1357,12 +1378,12 @@ static public class NGUITools
 		{
 			TextEditor te = new TextEditor();
 			te.Paste();
-			return te.content.text;
+			return te.text;
 		}
 		set
 		{
 			TextEditor te = new TextEditor();
-			te.content = new GUIContent(value);
+			te.text = new String(value);
 			te.OnFocus();
 			te.Copy();
 		}
