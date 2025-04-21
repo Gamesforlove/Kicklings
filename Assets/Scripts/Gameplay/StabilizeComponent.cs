@@ -27,8 +27,6 @@ public class StabilizeComponent : MonoBehaviour
     
     void Stabilize()
     {
-        Debug.Log("Stabilize");
-        
         float zRotation = transform.rotation.eulerAngles.z;
 
         if (zRotation > 0 && zRotation < 100)
