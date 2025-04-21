@@ -2,6 +2,7 @@ using System.Collections;
 using System.Linq;
 using EventBusSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class PlayerActions : MonoBehaviour
@@ -22,6 +23,12 @@ public class PlayerActions : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
         _kickingLegJointMotor = _kickingLegJoint.motor;
+    }
+
+    public void OnKick(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnActionPerformed();
+        else if (context.canceled) OnActionCancelled();
     }
 
     public void OnActionPerformed()

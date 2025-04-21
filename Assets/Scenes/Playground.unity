@@ -1033,6 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playersSpawner: {fileID: 1805551015}
+  _playerPrefab: {fileID: 100018, guid: 8608a3253f9ceec47a762dbe58bde4fa, type: 3}
   _twoEntitiesModePositions:
   - {fileID: 1297195840}
   - {fileID: 1900634766}
@@ -1041,7 +1042,6 @@ MonoBehaviour:
   - {fileID: 1449349239}
   - {fileID: 1900634766}
   - {fileID: 1695908218}
-  _controlSchemes: []
 --- !u!1 &1100506746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,7 +1289,7 @@ Transform:
   m_GameObject: {fileID: 1297195839}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
+  m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1351,7 +1351,7 @@ Transform:
   m_GameObject: {fileID: 1449349238}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1833,8 +1833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e0a97e0d33ed1429425c66eeeaaf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 1417530987922369882, guid: ee6e5d4719187554bba7be991dcefd7e, type: 3}
-  _cpuPrefab: {fileID: 8357182572728290208, guid: cbe42998c672e1546b485ea7cec17363, type: 3}
+  _playerPrefab: {fileID: 100018, guid: 8608a3253f9ceec47a762dbe58bde4fa, type: 3}
 --- !u!4 &1805551016
 Transform:
   m_ObjectHideFlags: 0

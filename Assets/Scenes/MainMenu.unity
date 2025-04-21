@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameModeData: {fileID: 11400000, guid: 726aaf7890022714d902f75b1f96ae59, type: 2}
+  _gameModeData: {fileID: 11400000, guid: 9d81b564cae28f04f941937c3bfe6109, type: 2}
 --- !u!1 &353865176
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +942,7 @@ GameObject:
   - component: {fileID: 850601856}
   - component: {fileID: 850601855}
   - component: {fileID: 850601854}
+  - component: {fileID: 850601857}
   m_Layer: 0
   m_Name: 2-Player
   m_TagString: Untagged
@@ -1011,7 +1012,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 850601855}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 850601857}
+        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &850601855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1050,6 +1063,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 850601852}
   m_CullTransparentMesh: 1
+--- !u!114 &850601857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850601852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameModeData: {fileID: 11400000, guid: ead7349943e3c29479d0b8375d798b97, type: 2}
 --- !u!1 &931319236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,6 +1165,7 @@ GameObject:
   - component: {fileID: 947922413}
   - component: {fileID: 947922412}
   - component: {fileID: 947922411}
+  - component: {fileID: 947922414}
   m_Layer: 0
   m_Name: 4-Player
   m_TagString: Untagged
@@ -1208,7 +1235,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 947922412}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 947922414}
+        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &947922412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,6 +1286,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947922409}
   m_CullTransparentMesh: 1
+--- !u!114 &947922414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947922409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameModeData: {fileID: 11400000, guid: 726aaf7890022714d902f75b1f96ae59, type: 2}
 --- !u!1 &954489680
 GameObject:
   m_ObjectHideFlags: 0

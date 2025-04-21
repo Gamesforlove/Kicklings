@@ -1,32 +1,73 @@
+using System;
 using System.Collections.Generic;
 using CommonDataTypes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayersManager : MonoBehaviour
 {
     [SerializeField] PlayersSpawner _playersSpawner;
-    [SerializeField] GameObject _playerPrefab;
-    [SerializeField] Transform[] _twoEntitiesModePositions;
     [SerializeField] Transform[] _fourEntitiesModePositions;
-
+    
     readonly List<GameObject> _players = new();
     readonly Dictionary<GameObject, Vector2> _playersPositions = new();
-    
-    public void SpawnEntities(GameModeData selectedGameModeData)
+    [SerializeField] List<InputControlScheme> _controlSchemes = new();
+
+    void Start()
     {
-        Transform[] spawnPoints = selectedGameModeData.TotalEntities == 2 ? _twoEntitiesModePositions : _fourEntitiesModePositions;
-        
-        for (int i = 0; i < selectedGameModeData.TotalEntities; i++)
+        InputActionAsset actionAsset = InputSystem.actions;
+
+        foreach (InputControlScheme scheme in actionAsset.controlSchemes)
         {
-            if (i < selectedGameModeData.NumberOfPlayers) SpawnPlayer(spawnPoints[i]);
-            
-            else SpawnCpu(spawnPoints[i]);
+            _controlSchemes.Add(scheme);
         }
     }
 
-    void SpawnPlayer(Transform position)
+    public void SpawnEntities(GameModeData selectedGameModeData)
     {
-        GameObject player = _playersSpawner.SpawnPlayer(position);
+        switch (selectedGameModeData.NumberOfPlayers)
+        {
+            case 1:
+                SpawnOnePlayerMode();
+                break;
+            case 2:
+                SpawnTwoPlayersMode(selectedGameModeData);
+                break;
+            case 4:
+                SpawnFourPlayersMode(selectedGameModeData);
+                break;
+        }
+    }
+
+    void SpawnOnePlayerMode()
+    {
+        SpawnPlayer(_fourEntitiesModePositions[0], _controlSchemes[0]);
+        SpawnPlayer(_fourEntitiesModePositions[1], _controlSchemes[0]);
+        SpawnCpu(_fourEntitiesModePositions[2]);
+        SpawnCpu(_fourEntitiesModePositions[3]);
+    }
+
+    void SpawnTwoPlayersMode(GameModeData selectedGameModeData)
+    {
+        for (int i = 0; i < selectedGameModeData.TotalEntities; i++)
+        {
+            if (i < selectedGameModeData.NumberOfPlayers) SpawnPlayer(_fourEntitiesModePositions[i], _controlSchemes[i]);
+            
+            else SpawnCpu(_fourEntitiesModePositions[i]);
+        }
+    }
+
+    void SpawnFourPlayersMode(GameModeData selectedGameModeData)
+    {
+        for (int i = 0; i < selectedGameModeData.TotalEntities; i++)
+        { 
+            SpawnPlayer(_fourEntitiesModePositions[i], _controlSchemes[i]);
+        }
+    }
+
+    void SpawnPlayer(Transform position, InputControlScheme scheme)
+    {
+        GameObject player = _playersSpawner.SpawnPlayer(position, scheme);
         _players.Add(player);
         _playersPositions.Add(player, player.transform.position);
     }

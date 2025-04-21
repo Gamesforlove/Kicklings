@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb809c137b3a4d2baeabb802d2742ef5, type: 3}
-  m_Name: 1PlayerVsCpu
+  m_Name: OnePlayerMode
   m_EditorClassIdentifier: 
-  <NumberOfPlayers>k__BackingField: 2
+  <NumberOfPlayers>k__BackingField: 1
   <TotalEntities>k__BackingField: 4
