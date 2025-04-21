@@ -610,6 +610,14 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 652948181309949361, guid: 401cbf7d320fcb746b74c4ca90eab6bb, type: 3}
+      propertyPath: _fieldSideData
+      value: 
+      objectReference: {fileID: 11400000, guid: db0948fa1f47a284caf61e4ed240ddcb, type: 2}
+    - target: {fileID: 7143527826232429926, guid: 401cbf7d320fcb746b74c4ca90eab6bb, type: 3}
+      propertyPath: _fieldSideData
+      value: 
+      objectReference: {fileID: 11400000, guid: db0948fa1f47a284caf61e4ed240ddcb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -771,7 +779,7 @@ MonoBehaviour:
   m_text: OUT!!!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d17f164b04acb184084bdac455425d0a, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: bf50d2dcda65bb7408e702475279daaa, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 8569aff3abba8084ea79fc61c5ed3e86, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -939,6 +947,14 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 652948181309949361, guid: 401cbf7d320fcb746b74c4ca90eab6bb, type: 3}
+      propertyPath: _fieldSideData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6eb6232da08fd47459ba39a47be9b4dc, type: 2}
+    - target: {fileID: 7143527826232429926, guid: 401cbf7d320fcb746b74c4ca90eab6bb, type: 3}
+      propertyPath: _fieldSideData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6eb6232da08fd47459ba39a47be9b4dc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1033,9 +1049,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playersSpawner: {fileID: 1805551015}
-  _twoEntitiesModePositions:
-  - {fileID: 1297195840}
-  - {fileID: 1900634766}
   _fourEntitiesModePositions:
   - {fileID: 1297195840}
   - {fileID: 1449349239}
@@ -1927,7 +1940,7 @@ MonoBehaviour:
   m_text: GOAL!!!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d17f164b04acb184084bdac455425d0a, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: bf50d2dcda65bb7408e702475279daaa, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 8569aff3abba8084ea79fc61c5ed3e86, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

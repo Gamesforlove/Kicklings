@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300004, guid: ed8692ed9f8f947418f78ba519988e5d, type: 3}
+  m_Sprite: {fileID: 21300004, guid: 9d647eb46ec57b2448b937fa04ddc9c6, type: 3}
   m_Color: {r: 0.1764706, g: 0.17254902, b: 0.17254902, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -167,12 +167,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300006, guid: ed8692ed9f8f947418f78ba519988e5d, type: 3}
+  m_Sprite: {fileID: 21300006, guid: 9d647eb46ec57b2448b937fa04ddc9c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -253,9 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2ca461b4ab53542a91d8320c18eb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: 0
-  redGoal: 0
-  blueGoal: 0
-  OOBBlue: 0
-  OOBRed: 0
-  spriteRenderer: {fileID: 0}
+  _rigidbody: {fileID: 5000000}
+  _collider: {fileID: 5800000}
+  _spriteRenderer: {fileID: 21200004}

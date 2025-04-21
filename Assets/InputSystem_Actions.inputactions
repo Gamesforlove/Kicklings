@@ -37,6 +37,28 @@
                     "action": "Kick",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c32111cc-b0c2-4e70-8d75-fc894e2fe481",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardPlayer3",
+                    "action": "Kick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b3802e3-d063-4545-a54f-ddc6bd2f5082",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardPlayer4",
+                    "action": "Kick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -572,6 +594,28 @@
         {
             "name": "KeyboardPlayer2",
             "bindingGroup": "KeyboardPlayer2",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "KeyboardPlayer3",
+            "bindingGroup": "KeyboardPlayer3",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "KeyboardPlayer4",
+            "bindingGroup": "KeyboardPlayer4",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
