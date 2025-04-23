@@ -1,5 +1,4 @@
-﻿using System;
-using CommonDataTypes;
+﻿using CommonDataTypes;
 using EventBusSystem;
 
 namespace Scene_Management
@@ -11,7 +10,7 @@ namespace Scene_Management
         public static void CreateMatch(GameModeData gameModeData)
         {
             SelectedGameModeData = gameModeData;
-            EventBus<CreateMatch>.Raise(new CreateMatch());
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(Scene.Gameplay));
         }
     }
 }

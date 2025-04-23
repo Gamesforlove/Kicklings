@@ -34,17 +34,14 @@ namespace EventBusSystem
 
     #endregion
 
-    #region UI
-
-    public struct CreateMatch : IEvent
+    public readonly struct OnLoadScene : IEvent
     {
-        public readonly GameModeData GameModeData;
+        readonly Scene _scene;
+        public string SceneName => _scene.ToString();
 
-        public CreateMatch(GameModeData gameModeData)
+        public OnLoadScene(Scene scene)
         {
-            GameModeData = gameModeData;
+            _scene = scene;
         }
     }
-    
-    #endregion
 }
