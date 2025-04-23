@@ -24,6 +24,7 @@ public class PlayersSpawner : MonoBehaviour
         //GameObject go = Instantiate(_playerPrefab, spawnPosition.position, spawnPosition.rotation);
         GameObject go = PlayerInput.Instantiate(_playerPrefab, controlScheme: scheme.name, pairWithDevice: Keyboard.current).gameObject;
         go.transform.position = spawnPosition.position;
+        if (spawnPosition.position.x > 0) go.transform.localScale = new Vector3(-1, 1, 1);
         return go;
     }
 }
