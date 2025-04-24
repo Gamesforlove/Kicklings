@@ -36,12 +36,23 @@ namespace EventBusSystem
 
     public readonly struct OnLoadScene : IEvent
     {
-        readonly Scene _scene;
-        public string SceneName => _scene.ToString();
+        public readonly SceneName EnumValue;
+        public string Name => EnumValue.ToString();
 
-        public OnLoadScene(Scene scene)
+        public OnLoadScene(SceneName enumValue)
         {
-            _scene = scene;
+            EnumValue = enumValue;
+        }
+    }
+
+    public readonly struct OnSceneLoaded : IEvent
+    {
+        public readonly SceneName EnumValue;
+        public string SceneName => EnumValue.ToString();
+
+        public OnSceneLoaded(SceneName enumValue)
+        {
+            EnumValue = enumValue;
         }
     }
 }

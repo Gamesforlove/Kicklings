@@ -8,7 +8,7 @@ namespace UI
     {
         public void OnClick()
         {
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(Scene.MainMenu));
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
     }
 }

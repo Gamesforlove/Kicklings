@@ -3,7 +3,6 @@ using EventBusSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Scene = CommonDataTypes.Scene;
 
 public class SceneHandler : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class SceneHandler : MonoBehaviour
 
     public async void LoadScene(OnLoadScene evt)
     {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(evt.SceneName);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(evt.Name);
         asyncOperation.allowSceneActivation = false;
 
         //loadingCanvas.SetActive(true);
@@ -27,6 +26,8 @@ public class SceneHandler : MonoBehaviour
         do {
             await Task.Delay(100);
         } while (asyncOperation.progress < 0.9f);
+        
+        EventBus<OnSceneLoaded>.Raise(new  OnSceneLoaded(evt.EnumValue));
         
         asyncOperation.allowSceneActivation = true;
     }

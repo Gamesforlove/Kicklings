@@ -10,7 +10,7 @@ namespace Scene_Management
         public static void CreateMatch(GameModeData gameModeData)
         {
             SelectedGameModeData = gameModeData;
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(Scene.Gameplay));
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
     }
 }

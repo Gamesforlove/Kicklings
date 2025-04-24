@@ -7,7 +7,7 @@ namespace CommonDataTypes
         Left, Right
     }
     
-    public enum Scene
+    public enum SceneName
     {
         MainMenu, Gameplay
     }
