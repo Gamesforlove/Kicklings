@@ -2,8 +2,17 @@ using UnityEngine;
 
 public class PersistentObjects : MonoBehaviour
 {
+    public static PersistentObjects Instance;
     void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

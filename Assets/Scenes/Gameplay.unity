@@ -204,7 +204,7 @@ MonoBehaviour:
   _matchStartPosition: {fileID: 1439621678}
   _leftSidePosition: {fileID: 1100506747}
   _rightSidePosition: {fileID: 380435335}
-  _ballPrefab: {fileID: 100004, guid: 96ca493c79a35694d9ef6028acbe0b97, type: 3}
+  _ballPrefab: {fileID: 100004, guid: e5b6de7da1a38d04190e3f3ffa4519e6, type: 3}
 --- !u!1 &380435334
 GameObject:
   m_ObjectHideFlags: 0
