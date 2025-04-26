@@ -10,13 +10,14 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - WebGL # WebGL.
+          - StandaloneWindows64
+          - WebGL
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-        # Git LFS
+      # Git LFS
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
@@ -50,9 +51,19 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
+          compressionFormat: ${{ matrix.targetPlatform == 'WebGL' && 'Disabled' || '' }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+
+      # ONLY for WebGL: Deploy to GitHub Pages
+      - name: Deploy WebGL to GitHub Pages
+        if: matrix.targetPlatform == 'WebGL'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/WebGL
+          force_orphan: true
