@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Editor
 {
-    public class CustomBuild
+    public static class CustomBuild
     {
         public static void Build()
         {
