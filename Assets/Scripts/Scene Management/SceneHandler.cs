@@ -1,34 +1,39 @@
-using System.Threading.Tasks;
+using System.Collections;
 using EventBusSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class SceneHandler : MonoBehaviour
 {
     void OnEnable()
     {
-        EventBus<OnLoadScene>.OnEvent += LoadScene;
+        EventBus<OnLoadScene>.OnEvent += HandleLoadScene;
     }
 
     void OnDisable()
     {
-        EventBus<OnLoadScene>.OnEvent -= LoadScene;
+        EventBus<OnLoadScene>.OnEvent -= HandleLoadScene;
     }
 
-    public async void LoadScene(OnLoadScene evt)
+    private void HandleLoadScene(OnLoadScene evt)
+    {
+        StartCoroutine(LoadSceneCoroutine(evt));
+    }
+
+    IEnumerator LoadSceneCoroutine(OnLoadScene evt)
     {
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(evt.Name);
         asyncOperation.allowSceneActivation = false;
 
-        //loadingCanvas.SetActive(true);
-            
-        do {
-            await Task.Delay(100);
-        } while (asyncOperation.progress < 0.9f);
+        while (asyncOperation.progress < 0.9f)
+        {
+            yield return null;
+        }
         
-        EventBus<OnSceneLoaded>.Raise(new  OnSceneLoaded(evt.EnumValue));
-        
+        yield return new WaitForSeconds(0.1f);
+
+        EventBus<OnSceneLoaded>.Raise(new OnSceneLoaded(evt.EnumValue));
+
         asyncOperation.allowSceneActivation = true;
     }
 }
