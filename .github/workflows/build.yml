@@ -51,7 +51,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          compressionFormat: ${{ matrix.targetPlatform == 'WebGL' && 'Disabled' || '' }}
+          buildMethod: CustomBuild.Build
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
