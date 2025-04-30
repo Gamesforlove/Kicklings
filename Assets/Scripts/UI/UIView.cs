@@ -35,7 +35,6 @@ namespace UI
 
         void Start()
         {
-            gameObject.SetActive(false);
             switch (_entryMode)
             {
                 case EntryMode.Slide:
