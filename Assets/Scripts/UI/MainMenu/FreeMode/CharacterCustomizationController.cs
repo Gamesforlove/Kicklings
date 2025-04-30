@@ -14,8 +14,10 @@ namespace UI.MainMenu.FreeMode
 
         void Awake()
         {
-            _shirtKey = _fieldSideType + "ShirtImageIndex";
-            _shoesKey = _fieldSideType + "ShoesImageIndex";
+            _shirtKey = _fieldSideType == FieldSideType.Left ? 
+                CharacterCustomizationPlayerPrefsKeys.LeftShirt.ToString() : CharacterCustomizationPlayerPrefsKeys.RightShirt.ToString();
+            _shoesKey = _fieldSideType == FieldSideType.Left ? 
+                CharacterCustomizationPlayerPrefsKeys.LeftShoes.ToString() : CharacterCustomizationPlayerPrefsKeys.RightShoes.ToString();
         }
 
         void Start()
@@ -53,7 +55,7 @@ namespace UI.MainMenu.FreeMode
         int GetNextShoesIndex(int delta)
         {
             int count = _customizationImages.GetShoesSpriteCount();
-            return (_shirtIndex + delta + count) % count;
+            return (_shoesIndex + delta + count) % count;
         }
     }
 }

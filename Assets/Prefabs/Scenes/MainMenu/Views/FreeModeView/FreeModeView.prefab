@@ -168,15 +168,58 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5842861291874357322, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5584671986022896689}
+    - target: {fileID: 5842861291874357322, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeShirt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177530778947426666, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5584671986022896689}
+    - target: {fileID: 6177530778947426666, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeShoes
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679336628207483336, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5584671986022896689}
+    - target: {fileID: 6679336628207483336, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeShirt
+      objectReference: {fileID: 0}
     - target: {fileID: 8036002629271300402, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_Name
       value: CustomizationMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342202157378214361, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5584671986022896689}
+    - target: {fileID: 8342202157378214361, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeShoes
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+--- !u!114 &5584671986022896689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1246710789736823334, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+  m_PrefabInstance: {fileID: 6687151992064749079}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf8746d9c4458246a5836e416f83f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8955270306073156179 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2344699389144511556, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}

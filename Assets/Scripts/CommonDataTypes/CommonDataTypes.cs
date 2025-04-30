@@ -11,4 +11,9 @@ namespace CommonDataTypes
     {
         MainMenu, Gameplay
     }
+
+    public enum CharacterCustomizationPlayerPrefsKeys
+    {
+        LeftShirt, RightShirt, LeftShoes, RightShoes
+    }
 }

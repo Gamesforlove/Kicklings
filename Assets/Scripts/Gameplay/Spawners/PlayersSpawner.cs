@@ -1,3 +1,4 @@
+using CommonDataTypes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,15 +10,20 @@ public class PlayersSpawner : MonoBehaviour
     {
         GameObject go = Instantiate(_cpuPrefab, spawnPosition.position, spawnPosition.rotation);
         ModifyComponentsForRightSide(go);
+        go.GetComponent<ClothesSetter>().SetClothes(FieldSideType.Right);
         return go;
     }
 
     public GameObject SpawnPlayer(Transform spawnPosition, InputControlScheme scheme)
     {
-        //GameObject go = Instantiate(_playerPrefab, spawnPosition.position, spawnPosition.rotation);
         GameObject go = PlayerInput.Instantiate(_playerPrefab, controlScheme: scheme.name, pairWithDevice: Keyboard.current).gameObject;
         go.transform.position = spawnPosition.position;
-        if (spawnPosition.position.x > 0) ModifyComponentsForRightSide(go);
+        ClothesSetter clothesSetter = go.GetComponent<ClothesSetter>();
+        if (spawnPosition.position.x > 0)
+        {
+            ModifyComponentsForRightSide(go);
+            clothesSetter.SetClothes(FieldSideType.Right);
+        } else clothesSetter.SetClothes(FieldSideType.Left);
         return go;
     }
 

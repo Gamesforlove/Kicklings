@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 6100014}
   - component: {fileID: 6197161903604135438}
   - component: {fileID: 1466539244621253280}
+  - component: {fileID: 4492443120641495497}
   m_Layer: 8
   m_Name: DefaultCharacter
   m_TagString: Untagged
@@ -500,6 +501,22 @@ MonoBehaviour:
   - {fileID: 1525746820429643469}
   - {fileID: 5508632737470193371}
   _stabilizeFactor: 25
+--- !u!114 &4492443120641495497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c887670edafc8394bba8113512507a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
+  _shirtSpriteRenderer: {fileID: 21200054}
+  _shoesLeftSpriteRenderer: {fileID: 21200014}
+  _shoesRightSpriteRenderer: {fileID: 21200012}
 --- !u!1 &100020
 GameObject:
   m_ObjectHideFlags: 0
