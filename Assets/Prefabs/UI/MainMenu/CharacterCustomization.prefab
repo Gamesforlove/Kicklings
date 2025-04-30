@@ -1898,8 +1898,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4518251822195775858}
+  - component: {fileID: 6983040956857413750}
   m_Layer: 8
-  m_Name: Visuals
+  m_Name: CharacterCustomization
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1928,6 +1929,22 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6983040956857413750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6884974849066983266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf8746d9c4458246a5836e416f83f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
+  _shirtImage: {fileID: 7025194256165088701}
+  _shoesLeftImage: {fileID: 4601737017086220434}
+  _shoesRightImage: {fileID: 3182101409993182155}
 --- !u!1 &6965556509366949161
 GameObject:
   m_ObjectHideFlags: 0
