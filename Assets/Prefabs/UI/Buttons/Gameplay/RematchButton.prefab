@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3662740962004002922, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_Name
-      value: RematchButton Variant
+      value: RematchButton
       objectReference: {fileID: 0}
     - target: {fileID: 4173256854532045977, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_text
@@ -163,7 +163,7 @@ PrefabInstance:
     - target: {fileID: 6546017592100173127, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b1056c32bd6116749a3ed652d9fe58f2, type: 3}
+      objectReference: {fileID: 21300000, guid: 330e83ea916211c4faf3c355630ce043, type: 3}
     - target: {fileID: 6546017592100173127, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_Color.b
       value: 1
