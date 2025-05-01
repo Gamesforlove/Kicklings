@@ -7,12 +7,15 @@ public class BallManager : MonoBehaviour
 
     BallScript _ball;
     
-    void Start()
+    public void SpawnBall() => _ball = _ballSpawner.SpawnBall();
+    
+    public void ResetBall()
     {
-        _ball = _ballSpawner.SpawnBall();
+        _ballSpawner.ResetBall();
+        _ball.Reset();
     }
 
-    public void ResetBallPositionOnSide(FieldSideType sideType)
+    public void ResetBall(FieldSideType sideType)
     {
         _ballSpawner.ResetBallOnSide(sideType);
         _ball.Reset();
