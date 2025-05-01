@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 7356846191021895184}
   - component: {fileID: 3127566301090648118}
   - component: {fileID: 3807205837563484338}
+  - component: {fileID: 7180576590652850283}
   m_Layer: 0
   m_Name: CpuVsCpu
   m_TagString: Untagged
@@ -557,7 +558,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3127566301090648118}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7180576590652850283}
+        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7180576590652850283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792931934210452864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameModeData: {fileID: 11400000, guid: 292378ff9b2248c4cb9702c999152bf8, type: 2}
 --- !u!1 &7594272633180697581
 GameObject:
   m_ObjectHideFlags: 0

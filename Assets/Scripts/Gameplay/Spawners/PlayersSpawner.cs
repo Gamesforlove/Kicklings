@@ -9,8 +9,15 @@ public class PlayersSpawner : MonoBehaviour
     public GameObject SpawnCpu(Transform spawnPosition)
     {
         GameObject go = Instantiate(_cpuPrefab, spawnPosition.position, spawnPosition.rotation);
-        ModifyComponentsForRightSide(go);
-        go.GetComponent<ClothesSetter>().SetClothes(FieldSideType.Right);
+        ClothesSetter clothesSetter = go.GetComponent<ClothesSetter>();
+        
+        if (spawnPosition.position.x > 0)
+        {
+            ModifyComponentsForRightSide(go);
+            clothesSetter.SetClothes(FieldSideType.Right);
+        } else 
+            clothesSetter.SetClothes(FieldSideType.Left);
+        
         return go;
     }
 
@@ -19,11 +26,14 @@ public class PlayersSpawner : MonoBehaviour
         GameObject go = PlayerInput.Instantiate(_playerPrefab, controlScheme: scheme.name, pairWithDevice: Keyboard.current).gameObject;
         go.transform.position = spawnPosition.position;
         ClothesSetter clothesSetter = go.GetComponent<ClothesSetter>();
+        
         if (spawnPosition.position.x > 0)
         {
             ModifyComponentsForRightSide(go);
             clothesSetter.SetClothes(FieldSideType.Right);
-        } else clothesSetter.SetClothes(FieldSideType.Left);
+        } else 
+            clothesSetter.SetClothes(FieldSideType.Left);
+        
         return go;
     }
 

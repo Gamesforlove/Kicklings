@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using CommonDataTypes;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PlayersManager : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class PlayersManager : MonoBehaviour
     
     readonly List<GameObject> _players = new();
     readonly Dictionary<GameObject, Vector2> _playersPositions = new();
-    [SerializeField] List<InputControlScheme> _controlSchemes = new();
+    List<InputControlScheme> _controlSchemes = new();
 
     void Start()
     {
@@ -28,6 +26,9 @@ public class PlayersManager : MonoBehaviour
     {
         switch (selectedGameModeData.NumberOfPlayers)
         {
+            case 0:
+                SpawnCpuMode();
+                break;
             case 1:
                 SpawnOnePlayerMode();
                 break;
@@ -38,6 +39,12 @@ public class PlayersManager : MonoBehaviour
                 SpawnFourPlayersMode(selectedGameModeData);
                 break;
         }
+    }
+
+    void SpawnCpuMode()
+    {
+        SpawnCpu(_spawnPoints[1]);
+        SpawnCpu(_spawnPoints[2]);
     }
 
     void SpawnOnePlayerMode()
