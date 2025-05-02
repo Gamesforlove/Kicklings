@@ -9,7 +9,7 @@ public class ScoreBoard : MonoBehaviour
     
     int _leftScore, _rightScore;
 
-    void Start()
+    public void ResetScore()
     {
         _leftScore = 0;
         _rightScore = 0;

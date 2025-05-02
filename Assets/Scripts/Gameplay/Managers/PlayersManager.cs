@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CommonDataTypes;
 using UnityEngine;
@@ -7,11 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayersManager : MonoBehaviour
 {
     [SerializeField] PlayersSpawner _playersSpawner;
-    [SerializeField] Transform[] _fourEntitiesModePositions;
+    [SerializeField] Transform[] _spawnPoints;
     
     readonly List<GameObject> _players = new();
     readonly Dictionary<GameObject, Vector2> _playersPositions = new();
-    [SerializeField] List<InputControlScheme> _controlSchemes = new();
+    List<InputControlScheme> _controlSchemes = new();
 
     void Start()
     {
@@ -27,6 +26,9 @@ public class PlayersManager : MonoBehaviour
     {
         switch (selectedGameModeData.NumberOfPlayers)
         {
+            case 0:
+                SpawnCpuMode();
+                break;
             case 1:
                 SpawnOnePlayerMode();
                 break;
@@ -39,21 +41,25 @@ public class PlayersManager : MonoBehaviour
         }
     }
 
+    void SpawnCpuMode()
+    {
+        SpawnCpu(_spawnPoints[1]);
+        SpawnCpu(_spawnPoints[2]);
+    }
+
     void SpawnOnePlayerMode()
     {
-        SpawnPlayer(_fourEntitiesModePositions[0], _controlSchemes[0]);
-        SpawnPlayer(_fourEntitiesModePositions[1], _controlSchemes[0]);
-        SpawnCpu(_fourEntitiesModePositions[2]);
-        SpawnCpu(_fourEntitiesModePositions[3]);
+        SpawnPlayer(_spawnPoints[1], _controlSchemes[0]);
+        SpawnCpu(_spawnPoints[2]);
     }
 
     void SpawnTwoPlayersMode(GameModeData selectedGameModeData)
     {
         for (int i = 0; i < selectedGameModeData.TotalEntities; i++)
         {
-            if (i < selectedGameModeData.NumberOfPlayers) SpawnPlayer(_fourEntitiesModePositions[i], _controlSchemes[i]);
+            if (i < selectedGameModeData.NumberOfPlayers) SpawnPlayer(_spawnPoints[i], _controlSchemes[i]);
             
-            else SpawnCpu(_fourEntitiesModePositions[i]);
+            else SpawnCpu(_spawnPoints[i]);
         }
     }
 
@@ -61,7 +67,7 @@ public class PlayersManager : MonoBehaviour
     {
         for (int i = 0; i < selectedGameModeData.TotalEntities; i++)
         { 
-            SpawnPlayer(_fourEntitiesModePositions[i], _controlSchemes[i]);
+            SpawnPlayer(_spawnPoints[i], _controlSchemes[i]);
         }
     }
 

@@ -9,12 +9,22 @@ public class MatchManager : MonoBehaviour
 {
     [SerializeField] PlayersManager _playersManager;
     [SerializeField] BallManager _ballManager;
+    [SerializeField] ScoreBoard _scoreBoard;
+
+    public void ResetGame()
+    {
+        _playersManager.ResetPlayers();
+        _ballManager.ResetBall();
+        _scoreBoard.ResetScore();
+    }
 
     void Start()
     {
         _playersManager.SpawnEntities(MatchFlow.SelectedGameModeData);
+        _ballManager.SpawnBall();
+        _scoreBoard.ResetScore();
     }
-
+    
     void OnEnable()
     {
         EventBus<GoalEvent>.OnEvent += OnGoalEvent;
@@ -36,18 +46,18 @@ public class MatchManager : MonoBehaviour
         Time.timeScale = .2f;
         yield return new WaitForSeconds(.3f);
         Time.timeScale = 1f;
-        ResetGame(evt.FieldSideData.SideType);
+        RespawnGameplayElements(evt.FieldSideData.SideType);
     }
     
     IEnumerator OnOutEventRoutine(OutEvent evt)
     {
         yield return new WaitForSeconds(1f);
-        ResetGame(evt.FieldSideData.SideType);
+        RespawnGameplayElements(evt.FieldSideData.SideType);
     }
 
-    void ResetGame(FieldSideType sideType)
+    void RespawnGameplayElements(FieldSideType sideType)
     {
         _playersManager.ResetPlayers();
-        _ballManager.ResetBallPositionOnSide(sideType);
+        _ballManager.ResetBall(sideType);
     }
 }

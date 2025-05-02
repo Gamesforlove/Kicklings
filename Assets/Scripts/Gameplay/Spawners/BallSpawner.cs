@@ -16,6 +16,11 @@ public class BallSpawner : MonoBehaviour
         return go.GetComponent<BallScript>();
     }
 
+    public void ResetBall()
+    {
+        _ball.transform.position = _matchStartPosition.position;
+    }
+
     public void ResetBallOnSide(FieldSideType sideType)
     {
         if (sideType == FieldSideType.Left)
