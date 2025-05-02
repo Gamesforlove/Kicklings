@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Audio;
 
 public class SFXManager : MonoBehaviour
 {
+    [SerializeField] private AudioMixerGroup _sfxMixerGroup;
     public static SFXManager Instance { get; private set; }
 
     [SerializeField] private AudioSource soundObject;
@@ -21,6 +23,7 @@ public class SFXManager : MonoBehaviour
     public void PlaySoundEffectAtPoint(AudioClip audioClip, Transform soundTransform, float volume)
     {
         AudioSource audioSource = Instantiate(soundObject, soundTransform.position, Quaternion.identity, transform);
+        audioSource.outputAudioMixerGroup = _sfxMixerGroup;
         audioSource.clip = audioClip;
         audioSource.volume = volume;
         audioSource.Play();
@@ -35,6 +38,7 @@ public class SFXManager : MonoBehaviour
         AudioClip randomClip = audioClips[randomIndex];
 
         AudioSource audioSource = Instantiate(soundObject, soundTransform.position, Quaternion.identity, transform);
+        audioSource.outputAudioMixerGroup = _sfxMixerGroup;
         audioSource.clip = randomClip;
         audioSource.volume = volume;
         audioSource.Play();

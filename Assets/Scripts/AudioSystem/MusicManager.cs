@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio; 
 
 namespace AudioSystem
 {
     [RequireComponent(typeof(AudioSource))]
     public class MusicManager : MonoBehaviour
     {
+        [SerializeField] private AudioMixerGroup _musicMixerGroup;
         [System.Serializable]
         public struct MusicClip
         {
@@ -21,6 +23,7 @@ namespace AudioSystem
         void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+            _audioSource.outputAudioMixerGroup = _musicMixerGroup;
             _clipMap = new Dictionary<MusicType, AudioClip>();
 
             foreach (MusicClip sound in _soundClips)

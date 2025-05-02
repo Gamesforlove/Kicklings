@@ -273,6 +273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3616136913255810600, guid: 3ea171ae7ad891241af23cf924f02087, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -476,6 +480,10 @@ PrefabInstance:
     - target: {fileID: 8112264499651507754, guid: b72ff2a10e2e56c4c9c07e212cad4d6a, type: 3}
       propertyPath: m_Name
       value: HowToPlayButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8112264499651507754, guid: b72ff2a10e2e56c4c9c07e212cad4d6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
