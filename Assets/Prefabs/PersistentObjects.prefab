@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f3ed1a7ea247f984175a3d0bb0f717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _musicMixerGroup: {fileID: 6874394053054776105, guid: b7158bad28b57e84c8b33f370884dfda, type: 2}
   _soundClips:
   - Type: 0
     Clip: {fileID: 8300000, guid: 0603ebce1ab39dd408361867b71b6201, type: 3}
@@ -330,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d413fb93a74fdf90a37eb3f550c600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sfxMixerGroup: {fileID: 9027027276151947435, guid: b7158bad28b57e84c8b33f370884dfda, type: 2}
   _playerActionPerformedClip: {fileID: 8300000, guid: 22f4d10aa17c9af4092e3701e43d3aaf, type: 3}
 --- !u!82 &9027566691268159549
 AudioSource:

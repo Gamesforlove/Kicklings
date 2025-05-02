@@ -772,6 +772,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuButtons
       objectReference: {fileID: 0}
+    - target: {fileID: 5850630876554294902, guid: d41784b6e543d7b439b017b7b13c1a87, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5899571454768930121}
+    - target: {fileID: 5850630876554294902, guid: d41784b6e543d7b439b017b7b13c1a87, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 7469862372228009937}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
