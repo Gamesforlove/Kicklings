@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 4143778380058050044}
   - component: {fileID: 6327124426909212714}
   - component: {fileID: 9180670660010355486}
+  - component: {fileID: 9131523977768334170}
   m_Layer: 0
   m_Name: CountryButton
   m_TagString: Untagged
@@ -196,7 +197,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6327124426909212714}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9131523977768334170}
+        m_TargetAssemblyTypeName: UI.ButtonsBehaviours.FlagButtonBehaviour, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9131523977768334170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972780404077698099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5618e5dd06b5f4db0ea145edcfefa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flagButtonImage: {fileID: 4001022734459328200}
+  _flagButtonText: {fileID: 7730409255724947514}
 --- !u!1 &6133793103867066733
 GameObject:
   m_ObjectHideFlags: 0
@@ -264,8 +291,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: MEX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d17f164b04acb184084bdac455425d0a, type: 2}
-  m_sharedMaterial: {fileID: 3010042516227124414, guid: d17f164b04acb184084bdac455425d0a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
+  m_sharedMaterial: {fileID: 3428143943676615420, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

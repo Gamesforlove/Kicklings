@@ -168,56 +168,98 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5842861291874357322, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5584671986022896689}
-    - target: {fileID: 5842861291874357322, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeShirt
+    - target: {fileID: 4101551657052039499, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6177530778947426666, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5584671986022896689}
-    - target: {fileID: 6177530778947426666, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeShoes
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 6679336628207483336, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 5584671986022896689}
-    - target: {fileID: 6679336628207483336, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      objectReference: {fileID: 7406921250144557579}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeShirt
+      value: SelectImage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ShowView
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Customization.CountryCustomizationController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UI.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 5894211019094008912}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8544052579544180669}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Image, UnityEngine.UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UIView, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8036002629271300402, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_Name
       value: CustomizationMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8342202157378214361, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5584671986022896689}
-    - target: {fileID: 8342202157378214361, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeShoes
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
---- !u!114 &5584671986022896689 stripped
+--- !u!114 &5894211019094008912 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1246710789736823334, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 937303975569001031, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
   m_PrefabInstance: {fileID: 6687151992064749079}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bf8746d9c4458246a5836e416f83f0c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7406921250144557579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4181349178933785628, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+  m_PrefabInstance: {fileID: 6687151992064749079}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ff1836d4d77f14ca6db0dbd5fb4bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8544052579544180669 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3053189596846033322, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+  m_PrefabInstance: {fileID: 6687151992064749079}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296a5a716f156b94b83761afc38b9706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &8955270306073156179 stripped

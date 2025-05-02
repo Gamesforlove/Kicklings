@@ -1,4 +1,5 @@
 using CommonDataTypes;
+using UnityEngine.UI;
 
 namespace EventBusSystem
 {
@@ -53,6 +54,18 @@ namespace EventBusSystem
         public OnSceneLoaded(SceneName enumValue)
         {
             EnumValue = enumValue;
+        }
+    }
+
+    public readonly struct OnCountryChanged : IEvent
+    {
+        public readonly int CountryID;
+        public readonly Image CountryImage;
+
+        public OnCountryChanged(int countryID, Image countryImage)
+        {
+            CountryID = countryID;
+            CountryImage = countryImage;
         }
     }
 }

@@ -10,9 +10,8 @@ namespace Editor
         {
             if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
             {
-                Debug.Log("Setting WebGL compression to Disabled...");
-                PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
-                PlayerSettings.WebGL.decompressionFallback = false;
+                PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Brotli;
+                PlayerSettings.WebGL.decompressionFallback = true;
             }
 
             // Automatically get all enabled scenes
