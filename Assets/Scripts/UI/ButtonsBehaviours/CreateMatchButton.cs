@@ -1,16 +1,16 @@
-﻿using CommonDataTypes;
-using Scene_Management;
+﻿using Scene_Management;
 using UnityEngine;
 
-namespace UI
+namespace UI.ButtonsBehaviours
 {
     public class CreateMatchButton : MonoBehaviour
     {
-        [SerializeField] GameModeData _gameModeData;
+        [SerializeField] int _numberOfPlayers;
         
         public void OnClick()
         {
-            MatchFlow.CreateMatch(_gameModeData);
+            MatchFlow.SetNumberOfPlayers(_numberOfPlayers);
+            MatchFlow.CreateMatch();
         }
     }
 }

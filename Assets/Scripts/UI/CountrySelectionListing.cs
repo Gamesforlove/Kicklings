@@ -1,20 +1,17 @@
 using System.Collections.Generic;
-using TMPro;
 using UI.ButtonsBehaviours;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class CountrySelectionListing : MonoBehaviour
 {
-    [SerializeField] GameObject flagButtonPrefab;
-    [SerializeField] List<Sprite> flagSprites = new List<Sprite>();
+    [SerializeField] GameObject _flagButtonPrefab;
+    [SerializeField] List<Sprite> _flagSprites = new();
 
     void Start()
     {
-        for (int i = 0; i < flagSprites.Count; i++) {
-            GameObject countryFlag = Instantiate(flagButtonPrefab, transform);
-            countryFlag.GetComponent<FlagButtonBehaviour>().SetUp(i, flagSprites[i]);
+        for (int i = 0; i < _flagSprites.Count; i++) {
+            GameObject countryFlag = Instantiate(_flagButtonPrefab, transform);
+            countryFlag.GetComponent<FlagButtonBehaviour>().SetUp(i, _flagSprites[i]);
         }
     }
     

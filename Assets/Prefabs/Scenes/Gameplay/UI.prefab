@@ -187,16 +187,8 @@ PrefabInstance:
       value: ResumeGame
       objectReference: {fileID: 0}
     - target: {fileID: 6237450097821260179, guid: 94b3c5ab29caac04a9027ce4d5ae63df, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: OnClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237450097821260179, guid: 94b3c5ab29caac04a9027ce4d5ae63df, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Gameplay.Managers.PauseManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6237450097821260179, guid: 94b3c5ab29caac04a9027ce4d5ae63df, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UI.BackButtonBehaviour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6237450097821260179, guid: 94b3c5ab29caac04a9027ce4d5ae63df, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName

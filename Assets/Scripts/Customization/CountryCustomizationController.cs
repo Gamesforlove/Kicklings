@@ -1,5 +1,6 @@
 using CommonDataTypes;
 using EventBusSystem;
+using Scene_Management;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,12 @@ namespace Customization
         void OnCountryChanged(OnCountryChanged evt)
         {
             _selectedFlagButtonImage.sprite = evt.CountryImage.sprite;
+            
+            if (_selectedFieldSideType == FieldSideType.Left)
+                MatchFlow.SetLeftCountryImage(evt.CountryImage);
+            else if (_selectedFieldSideType == FieldSideType.Right)
+                MatchFlow.SetRightCountryImage(evt.CountryImage);
+            
             _uiViewsManager.HideView();
         }
     }

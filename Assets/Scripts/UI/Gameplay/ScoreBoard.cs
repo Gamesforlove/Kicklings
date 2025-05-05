@@ -1,44 +1,56 @@
 using CommonDataTypes;
 using EventBusSystem;
+using Scene_Management;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ScoreBoard : MonoBehaviour
+namespace UI.Gameplay
 {
-    [SerializeField] TextMeshProUGUI _leftScoreText,  _rightScoreText;
-    
-    int _leftScore, _rightScore;
-
-    public void ResetScore()
+    public class ScoreBoard : MonoBehaviour
     {
-        _leftScore = 0;
-        _rightScore = 0;
+        [SerializeField] TextMeshProUGUI _leftScoreText,  _rightScoreText;
+        [SerializeField] Image _leftCountryImage, _rightCountryImage;
         
-        _leftScoreText.text = _leftScore.ToString();
-        _rightScoreText.text = _rightScore.ToString();
-    }
+        int _leftScore, _rightScore;
 
-    void OnEnable()
-    {
-        EventBus<GoalEvent>.OnEvent += OnGoalScored;
-    }
-
-    void OnDisable()
-    {
-        EventBus<GoalEvent>.OnEvent -= OnGoalScored;
-    }
-
-    void OnGoalScored(GoalEvent evt)
-    {
-        if (evt.FieldSideData.SideType == FieldSideType.Right)
+        public void ResetScore()
         {
-            _leftScore++;
+            _leftScore = 0;
+            _rightScore = 0;
+        
             _leftScoreText.text = _leftScore.ToString();
-        }
-        else if (evt.FieldSideData.SideType == FieldSideType.Left)
-        {
-            _rightScore++;
             _rightScoreText.text = _rightScore.ToString();
+        }
+
+        void Start()
+        {
+            _leftCountryImage.sprite = MatchFlow.MatchSettings.LeftCountryImage.sprite;
+            _rightCountryImage.sprite = MatchFlow.MatchSettings.RightCountryImage.sprite;
+        }
+
+        void OnEnable()
+        {
+            EventBus<GoalEvent>.OnEvent += OnGoalScored;
+        }
+
+        void OnDisable()
+        {
+            EventBus<GoalEvent>.OnEvent -= OnGoalScored;
+        }
+
+        void OnGoalScored(GoalEvent evt)
+        {
+            if (evt.FieldSideData.SideType == FieldSideType.Right)
+            {
+                _leftScore++;
+                _leftScoreText.text = _leftScore.ToString();
+            }
+            else if (evt.FieldSideData.SideType == FieldSideType.Left)
+            {
+                _rightScore++;
+                _rightScoreText.text = _rightScore.ToString();
+            }
         }
     }
 }

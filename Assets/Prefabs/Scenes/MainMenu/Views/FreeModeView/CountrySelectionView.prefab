@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fec46bee79e0b34b95831bc114b8daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flagButtonPrefab: {fileID: 5972780404077698099, guid: 0dae41436e30fae4fbae1ee816f520e7, type: 3}
-  flagSprites:
+  _flagButtonPrefab: {fileID: 5972780404077698099, guid: 0dae41436e30fae4fbae1ee816f520e7, type: 3}
+  _flagSprites:
   - {fileID: 21300000, guid: df94767dc2f6e82448b85cbc52e87563, type: 3}
   - {fileID: 21300000, guid: 4cce0004bfee5a04fa215c7fd2ffc151, type: 3}
   - {fileID: 21300000, guid: bfe2c357e5d235045b26fe314dd1b368, type: 3}
