@@ -59,11 +59,12 @@ jobs:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
 
-      # ONLY for WebGL: Deploy to GitHub Pages
+      # ONLY for WebGL: Deploy to itch.io
       - name: Deploy WebGL to GitHub Pages
         if: matrix.targetPlatform == 'WebGL'
-        uses: peaceiris/actions-gh-pages@v3
+        uses: KikimoraGames/itch-publish@v0.0.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/WebGL
-          force_orphan: true
+          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          gameData: ./build/${{ matrix.targetPlatform }}
+          itchUsername: ahmedfawzi
+          itchGameId: kicklings
