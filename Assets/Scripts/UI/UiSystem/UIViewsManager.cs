@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI
+namespace UI.UiSystem
 {
     public class UIViewsManager : MonoBehaviour
     {
@@ -75,20 +74,9 @@ namespace UI
             }
         }
         
-        [CustomEditor(typeof(UIViewsManager))]
-        public class StackPreview : Editor {
-            public override void OnInspectorGUI() {
-                DrawDefaultInspector();
-                
-                UIViewsManager ts = (UIViewsManager)target; 
-                Stack<UIView> stack = ts._viewsHistory;
-                
-                GUILayout.Label("Views history");
-                
-                foreach (UIView item in stack) {
-                    GUILayout.Label(item.name); 
-                }
-            }
-        }
+#if UNITY_EDITOR
+        // Internal accessor for custom editor use only
+        public Stack<UIView> GetDebugStack() => _viewsHistory;
+#endif
     }
 }
