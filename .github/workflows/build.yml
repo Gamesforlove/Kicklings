@@ -60,7 +60,7 @@ jobs:
           path: build/${{ matrix.targetPlatform }}
 
       # ONLY for WebGL: Deploy to itch.io
-      - name: Deploy WebGL to GitHub Pages
+      - name: Deploy WebGL to itch.io
         if: matrix.targetPlatform == 'WebGL'
         uses: KikimoraGames/itch-publish@v0.0.3
         with:
@@ -68,3 +68,4 @@ jobs:
           gameData: ./build/${{ matrix.targetPlatform }}
           itchUsername: ahmedfawzi
           itchGameId: kicklings
+          buildChannel: webgl
