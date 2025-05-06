@@ -16,23 +16,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
-      # Git LFS
-      - name: Create LFS file list
+      # Git LFS cache
+      - name: Generate LFS hash file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
-      #- name: Restore LFS cache
-      # uses: actions/cache@v3
-      # id: lfs-cache
-      # with:
-      #   path: .git/lfs
-      #   key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
 
-      - name: Git LFS Pull
+      - name: Pull LFS files (only if needed)
         run: |
           git lfs pull
-          git add .
-          git reset --hard
 
       - name: Cache Library
         uses: actions/cache@v3
@@ -51,7 +51,12 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          #buildMethod: Editor.CustomBuild.Build
+
+      - name: Detect modified files (after build)
+        run: |
+          echo "Modified files after build:"
+          git status --porcelain
+          git diff --name-only || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -59,12 +64,11 @@ jobs:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
 
-      # ONLY for WebGL: Deploy to itch.io
       - name: Deploy WebGL to itch.io
         if: matrix.targetPlatform == 'WebGL'
         uses: KikimoraGames/itch-publish@v0.0.3
         with:
-          butlerApiKey: ${{secrets.BUTLER_API_KEY}}
+          butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
           gameData: ./build/${{ matrix.targetPlatform }}
           itchUsername: ahmedfawzi
           itchGameId: kicklings
