@@ -42,11 +42,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UI.UIViewsManager, Assembly-CSharp
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UI.UIView, Assembly-CSharp
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1950638777270851351, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Color.b

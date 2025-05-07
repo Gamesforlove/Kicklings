@@ -288,6 +288,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406921250144557579}
     - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -304,25 +308,9 @@ PrefabInstance:
       value: Customization.CountryCustomizationController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UI.UIViewsManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 5894211019094008912}
-    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8544052579544180669}
-    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.UI.Image, UnityEngine.UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6768555869508157100, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UI.UIView, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 8036002629271300402, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
       propertyPath: m_Name
       value: CustomizationMenu
@@ -332,17 +320,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
---- !u!114 &5894211019094008912 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 937303975569001031, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
-  m_PrefabInstance: {fileID: 6687151992064749079}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7406921250144557579 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4181349178933785628, guid: 593ee5fbcb93d3043b8c319fb72fe89e, type: 3}
