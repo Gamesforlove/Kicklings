@@ -1468,6 +1468,14 @@ PrefabInstance:
       propertyPath: _postShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1076501094}
+    - target: {fileID: 6023818325488619307, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023818325488619307, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7347605310270021032, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
