@@ -34,5 +34,8 @@ namespace Scene_Management
 
         public static void SetRightCountryImage(Image rightCountryImage) =>
             MatchSettings.RightCountryImage = rightCountryImage;
+        
+        public static void SetGoalsToEndMatch(int goalsToEndMatch) =>
+            MatchSettings.GoalsToEndMatch = goalsToEndMatch;
     }
 }
