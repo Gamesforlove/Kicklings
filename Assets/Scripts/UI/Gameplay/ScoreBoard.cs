@@ -1,6 +1,7 @@
 using CommonDataTypes;
 using Scene_Management;
 using TMPro;
+using UI.Customization.Countries;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ namespace UI.Gameplay
 {
     public class ScoreBoard : MonoBehaviour
     {
+        [SerializeField] CountriesImages _countriesImages;
         [SerializeField] TextMeshProUGUI _leftScoreText,  _rightScoreText;
         [SerializeField] Image _leftCountryImage, _rightCountryImage;
         
@@ -42,8 +44,8 @@ namespace UI.Gameplay
 
         void Start()
         {
-            _leftCountryImage.sprite = MatchFlow.MatchSettings.LeftCountryImage.sprite;
-            _rightCountryImage.sprite = MatchFlow.MatchSettings.RightCountryImage.sprite;
+            _leftCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.MatchSettings.LeftCountryImageIndex);
+            _rightCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.MatchSettings.RightCountryImageIndex);
         }
 
         

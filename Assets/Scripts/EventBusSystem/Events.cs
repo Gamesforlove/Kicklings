@@ -62,12 +62,10 @@ namespace EventBusSystem
     public readonly struct OnCountryChanged : IEvent
     {
         public readonly int CountryID;
-        public readonly Image CountryImage;
 
-        public OnCountryChanged(int countryID, Image countryImage)
+        public OnCountryChanged(int countryID)
         {
             CountryID = countryID;
-            CountryImage = countryImage;
         }
     }
 }

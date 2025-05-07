@@ -25,8 +25,8 @@ namespace CommonDataTypes
         public int RightSideShirtIndex { get; set; }
         public int LeftSideShoesIndex { get; set; }
         public int RightSideShoesIndex { get; set; }
-        public Image LeftCountryImage { get; set; }
-        public Image RightCountryImage { get; set; }
+        public int LeftCountryImageIndex { get; set; }
+        public int RightCountryImageIndex { get; set; }
         public int GoalsToEndMatch { get; set; }
 
         public void Dispose()
@@ -36,8 +36,8 @@ namespace CommonDataTypes
             RightSideShirtIndex = 0;
             LeftSideShoesIndex = 0;
             RightSideShoesIndex = 0;
-            LeftCountryImage = null;
-            RightCountryImage = null;
+            LeftCountryImageIndex = 0;
+            RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
         }
     }

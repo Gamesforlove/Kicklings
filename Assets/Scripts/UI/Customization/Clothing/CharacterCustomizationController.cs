@@ -1,5 +1,6 @@
 using CommonDataTypes;
 using Scene_Management;
+using UI.Customization.Clothing;
 using UnityEngine;
 using UnityEngine.UI;
 

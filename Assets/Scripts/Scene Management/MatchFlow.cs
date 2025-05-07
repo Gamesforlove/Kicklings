@@ -29,11 +29,11 @@ namespace Scene_Management
         public static void SetRightSideShoesIndex(int rightSideShoesIndex) =>
             MatchSettings.RightSideShoesIndex = rightSideShoesIndex;
 
-        public static void SetLeftCountryImage(Image leftCountryImage) =>
-            MatchSettings.LeftCountryImage = leftCountryImage;
+        public static void SetLeftCountryImage(int leftCountryIndex) =>
+            MatchSettings.LeftCountryImageIndex = leftCountryIndex;
 
-        public static void SetRightCountryImage(Image rightCountryImage) =>
-            MatchSettings.RightCountryImage = rightCountryImage;
+        public static void SetRightCountryImage(int rightCountryIndex) =>
+            MatchSettings.RightCountryImageIndex = rightCountryIndex;
         
         public static void SetGoalsToEndMatch(int goalsToEndMatch) =>
             MatchSettings.GoalsToEndMatch = goalsToEndMatch;

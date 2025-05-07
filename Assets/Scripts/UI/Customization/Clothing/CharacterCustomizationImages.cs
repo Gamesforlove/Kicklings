@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace UI.MainMenu.FreeMode
+namespace UI.Customization.Clothing
 {
-    [CreateAssetMenu(fileName = "CharacterCustomizationImages", menuName = "UI/FreeMode/CharacterCustomizationImages")]
+    [CreateAssetMenu(fileName = "CharacterCustomizationImages", menuName = "Customizations/CharacterCustomizationImages")]
     public class CharacterCustomizationImages : ScriptableObject
     {
         [SerializeField] List<Sprite> _shirtImages = new();

@@ -523,6 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ff1836d4d77f14ca6db0dbd5fb4bab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _countriesImages: {fileID: 11400000, guid: 8c2ec60c7d0dd284a9fc470081db8ae6, type: 2}
   _uiViewsManager: {fileID: 0}
   _countrySelectionListing: {fileID: 5772994451343084105}
   _leftFlagButtonImage: {fileID: 937303975569001031}

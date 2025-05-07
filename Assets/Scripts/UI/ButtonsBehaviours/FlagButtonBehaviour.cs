@@ -21,7 +21,7 @@ namespace UI.ButtonsBehaviours
 
         public void OnClick()
         {
-            EventBus<OnCountryChanged>.Raise(new OnCountryChanged(_index, _flagButtonImage));
+            EventBus<OnCountryChanged>.Raise(new OnCountryChanged(_index));
         }
     }
 }

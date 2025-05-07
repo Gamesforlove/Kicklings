@@ -1,16 +1,15 @@
 using CommonDataTypes;
 using EventBusSystem;
 using Scene_Management;
-using UI;
-using UI.UiSystem;
 using UI.UiSystem.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Customization
+namespace UI.Customization.Countries
 {
     public class CountryCustomizationController : MonoBehaviour
     {
+        [SerializeField] CountriesImages _countriesImages;
         [SerializeField] UIViewsManager _uiViewsManager;
         [SerializeField] CountrySelectionListing _countrySelectionListing;
         [SerializeField] Image _leftFlagButtonImage,  _rightFlagButtonImage;
@@ -33,6 +32,12 @@ namespace Customization
             }
         }
 
+        void Start()
+        {
+            _leftFlagButtonImage.sprite = _countriesImages.GetCountrySprite(0);
+            _rightFlagButtonImage.sprite = _countriesImages.GetCountrySprite(0);
+        }
+
         void OnEnable()
         {
             EventBus<OnCountryChanged>.OnEvent += OnCountryChanged;
@@ -43,16 +48,20 @@ namespace Customization
             EventBus<OnCountryChanged>.OnEvent -= OnCountryChanged;
         }
 
-        void OnCountryChanged(OnCountryChanged evt)
+        void OnCountryChanged(OnCountryChanged payload)
         {
-            _selectedFlagButtonImage.sprite = evt.CountryImage.sprite;
-            
-            if (_selectedFieldSideType == FieldSideType.Left)
-                MatchFlow.SetLeftCountryImage(evt.CountryImage);
-            else if (_selectedFieldSideType == FieldSideType.Right)
-                MatchFlow.SetRightCountryImage(evt.CountryImage);
-            
+            ChangeCountryImage(payload.CountryID);
             _uiViewsManager.HideView();
+        }
+
+        void ChangeCountryImage(int index)
+        {
+            _selectedFlagButtonImage.sprite = _countriesImages.GetCountrySprite(index);
+
+            if (_selectedFieldSideType == FieldSideType.Left)
+                MatchFlow.SetLeftCountryImage(index);
+            else if (_selectedFieldSideType == FieldSideType.Right)
+                MatchFlow.SetRightCountryImage(index);
         }
     }
 }

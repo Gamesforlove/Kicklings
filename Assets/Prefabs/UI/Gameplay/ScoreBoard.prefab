@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c64269d714317744943f5a86d466da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _countriesImages: {fileID: 11400000, guid: 8c2ec60c7d0dd284a9fc470081db8ae6, type: 2}
   _leftScoreText: {fileID: 8484252344736015062}
   _rightScoreText: {fileID: 4774880157811945317}
   _leftCountryImage: {fileID: 8816989585815249600}
