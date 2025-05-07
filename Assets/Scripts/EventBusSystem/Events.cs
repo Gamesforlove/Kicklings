@@ -9,11 +9,13 @@ namespace EventBusSystem
 
     public struct GoalEvent : IEvent
     {
-        public readonly FieldSideData FieldSideData;
+        public readonly FieldSideData ScoringSideData;
+        public readonly FieldSideData ScoredSideData;
 
-        public GoalEvent(FieldSideData data)
+        public GoalEvent(FieldSideData scoringSideData, FieldSideData scoredSideData)
         {
-            FieldSideData = data;
+            ScoringSideData = scoringSideData;
+            ScoredSideData = scoredSideData;
         }
     }
     

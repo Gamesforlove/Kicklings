@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UI;
 using UI.UiSystem;
+using UI.UiSystem.Core;
 
 [CustomEditor(typeof(UIViewsManager))]
 public class UIViewsManagerEditor : UnityEditor.Editor

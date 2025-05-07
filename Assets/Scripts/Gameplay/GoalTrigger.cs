@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GoalTrigger : MonoBehaviour
 {
-    [SerializeField] FieldSideData _fieldSideData;
+    [SerializeField] FieldSideData _scoringSideData;
+    [SerializeField] FieldSideData _scoredSideData;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,6 +13,6 @@ public class GoalTrigger : MonoBehaviour
         
         if (other.gameObject.GetComponent<BallScript>() == null) return;
         
-        EventBus<GoalEvent>.Raise(new GoalEvent(_fieldSideData));
+        EventBus<GoalEvent>.Raise(new GoalEvent(_scoringSideData, _scoredSideData));
     }
 }

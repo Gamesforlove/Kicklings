@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721034e2985e4c9aaa283f4ad877136d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitTimeUntilHide: 1
 --- !u!1 &3897436714160941309
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721034e2985e4c9aaa283f4ad877136d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waitTimeUntilHide: 0.5
 --- !u!1 &9021580098789464767
 GameObject:
   m_ObjectHideFlags: 0

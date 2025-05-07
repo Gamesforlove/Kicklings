@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UI
+namespace UI.UiSystem.Core
 {
     public enum EntryMode { DoNothing, Slide, Zoom, Fade}
     public enum Direction { None, Up, Down, Left, Right }

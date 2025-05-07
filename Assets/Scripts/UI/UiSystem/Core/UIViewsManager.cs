@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UI.UiSystem
+namespace UI.UiSystem.Core
 {
     public class UIViewsManager : MonoBehaviour
     {
@@ -52,6 +52,20 @@ namespace UI.UiSystem
         {
             StartCoroutine(uiView.Show());
             _viewsHistory.Push(uiView);
+        }
+        
+        public void ShowView<T>(UIView view, T data)
+        {
+            if (view is IUIViewWithData<T> dataView)
+            {
+                StartCoroutine(dataView.Show(data));
+                _viewsHistory.Push(view);
+            }
+            else
+            {
+                Debug.LogWarning($"View {view.name} does not support data of type {typeof(T)}");
+                ShowView(view); // fallback to default
+            }
         }
 
         public void HideView()

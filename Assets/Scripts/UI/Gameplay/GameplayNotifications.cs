@@ -1,28 +1,25 @@
-using System;
+using System.Collections;
 using CommonDataTypes;
 using EventBusSystem;
 using UnityEngine;
 
-public class GameplayNotifications : MonoBehaviour
+namespace UI.Gameplay
 {
-    [SerializeField] private FieldSideData _leftFieldSideData,  _rightFieldSideData;
-    [SerializeField] GameplayNotification _goalNotification, _outNotification;
-
-    void OnEnable()
+    public class GameplayNotifications : MonoBehaviour
     {
-        EventBus<GoalEvent>.OnEvent += OnGoalEvent;
-        EventBus<OutEvent>.OnEvent += OnOutEvent;
-    }
+        [SerializeField] FieldSideData _leftFieldSideData,  _rightFieldSideData;
+        [SerializeField] GameplayNotification _goalNotification, _outNotification;
     
-    void OnGoalEvent(GoalEvent evt)
-    {
-        Color color = evt.FieldSideData.SideType == FieldSideType.Left ? _rightFieldSideData.Color : _leftFieldSideData.Color;
-        _goalNotification.ChangeColor(color);
-        StartCoroutine(_goalNotification.ShowAndHide());
-    }
+        public IEnumerator ShowGoalNotification(GoalEvent payload)
+        {
+            Color color = payload.ScoringSideData.SideType == FieldSideType.Right ? _rightFieldSideData.Color : _leftFieldSideData.Color;
+            _goalNotification.ChangeColor(color);
+            yield return StartCoroutine(_goalNotification.ShowAndHide());
+        }
 
-    void OnOutEvent(OutEvent evt)
-    {
-        StartCoroutine(_outNotification.ShowAndHide());
+        public void ShowOutNotification(OutEvent _)
+        {
+            StartCoroutine(_outNotification.ShowAndHide());
+        }
     }
 }

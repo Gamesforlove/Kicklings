@@ -3,30 +3,35 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class GameplayNotification : MonoBehaviour
+namespace UI.Gameplay
 {
-    TextMeshProUGUI _text;
-
-    void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class GameplayNotification : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] float _waitTimeUntilHide = 1f;
+        
+        TextMeshProUGUI _text;
 
-    void Start()
-    {
-        transform.localScale = Vector3.zero;
-    }
+        void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+        }
 
-    public IEnumerator ShowAndHide()
-    {
-        _text.gameObject.transform.DOScale(Vector3.one, 0.2f).SetUpdate(UpdateType.Normal, true);
-        yield return new WaitForSeconds(1f);
-        _text.gameObject.transform.DOScale(Vector3.zero, 0.2f).SetUpdate(UpdateType.Normal, true);
-    }
+        void Start()
+        {
+            transform.localScale = Vector3.zero;
+        }
 
-    public void ChangeColor(Color color)
-    {
-        _text.color = color;
+        public IEnumerator ShowAndHide()
+        {
+            _text.gameObject.transform.DOScale(Vector3.one, 0.2f).SetUpdate(UpdateType.Normal, true);
+            yield return new WaitForSeconds(_waitTimeUntilHide);
+            _text.gameObject.transform.DOScale(Vector3.zero, 0.2f).SetUpdate(UpdateType.Normal, true);
+        }
+
+        public void ChangeColor(Color color)
+        {
+            _text.color = color;
+        }
     }
 }
