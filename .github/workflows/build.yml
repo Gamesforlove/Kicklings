@@ -19,21 +19,6 @@ jobs:
         with:
           lfs: true
 
-      # Git LFS cache
-      - name: Generate LFS hash file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v3
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-      - name: Pull LFS files (only if needed)
-        run: |
-          git lfs pull
-
       - name: Cache Library
         uses: actions/cache@v3
         with:
@@ -43,15 +28,6 @@ jobs:
             Library-${{ matrix.targetPlatform }}-
             Library-
 
-      - name: Restore Assets Cache
-        uses: actions/cache@v3
-        with:
-          path: Assets
-          key: Assets-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**') }}
-          restore-keys: |
-            Assets-${{ matrix.targetPlatform }}-
-            Assets-
-
       - name: Build project
         uses: game-ci/unity-builder@v4
         env:
@@ -60,19 +36,6 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-
-      - name: Detect modified files (after build)
-        run: |
-          echo "Modified files after build:"
-          git status --porcelain
-          git diff --name-only || true
-
-      - name: Save Assets Cache
-        if: always()
-        uses: actions/cache/save@v3
-        with:
-          path: Assets
-          key: Assets-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**') }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
