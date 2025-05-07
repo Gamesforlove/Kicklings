@@ -1518,6 +1518,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4464836427881859074, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5320271468226084954, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
