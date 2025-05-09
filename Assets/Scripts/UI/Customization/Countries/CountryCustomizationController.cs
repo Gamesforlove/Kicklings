@@ -11,7 +11,6 @@ namespace UI.Customization.Countries
     {
         [SerializeField] CountriesImages _countriesImages;
         [SerializeField] UIViewsManager _uiViewsManager;
-        [SerializeField] CountrySelectionListing _countrySelectionListing;
         [SerializeField] Image _leftFlagButtonImage,  _rightFlagButtonImage;
 
         Image _selectedFlagButtonImage;
@@ -35,7 +34,7 @@ namespace UI.Customization.Countries
         void Start()
         {
             _leftFlagButtonImage.sprite = _countriesImages.GetCountrySprite(0);
-            _rightFlagButtonImage.sprite = _countriesImages.GetCountrySprite(0);
+            //_rightFlagButtonImage.sprite = _countriesImages.GetCountrySprite(0);
         }
 
         void OnEnable()

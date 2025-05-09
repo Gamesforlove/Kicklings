@@ -4,6 +4,7 @@ namespace UI.MainMenu.TournamentMode
 {
     public class TournamentModeController : MonoBehaviour
     {
-        public int NumberOfTeams { get; set; }
+        public static int NumberOfTeams { get; set; }
+        
     }
 }
