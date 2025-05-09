@@ -34,6 +34,10 @@ namespace UI.UiSystem.Core
 
         void Start()
         {
+             // Agrego Configuración inicial de pantalla completa
+            bool savedFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+            Screen.fullScreen = savedFullscreen;
+
             switch (_entryMode)
             {
                 case EntryMode.Slide:
@@ -48,6 +52,22 @@ namespace UI.UiSystem.Core
                     _canvasGroup.alpha = 0;
                     break;
             }
+        }
+
+         // Agrego método para pantalla completa
+        public void ToggleFullscreen()
+        {
+            bool newFullscreenState = !Screen.fullScreen;
+            
+            // Aplicar cambios
+            Screen.fullScreen = newFullscreenState;
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            
+            // Guardar preferencia
+            PlayerPrefs.SetInt("Fullscreen", newFullscreenState ? 1 : 0);
+            PlayerPrefs.Save();
+            
+            Debug.Log($"Modo pantalla completa actualizado: {newFullscreenState}");
         }
 
         public IEnumerator Show()
