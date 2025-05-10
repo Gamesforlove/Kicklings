@@ -12,6 +12,34 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0076cb3b8f2f293408b228a1295e37af, type: 3}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2074008487505099623}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFullscreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.ButtonsBehaviours.FullscreenButtonBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5940883792929974123, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -99,5 +127,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9012337738845976383, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2074008487505099623}
   m_SourcePrefab: {fileID: 100100000, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+--- !u!1 &205118182646300462 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9012337738845976383, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+  m_PrefabInstance: {fileID: 9208445663767545873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2074008487505099623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205118182646300462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f356f19dd249a7449a6f71387370593f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
