@@ -88,9 +88,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2155170212220501404, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -50.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155170212220501404, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -25.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155170212220501404, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.13999939
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155170212220501404, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.30000305
+      objectReference: {fileID: 0}
     - target: {fileID: 3000380713076084371, guid: 0988c263b317b26459c250a448d3826e, type: 3}
       propertyPath: m_Name
       value: HowToPlayButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876821034674374940, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876821034674374940, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876821034674374940, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876821034674374940, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShowView
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876821034674374940, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876821034674374940, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5738483754398346939, guid: 0988c263b317b26459c250a448d3826e, type: 3}
       propertyPath: m_Color.b
@@ -103,6 +143,26 @@ PrefabInstance:
     - target: {fileID: 5738483754398346939, guid: 0988c263b317b26459c250a448d3826e, type: 3}
       propertyPath: m_Color.r
       value: 0.35686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962832644277055816, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_fontSize
+      value: 74.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962832644277055816, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962832644277055816, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962832644277055816, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962832644277055816, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
