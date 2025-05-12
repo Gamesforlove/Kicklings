@@ -9,15 +9,8 @@ namespace UI.UiSystem.Core
     {
         [SerializeField] UIView _initialPage;
         [SerializeField] GameObject _firstFocusItem;
-
-        Canvas _rootCanvas;
         
         readonly Stack<UIView> _viewsHistory = new();
-
-        void Awake()
-        {
-            _rootCanvas = GetComponent<Canvas>();
-        }
 
         void Start()
         {
@@ -26,17 +19,6 @@ namespace UI.UiSystem.Core
 
             if (_initialPage != null)
                 ShowView(_initialPage);
-        }
-
-        void OnCancel()
-        {
-            if (_rootCanvas.enabled && _rootCanvas.gameObject.activeInHierarchy)
-            {
-                if (_viewsHistory.Count != 0)
-                {
-                    HideView();
-                }
-            }
         }
 
         public void ShowView(UIView view) => StartCoroutine(ShowViewRoutine(view));
@@ -55,43 +37,30 @@ namespace UI.UiSystem.Core
             }
         }
 
-        public void HideView() => StartCoroutine(HideViewRoutine());
+        public void HideView(UIView view) => StartCoroutine(HideViewRoutine(view));
+        
+        public void HideCurrentView() => StartCoroutine(HideViewRoutine(_viewsHistory.Peek()));
 
         public void TransitionToView(UIView view) => StartCoroutine(TransitionToViewRoutine(view));
-        
-        public bool IsPageInStack(UIView view) => _viewsHistory.Contains(view);
 
-        public bool IsPageOnTopOfStack(UIView view) => _viewsHistory.Count > 0 && view == _viewsHistory.Peek();
-
-        public void PopAllPages()
+        IEnumerator ShowViewRoutine(UIView view)
         {
-            for (int i = 1; i < _viewsHistory.Count; i++)
-            {
-                HideView();
-            }
+            yield return view.Show();
+            if (view.KeepOnHistory)
+                _viewsHistory.Push(view);
         }
 
-        IEnumerator ShowViewRoutine(UIView uiView)
+        IEnumerator HideViewRoutine(UIView view)
         {
-            yield return uiView.Show();
-            _viewsHistory.Push(uiView);
-        }
-
-        IEnumerator HideViewRoutine()
-        {
-            if (_viewsHistory.Count <= 1)
-            {
-                Debug.LogWarning("Trying to pop a page but only 1 page remains in the stack!");
-                yield break;
-            }
+            if (_viewsHistory.Contains(view))
+                _viewsHistory.Pop();
             
-            UIView page = _viewsHistory.Pop();
-            yield return page.Hide();
+            yield return view.Hide();
         }
         
         IEnumerator TransitionToViewRoutine(UIView view)
         {
-            yield return HideViewRoutine();
+            yield return HideViewRoutine(_viewsHistory.Peek());
             yield return ShowViewRoutine(view);
         }
         

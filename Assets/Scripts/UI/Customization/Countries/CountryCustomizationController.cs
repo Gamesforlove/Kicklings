@@ -50,7 +50,7 @@ namespace UI.Customization.Countries
         void OnCountryChanged(OnCountryChanged payload)
         {
             ChangeCountryImage(payload.CountryID);
-            _uiViewsManager.HideView();
+            _uiViewsManager.HideCurrentView();
         }
 
         void ChangeCountryImage(int index)

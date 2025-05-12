@@ -14,8 +14,11 @@ namespace UI.UiSystem.Core
     {
         RectTransform _rectTransform;
         CanvasGroup _canvasGroup;
+
+        [field: SerializeField] public bool KeepOnHistory { get; private set; } = true;
         
-        [SerializeField] float _animationSpeed = 1f;
+        [SerializeField] float _animationSpeed = 0.5f;
+        
         [SerializeField] EntryMode _entryMode =  EntryMode.Slide;
         [SerializeField] Direction _entryDirection = Direction.Left;
         [SerializeField] EntryMode _exitMode =  EntryMode.Slide;
@@ -32,7 +35,7 @@ namespace UI.UiSystem.Core
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
-        void Start()
+        void OnEnable()
         {
             switch (_entryMode)
             {

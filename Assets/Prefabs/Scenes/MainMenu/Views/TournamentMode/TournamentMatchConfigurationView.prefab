@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: _animationSpeed
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 513615243800072017, guid: e5dd23e3741700544b67506bd4230bea, type: 3}
+      propertyPath: _entryDirection
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1005630350302347787, guid: e5dd23e3741700544b67506bd4230bea, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
