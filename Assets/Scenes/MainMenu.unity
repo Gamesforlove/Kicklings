@@ -202,6 +202,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 6679255914224468258, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
+      propertyPath: <TeamsData>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
     - target: {fileID: 7574146801227627953, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

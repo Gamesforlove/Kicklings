@@ -1,33 +1,33 @@
 using CommonDataTypes;
 using Scene_Management;
-using UI.Customization.Clothing;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.MainMenu.FreeMode
+namespace UI.Customization.Clothing
 {
     public class CharacterCustomizationController : MonoBehaviour
     {
+        public int ShirtIndex { get; private set; } 
+        public int ShoesIndex { get; private set; }
+        
         [SerializeField] CharacterCustomizationImages _customizationImages;
         [SerializeField] FieldSideType  _fieldSideType;
         [SerializeField] Image _shirtImage,  _shoesLeftImage, _shoesRightImage;
-        int _shirtIndex, _shoesIndex;
 
         void Start()
         {
-            _shirtImage.sprite = _customizationImages.GetShirtSprite(_shirtIndex);
-            _shoesLeftImage.sprite = _customizationImages.GetShoesSprite(_shoesIndex);
-            _shoesRightImage.sprite = _customizationImages.GetShoesSprite(_shoesIndex);
+            ChangeShirt(0);
+            ChangeShoes(0);
 
             if (_fieldSideType == FieldSideType.Left)
             {
-                MatchFlow.SetLeftSideShoesIndex(_shirtIndex);
-                MatchFlow.SetLeftSideShoesIndex(_shoesIndex);
+                MatchFlow.SetLeftSideShoesIndex(ShirtIndex);
+                MatchFlow.SetLeftSideShoesIndex(ShoesIndex);
             }
             else
             {
-                MatchFlow.SetRightSideShoesIndex(_shirtIndex);
-                MatchFlow.SetRightSideShoesIndex(_shoesIndex);
+                MatchFlow.SetRightSideShoesIndex(ShirtIndex);
+                MatchFlow.SetRightSideShoesIndex(ShoesIndex);
             }
                 
         }
@@ -42,7 +42,7 @@ namespace UI.MainMenu.FreeMode
             else
                 MatchFlow.SetRightSideShirtIndex(newIndex);
             
-            _shirtIndex = newIndex;
+            ShirtIndex = newIndex;
         }
 
         public void ChangeShoes(int nextIndex)
@@ -56,19 +56,19 @@ namespace UI.MainMenu.FreeMode
             else
                 MatchFlow.SetRightSideShoesIndex(newIndex);
             
-            _shoesIndex = newIndex;
+            ShoesIndex = newIndex;
         }
 
         int GetNextShirtIndex(int delta)
         {
             int count = _customizationImages.GetShirtSpriteCount();
-            return (_shirtIndex + delta + count) % count;
+            return (ShirtIndex + delta + count) % count;
         }
         
         int GetNextShoesIndex(int delta)
         {
             int count = _customizationImages.GetShoesSpriteCount();
-            return (_shoesIndex + delta + count) % count;
+            return (ShoesIndex + delta + count) % count;
         }
     }
 }

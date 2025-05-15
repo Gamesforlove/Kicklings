@@ -5,9 +5,6 @@ using UnityEngine.Events;
 
 namespace UI.UiSystem.Core
 {
-    public enum EntryMode { DoNothing, Slide, Zoom, Fade}
-    public enum Direction { None, Up, Down, Left, Right }
-    
     [RequireComponent(typeof(RectTransform)), RequireComponent(typeof(CanvasGroup))]
     [DisallowMultipleComponent]
     public class UIView : MonoBehaviour
@@ -53,7 +50,7 @@ namespace UI.UiSystem.Core
             }
         }
 
-        public IEnumerator Show()
+        public virtual IEnumerator Show()
         {
             gameObject.SetActive(true);
             _preShowAction?.Invoke();
@@ -74,7 +71,7 @@ namespace UI.UiSystem.Core
             _postShowAction?.Invoke();
         }
 
-        public IEnumerator Hide()
+        public virtual IEnumerator Hide()
         {
             _preHideAction?.Invoke();
             

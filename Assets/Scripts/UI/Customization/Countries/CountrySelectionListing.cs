@@ -1,3 +1,4 @@
+using CommonDataTypes;
 using UI.ButtonsBehaviours;
 using UnityEngine;
 
@@ -5,14 +6,15 @@ namespace UI.Customization.Countries
 {
     public class CountrySelectionListing : MonoBehaviour
     {
-        [SerializeField] CountriesImages _countriesImages;
+        [SerializeField] TeamsData _teamsData;
         [SerializeField] GameObject _flagButtonPrefab;
 
         void Start()
         {
-            for (int i = 0; i < _countriesImages.GetListCount(); i++) {
+            foreach (TeamsData.TeamData team in _teamsData.Teams)
+            {
                 GameObject countryFlag = Instantiate(_flagButtonPrefab, transform);
-                countryFlag.GetComponent<FlagButtonBehaviour>().SetUp(i, _countriesImages.GetCountrySprite(i));
+                countryFlag.GetComponent<FlagButtonBehaviour>().SetUp(team);
             }
         }
     

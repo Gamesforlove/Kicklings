@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public delegate void EventHandler();
 public class GameController : MonoBehaviour {
 
     public static GameController Instance { get; private set; }

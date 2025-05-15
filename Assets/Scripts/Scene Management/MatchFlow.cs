@@ -1,6 +1,5 @@
 ﻿using CommonDataTypes;
 using EventBusSystem;
-using UnityEngine.UI;
 
 namespace Scene_Management
 {
@@ -9,6 +8,12 @@ namespace Scene_Management
         public static MatchSettings MatchSettings { get; private set; } = new();
         public static void CreateMatch()
         {
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
+        }
+
+        public static void CreateTournamentMatch(MatchSettings matchSettings)
+        {
+            MatchSettings = matchSettings;
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
 

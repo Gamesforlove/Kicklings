@@ -220,6 +220,50 @@ PrefabInstance:
       propertyPath: m_Name
       value: Btn_StartTournament
       objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartTournament
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: TransitionToView
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.MainMenu.TournamentMode.TournamentModeController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808863438511328967, guid: 0fcc47eab136ba54a89b02c0483489b0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -241,10 +285,6 @@ PrefabInstance:
     - target: {fileID: 343345898520729965, guid: 879b5b9ae99d95b44885a2e67728eea1, type: 3}
       propertyPath: m_Name
       value: CustomizationMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 677092380961585184, guid: 879b5b9ae99d95b44885a2e67728eea1, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Left
       objectReference: {fileID: 0}
     - target: {fileID: 5461838570592453659, guid: 879b5b9ae99d95b44885a2e67728eea1, type: 3}
       propertyPath: m_Pivot.x

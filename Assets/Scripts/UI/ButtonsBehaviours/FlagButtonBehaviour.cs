@@ -1,3 +1,4 @@
+using CommonDataTypes;
 using EventBusSystem;
 using TMPro;
 using UnityEngine;
@@ -9,19 +10,19 @@ namespace UI.ButtonsBehaviours
     {
         [SerializeField] Image _flagButtonImage;
         [SerializeField] TextMeshProUGUI _flagButtonText;
-
-        int _index;
+        
+        TeamsData.TeamData _teamData;
     
-        public void SetUp(int index, Sprite sprite)
+        public void SetUp(TeamsData.TeamData teamData)
         {
-            _index = index;
-            _flagButtonImage.sprite = sprite;
-            _flagButtonText.text = sprite.name;
+            _teamData = teamData;
+            _flagButtonImage.sprite = teamData.Icon;
+            _flagButtonText.text = teamData.Name;
         }
 
         public void OnClick()
         {
-            EventBus<OnCountryChanged>.Raise(new OnCountryChanged(_index));
+            EventBus<OnCountryChanged>.Raise(new OnCountryChanged(_teamData));
         }
     }
 }

@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3000380713076084371, guid: 0988c263b317b26459c250a448d3826e, type: 3}
       propertyPath: m_Name
-      value: 4TeamsButton Variant
+      value: Btn_TournamentTypeSelection
       objectReference: {fileID: 0}
     - target: {fileID: 5738483754398346939, guid: 0988c263b317b26459c250a448d3826e, type: 3}
       propertyPath: m_Color.b
@@ -123,5 +123,26 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3000380713076084371, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7345281931923157578}
   m_SourcePrefab: {fileID: 100100000, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+--- !u!1 &1899124750651935046 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3000380713076084371, guid: 0988c263b317b26459c250a448d3826e, type: 3}
+  m_PrefabInstance: {fileID: 3744872534887598037}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7345281931923157578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899124750651935046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63753dcbb7294bb89c71550edb5d3807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layoutMode: 0

@@ -46,7 +46,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5461838570592453659}
-  - component: {fileID: 23675967738749279}
   m_Layer: 0
   m_Name: TournamentCustomizationMenu
   m_TagString: Untagged
@@ -75,22 +74,6 @@ RectTransform:
   m_AnchoredPosition: {x: -104.15998, y: -56.11}
   m_SizeDelta: {x: -681.69995, y: -398.09924}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &23675967738749279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 343345898520729965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ff1836d4d77f14ca6db0dbd5fb4bab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _countriesImages: {fileID: 11400000, guid: 8c2ec60c7d0dd284a9fc470081db8ae6, type: 2}
-  _uiViewsManager: {fileID: 0}
-  _leftFlagButtonImage: {fileID: 6452187817486814411}
-  _rightFlagButtonImage: {fileID: 0}
 --- !u!1 &1601311343393901781
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7108292806602486513}
+  - component: {fileID: 2389248843874140213}
   m_Layer: 0
   m_Name: Country
   m_TagString: Untagged
@@ -261,6 +245,22 @@ RectTransform:
   m_AnchoredPosition: {x: -46, y: 0}
   m_SizeDelta: {x: -122, y: 0}
   m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &2389248843874140213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433131591019944613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ff1836d4d77f14ca6db0dbd5fb4bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fieldSideType: 0
+  _teamsData: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
+  _uiViewsManager: {fileID: 0}
+  _image: {fileID: 6452187817486814411}
 --- !u!1 &2972210707898707909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,21 +1259,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 390477915969462151}
     - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 23675967738749279}
+      objectReference: {fileID: 0}
     - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -1283,24 +1275,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UI.Customization.Countries.CountryCustomizationController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Left
-      objectReference: {fileID: 0}
-    - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3438787674094652828, guid: bea846e92e283bb4eb8122c668caf63e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
