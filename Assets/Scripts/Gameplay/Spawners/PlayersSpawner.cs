@@ -56,15 +56,15 @@ namespace Gameplay.Spawners
             if (isRightSide)
             {
                 clothesSetter.SetClothes(
-                    MatchFlow.MatchSettings.RightSideShirtIndex,
-                    MatchFlow.MatchSettings.RightSideShoesIndex
+                    MatchFlow.Match.Settings.RightSideShirtIndex,
+                    MatchFlow.Match.Settings.RightSideShoesIndex
                 );
             }
             else
             {
                 clothesSetter.SetClothes(
-                    MatchFlow.MatchSettings.LeftSideShirtIndex,
-                    MatchFlow.MatchSettings.LeftSideShoesIndex
+                    MatchFlow.Match.Settings.LeftSideShirtIndex,
+                    MatchFlow.Match.Settings.LeftSideShoesIndex
                 );
             }
         }

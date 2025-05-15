@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine.UI;
 
 namespace CommonDataTypes
@@ -13,6 +14,7 @@ namespace CommonDataTypes
         public int LeftCountryImageIndex { get; set; }
         public int RightCountryImageIndex { get; set; }
         public int GoalsToEndMatch { get; set; }
+        public bool IsTournamentMatch {get; private set;}
         
         public MatchSettings() { }
 
@@ -26,6 +28,7 @@ namespace CommonDataTypes
             LeftCountryImageIndex = 0;
             RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
+            IsTournamentMatch = false;
         }
 
         public class Builder
@@ -39,6 +42,7 @@ namespace CommonDataTypes
             int _leftCountryImageIndex;
             int _rightCountryImageIndex;
             int _goalsToEndMatch = 1;
+            bool _isTournamentMatch = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
             {
@@ -88,6 +92,12 @@ namespace CommonDataTypes
                 return this;
             }
 
+            public Builder WithIsTournamentMatch(bool isTournamentMatch)
+            {
+                _isTournamentMatch = isTournamentMatch;
+                return this;
+            }
+
             public MatchSettings Build()
             {
                 return new MatchSettings
@@ -100,7 +110,8 @@ namespace CommonDataTypes
                     RightSideShoesIndex = _rightSideShoesIndex,
                     LeftCountryImageIndex = _leftCountryImageIndex,
                     RightCountryImageIndex = _rightCountryImageIndex,
-                    GoalsToEndMatch = _goalsToEndMatch
+                    GoalsToEndMatch = _goalsToEndMatch,
+                    IsTournamentMatch = _isTournamentMatch
                 };
             }
         }

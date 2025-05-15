@@ -9,8 +9,7 @@ namespace UI.ButtonsBehaviours
         
         public void OnClick()
         {
-            MatchFlow.SetNumberOfPlayers(_numberOfPlayers);
-            MatchFlow.CreateMatch();
+            //MatchFlow.CreateMatch();
         }
     }
 }

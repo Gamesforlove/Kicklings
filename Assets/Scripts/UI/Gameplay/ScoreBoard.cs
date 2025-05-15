@@ -44,8 +44,8 @@ namespace UI.Gameplay
 
         void Start()
         {
-            _leftCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.MatchSettings.LeftCountryImageIndex);
-            _rightCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.MatchSettings.RightCountryImageIndex);
+            _leftCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.Match.Settings.LeftCountryImageIndex);
+            _rightCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.Match.Settings.RightCountryImageIndex);
         }
 
         

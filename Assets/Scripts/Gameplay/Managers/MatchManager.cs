@@ -5,6 +5,7 @@ using Scene_Management;
 using UI.Gameplay;
 using UI.UiSystem;
 using UI.UiSystem.Core;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -17,6 +18,8 @@ namespace Gameplay.Managers
         [SerializeField] BallManager _ballManager;
         [SerializeField] ScoreBoard _scoreBoard;
         [SerializeField] GameplayNotifications _gameplayNotifications;
+        
+        Match _match;
 
         public void ResetGame()
         {
@@ -27,13 +30,13 @@ namespace Gameplay.Managers
 
         public void EndGame()
         {
-            MatchFlow.DisposeMatch();
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
 
         void Start()
         {
-            _playersManager.SpawnEntities(MatchFlow.MatchSettings);
+            _match = MatchFlow.Match;
+            _playersManager.SpawnEntities(_match.Settings);
             _ballManager.SpawnBall();
             _scoreBoard.ResetScore();
         }
@@ -69,8 +72,9 @@ namespace Gameplay.Managers
             Time.timeScale = 1f;
             
             if (_scoreBoard.GetScoreFromSide(payload.ScoringSideData.SideType) >=
-                MatchFlow.MatchSettings.GoalsToEndMatch)
+                _match.Settings.GoalsToEndMatch)
             {
+                if(payload.ScoringSideData.SideType == FieldSideType.Left) _match.IsPlayerWinner = true;
                 _uiViewsManager.ShowView(_matchWinnerView, payload.ScoringSideData);
                 yield break;
             }

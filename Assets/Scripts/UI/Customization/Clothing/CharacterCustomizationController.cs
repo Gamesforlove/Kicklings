@@ -18,29 +18,12 @@ namespace UI.Customization.Clothing
         {
             ChangeShirt(0);
             ChangeShoes(0);
-
-            if (_fieldSideType == FieldSideType.Left)
-            {
-                MatchFlow.SetLeftSideShoesIndex(ShirtIndex);
-                MatchFlow.SetLeftSideShoesIndex(ShoesIndex);
-            }
-            else
-            {
-                MatchFlow.SetRightSideShoesIndex(ShirtIndex);
-                MatchFlow.SetRightSideShoesIndex(ShoesIndex);
-            }
-                
         }
         
         public void ChangeShirt(int nextIndex)
         {
             int newIndex = GetNextShirtIndex(nextIndex);
             _shirtImage.sprite = _customizationImages.GetShirtSprite(newIndex);
-            
-            if (_fieldSideType == FieldSideType.Left)
-                MatchFlow.SetLeftSideShirtIndex(newIndex);
-            else
-                MatchFlow.SetRightSideShirtIndex(newIndex);
             
             ShirtIndex = newIndex;
         }
@@ -50,11 +33,6 @@ namespace UI.Customization.Clothing
             int newIndex = GetNextShoesIndex(nextIndex);
             _shoesLeftImage.sprite = _customizationImages.GetShoesSprite(newIndex);
             _shoesRightImage.sprite = _customizationImages.GetShoesSprite(newIndex);
-
-            if (_fieldSideType == FieldSideType.Left)
-                MatchFlow.SetLeftSideShoesIndex(newIndex);
-            else
-                MatchFlow.SetRightSideShoesIndex(newIndex);
             
             ShoesIndex = newIndex;
         }

@@ -327,6 +327,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 5899571454768930121}
+    - target: {fileID: 4058473197458320660, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: _uiViewsManager
+      value: 
+      objectReference: {fileID: 5899571454768930121}
     - target: {fileID: 4210720054304506783, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
       propertyPath: _layoutMode
       value: 1
@@ -340,13 +344,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5899571454768930121}
     - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 5899571454768930121}
+      objectReference: {fileID: 3235034530637457815}
     - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: AssignLayoutMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UI.MainMenu.TournamentMode.TournamentModeController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 5493403352083083245}
+    - target: {fileID: 5562478228663162861, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.MainMenu.TournamentMode.TournamentLayoutComponent, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6190837140556198788, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
       propertyPath: _uiViewsManager
       value: 
@@ -476,6 +500,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+--- !u!114 &3235034530637457815 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4058473197458320660, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+  m_PrefabInstance: {fileID: 1492856530250679427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f6b613a02b7204d9b97e89f236a41f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5493403352083083245 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6380417754287893358, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}

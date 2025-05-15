@@ -5,42 +5,14 @@ namespace Scene_Management
 {
     public static class MatchFlow
     {
-        public static MatchSettings MatchSettings { get; private set; } = new();
-        public static void CreateMatch()
+        public static Match Match { get; private set; }
+        public static void CreateMatch(MatchSettings matchSettings)
         {
+            DisposeMatch();
+            Match = new Match(matchSettings);
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
 
-        public static void CreateTournamentMatch(MatchSettings matchSettings)
-        {
-            MatchSettings = matchSettings;
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
-        }
-
-        public static void DisposeMatch() => MatchSettings.Dispose();
-
-        public static void SetNumberOfPlayers(int numberOfPlayers) =>
-            MatchSettings.NumberOfPlayers = numberOfPlayers;
-
-        public static void SetLeftSideShirtIndex(int leftSideShirtIndex) =>
-            MatchSettings.LeftSideShirtIndex = leftSideShirtIndex;
-
-        public static void SetRightSideShirtIndex(int rightSideShirtIndex) =>
-            MatchSettings.RightSideShirtIndex = rightSideShirtIndex;
-
-        public static void SetLeftSideShoesIndex(int leftSideShoesIndex) =>
-            MatchSettings.LeftSideShoesIndex = leftSideShoesIndex;
-
-        public static void SetRightSideShoesIndex(int rightSideShoesIndex) =>
-            MatchSettings.RightSideShoesIndex = rightSideShoesIndex;
-
-        public static void SetLeftCountryImage(int leftCountryIndex) =>
-            MatchSettings.LeftCountryImageIndex = leftCountryIndex;
-
-        public static void SetRightCountryImage(int rightCountryIndex) =>
-            MatchSettings.RightCountryImageIndex = rightCountryIndex;
-        
-        public static void SetGoalsToEndMatch(int goalsToEndMatch) =>
-            MatchSettings.GoalsToEndMatch = goalsToEndMatch;
+        static void DisposeMatch() => Match?.Dispose();
     }
 }

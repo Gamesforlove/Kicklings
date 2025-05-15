@@ -17,6 +17,7 @@ namespace UI.Customization.Countries
 
         void Start()
         {
+
             TeamsData.TeamData defaultTeamData = _teamsData.GetTeamById(0);
             ChangeCountryImage(defaultTeamData);
         }

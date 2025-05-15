@@ -24,7 +24,6 @@ namespace UI.Customization
             int newIndex = _minScore + relativeIndex;
 
             _scoreText.text = newIndex.ToString();
-            MatchFlow.SetGoalsToEndMatch(newIndex);
             SelectedGoals = newIndex;
         }
     }

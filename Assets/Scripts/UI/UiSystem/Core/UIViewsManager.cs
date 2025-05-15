@@ -7,12 +7,14 @@ namespace UI.UiSystem.Core
 {
     public class UIViewsManager : MonoBehaviour
     {
+        public bool IsReady { get; private set; }
+        
         [SerializeField] UIView _initialPage;
         [SerializeField] GameObject _firstFocusItem;
         
         readonly Stack<UIView> _viewsHistory = new();
 
-        void Start()
+        void Awake()
         {
             if (_firstFocusItem != null)
                 EventSystem.current.SetSelectedGameObject(_firstFocusItem);
@@ -48,6 +50,8 @@ namespace UI.UiSystem.Core
             yield return view.Show();
             if (view.KeepOnHistory)
                 _viewsHistory.Push(view);
+            
+            if (!IsReady) IsReady = true;
         }
 
         IEnumerator HideViewRoutine(UIView view)
