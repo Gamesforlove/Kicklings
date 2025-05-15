@@ -152,6 +152,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3382915826746076180, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+      propertyPath: _audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: b7158bad28b57e84c8b33f370884dfda, type: 2}
     - target: {fileID: 4295984589349452121, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -191,8 +195,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5946641094774350568, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3599714779820739812}
+    - targetCorrespondingSourceObject: {fileID: 4552998441883403223, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4633215683007017995}
   m_SourcePrefab: {fileID: 100100000, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+--- !u!1 &2509326911969266269 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5946641094774350568, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+  m_PrefabInstance: {fileID: 8094196794956867765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3599714779820739812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509326911969266269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bdf4882844e37e4d984735dc593ee4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 1
+  rotationDuration: 2
+--- !u!1 &5727209749865065314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4552998441883403223, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
+  m_PrefabInstance: {fileID: 8094196794956867765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4633215683007017995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5727209749865065314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561a82c863bd9ce4eaf62ca830f56b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationDuration: 1
+  pulseScale: 1.2
+  rotationAngle: 15
 --- !u!224 &9006852273136338615 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 912710605192064514, guid: c89d10081176b9a42bb80993528d00f2, type: 3}
