@@ -13,11 +13,11 @@ namespace UI.MainMenu.TournamentMode
         public TeamsGenerator(Tournament tournament)
         {
             _tournament = tournament;
-            _numberOfTeamsToGenerate = _tournament.NumberOfRounds switch
+            _numberOfTeamsToGenerate = _tournament.LayoutMode switch
             {
-                1 => 4,
-                2 => 8,
-                3 => 16,
+                0 => 4,
+                1 => 8,
+                2 => 16,
             };
             _teamsData = _tournament.TeamsData;
         }
@@ -29,7 +29,7 @@ namespace UI.MainMenu.TournamentMode
             generatedTeams[0] = _tournament.PlayerTeamData;
             _teamsData.Remove(_tournament.PlayerTeamData);
 
-            for (int i = 0; i < _numberOfTeamsToGenerate; i++)
+            for (int i = 1; i < _numberOfTeamsToGenerate; i++)
             {
                 int randomIndex = Random.Range(0, _teamsData.Count);
                 TeamsData.TeamData teamData = _teamsData[randomIndex];

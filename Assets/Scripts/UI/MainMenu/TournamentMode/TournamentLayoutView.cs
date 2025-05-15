@@ -18,7 +18,7 @@ namespace UI.MainMenu.TournamentMode
             }
 
             _tournament = TournamentModeController.Tournament;
-            _layouts[_tournament.NumberOfRounds - 1].Show(_tournament);
+            _layouts[_tournament.LayoutMode].Show(_tournament);
             yield return base.Show();
         }
     }

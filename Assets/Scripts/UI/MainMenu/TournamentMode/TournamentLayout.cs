@@ -7,7 +7,7 @@ namespace UI.MainMenu.TournamentMode
 {
     public class TournamentLayout : MonoBehaviour
     {
-        [SerializeField] TeamEntry[] _teamEntries;
+        [SerializeField] BracketEntry[] _bracketEntries;
         
         Tournament _tournament;
         
@@ -20,13 +20,19 @@ namespace UI.MainMenu.TournamentMode
 
         void PopulateTeamEntries()
         {
-            List<TeamsData.TeamData> generatedTeams = _tournament.GeneratedTeamsData.ToList();
+            /*List<TeamsData.TeamData> generatedTeams = _tournament.Participants.ToList();
 
             foreach (TeamEntry teamEntry in _teamEntries)
             {
                 TeamsData.TeamData teamData = generatedTeams[Random.Range(0, generatedTeams.Count)];
                 teamEntry.Initialize(teamData);
                 generatedTeams.Remove(teamData);
+            }*/
+
+            for (int i = 0; i < _tournament.CurrentRound.Brackets.Count; i++)
+            {
+                Bracket bracket = _tournament.CurrentRound.Brackets[i];
+                _bracketEntries[i].Initialize(bracket);
             }
         }
     }
