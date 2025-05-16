@@ -2,7 +2,6 @@ using CommonDataTypes;
 using EventBusSystem;
 using UI.UiSystem.Core;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.Customization.Countries
 {
@@ -13,13 +12,11 @@ namespace UI.Customization.Countries
         [SerializeField] FieldSideType _fieldSideType;
         [SerializeField] TeamsData _teamsData;
         [SerializeField] UIViewsManager _uiViewsManager;
-        [SerializeField] Image _image;
+        [SerializeField] CountryCustomizationView _countryCustomizationView;
 
         void Start()
         {
-
-            TeamsData.TeamData defaultTeamData = _teamsData.GetTeamById(0);
-            ChangeCountryImage(defaultTeamData);
+            ChangeCountryImage(_teamsData.GetTeamById(0));
         }
 
         void OnEnable()
@@ -40,7 +37,7 @@ namespace UI.Customization.Countries
 
         void ChangeCountryImage(TeamsData.TeamData teamData)
         {
-            _image.sprite = teamData.Icon;
+            _countryCustomizationView.ChangeViewElements(teamData);
             TeamDataIndex = teamData.Id;
         }
     }

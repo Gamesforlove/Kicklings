@@ -12,8 +12,8 @@ namespace UI.MainMenu.TournamentMode
     public class TournamentModeController : MonoBehaviour
     {
         public static Tournament Tournament;
+        static TournamentConfiguration _tournamentConfiguration;
         [field:SerializeField] public TeamsData TeamsData { get; private set; }
-        public TournamentLayoutMode LayoutMode { get; private set; }
         public TeamsData.TeamData PlayerTeamData { get; private set; }
         
         [SerializeField] UIViewsManager _uiViewsManager;
@@ -22,6 +22,8 @@ namespace UI.MainMenu.TournamentMode
         [SerializeField] CharacterCustomizationController _characterCustomizationController;
         [SerializeField] CountryCustomizationController _countryCustomizationController;
         [SerializeField] ScoreToWinController _scoreToWinController;
+        
+        TournamentLayoutComponent _tournamentLayoutComponent;
 
         IEnumerator Start()
         {
@@ -37,14 +39,24 @@ namespace UI.MainMenu.TournamentMode
             _uiViewsManager.ShowView(_backgroundView);
         }
 
+        public TournamentLayoutMode GetLayoutMode() => _tournamentConfiguration.LayoutMode;
+
         public void AssignLayoutMode(TournamentLayoutComponent component)
         {
-            LayoutMode = component.LayoutMode;
+            _tournamentLayoutComponent = component;
             _uiViewsManager.TransitionToView(_matchConfigurationView);
         }
 
         public void StartTournament()
         {
+            _tournamentConfiguration = new TournamentConfiguration
+            {
+                LayoutMode = _tournamentLayoutComponent.LayoutMode,
+                PlayerShirtIndex = _characterCustomizationController.ShirtIndex,
+                PlayerShoesIndex = _characterCustomizationController.ShoesIndex,
+                GoalsToEndMatch = _scoreToWinController.SelectedGoals
+            };
+
             PlayerTeamData = TeamsData.GetTeamById(_countryCustomizationController.TeamDataIndex);
             Tournament = new Tournament(this);
             _uiViewsManager.TransitionToView(_layoutView);
@@ -52,15 +64,29 @@ namespace UI.MainMenu.TournamentMode
 
         public void StartMatch()
         {
+            Bracket playerBracket = Tournament.GetPlayerBracket();
+            Participant player = playerBracket.Participants[0];
+            Participant rival =  playerBracket.Participants[1];
+            
             MatchSettings matchSettings = new MatchSettings.Builder()
-                .WithLeftShirtIndex(_characterCustomizationController.ShirtIndex)
-                .WithLeftShoesIndex(_characterCustomizationController.ShoesIndex)
-                .WithLeftCountryImageIndex(_countryCustomizationController.TeamDataIndex)
-                .WithGoalsToEndMatch(_scoreToWinController.SelectedGoals)
+                .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
+                .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
+                .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
+                .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
+                .WithGoalsToEndMatch(_tournamentConfiguration.GoalsToEndMatch)
                 .WithIsTournamentMatch(true)
                 .Build();
             
             MatchFlow.CreateMatch(matchSettings);
         }
+    }
+
+    public class TournamentConfiguration
+    {
+        public TournamentLayoutMode LayoutMode { get; set; }
+        public TeamsData.TeamData TeamData { get; set; }
+        public int PlayerShirtIndex { get; set; }
+        public int PlayerShoesIndex { get; set; }
+        public int GoalsToEndMatch { get; set; }
     }
 }

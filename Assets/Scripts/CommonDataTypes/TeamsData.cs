@@ -17,10 +17,9 @@ namespace CommonDataTypes
         
         public List<TeamData> Teams;
 
-        public TeamData GetTeamById(int id)
-        {
-            return Teams.Find(x => x.Id == id);   
-        }
+        public TeamData GetTeamById(int id) => Teams.Find(x => x.Id == id);
+
+        public TeamData GetTeamByName(string name) => Teams.Find(x => x.Name == name);
 
         void OnValidate()
         {

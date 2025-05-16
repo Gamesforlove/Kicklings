@@ -11,7 +11,7 @@ namespace UI.MainMenu.TournamentMode
         {
             for (int i = 0; i < bracketData.Participants.Length; i++)
             {
-                _teamEntries[i].Initialize(bracketData.Participants[i].TeamData);
+                _teamEntries[i].ChangeVisualElements(bracketData.Participants[i].TeamData);
             }
             
             if (bracketData.IsPlayerBracket()) _visualEffect.SetActive(true);

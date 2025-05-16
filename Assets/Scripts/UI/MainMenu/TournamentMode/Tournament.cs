@@ -26,10 +26,15 @@ namespace UI.MainMenu.TournamentMode
             Participants = roundWinners;
             GenerateRound(CurrentRound.Id + 1);
         }
+
+        public Bracket GetPlayerBracket()
+        {
+            return CurrentRound.Brackets.Find(bracket => bracket.IsPlayerBracket());
+        }
         
         void Initialize()
         {
-            LayoutMode = _controller.LayoutMode switch
+            LayoutMode = _controller.GetLayoutMode() switch
             {
                 TournamentLayoutMode.Four => 0,
                 TournamentLayoutMode.Eight => 1,

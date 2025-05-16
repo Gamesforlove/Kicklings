@@ -1,4 +1,5 @@
-﻿using CommonDataTypes;
+﻿using System;
+using CommonDataTypes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,10 +11,11 @@ namespace UI.MainMenu.TournamentMode
         [SerializeField] TextMeshProUGUI _name;
         [SerializeField] Image _flagImage;
 
-        public void Initialize(TeamsData.TeamData data)
+        public void ChangeVisualElements(TeamsData.TeamData data)
         {
             _name.text = data.Name;
             _flagImage.sprite = data.Icon;
+            _flagImage.enabled = true;
         }
     }
 }

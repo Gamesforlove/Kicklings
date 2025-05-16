@@ -217,6 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7108292806602486513}
   - component: {fileID: 2389248843874140213}
+  - component: {fileID: 5435136650236146768}
   m_Layer: 0
   m_Name: Country
   m_TagString: Untagged
@@ -260,7 +261,22 @@ MonoBehaviour:
   _fieldSideType: 0
   _teamsData: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
   _uiViewsManager: {fileID: 0}
+  _countryCustomizationView: {fileID: 5435136650236146768}
+--- !u!114 &5435136650236146768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433131591019944613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7526f9977e0b46cc9965e9207b17a89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _image: {fileID: 6452187817486814411}
+  _name: {fileID: 2027510196504322983}
+  _description: {fileID: 8508989362241785221}
 --- !u!1 &2972210707898707909
 GameObject:
   m_ObjectHideFlags: 0
