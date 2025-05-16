@@ -31,7 +31,7 @@ namespace UI.MainMenu.TournamentMode
             for (int i = 0; i < numberOfBrackets; i++)
             {
                 Participant[] bracketParticipants = GetBracketParticipants(ref participants);
-                Brackets.Add(new Bracket(bracketParticipants));
+                Brackets.Add(new Bracket(bracketParticipants, this));
             }
         }
 
@@ -42,5 +42,7 @@ namespace UI.MainMenu.TournamentMode
             participants.Remove(participants[0]);
             return teamsData;
         }
+
+        public bool IsCurrentRound() => Id == _tournament.CurrentRound.Id;
     }
 }

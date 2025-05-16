@@ -7,9 +7,12 @@ namespace UI.MainMenu.TournamentMode
     {
         public readonly Participant[] Participants;
         
-        public Bracket(Participant[] participants)
+        Round _round;
+        
+        public Bracket(Participant[] participants, Round round)
         {
             Participants = participants;
+            _round = round;
         }
 
         public Participant GetWinner()
@@ -20,7 +23,7 @@ namespace UI.MainMenu.TournamentMode
 
         public bool IsPlayerBracket()
         {
-            return Participants.Any(participant => participant.IsPlayer);
+            return _round.IsCurrentRound() && Participants.Any(participant => participant.IsPlayer);
         }
     }
 }
