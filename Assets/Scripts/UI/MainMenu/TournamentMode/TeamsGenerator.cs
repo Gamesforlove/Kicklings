@@ -6,10 +6,10 @@ namespace UI.MainMenu.TournamentMode
 {
     public class TeamsGenerator
     {
-        Tournament _tournament;
+        readonly Tournament _tournament;
 
-        int _numberOfTeamsToGenerate;
-        List<TeamsData.TeamData> _teamsData;
+        readonly int _numberOfTeamsToGenerate;
+        readonly List<TeamsData.TeamData> _teamsData;
         public TeamsGenerator(Tournament tournament)
         {
             _tournament = tournament;
@@ -22,22 +22,20 @@ namespace UI.MainMenu.TournamentMode
             _teamsData = _tournament.TeamsData;
         }
 
-        public TeamsData.TeamData[] GenerateTeams()
+        public List<Participant> GenerateParticipants()
         {
-            TeamsData.TeamData[] generatedTeams = new TeamsData.TeamData[_numberOfTeamsToGenerate];
-            
-            generatedTeams[0] = _tournament.PlayerTeamData;
+            List<Participant> generatedParticipants = new() { new Participant(_tournament.PlayerTeamData, true) };
             _teamsData.Remove(_tournament.PlayerTeamData);
 
             for (int i = 1; i < _numberOfTeamsToGenerate; i++)
             {
                 int randomIndex = Random.Range(0, _teamsData.Count);
                 TeamsData.TeamData teamData = _teamsData[randomIndex];
-                generatedTeams[i] = teamData;
+                generatedParticipants.Add(new Participant(teamData));
                 _teamsData.RemoveAt(randomIndex);
             }
             
-            return generatedTeams;
+            return generatedParticipants;
         }
     }
 }

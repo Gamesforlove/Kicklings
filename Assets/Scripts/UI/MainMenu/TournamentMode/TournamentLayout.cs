@@ -20,19 +20,16 @@ namespace UI.MainMenu.TournamentMode
 
         void PopulateTeamEntries()
         {
-            /*List<TeamsData.TeamData> generatedTeams = _tournament.Participants.ToList();
+            List<Bracket> brackets = new();
 
-            foreach (TeamEntry teamEntry in _teamEntries)
+            foreach (Round round in _tournament.Rounds)
             {
-                TeamsData.TeamData teamData = generatedTeams[Random.Range(0, generatedTeams.Count)];
-                teamEntry.Initialize(teamData);
-                generatedTeams.Remove(teamData);
-            }*/
-
-            for (int i = 0; i < _tournament.CurrentRound.Brackets.Count; i++)
+                brackets.AddRange(round.Brackets);
+            }
+            
+            for (int i = 0; i < brackets.Count; i++)
             {
-                Bracket bracket = _tournament.CurrentRound.Brackets[i];
-                _bracketEntries[i].Initialize(bracket);
+                _bracketEntries[i].Initialize(brackets[i]);
             }
         }
     }

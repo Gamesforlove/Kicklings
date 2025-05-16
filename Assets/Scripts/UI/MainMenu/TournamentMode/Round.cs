@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CommonDataTypes;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace UI.MainMenu.TournamentMode
@@ -8,34 +9,38 @@ namespace UI.MainMenu.TournamentMode
     public class Round
     {
         public int Id;
-        public List<Bracket> Brackets = new();
+        public readonly List<Bracket> Brackets = new();
 
         Tournament _tournament;
         public Round(int id, Tournament tournament)
         {
             Id = id;
             _tournament = tournament;
-            GenerateBrackets(_tournament.Participants.Length / 2);
+            GenerateBrackets(_tournament.Participants.Count / 2);
+        }
+
+        public List<Participant> GetWinners()
+        {
+            return Brackets.Select(bracket => bracket.GetWinner()).ToList();
         }
 
         void GenerateBrackets(int numberOfBrackets)
         {
-            List<TeamsData.TeamData> participants = new(_tournament.Participants);
+            List<Participant> participants = new(_tournament.Participants);
             
             for (int i = 0; i < numberOfBrackets; i++)
             {
-                TeamsData.TeamData[] teamsData = { GetRandomTeam(ref participants), GetRandomTeam(ref participants) };
-                Bracket bracket = new(teamsData);
-                if (teamsData.Any(data => data == _tournament.PlayerTeamData)) bracket.IsPlayerBracket = true;
-                Brackets.Add(new Bracket(teamsData));
+                Participant[] bracketParticipants = GetBracketParticipants(ref participants);
+                Brackets.Add(new Bracket(bracketParticipants));
             }
         }
 
-        TeamsData.TeamData GetRandomTeam(ref List<TeamsData.TeamData> participants)
+        Participant[] GetBracketParticipants(ref List<Participant> participants)
         {
-            TeamsData.TeamData randomParticipant = participants[Random.Range(0, participants.Count)];
-            participants.Remove(randomParticipant);
-            return randomParticipant;
+            Participant[] teamsData = { participants[0], participants[1] };
+            participants.Remove(participants[0]);
+            participants.Remove(participants[0]);
+            return teamsData;
         }
     }
 }

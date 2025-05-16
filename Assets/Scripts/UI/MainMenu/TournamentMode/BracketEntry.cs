@@ -9,12 +9,12 @@ namespace UI.MainMenu.TournamentMode
 
         public void Initialize(Bracket bracketData)
         {
-            for (int i = 0; i < bracketData.TeamsData.Length; i++)
+            for (int i = 0; i < bracketData.Participants.Length; i++)
             {
-                _teamEntries[i].Initialize(bracketData.TeamsData[i]);
+                _teamEntries[i].Initialize(bracketData.Participants[i].TeamData);
             }
             
-            if (bracketData.IsPlayerBracket) _visualEffect.SetActive(true);
+            if (bracketData.IsPlayerBracket()) _visualEffect.SetActive(true);
         }
     }
 }

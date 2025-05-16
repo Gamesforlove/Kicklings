@@ -8,25 +8,25 @@ namespace UI.MainMenu.TournamentMode
         public int LayoutMode {get; private set;}
         public List<TeamsData.TeamData> TeamsData;
         public TeamsData.TeamData PlayerTeamData;
-        public TeamsData.TeamData[] Participants;
+        public List<Participant> Participants;
         public Round CurrentRound;
+        public List<Round> Rounds = new();
         
         TournamentModeController _controller;
         TeamsGenerator _teamsGenerator;
-        List<Round> _rounds = new();
         public Tournament(TournamentModeController controller)
         {
             _controller = controller;
             Initialize();
         }
-        
-        Round GenerateRound(int id)
-        {
-            Round round = new(id, this);
-            _rounds.Add(round);
-            return round;
-        }
 
+        public void SimulateRound(Round round)
+        {
+            List<Participant> roundWinners = round.GetWinners();
+            Participants = roundWinners;
+            GenerateRound(CurrentRound.Id + 1);
+        }
+        
         void Initialize()
         {
             LayoutMode = _controller.LayoutMode switch
@@ -38,8 +38,16 @@ namespace UI.MainMenu.TournamentMode
             TeamsData = new List<TeamsData.TeamData>(_controller.TeamsData.Teams);
             PlayerTeamData = _controller.PlayerTeamData;
             _teamsGenerator = new TeamsGenerator(this);
-            Participants = _teamsGenerator.GenerateTeams();
+            Participants = _teamsGenerator.GenerateParticipants();
             CurrentRound = GenerateRound(1);
+        }
+        
+        Round GenerateRound(int id)
+        {
+            Round round = new(id, this);
+            Rounds.Add(round);
+            CurrentRound = round;
+            return round;
         }
     }
 }

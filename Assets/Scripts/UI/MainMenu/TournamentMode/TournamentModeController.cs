@@ -32,6 +32,7 @@ namespace UI.MainMenu.TournamentMode
             while (!_uiViewsManager.IsReady)
                 yield return null;
 
+            Tournament.SimulateRound(Tournament.CurrentRound);
             _uiViewsManager.TransitionToView(MatchFlow.Match.IsPlayerWinner ? _layoutView : _typeSelectionView);
             _uiViewsManager.ShowView(_backgroundView);
         }
