@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1577000601163367157}
   - component: {fileID: 3869021404498440419}
   - component: {fileID: 925909354591344765}
-  - component: {fileID: 2355080572252174092}
   m_Layer: 0
   m_Name: 4-Player
   m_TagString: Untagged
@@ -121,31 +120,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2355080572252174092}
-        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI.MainMenu.Freemode.FreemodeController, Assembly-CSharp
+        m_MethodName: StartMatch
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2355080572252174092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3279117674512106189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameModeData: {fileID: 11400000, guid: 726aaf7890022714d902f75b1f96ae59, type: 2}
 --- !u!1 &4711857659000847126
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +144,6 @@ GameObject:
   - component: {fileID: 8810549490440159390}
   - component: {fileID: 6224903631550105659}
   - component: {fileID: 24067811778422839}
-  - component: {fileID: 3525980421315427498}
   m_Layer: 0
   m_Name: 1-Player
   m_TagString: Untagged
@@ -267,31 +252,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3525980421315427498}
-        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI.MainMenu.Freemode.FreemodeController, Assembly-CSharp
+        m_MethodName: StartMatch
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3525980421315427498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4711857659000847126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameModeData: {fileID: 11400000, guid: 9d81b564cae28f04f941937c3bfe6109, type: 2}
 --- !u!1 &5385410452152400618
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +276,6 @@ GameObject:
   - component: {fileID: 5355593081448893917}
   - component: {fileID: 7928445143485052977}
   - component: {fileID: 6106492298661670996}
-  - component: {fileID: 8030738622176668682}
   m_Layer: 0
   m_Name: 2-Player
   m_TagString: Untagged
@@ -413,31 +384,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8030738622176668682}
-        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI.MainMenu.Freemode.FreemodeController, Assembly-CSharp
+        m_MethodName: StartMatch
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8030738622176668682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5385410452152400618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameModeData: {fileID: 11400000, guid: ead7349943e3c29479d0b8375d798b97, type: 2}
 --- !u!1 &6792931934210452864
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +408,6 @@ GameObject:
   - component: {fileID: 7356846191021895184}
   - component: {fileID: 3127566301090648118}
   - component: {fileID: 3807205837563484338}
-  - component: {fileID: 7180576590652850283}
   m_Layer: 0
   m_Name: CpuVsCpu
   m_TagString: Untagged
@@ -559,10 +516,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7180576590652850283}
-        m_TargetAssemblyTypeName: UI.CreateMatchButton, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: UI.MainMenu.Freemode.FreemodeController, Assembly-CSharp
+        m_MethodName: StartMatch
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -571,19 +528,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7180576590652850283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6792931934210452864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a4686a6c31424698e8aa77a99e2014, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameModeData: {fileID: 11400000, guid: 292378ff9b2248c4cb9702c999152bf8, type: 2}
 --- !u!1 &7594272633180697581
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +551,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7594272633180697581}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
