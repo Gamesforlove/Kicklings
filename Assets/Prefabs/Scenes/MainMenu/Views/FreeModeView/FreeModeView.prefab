@@ -66,11 +66,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <KeepOnHistory>k__BackingField: 1
-  _animationSpeed: 1
-  _entryMode: 0
-  _entryDirection: 0
-  _exitMode: 0
-  _exitDirection: 0
+  _animationSpeed: 0.2
+  _entryMode: 1
+  _entryDirection: 4
+  _exitMode: 1
+  _exitDirection: 3
   _preShowAction:
     m_PersistentCalls:
       m_Calls: []

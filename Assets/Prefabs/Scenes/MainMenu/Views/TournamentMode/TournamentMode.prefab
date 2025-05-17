@@ -288,9 +288,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7813640969079738504, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.6399994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594116682772444115, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 71.45999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860958768148452155, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860958768148452155, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TransitionToView
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860958768148452155, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860958768148452155, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 7990582665825044147}
+    - target: {fileID: 8860958768148452155, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 9212906870882849619, guid: 86195bfe0f00ecf4a8298039b0a78470, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ShowView
+      value: Select
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -575,6 +603,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8860958768148452155, guid: e3fcfc7e4f90cc84a931ed7f7d645bbf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860958768148452155, guid: e3fcfc7e4f90cc84a931ed7f7d645bbf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 2
       objectReference: {fileID: 0}
@@ -584,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8860958768148452155, guid: e3fcfc7e4f90cc84a931ed7f7d645bbf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: HideCurrentView
+      value: TransitionToView
       objectReference: {fileID: 0}
     - target: {fileID: 8860958768148452155, guid: e3fcfc7e4f90cc84a931ed7f7d645bbf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -604,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 7631865655197246320}
     - target: {fileID: 8860958768148452155, guid: e3fcfc7e4f90cc84a931ed7f7d645bbf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8860958768148452155, guid: e3fcfc7e4f90cc84a931ed7f7d645bbf, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName

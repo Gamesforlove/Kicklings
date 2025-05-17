@@ -590,14 +590,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5273378336921098296}
     m_Modifications:
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 108
-      objectReference: {fileID: 0}
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 3527160417824549219, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
       propertyPath: m_Name
       value: TeamEntry (1)
@@ -711,41 +703,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5273378336921098296}
     m_Modifications:
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 3527160417824549219, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
       propertyPath: m_Name
       value: TeamEntry
-      objectReference: {fileID: 0}
-    - target: {fileID: 6388341939486529204, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6798759156426851745, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_text
-      value: ESP
-      objectReference: {fileID: 0}
-    - target: {fileID: 6798759156426851745, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
-      propertyPath: m_fontSize
-      value: 44.9
       objectReference: {fileID: 0}
     - target: {fileID: 8486511668117219164, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
       propertyPath: m_Pivot.x
