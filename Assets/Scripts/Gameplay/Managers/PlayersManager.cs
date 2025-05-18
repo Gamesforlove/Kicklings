@@ -96,6 +96,8 @@ namespace Gameplay.Managers
             {
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
                 player.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
+                player.GetComponent<Rigidbody2D>().angularVelocity = 0;
+                player.transform.eulerAngles = Vector3.zero;
             }
         }
 

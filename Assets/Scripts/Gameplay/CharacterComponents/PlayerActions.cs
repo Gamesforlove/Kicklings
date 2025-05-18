@@ -3,66 +3,73 @@ using System.Linq;
 using EventBusSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
-public class PlayerActions : MonoBehaviour
+namespace Gameplay.CharacterComponents
 {
-    [SerializeField] float _speed = 8f;
-    [SerializeField] float _jumpPower = 10f;
-    [SerializeField] GameObject _kickingLeg;
-    [SerializeField] GroundCheck[] _groundChecks;
+    public class PlayerActions : MonoBehaviour
+    {
+        [SerializeField] float _speed = 8f;
+        [SerializeField] float _jumpPower = 10f;
+        [SerializeField] GameObject _kickingLeg;
+        [SerializeField] GroundCheck[] _groundChecks;
 
-    public float KickingLegSpeed = 800f;
+        public float KickingLegSpeed = 800f;
     
-    Rigidbody2D _rigidbody;
-    HingeJoint2D _kickingLegJoint;
-    JointMotor2D _kickingLegJointMotor;
+        Rigidbody2D _rigidbody;
+        HingeJoint2D _kickingLegJoint;
+        JointMotor2D _kickingLegJointMotor;
     
-    void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
-        _kickingLegJointMotor = _kickingLegJoint.motor;
-    }
+        void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
+            _kickingLegJointMotor = _kickingLegJoint.motor;
+        }
 
-    public void OnKick(InputAction.CallbackContext context)
-    {
-        if (context.performed) OnActionPerformed();
-        else if (context.canceled) OnActionCancelled();
-    }
+        void FixedUpdate()
+        {
+            _rigidbody.angularVelocity = Mathf.Clamp(_rigidbody.angularVelocity, -40f, 40f);
+        }
 
-    public void OnActionPerformed()
-    {
-        Kick();
-        if (_groundChecks.Any(gc =>  gc.IsGrounded))
-            Jump();
-    }
+        public void OnKick(InputAction.CallbackContext context)
+        {
+            if (context.performed) OnActionPerformed();
+            else if (context.canceled) OnActionCancelled();
+        }
 
-    public void OnActionCancelled()
-    {
-        StartCoroutine(ReturnLeftLegToOriginalPosition());
-    }
+        public void OnActionPerformed()
+        {
+            Kick();
+            if (_groundChecks.Any(gc =>  gc.IsGrounded))
+                Jump();
+        }
+
+        public void OnActionCancelled()
+        {
+            StartCoroutine(ReturnLeftLegToOriginalPosition());
+        }
     
-    void Jump()
-    {
-        _rigidbody.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-        EventBus<PlayerJumped>.Raise(new PlayerJumped());
-    }
+        void Jump()
+        {
+            _rigidbody.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            EventBus<PlayerJumped>.Raise(new PlayerJumped());
+        }
 
-    void Kick()
-    {
-        Debug.Log("Kick");
-        _kickingLegJointMotor.motorSpeed = -KickingLegSpeed;
-        _kickingLegJoint.motor = _kickingLegJointMotor;
-    }
+        void Kick()
+        {
+            Debug.Log("Kick");
+            _kickingLegJointMotor.motorSpeed = -KickingLegSpeed;
+            _kickingLegJoint.motor = _kickingLegJointMotor;
+        }
 
-    IEnumerator ReturnLeftLegToOriginalPosition()
-    {
-        Debug.Log("ReturnLeftLegToOriginalPosition");
-        _kickingLegJointMotor.motorSpeed = KickingLegSpeed;
-        _kickingLegJoint.motor = _kickingLegJointMotor;
-        yield return new WaitForSeconds(0.2f);
-        _kickingLegJointMotor.motorSpeed = 0;
-        _kickingLegJoint.motor = _kickingLegJointMotor;
+        IEnumerator ReturnLeftLegToOriginalPosition()
+        {
+            Debug.Log("ReturnLeftLegToOriginalPosition");
+            _kickingLegJointMotor.motorSpeed = KickingLegSpeed;
+            _kickingLegJoint.motor = _kickingLegJointMotor;
+            yield return new WaitForSeconds(0.2f);
+            _kickingLegJointMotor.motorSpeed = 0;
+            _kickingLegJoint.motor = _kickingLegJointMotor;
+        }
     }
 }

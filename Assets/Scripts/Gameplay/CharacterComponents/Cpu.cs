@@ -1,4 +1,5 @@
 using System.Collections;
+using Gameplay.CharacterComponents;
 using UnityEngine;
 
 public class Cpu : MonoBehaviour

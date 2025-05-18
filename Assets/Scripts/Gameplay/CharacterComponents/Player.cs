@@ -1,5 +1,6 @@
 using System;
 using EventBusSystem;
+using Gameplay.CharacterComponents;
 using UnityEngine;
 
 public class Player : MonoBehaviour
