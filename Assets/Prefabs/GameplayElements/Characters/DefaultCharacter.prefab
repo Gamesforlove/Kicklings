@@ -484,7 +484,7 @@ MonoBehaviour:
   _groundChecks:
   - {fileID: 1525746820429643469}
   - {fileID: 5508632737470193371}
-  KickingLegSpeed: 100
+  KickingLegSpeed: 1500
 --- !u!114 &1466539244621253280
 MonoBehaviour:
   m_ObjectHideFlags: 0

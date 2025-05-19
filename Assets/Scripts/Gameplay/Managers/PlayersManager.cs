@@ -48,24 +48,26 @@ namespace Gameplay.Managers
 
         void SpawnCpuMode()
         {
+            SpawnCpu(_spawnPoints[0]);
             SpawnCpu(_spawnPoints[1]);
             SpawnCpu(_spawnPoints[2]);
+            SpawnCpu(_spawnPoints[3]);
         }
 
         void SpawnOnePlayerMode()
         {
+			SpawnPlayer(_spawnPoints[0], _controlSchemes[0]);
             SpawnPlayer(_spawnPoints[1], _controlSchemes[0]);
             SpawnCpu(_spawnPoints[2]);
+            SpawnCpu(_spawnPoints[3]);
         }
 
         void SpawnTwoPlayersMode()
         {
-            for (int i = 0; i < _matchSettings.MaxNumberOfEntities; i++)
-            {
-                if (i < _matchSettings.NumberOfPlayers) SpawnPlayer(_spawnPoints[i], _controlSchemes[i]);
-            
-                else SpawnCpu(_spawnPoints[i]);
-            }
+            SpawnPlayer(_spawnPoints[0], _controlSchemes[0]);
+            SpawnPlayer(_spawnPoints[1], _controlSchemes[0]);
+            SpawnPlayer(_spawnPoints[2], _controlSchemes[1]);
+            SpawnPlayer(_spawnPoints[3], _controlSchemes[1]);
         }
 
         void SpawnFourPlayersMode()
