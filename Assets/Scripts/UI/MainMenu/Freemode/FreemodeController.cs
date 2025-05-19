@@ -13,16 +13,17 @@ namespace UI.MainMenu.Freemode
         [SerializeField] CountryCustomizationController _leftCountryCustomizationController, _rightCountryCustomizationController;
         [SerializeField] ScoreToWinController _scoreToWinController;
         
-        public void StartMatch(int goalsToEndMatch)
+        public void StartMatch(int numberOfPlayers)
         {
             MatchSettings matchSettings = new MatchSettings.Builder()
+                .WithNumberOfPlayers(numberOfPlayers)
                 .WithLeftShirtIndex(_leftCharacterCustomizationController.ShirtIndex)
                 .WithLeftShoesIndex(_leftCharacterCustomizationController.ShoesIndex)
                 .WithLeftCountryImageIndex(_leftCountryCustomizationController.TeamDataIndex)
                 .WithRightShirtIndex(_rightCharacterCustomizationController.ShirtIndex)
                 .WithRightShoesIndex(_rightCharacterCustomizationController.ShoesIndex)
                 .WithRightCountryImageIndex(_rightCountryCustomizationController.TeamDataIndex)
-                .WithGoalsToEndMatch(goalsToEndMatch)
+                .WithGoalsToEndMatch(_scoreToWinController.SelectedGoals)
                 .Build();
             
             MatchFlow.CreateMatch(matchSettings);

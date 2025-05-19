@@ -15,6 +15,9 @@ namespace Gameplay.CharacterComponents
         void Start()
         {
             ChangeVisuals(_playerInput.currentControlScheme);
+            
+            if (gameObject.transform.root.transform.position.x > 0)
+                gameObject.transform.localScale = new Vector3(-1, 1, 1);
         }
         
         void ChangeVisuals(string controlScheme)

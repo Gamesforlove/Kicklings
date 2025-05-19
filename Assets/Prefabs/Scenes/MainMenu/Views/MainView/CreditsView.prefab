@@ -511,10 +511,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <KeepOnHistory>k__BackingField: 1
-  _animationSpeed: 0.5
-  _entryMode: 1
+  _animationSpeed: 0.2
+  _entryMode: 2
   _entryDirection: 3
-  _exitMode: 1
+  _exitMode: 2
   _exitDirection: 3
   _preShowAction:
     m_PersistentCalls:
@@ -1061,7 +1061,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
-        m_MethodName: HideView
+        m_MethodName: HideCurrentView
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296a5a716f156b94b83761afc38b9706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <KeepOnHistory>k__BackingField: 1
   _animationSpeed: 0.5
   _entryMode: 1
   _entryDirection: 1
@@ -474,11 +475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6402473557619339237, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: HideView
+      value: HideCurrentView
       objectReference: {fileID: 0}
     - target: {fileID: 6402473557619339237, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UI.UIViewsManager, Assembly-CSharp
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6402473557619339237, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
