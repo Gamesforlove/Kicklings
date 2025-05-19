@@ -16,23 +16,25 @@ namespace Gameplay.CharacterComponents
 
         void FixedUpdate()
         {
-            foreach (GroundCheck groundCheck in _groundChecks)
-            {
-                Stabilize(groundCheck.IsGrounded ? _groundFactor : _airborneFactor);
-            }
+            Stabilize(_groundChecks[1].IsGrounded ? _groundFactor : _airborneFactor);
+            
+            _rigidbody.angularVelocity = Mathf.Clamp(_rigidbody.angularVelocity, -40f, 40f);
         }
     
         void Stabilize(float factor)
         {
             float zRotation = transform.rotation.eulerAngles.z;
+            
+            Debug.Log("ZRotation: " + zRotation);
+            Debug.Log("Factor: " + factor);
 
             if (zRotation > 0 && zRotation < 100)
             {
-                _rigidbody.AddTorque(-_groundFactor * (zRotation / 10));
+                _rigidbody.AddTorque(-factor * (zRotation / 10));
             }
             else if (zRotation > 260 && zRotation < 360)
             {
-                _rigidbody.AddTorque(_groundFactor * ((360 - zRotation) / 10));
+                _rigidbody.AddTorque(factor * ((360 - zRotation) / 10));
             }
 
             _rigidbody.angularVelocity = Mathf.Clamp(_rigidbody.angularVelocity, -40f, 40f);

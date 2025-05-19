@@ -26,11 +26,6 @@ namespace Gameplay.CharacterComponents
             _kickingLegJointMotor = _kickingLegJoint.motor;
         }
 
-        void FixedUpdate()
-        {
-            _rigidbody.angularVelocity = Mathf.Clamp(_rigidbody.angularVelocity, -40f, 40f);
-        }
-
         public void OnKick(InputAction.CallbackContext context)
         {
             if (context.performed) OnActionPerformed();
@@ -51,7 +46,7 @@ namespace Gameplay.CharacterComponents
     
         void Jump()
         {
-            _rigidbody.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _jumpPower, ForceMode2D.Impulse);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
         }
 
@@ -68,8 +63,8 @@ namespace Gameplay.CharacterComponents
             _kickingLegJointMotor.motorSpeed = KickingLegSpeed;
             _kickingLegJoint.motor = _kickingLegJointMotor;
             yield return new WaitForSeconds(0.2f);
-            _kickingLegJointMotor.motorSpeed = 0;
-            _kickingLegJoint.motor = _kickingLegJointMotor;
+            /*_kickingLegJointMotor.motorSpeed = 0;
+            _kickingLegJoint.motor = _kickingLegJointMotor;*/
         }
     }
 }

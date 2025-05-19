@@ -500,8 +500,8 @@ MonoBehaviour:
   _groundChecks:
   - {fileID: 1525746820429643469}
   - {fileID: 5508632737470193371}
-  _groundFactor: 25
-  _airborneFactor: 50
+  _groundFactor: 15
+  _airborneFactor: 40
 --- !u!114 &4492443120641495497
 MonoBehaviour:
   m_ObjectHideFlags: 0
