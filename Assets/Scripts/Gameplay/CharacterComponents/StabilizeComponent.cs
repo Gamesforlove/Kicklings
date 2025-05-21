@@ -24,9 +24,6 @@ namespace Gameplay.CharacterComponents
         void Stabilize(float factor)
         {
             float zRotation = transform.rotation.eulerAngles.z;
-            
-            Debug.Log("ZRotation: " + zRotation);
-            Debug.Log("Factor: " + factor);
 
             if (zRotation > 0 && zRotation < 100)
             {

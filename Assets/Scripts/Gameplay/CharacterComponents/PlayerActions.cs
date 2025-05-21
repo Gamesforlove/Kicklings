@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using EventBusSystem;
@@ -63,8 +64,8 @@ namespace Gameplay.CharacterComponents
             _kickingLegJointMotor.motorSpeed = KickingLegSpeed;
             _kickingLegJoint.motor = _kickingLegJointMotor;
             yield return new WaitForSeconds(0.2f);
-            /*_kickingLegJointMotor.motorSpeed = 0;
-            _kickingLegJoint.motor = _kickingLegJointMotor;*/
+            _kickingLegJointMotor.motorSpeed = 0;
+            _kickingLegJoint.motor = _kickingLegJointMotor;
         }
     }
 }

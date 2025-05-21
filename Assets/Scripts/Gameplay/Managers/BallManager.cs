@@ -2,23 +2,26 @@ using CommonDataTypes;
 using Gameplay.Spawners;
 using UnityEngine;
 
-public class BallManager : MonoBehaviour
+namespace Gameplay.Managers
 {
-    [SerializeField] BallSpawner _ballSpawner;
-
-    BallScript _ball;
-    
-    public void SpawnBall() => _ball = _ballSpawner.SpawnBall();
-    
-    public void ResetBall()
+    public class BallManager : MonoBehaviour
     {
-        _ballSpawner.ResetBall();
-        _ball.Reset();
-    }
+        [SerializeField] BallSpawner _ballSpawner;
 
-    public void ResetBall(FieldSideType sideType)
-    {
-        _ballSpawner.ResetBallOnSide(sideType);
-        _ball.Reset();
+        public BallScript Ball { get; private set; }
+    
+        public void SpawnBall() => Ball = _ballSpawner.SpawnBall();
+    
+        public void ResetBall()
+        {
+            _ballSpawner.ResetBall();
+            Ball.Reset();
+        }
+
+        public void ResetBall(FieldSideType sideType)
+        {
+            _ballSpawner.ResetBallOnSide(sideType);
+            Ball.Reset();
+        }
     }
 }
