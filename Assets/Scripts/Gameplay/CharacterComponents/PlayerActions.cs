@@ -9,7 +9,6 @@ namespace Gameplay.CharacterComponents
 {
     public class PlayerActions : MonoBehaviour
     {
-        [SerializeField] float _speed = 8f;
         [SerializeField] float _jumpPower = 10f;
         [SerializeField] GameObject _kickingLeg;
         [SerializeField] GroundCheck[] _groundChecks;

@@ -5,7 +5,6 @@ using Scene_Management;
 using UI.Gameplay;
 using UI.UiSystem;
 using UI.UiSystem.Core;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -30,6 +29,7 @@ namespace Gameplay.Managers
 
         public void EndGame()
         {
+            Time.timeScale = 1f;
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
 
@@ -39,6 +39,7 @@ namespace Gameplay.Managers
             _playersManager.SpawnEntities(_match.Settings);
             _ballManager.SpawnBall();
             _scoreBoard.ResetScore();
+            Time.timeScale = 1.5f;
         }
     
         void OnEnable()

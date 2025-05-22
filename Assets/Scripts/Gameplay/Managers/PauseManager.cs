@@ -11,7 +11,7 @@ namespace Gameplay.Managers
 
         public void ResumeGame()
         {
-            Time.timeScale = 1;
+            Time.timeScale = 1.5f;
         }
     }
 }

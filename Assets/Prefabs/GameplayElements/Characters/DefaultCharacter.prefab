@@ -405,7 +405,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -478,13 +478,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cceebc1712ed96b4d960a9860bdaf500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
-  _jumpPower: 40
+  _jumpPower: 60
   _kickingLeg: {fileID: 100050}
   _groundChecks:
   - {fileID: 1525746820429643469}
   - {fileID: 5508632737470193371}
-  KickingLegSpeed: 1500
+  KickingLegSpeed: 800
 --- !u!114 &1466539244621253280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,8 +499,10 @@ MonoBehaviour:
   _groundChecks:
   - {fileID: 1525746820429643469}
   - {fileID: 5508632737470193371}
-  _groundFactor: 15
-  _airborneFactor: 40
+  _groundFactor: 35
+  _airborneFactor: 50
+  _sleepVelocityOnBack: 2200
+  _sleepVelocityOnFace: 1200
 --- !u!114 &4492443120641495497
 MonoBehaviour:
   m_ObjectHideFlags: 0

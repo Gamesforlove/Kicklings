@@ -194,7 +194,7 @@ Rigidbody2D:
   m_LinearDamping: 0.23
   m_AngularDamping: 1
   m_GravityScale: 1.3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 96c5bdcc4f3826149bac71283c8d2b69, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -203,7 +203,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!58 &5800000
 CircleCollider2D:
@@ -253,6 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2ca461b4ab53542a91d8320c18eb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 5000000}
-  _collider: {fileID: 5800000}
-  _spriteRenderer: {fileID: 21200004}
+  <Rigidbody>k__BackingField: {fileID: 0}
+  <Collider>k__BackingField: {fileID: 0}
+  <Renderer>k__BackingField: {fileID: 0}

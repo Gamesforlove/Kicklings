@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -55,18 +56,22 @@ namespace UI.UiSystem.Core
             gameObject.SetActive(true);
             _preShowAction?.Invoke();
 
+            Tween tween = null;
+
             switch (_entryMode)
             {
                 case EntryMode.Slide:
-                    yield return SlideIn().WaitForCompletion();
+                    tween = SlideIn();
                     break;
                 case EntryMode.Zoom:
-                    yield return ZoomIn().WaitForCompletion();
+                    tween = ZoomIn();
                     break;
                 case EntryMode.Fade:
-                    yield return FadeIn().WaitForCompletion();
+                    tween = FadeIn();
                     break;
             }
+            
+            yield return tween?.SetUpdate(UpdateType.Normal, true).WaitForCompletion();
             
             _postShowAction?.Invoke();
         }
@@ -75,18 +80,22 @@ namespace UI.UiSystem.Core
         {
             _preHideAction?.Invoke();
             
+            Tween tween = null;
+            
             switch (_exitMode)
             {
                 case EntryMode.Slide:
-                    yield return SlideOut().WaitForCompletion();
+                    tween = SlideOut();
                     break;
                 case EntryMode.Zoom:
-                    yield return ZoomOut().WaitForCompletion();
+                    tween = ZoomOut();
                     break;
                 case EntryMode.Fade:
-                    yield return FadeOut().WaitForCompletion();
+                    tween = FadeOut();
                     break;
             }
+            
+            yield return tween?.SetUpdate(UpdateType.Normal, true).WaitForCompletion();
             
             _postHideAction?.Invoke();
             gameObject.SetActive(false);
