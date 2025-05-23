@@ -145,6 +145,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6671426424375598052, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_AngleLimits.m_UpperAngle
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879601419414387933, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_AngleLimits.m_LowerAngle
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
