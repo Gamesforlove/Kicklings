@@ -41,29 +41,24 @@ namespace Gameplay.CharacterComponents
 
         public void OnActionCancelled()
         {
-            StartCoroutine(ReturnLeftLegToOriginalPosition());
+            ReturnLeftLegToOriginalPosition();
         }
     
         void Jump()
         {
-            _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _jumpPower, ForceMode2D.Impulse);
+            _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _jumpPower);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
         }
 
         void Kick()
         {
-            Debug.Log("Kick");
             _kickingLegJointMotor.motorSpeed = -KickingLegSpeed;
             _kickingLegJoint.motor = _kickingLegJointMotor;
         }
 
-        IEnumerator ReturnLeftLegToOriginalPosition()
+        void ReturnLeftLegToOriginalPosition()
         {
-            Debug.Log("ReturnLeftLegToOriginalPosition");
             _kickingLegJointMotor.motorSpeed = KickingLegSpeed;
-            _kickingLegJoint.motor = _kickingLegJointMotor;
-            yield return new WaitForSeconds(0.2f);
-            _kickingLegJointMotor.motorSpeed = 0;
             _kickingLegJoint.motor = _kickingLegJointMotor;
         }
     }

@@ -1,81 +1,51 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace Gameplay.CharacterComponents
 {
     public class StabilizeComponent : MonoBehaviour
     {
+        const float MaxForwardRotation = 100f;
+        const float MinBackwardRotation = 260f;
+        const float RotationFactor = 10f;
+        
         [SerializeField] GroundCheck[] _groundChecks;
-        [SerializeField] float _groundFactor, _airborneFactor;
-        [SerializeField] float _sleepVelocityOnBack, _sleepVelocityOnFace;
-    
-        Rigidbody2D _rigidbody;
-        bool _sleeping;
+        [SerializeField] float _stabilizationFactor;
+
+        Rigidbody2D _rigidBody;
+        bool _isRecovering;
 
         void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidBody = GetComponent<Rigidbody2D>();
         }
 
         void FixedUpdate()
         {
-            Stabilize(_groundChecks[1].IsGrounded ? _groundFactor : _airborneFactor);
-            SleepDetect();
+            if (_groundChecks.Any(check => check.IsGrounded))
+                StabilizeRotation(_stabilizationFactor);
             
-            //_rigidbody.angularVelocity = Mathf.Clamp(_rigidbody.angularVelocity, -80f, 80f);
-            //Debug.Log(_rigidbody.angularVelocity);
+            _rigidBody.angularVelocity = Mathf.Clamp(_rigidBody.angularVelocity, -40f, 40f);
         }
-    
-        void Stabilize(float factor)
-        {
-            float zRotation = transform.rotation.eulerAngles.z;
-            
-            Debug.Log(zRotation);
 
-            if (zRotation > 0 && zRotation < 100)
+        void StabilizeRotation(float factor)
+        {
+            float currentRotation = transform.rotation.eulerAngles.z;
+
+            if (IsForwardTilt(currentRotation))
             {
-                _rigidbody.AddTorque(-factor * (zRotation / 10));
+                ApplyStabilizingTorque(-factor * (currentRotation / RotationFactor));
             }
-            else if (zRotation > 260 && zRotation < 360)
+            else if (IsBackwardTilt(currentRotation))
             {
-                _rigidbody.AddTorque(factor * ((360 - zRotation) / 10));
+                ApplyStabilizingTorque(factor * ((360 - currentRotation) / RotationFactor));
             }
         }
+
+        bool IsForwardTilt(float rotation) => rotation > 0 && rotation < MaxForwardRotation;
         
-        void SleepDetect()
-        {
-            if (_sleeping) return;
+        bool IsBackwardTilt(float rotation) => rotation > MinBackwardRotation && rotation < 360;
 
-            float eulerAnglesZ = transform.rotation.eulerAngles.z;
-            
-            if (eulerAnglesZ > 60 && eulerAnglesZ < 90)
-            {
-                StartCoroutine(StandUp(true));
-                _sleeping = true;
-            }
-
-            else if (eulerAnglesZ > 240 && eulerAnglesZ < 300)
-            {
-                StartCoroutine(StandUp(false));
-                _sleeping = true;
-            }
-        }
-        
-        IEnumerator StandUp(bool side)
-        {
-            yield return new WaitForSeconds(1);
-            
-            if (side)
-            {
-                    _rigidbody.angularVelocity = -_sleepVelocityOnBack;
-            }
-            else
-            {
-                    _rigidbody.angularVelocity = _sleepVelocityOnFace;
-            }
-
-            yield return new WaitForSeconds(2);
-            _sleeping = false;
-        }
+        void ApplyStabilizingTorque(float torque) => _rigidBody.AddTorque(torque);
     }
 }
