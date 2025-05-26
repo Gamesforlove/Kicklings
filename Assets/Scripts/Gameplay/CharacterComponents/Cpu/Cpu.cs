@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Gameplay.Managers;
 using UnityEngine;
@@ -7,15 +8,19 @@ namespace Gameplay.CharacterComponents.Cpu
 {
     public class Cpu : Entity
     {
-        const float JumpTimer = 1f;
-
         Transform _proximity1;
         Transform _proximity2;
         
         BallManager _ballManager;
         BallScript _ball;
-        
-        bool _jumpOnCd;
+
+        CountdownTimer _actionTimer;
+
+        void Awake()
+        {
+            _actionTimer = new CountdownTimer(Random.Range(3f, 10f));
+            _actionTimer.OnTimerStop += DoAction;
+        }
 
         public override void SetUp()
         {
@@ -29,7 +34,7 @@ namespace Gameplay.CharacterComponents.Cpu
         {
             base.Reset();
             StopAllCoroutines();
-            StartCoroutine(JumpLoop(5f));
+            _actionTimer.Reset();
         }
 
         void CacheProximitySensors()
@@ -43,19 +48,13 @@ namespace Gameplay.CharacterComponents.Cpu
         {
             _ballManager = FindFirstObjectByType<BallManager>();
             _ball = _ballManager.Ball;
-            StartCoroutine(JumpLoop(5f));
+            _actionTimer.Start();
         }
 
         void Update()
         {
             CpuPlayer();
-        }
-
-        IEnumerator JumpLoop(float time)
-        {
-            yield return new WaitForSeconds(time);
-            DoAction();
-            StartCoroutine(JumpLoop(Random.Range(3f, 10f)));
+            _actionTimer.Tick(Time.deltaTime);
         }
     
         void CpuPlayer()
@@ -81,25 +80,16 @@ namespace Gameplay.CharacterComponents.Cpu
         
         void DoAction()
         {
-            Debug.Log(_jumpOnCd);
-            if (_jumpOnCd) return;
-            
-            _jumpOnCd = true;
-            float tm = Random.Range(0.05f, 0.3f);
+            float tm = Random.Range(0.1f, 0.3f);
             StartCoroutine(RandomReflex(tm));
-        }
-        
-        IEnumerator JumpCd()
-        {
-            yield return new WaitForSeconds(JumpTimer);
-            _jumpOnCd = false;
+            _actionTimer.Reset(Random.Range(3f, 10f));
+            _actionTimer.Start();
         }
         
         IEnumerator RandomReflex(float time)
         {
             yield return new WaitForSeconds(time);
             PlayerActions.OnActionPerformed();
-            StartCoroutine(JumpCd());
             yield return new WaitForSeconds(0.3f);
             PlayerActions.OnActionCancelled();
         }

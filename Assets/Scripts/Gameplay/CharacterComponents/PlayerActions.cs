@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Linq;
 using EventBusSystem;
 using UnityEngine;
@@ -9,6 +7,10 @@ namespace Gameplay.CharacterComponents
 {
     public class PlayerActions : MonoBehaviour
     {
+        const float jumpCdTime = 1f;
+        bool _jumpOnCd;
+        CountdownTimer _jumpCdTimer;
+        
         [SerializeField] float _jumpPower = 10f;
         [SerializeField] GameObject _kickingLeg;
         [SerializeField] GroundCheck[] _groundChecks;
@@ -24,6 +26,13 @@ namespace Gameplay.CharacterComponents
             _rigidbody = GetComponent<Rigidbody2D>();
             _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
             _kickingLegJointMotor = _kickingLegJoint.motor;
+            _jumpCdTimer = new CountdownTimer(jumpCdTime);
+            _jumpCdTimer.OnTimerStop += () => _jumpOnCd = false;
+        }
+
+        void Update()
+        {
+            _jumpCdTimer.Tick(Time.deltaTime);
         }
 
         public void OnKick(InputAction.CallbackContext context)
@@ -35,7 +44,7 @@ namespace Gameplay.CharacterComponents
         public void OnActionPerformed()
         {
             Kick();
-            if (_groundChecks.Any(gc =>  gc.IsGrounded))
+            if (_groundChecks.Any(gc =>  gc.IsGrounded) && !_jumpOnCd)
                 Jump();
         }
 
@@ -48,6 +57,8 @@ namespace Gameplay.CharacterComponents
         {
             _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _jumpPower);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
+            _jumpOnCd = true;
+            _jumpCdTimer.Start();
         }
 
         void Kick()
