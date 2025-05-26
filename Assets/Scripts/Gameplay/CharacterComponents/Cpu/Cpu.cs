@@ -5,22 +5,31 @@ using Random = UnityEngine.Random;
 
 namespace Gameplay.CharacterComponents.Cpu
 {
-    public class Cpu : MonoBehaviour
+    public class Cpu : Entity
     {
-        [SerializeField] float _jumpTimer = 1f;
+        const float JumpTimer = 1f;
+
+        Transform _proximity1;
+        Transform _proximity2;
         
-        [SerializeField] GameObject _proxymity1, _proxymity2, _proxymity3;
-    
-        PlayerActions _playerActions;
         BallManager _ballManager;
         BallScript _ball;
         
         bool _jumpOnCd;
 
-        void Awake()
+        public override void SetUp()
         {
-            _playerActions = GetComponent<PlayerActions>();
-            
+            base.SetUp();
+            CacheProximitySensors();
+            PlayerInput.enabled = false;
+            PlayerIndicator.gameObject.SetActive(false);
+        }
+
+        void CacheProximitySensors()
+        {
+            Transform intermediateChild = gameObject.transform.Find("Sensors");
+            _proximity1 = intermediateChild.Find("Proximity1").transform;
+            _proximity2 = intermediateChild.Find("Proximity2").transform;
         }
 
         void Start()
@@ -48,21 +57,13 @@ namespace Gameplay.CharacterComponents.Cpu
             
             float speedMux = _ball.Rigidbody.linearVelocity.magnitude / 8;
 
-            if ((_proxymity1.transform.position - _ball.transform.position).magnitude < 0.5f + 2 * speedMux)
+            if ((_proximity1.position - _ball.transform.position).magnitude < 0.5f + 2 * speedMux)
             {
-                Debug.Log("Near");
                 ballisnear = true;
             }
-            if ((_proxymity2.transform.position - _ball.transform.position).magnitude < 0.5f + 1 * speedMux)
+            if ((_proximity2.position - _ball.transform.position).magnitude < 0.5f + 1 * speedMux)
             {
-                Debug.Log("Near");
                 ballisnear = true;
-            }
-            if ((_proxymity3.transform.position - _ball.transform.position).magnitude < 1f + 2 * speedMux)
-            {
-                Debug.Log("Near");
-                ballisnear = true;
-
             }
 
             if (ballisnear)
@@ -83,17 +84,17 @@ namespace Gameplay.CharacterComponents.Cpu
         
         IEnumerator JumpCd()
         {
-            yield return new WaitForSeconds(_jumpTimer);
+            yield return new WaitForSeconds(JumpTimer);
             _jumpOnCd = false;
         }
         
         IEnumerator RandomReflex(float time)
         {
             yield return new WaitForSeconds(time);
-            _playerActions.OnActionPerformed();
+            PlayerActions.OnActionPerformed();
             StartCoroutine(JumpCd());
             yield return new WaitForSeconds(0.3f);
-            _playerActions.OnActionCancelled();
+            PlayerActions.OnActionCancelled();
         }
     }
 }

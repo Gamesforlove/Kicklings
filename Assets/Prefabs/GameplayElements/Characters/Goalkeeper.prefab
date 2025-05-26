@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2659666017149917283
+--- !u!1001 &2969339635674186888
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_Name
-      value: PlayerCharacter
+      value: Goalkeeper
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,13 +52,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 21200020, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
-      propertyPath: m_FlipX
-      value: 0
+    - target: {fileID: 400022, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 3895997388032293447, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
-      propertyPath: m_FlipX
-      value: 0
+    - target: {fileID: 400038, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400042, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200016, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200026, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200028, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_SortingOrder
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200032, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200034, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200050, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_SortingOrder
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197161903604135438, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: _jumpPower
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671426424375598052, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_AngleLimits.m_UpperAngle
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879601419414387933, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_AngleLimits.m_LowerAngle
+      value: -5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

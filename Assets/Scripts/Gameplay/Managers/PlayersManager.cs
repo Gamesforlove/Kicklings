@@ -48,46 +48,46 @@ namespace Gameplay.Managers
 
         void SpawnCpuMode()
         {
-            SpawnCpu(_spawnPoints[0]);
-            SpawnCpu(_spawnPoints[1]);
-            SpawnCpu(_spawnPoints[2]);
-            SpawnCpu(_spawnPoints[3]);
+            SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0]);
+            SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[1]);
+            SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[2]);
+            SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3]);
         }
 
         void SpawnOnePlayerMode()
         {
-			SpawnPlayer(_spawnPoints[0], _controlSchemes[0]);
-            SpawnPlayer(_spawnPoints[1], _controlSchemes[0]);
-            SpawnCpu(_spawnPoints[2]);
-            SpawnCpu(_spawnPoints[3]);
+			SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0]);
+            SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[2]);
+            SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3]);
         }
 
         void SpawnTwoPlayersMode()
         {
-            SpawnPlayer(_spawnPoints[0], _controlSchemes[0]);
-            SpawnPlayer(_spawnPoints[1], _controlSchemes[0]);
-            SpawnPlayer(_spawnPoints[2], _controlSchemes[1]);
-            SpawnPlayer(_spawnPoints[3], _controlSchemes[1]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[2], _controlSchemes[1]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], _controlSchemes[1]);
         }
 
         void SpawnFourPlayersMode()
         {
-            for (int i = 0; i < _matchSettings.MaxNumberOfEntities; i++)
-            { 
-                SpawnPlayer(_spawnPoints[i], _controlSchemes[i]);
-            }
+            SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[1]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[2], _controlSchemes[2]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], _controlSchemes[3]);
         }
 
-        void SpawnPlayer(Transform position, InputControlScheme scheme)
+        void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(position, scheme);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
         }
 
-        void SpawnCpu(Transform position)
+        void SpawnCpu(PlayersSpawner.PlayerType type, Transform position)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(position);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
         }

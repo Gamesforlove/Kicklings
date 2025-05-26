@@ -1,28 +1,29 @@
-using System;
 using EventBusSystem;
-using Gameplay.CharacterComponents;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Gameplay.CharacterComponents.Player
 {
-    PlayerActions _playerActions;
-
-    void Awake()
+    public class Player : Entity
     {
-        _playerActions = GetComponent<PlayerActions>();
-    }
+        PlayerActions _playerActions;
 
-    void OnEnable()
-    {
-        EventBus<PlayerActionPerformed>.OnEvent += PerformAction;
-        EventBus<PlayerActionCanceled>.OnEvent += CancelAction;
-    }
+        void Awake()
+        {
+            _playerActions = GetComponent<PlayerActions>();
+        }
 
-    void OnDisable()
-    {
-        EventBus<PlayerActionPerformed>.OnEvent -= PerformAction;
-    }
+        void OnEnable()
+        {
+            EventBus<PlayerActionPerformed>.OnEvent += PerformAction;
+            EventBus<PlayerActionCanceled>.OnEvent += CancelAction;
+        }
+
+        void OnDisable()
+        {
+            EventBus<PlayerActionPerformed>.OnEvent -= PerformAction;
+        }
     
-    void PerformAction(PlayerActionPerformed _) => _playerActions.OnActionPerformed();
-    void CancelAction(PlayerActionCanceled _) => _playerActions.OnActionCancelled();
+        void PerformAction(PlayerActionPerformed _) => _playerActions.OnActionPerformed();
+        void CancelAction(PlayerActionCanceled _) => _playerActions.OnActionCancelled();
+    }
 }

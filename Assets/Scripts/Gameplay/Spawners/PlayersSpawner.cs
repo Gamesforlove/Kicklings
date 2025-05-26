@@ -1,5 +1,5 @@
-using Gameplay.CharacterComponents;
-using Scene_Management;
+using Gameplay.CharacterComponents.Cpu;
+using Gameplay.CharacterComponents.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,66 +7,42 @@ namespace Gameplay.Spawners
 {
     public class PlayersSpawner : MonoBehaviour
     {
-        [SerializeField] GameObject _playerPrefab, _cpuPrefab;
-    
-        public GameObject SpawnCpu(Transform spawnPosition)
-        {
-            GameObject go = Instantiate(_cpuPrefab, spawnPosition.position, spawnPosition.rotation);
-            bool isRightSide = spawnPosition.position.x > 0;
-
-            if (isRightSide)
-                ModifyComponentsForRightSide(go);
-
-            SetCharacterClothes(go, isRightSide);
-
-            return go;
-        }
-
-        public GameObject SpawnPlayer(Transform spawnPosition, InputControlScheme scheme)
-        {
-            GameObject go = PlayerInput.Instantiate(_playerPrefab, controlScheme: scheme.name, pairWithDevice: Keyboard.current).gameObject;
-            go.transform.position = spawnPosition.position;
-            bool isRightSide = spawnPosition.position.x > 0;
-
-            if (isRightSide)
-                ModifyComponentsForRightSide(go);
-
-            SetCharacterClothes(go, isRightSide);
-
-            return go;
-        }
-
-        void ModifyComponentsForRightSide(GameObject go)
-        {
-            go.transform.localScale = new Vector3(-1, 1, 1);
-            HingeJoint2D joint = go.transform.Find("Visuals/Legs/RightLeg").gameObject.GetComponent<HingeJoint2D>();
-            JointAngleLimits2D limits = new()
-            {
-                min = 90f,
-            };
-            joint.limits = limits;
-            go.GetComponent<PlayerActions>().KickingLegSpeed *= -1;
-        }
+        public enum PlayerType { Normal, Goalkeeper }
         
-        void SetCharacterClothes(GameObject go, bool isRightSide)
+        [SerializeField] GameObject _playerPrefab, _goalkeeperPrefab;
+        [SerializeField] InputActionAsset _inputActions;
+        
+        public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
         {
-            ClothesSetter clothesSetter = go.GetComponent<ClothesSetter>();
-            if (clothesSetter == null) return;
+            GameObject go = PlayerInput.Instantiate(
+                DecidePrefab(playerType),
+                controlScheme: scheme.name,
+                pairWithDevice: Keyboard.current
+                ).gameObject;
+            
+            go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
+            
+            go.AddComponent<Player>().SetUp();
 
-            if (isRightSide)
+            return go;
+        }
+
+        public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition)
+        {
+            GameObject go = Instantiate(DecidePrefab(playerType), spawnPosition.position, Quaternion.identity);
+ 
+            go.AddComponent<Cpu>().SetUp();
+
+            return go;
+        }
+
+        GameObject DecidePrefab(PlayerType playerType)
+        {
+            return playerType switch
             {
-                clothesSetter.SetClothes(
-                    MatchFlow.Match.Settings.RightSideShirtIndex,
-                    MatchFlow.Match.Settings.RightSideShoesIndex
-                );
-            }
-            else
-            {
-                clothesSetter.SetClothes(
-                    MatchFlow.Match.Settings.LeftSideShirtIndex,
-                    MatchFlow.Match.Settings.LeftSideShoesIndex
-                );
-            }
+                PlayerType.Normal => _playerPrefab,
+                PlayerType.Goalkeeper => _goalkeeperPrefab
+            };
         }
     }
 }

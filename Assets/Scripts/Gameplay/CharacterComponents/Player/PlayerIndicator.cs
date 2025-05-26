@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Gameplay.CharacterComponents
+namespace Gameplay.CharacterComponents.Player
 {
     public class PlayerIndicator : MonoBehaviour
     {
