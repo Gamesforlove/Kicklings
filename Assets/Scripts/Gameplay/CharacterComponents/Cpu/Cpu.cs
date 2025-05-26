@@ -25,6 +25,13 @@ namespace Gameplay.CharacterComponents.Cpu
             PlayerIndicator.gameObject.SetActive(false);
         }
 
+        public override void Reset()
+        {
+            base.Reset();
+            StopAllCoroutines();
+            StartCoroutine(JumpLoop(5f));
+        }
+
         void CacheProximitySensors()
         {
             Transform intermediateChild = gameObject.transform.Find("Sensors");

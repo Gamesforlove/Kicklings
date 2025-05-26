@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gameplay.CharacterComponents
 {
-    public class JointsConfigurator : MonoBehaviour
+    public class JointsController : MonoBehaviour
     {
         [Serializable]
         public class JointsConfig
@@ -34,6 +34,19 @@ namespace Gameplay.CharacterComponents
                 _limits.max = _jointsConfig.Limits[i].Max;
                 _limits.min = _jointsConfig.Limits[i].Min;
                 _joints[i].limits = _limits;
+            }
+        }
+
+        public void ResetJoints()
+        {
+            JointMotor2D motor = new()
+            {
+                motorSpeed = 0
+            };
+            
+            foreach (HingeJoint2D joint in _joints)
+            {
+                joint.motor = motor;
             }
         }
         

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CommonDataTypes;
+using Gameplay.CharacterComponents;
 using Gameplay.Spawners;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -96,10 +97,8 @@ namespace Gameplay.Managers
         {
             foreach (GameObject player in _players)
             {
+                player.GetComponent<IEntity>().Reset();
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
-                player.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
-                player.GetComponent<Rigidbody2D>().angularVelocity = 0;
-                player.transform.eulerAngles = Vector3.zero;
             }
         }
 

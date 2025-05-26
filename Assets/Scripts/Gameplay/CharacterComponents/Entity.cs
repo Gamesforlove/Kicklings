@@ -5,13 +5,21 @@ using UnityEngine.InputSystem;
 
 namespace Gameplay.CharacterComponents
 {
-    public abstract class Entity : MonoBehaviour
+    public interface IEntity
     {
-        protected JointsConfigurator JointsConfigurator;
+        public void SetUp();
+        public void Reset();
+    }
+    public abstract class Entity : MonoBehaviour, IEntity
+    {
+        protected JointsController JointsController;
         protected PlayerActions PlayerActions;
-        protected PlayerInput PlayerInput;
         protected PlayerIndicator PlayerIndicator;
         protected ClothesSetter ClothesSetter;
+        protected BodyPartsController BodyPartsController;
+        
+        protected PlayerInput PlayerInput;
+        protected Rigidbody2D Rigidbody;
 
         public virtual void SetUp()
         {
@@ -19,20 +27,33 @@ namespace Gameplay.CharacterComponents
             
             bool isRightSide = gameObject.transform.position.x > 0;
             
-            JointsConfigurator.SetJointsLimits();
+            JointsController.SetJointsLimits();
             SetCharacterClothes(isRightSide);
             
             if (isRightSide)
                 ChangeValuesForRightSide();
         }
-        
+
+        public virtual void Reset()
+        {
+            Rigidbody.linearVelocity = Vector3.zero;
+            Rigidbody.angularVelocity = 0;
+            transform.eulerAngles = Vector3.zero;
+            
+            BodyPartsController.ResetBodyParts();
+            JointsController.ResetJoints();
+        }
+
         void CacheComponents()
         {
-            JointsConfigurator = GetComponent<JointsConfigurator>();
+            JointsController = GetComponent<JointsController>();
             PlayerActions = GetComponent<PlayerActions>();
-            PlayerInput = GetComponent<PlayerInput>();
             PlayerIndicator = GetComponentInChildren<PlayerIndicator>();
             ClothesSetter = GetComponent<ClothesSetter>();
+            BodyPartsController = GetComponent<BodyPartsController>();
+            
+            PlayerInput = GetComponent<PlayerInput>();
+            Rigidbody = GetComponent<Rigidbody2D>();
         }
 
         void ChangeValuesForRightSide()
