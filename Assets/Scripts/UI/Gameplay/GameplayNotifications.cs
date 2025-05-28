@@ -17,9 +17,9 @@ namespace UI.Gameplay
             yield return StartCoroutine(_goalNotification.ShowAndHide());
         }
 
-        public void ShowOutNotification(OutEvent _)
+        public IEnumerator ShowOutNotification(OutEvent _)
         {
-            StartCoroutine(_outNotification.ShowAndHide());
+            yield return StartCoroutine(_outNotification.ShowAndHide());
         }
     }
 }

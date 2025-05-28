@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Goalkeeper
   m_EditorClassIdentifier: 
   JumpPower: 4000
-  KickingPower: 800
+  KickingPower: 1000
   StabilizationFactor: 35

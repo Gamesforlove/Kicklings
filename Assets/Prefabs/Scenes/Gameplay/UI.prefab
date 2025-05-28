@@ -686,6 +686,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336036625740966005}
     m_Modifications:
+    - target: {fileID: 2388560736800935203, guid: 50adc5a09d317ae4b94b6de586b99d1d, type: 3}
+      propertyPath: _waitTimeUntilHide
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3074933975610692478, guid: 50adc5a09d317ae4b94b6de586b99d1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2

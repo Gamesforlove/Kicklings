@@ -70,7 +70,7 @@ namespace Gameplay.Managers
         {
             Time.timeScale = .2f;
             yield return StartCoroutine(_gameplayNotifications.ShowGoalNotification(payload));
-            Time.timeScale = 1f;
+            Time.timeScale = 1.5f;
             
             if (_scoreBoard.GetScoreFromSide(payload.ScoringSideData.SideType) >=
                 _match.Settings.GoalsToEndMatch)
@@ -83,10 +83,12 @@ namespace Gameplay.Managers
             RespawnGameplayElements(payload.ScoredSideData.SideType);
         }
     
-        IEnumerator OnOutEventRoutine(OutEvent evt)
+        IEnumerator OnOutEventRoutine(OutEvent payload)
         {
-            yield return new WaitForSeconds(1f);
-            RespawnGameplayElements(evt.FieldSideData.SideType);
+            Time.timeScale = .2f;
+            yield return StartCoroutine(_gameplayNotifications.ShowOutNotification(payload));
+            Time.timeScale = 1.5f;
+            RespawnGameplayElements(payload.FieldSideData.SideType);
         }
 
         void RespawnGameplayElements(FieldSideType sideType)
