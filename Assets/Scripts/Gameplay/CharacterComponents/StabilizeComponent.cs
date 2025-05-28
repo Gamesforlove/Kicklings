@@ -9,8 +9,9 @@ namespace Gameplay.CharacterComponents
         const float MinBackwardRotation = 260f;
         const float RotationFactor = 10f;
         
+        EntityData _entityData;
+        
         [SerializeField] GroundCheck[] _groundChecks;
-        [SerializeField] float _stabilizationFactor;
 
         Rigidbody2D _rigidBody;
         bool _isRecovering;
@@ -23,9 +24,14 @@ namespace Gameplay.CharacterComponents
         void FixedUpdate()
         {
             if (_groundChecks.Any(check => check.IsGrounded))
-                StabilizeRotation(_stabilizationFactor);
+                StabilizeRotation(_entityData.StabilizationFactor);
             
             _rigidBody.angularVelocity = Mathf.Clamp(_rigidBody.angularVelocity, -40f, 40f);
+        }
+
+        public void SetUp(EntityData entityData)
+        {
+            _entityData = entityData;
         }
 
         void StabilizeRotation(float factor)

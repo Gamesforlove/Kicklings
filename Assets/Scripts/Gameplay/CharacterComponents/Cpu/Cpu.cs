@@ -22,9 +22,9 @@ namespace Gameplay.CharacterComponents.Cpu
             _actionTimer.OnTimerStop += DoAction;
         }
 
-        public override void SetUp()
+        public override void SetUp(EntityData data)
         {
-            base.SetUp();
+            base.SetUp(data);
             CacheProximitySensors();
             PlayerInput.enabled = false;
             PlayerIndicator.gameObject.SetActive(false);

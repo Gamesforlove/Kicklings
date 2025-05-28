@@ -1046,9 +1046,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e0a97e0d33ed1429425c66eeeaaf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 2659666017150017233, guid: ee6e5d4719187554bba7be991dcefd7e, type: 3}
+  _fielderPrefab: {fileID: 2659666017150017233, guid: ee6e5d4719187554bba7be991dcefd7e, type: 3}
   _goalkeeperPrefab: {fileID: 2969339635674153530, guid: 378fdb470c4f8f0419b4e6db45653fae, type: 3}
-  _inputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _fielderData: {fileID: 11400000, guid: 8b44f6b5b38bffd478230f3afb48c309, type: 2}
+  _goalkeeperData: {fileID: 11400000, guid: 7e8d6b8dcb18b4840a336d836933fcbe, type: 2}
 --- !u!4 &1805551016
 Transform:
   m_ObjectHideFlags: 0

@@ -7,15 +7,15 @@ namespace Gameplay.CharacterComponents
 {
     public class PlayerActions : MonoBehaviour
     {
+        EntityData _entityData;
+        int _kickingDirectionMultiplier = 1; // Default direction
+
         const float jumpCdTime = 1f;
         bool _jumpOnCd;
         CountdownTimer _jumpCdTimer;
         
-        [SerializeField] float _jumpPower = 10f;
         [SerializeField] GameObject _kickingLeg;
         [SerializeField] GroundCheck[] _groundChecks;
-
-        public float KickingLegSpeed = 800f;
     
         Rigidbody2D _rigidbody;
         HingeJoint2D _kickingLegJoint;
@@ -33,6 +33,12 @@ namespace Gameplay.CharacterComponents
         void Update()
         {
             _jumpCdTimer.Tick(Time.deltaTime);
+        }
+
+        public void SetUp(EntityData entityData)
+        {
+            _entityData = entityData;
+            _kickingDirectionMultiplier = transform.position.x > 0 ? -1 : 1;
         }
 
         public void OnKick(InputAction.CallbackContext context)
@@ -55,7 +61,8 @@ namespace Gameplay.CharacterComponents
     
         void Jump()
         {
-            _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _jumpPower);
+            Debug.Log("Jump");
+            _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _entityData.JumpPower);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();
@@ -63,14 +70,23 @@ namespace Gameplay.CharacterComponents
 
         void Kick()
         {
-            _kickingLegJointMotor.motorSpeed = -KickingLegSpeed;
-            _kickingLegJoint.motor = _kickingLegJointMotor;
+            Debug.Log("Kick");
+            ApplyKickingPower(-1);
+
         }
 
         void ReturnLeftLegToOriginalPosition()
         {
-            _kickingLegJointMotor.motorSpeed = KickingLegSpeed;
+            Debug.Log("Return leg to original position");
+            ApplyKickingPower(1);
+
+        }
+        
+        void ApplyKickingPower(float direction)
+        {
+            _kickingLegJointMotor.motorSpeed = _entityData.KickingPower * _kickingDirectionMultiplier * direction;
             _kickingLegJoint.motor = _kickingLegJointMotor;
         }
+
     }
 }

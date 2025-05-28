@@ -7,31 +7,37 @@ namespace Gameplay.CharacterComponents
 {
     public interface IEntity
     {
-        public void SetUp();
+        public void SetUp(EntityData entityData);
         public void Reset();
     }
+
     public abstract class Entity : MonoBehaviour, IEntity
     {
+        protected EntityData EntityData;
+        
         protected JointsController JointsController;
         protected PlayerActions PlayerActions;
         protected PlayerIndicator PlayerIndicator;
         protected ClothesSetter ClothesSetter;
         protected BodyPartsController BodyPartsController;
+        protected StabilizeComponent StabilizeComponent;
         
         protected PlayerInput PlayerInput;
         protected Rigidbody2D Rigidbody;
 
-        public virtual void SetUp()
+        public virtual void SetUp(EntityData entityData)
         {
+            EntityData = entityData;
             CacheComponents();
             
             bool isRightSide = gameObject.transform.position.x > 0;
+            if (isRightSide)
+                ChangeValuesForRightSide();
             
             JointsController.SetJointsLimits();
             SetCharacterClothes(isRightSide);
-            
-            if (isRightSide)
-                ChangeValuesForRightSide();
+            PlayerActions.SetUp(EntityData);
+            StabilizeComponent.SetUp(EntityData);
         }
 
         public virtual void Reset()
@@ -51,6 +57,7 @@ namespace Gameplay.CharacterComponents
             PlayerIndicator = GetComponentInChildren<PlayerIndicator>();
             ClothesSetter = GetComponent<ClothesSetter>();
             BodyPartsController = GetComponent<BodyPartsController>();
+            StabilizeComponent = GetComponent<StabilizeComponent>();
             
             PlayerInput = GetComponent<PlayerInput>();
             Rigidbody = GetComponent<Rigidbody2D>();
@@ -59,7 +66,6 @@ namespace Gameplay.CharacterComponents
         void ChangeValuesForRightSide()
         {
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            PlayerActions.KickingLegSpeed *= -1;
         }
         
         void SetCharacterClothes(bool isRightSide)
