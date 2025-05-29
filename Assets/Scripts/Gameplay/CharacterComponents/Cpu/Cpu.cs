@@ -2,12 +2,26 @@ using System;
 using System.Collections;
 using Gameplay.Managers;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Gameplay.CharacterComponents.Cpu
 {
+    [Serializable]
+    public class CpuConfiguration
+    {
+        public EntityData EntityData;
+        public CpuDifficultyPreset.DifficultySettings DifficultySettings;
+
+        public CpuConfiguration(EntityData entityData, CpuDifficultyPreset.DifficultySettings difficultySettings)
+        {
+            EntityData = entityData;
+            DifficultySettings = difficultySettings;
+        }
+    }
+
     public class Cpu : Entity
     {
+        CpuDifficultyPreset.DifficultySettings _difficultySettings;
+
         Transform _proximity1;
         Transform _proximity2;
         
@@ -16,19 +30,18 @@ namespace Gameplay.CharacterComponents.Cpu
 
         CountdownTimer _actionTimer;
 
-        void Awake()
+        public void SetUp(CpuConfiguration config)
         {
-            _actionTimer = new CountdownTimer(Random.Range(3f, 10f));
-            _actionTimer.OnTimerStop += DoAction;
-        }
-
-        public override void SetUp(EntityData data)
-        {
-            base.SetUp(data);
+            base.SetUp(config.EntityData);
+            _difficultySettings = config.DifficultySettings;
             CacheProximitySensors();
             PlayerInput.enabled = false;
             PlayerIndicator.gameObject.SetActive(false);
+            
+            _actionTimer = new CountdownTimer(_difficultySettings.TimeBetweenKicks.RandomValue);
+            _actionTimer.OnTimerStop += DoAction;
         }
+
 
         public override void Reset()
         {
@@ -80,9 +93,8 @@ namespace Gameplay.CharacterComponents.Cpu
         
         void DoAction()
         {
-            float tm = Random.Range(0.1f, 0.3f);
-            StartCoroutine(RandomReflex(tm));
-            _actionTimer.Reset(Random.Range(3f, 10f));
+            StartCoroutine(RandomReflex(_difficultySettings.ReactionTime.RandomValue));
+            _actionTimer.Reset(_difficultySettings.TimeBetweenKicks.RandomValue);
             _actionTimer.Start();
         }
         

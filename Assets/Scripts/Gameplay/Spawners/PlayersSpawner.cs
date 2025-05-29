@@ -12,6 +12,11 @@ namespace Gameplay.Spawners
         
         [SerializeField] GameObject _fielderPrefab, _goalkeeperPrefab;
         [SerializeField] EntityData _fielderData, _goalkeeperData;
+        [SerializeField] CpuDifficultyPreset _cpuDifficultyPreset;
+    
+        // Current difficulty level
+        [SerializeField] DifficultyLevel _currentDifficulty = DifficultyLevel.Medium;
+
         
         public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
         {
@@ -36,9 +41,18 @@ namespace Gameplay.Spawners
                 Quaternion.identity
                 );
  
-            go.AddComponent<Cpu>().SetUp(playerType == PlayerType.Normal ? _fielderData : _goalkeeperData);
-
+            CpuDifficultyPreset.DifficultySettings settings = _cpuDifficultyPreset.GetSettingsForDifficulty(_currentDifficulty);
+            go.AddComponent<Cpu>().SetUp(new CpuConfiguration(
+                playerType == PlayerType.Normal ? _fielderData : _goalkeeperData,
+                settings
+            ));
+            
             return go;
+        }
+        
+        public void SetDifficulty(DifficultyLevel newDifficulty)
+        {
+            _currentDifficulty = newDifficulty;
         }
     }
 }

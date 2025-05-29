@@ -1121,6 +1121,8 @@ MonoBehaviour:
   _goalkeeperPrefab: {fileID: 2969339635674153530, guid: 378fdb470c4f8f0419b4e6db45653fae, type: 3}
   _fielderData: {fileID: 11400000, guid: 8b44f6b5b38bffd478230f3afb48c309, type: 2}
   _goalkeeperData: {fileID: 11400000, guid: 7e8d6b8dcb18b4840a336d836933fcbe, type: 2}
+  _cpuDifficultyPreset: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
+  _currentDifficulty: 0
 --- !u!4 &1805551016
 Transform:
   m_ObjectHideFlags: 0
