@@ -17,6 +17,7 @@ namespace Gameplay.Managers
         [SerializeField] BallManager _ballManager;
         [SerializeField] ScoreBoard _scoreBoard;
         [SerializeField] GameplayNotifications _gameplayNotifications;
+        [SerializeField] GoalsManager _goalsManager;
         
         Match _match;
 
@@ -39,6 +40,7 @@ namespace Gameplay.Managers
             _playersManager.SpawnEntities(_match.Settings);
             _ballManager.SpawnBall();
             _scoreBoard.ResetScore();
+            _goalsManager.SetCollidersEnabled(true);
             Time.timeScale = 1.5f;
         }
     
@@ -57,12 +59,12 @@ namespace Gameplay.Managers
         void OnGoalEvent(GoalEvent payload)
         {
             _scoreBoard.ChangeScore(payload.ScoringSideData.SideType);
+            _goalsManager.SetCollidersEnabled(false);
             StartCoroutine(OnGoalEventRoutine(payload));
         }
 
         void OnOutEvent(OutEvent payload)
         {
-            _gameplayNotifications.ShowOutNotification(payload);
             StartCoroutine(OnOutEventRoutine(payload));
         }
 
@@ -95,6 +97,7 @@ namespace Gameplay.Managers
         {
             _playersManager.ResetPlayers();
             _ballManager.ResetBall(sideType);
+            _goalsManager.SetCollidersEnabled(true);
         }
     }
 }
