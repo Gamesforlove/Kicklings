@@ -26,6 +26,7 @@ namespace Gameplay.Managers
             _playersManager.ResetPlayers();
             _ballManager.ResetBall();
             _scoreBoard.ResetScore();
+            _goalsManager.SetCollidersEnabled(true);
         }
 
         public void EndGame()
