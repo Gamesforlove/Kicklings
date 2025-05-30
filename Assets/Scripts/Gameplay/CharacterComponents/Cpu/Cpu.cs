@@ -21,25 +21,24 @@ namespace Gameplay.CharacterComponents.Cpu
     public class Cpu : Entity
     {
         CpuDifficultyPreset.DifficultySettings _difficultySettings;
-
-        Transform _proximity1;
-        Transform _proximity2;
         
         BallManager _ballManager;
         BallScript _ball;
 
         CountdownTimer _actionTimer;
+        
+        BallProximityChecker _ballProximityChecker;
 
         public void SetUp(CpuConfiguration config)
         {
             base.SetUp(config.EntityData);
             _difficultySettings = config.DifficultySettings;
-            CacheProximitySensors();
-            PlayerInput.enabled = false;
-            PlayerIndicator.gameObject.SetActive(false);
+            
+            _ballProximityChecker.SetUp(_difficultySettings.ProximityPoints);
             
             _actionTimer = new CountdownTimer(_difficultySettings.TimeBetweenKicks.RandomValue);
             _actionTimer.OnTimerStop += DoAction;
+            _actionTimer.Start();
         }
 
 
@@ -50,18 +49,10 @@ namespace Gameplay.CharacterComponents.Cpu
             _actionTimer.Reset();
         }
 
-        void CacheProximitySensors()
+        void Awake()
         {
-            Transform intermediateChild = gameObject.transform.Find("Sensors");
-            _proximity1 = intermediateChild.Find("Proximity1").transform;
-            _proximity2 = intermediateChild.Find("Proximity2").transform;
-        }
-
-        void Start()
-        {
+            _ballProximityChecker = GetComponent<BallProximityChecker>();
             _ballManager = FindFirstObjectByType<BallManager>();
-            _ball = _ballManager.Ball;
-            _actionTimer.Start();
         }
 
         void Update()
@@ -72,23 +63,11 @@ namespace Gameplay.CharacterComponents.Cpu
     
         void CpuPlayer()
         {
-            bool ballisnear = false;
-            
-            float speedMux = _ball.Rigidbody.linearVelocity.magnitude / 8;
-
-            if ((_proximity1.position - _ball.transform.position).magnitude < 0.5f + 2 * speedMux)
-            {
-                ballisnear = true;
-            }
-            if ((_proximity2.position - _ball.transform.position).magnitude < 0.5f + 1 * speedMux)
-            {
-                ballisnear = true;
-            }
-
-            if (ballisnear)
+            if (_ballProximityChecker.IsBallWithinRange(_ballManager.Ball.Rigidbody))
             {
                 DoAction();
             }
+
         }
         
         void DoAction()

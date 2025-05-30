@@ -17,12 +17,9 @@ namespace Gameplay.CharacterComponents
         
         protected JointsController JointsController;
         protected PlayerActions PlayerActions;
-        protected PlayerIndicator PlayerIndicator;
         protected ClothesSetter ClothesSetter;
         protected BodyPartsController BodyPartsController;
         protected StabilizeComponent StabilizeComponent;
-        
-        protected PlayerInput PlayerInput;
         protected Rigidbody2D Rigidbody;
 
         public virtual void SetUp(EntityData entityData)
@@ -54,12 +51,9 @@ namespace Gameplay.CharacterComponents
         {
             JointsController = GetComponent<JointsController>();
             PlayerActions = GetComponent<PlayerActions>();
-            PlayerIndicator = GetComponentInChildren<PlayerIndicator>();
             ClothesSetter = GetComponent<ClothesSetter>();
             BodyPartsController = GetComponent<BodyPartsController>();
             StabilizeComponent = GetComponent<StabilizeComponent>();
-            
-            PlayerInput = GetComponent<PlayerInput>();
             Rigidbody = GetComponent<Rigidbody2D>();
         }
 

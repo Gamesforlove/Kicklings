@@ -13,6 +13,13 @@ namespace Gameplay.CharacterComponents.Cpu
 
             public float RandomValue => Random.Range(Min, Max);
         }
+        
+        [System.Serializable]
+        public struct ProximityPoint
+        {
+            [SerializeField] string _name;
+            public float BaseRadius;
+        }
 
         [System.Serializable]
         public class DifficultySettings
@@ -22,12 +29,15 @@ namespace Gameplay.CharacterComponents.Cpu
     
             [Tooltip("Delay in which the kick will be performed after a sensor detects the ball (in seconds)")]
             public FloatRange ReactionTime;
+            
+            public ProximityPoint[] ProximityPoints;
         }
 
-        [Header("Difficulty Configurations")] [SerializeField]
-        DifficultySettings _easySettings;
+        [Header("Difficulty Configurations")] 
+        [SerializeField] DifficultySettings _easySettings;
         [SerializeField] DifficultySettings _mediumSettings;
         [SerializeField] DifficultySettings _hardSettings;
+        [SerializeField] DifficultySettings _defaultSettings;
 
         public DifficultySettings GetSettingsForDifficulty(DifficultyLevel level)
         {
@@ -36,7 +46,7 @@ namespace Gameplay.CharacterComponents.Cpu
                 DifficultyLevel.Easy => _easySettings,
                 DifficultyLevel.Medium => _mediumSettings,
                 DifficultyLevel.Hard => _hardSettings,
-                _ => _mediumSettings // Default to medium if custom or invalid
+                _ => _defaultSettings // Default to medium if custom or invalid
             };
         }
     }
@@ -46,6 +56,6 @@ namespace Gameplay.CharacterComponents.Cpu
         Easy,
         Medium,
         Hard,
-        Custom
+        Default
     }
 }

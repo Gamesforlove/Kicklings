@@ -10,25 +10,24 @@ namespace Gameplay.Spawners
     {
         public enum PlayerType { Normal, Goalkeeper }
         
-        [SerializeField] GameObject _fielderPrefab, _goalkeeperPrefab;
+        [SerializeField] GameObject _playerFielderPrefab, _playerGoalkeeperPrefab, _cpuFielderPrefab, _cpuGoalkeeperPrefab;
         [SerializeField] EntityData _fielderData, _goalkeeperData;
         [SerializeField] CpuDifficultyPreset _cpuDifficultyPreset;
-    
-        // Current difficulty level
-        [SerializeField] DifficultyLevel _currentDifficulty = DifficultyLevel.Medium;
+        
+        [SerializeField] DifficultyLevel _currentDifficulty = DifficultyLevel.Default;
 
         
         public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
         {
             GameObject go = PlayerInput.Instantiate(
-                playerType == PlayerType.Normal ? _fielderPrefab : _goalkeeperPrefab,
+                playerType == PlayerType.Normal ? _playerFielderPrefab : _playerGoalkeeperPrefab,
                 controlScheme: scheme.name,
                 pairWithDevice: Keyboard.current
                 ).gameObject;
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
             
-            go.AddComponent<Player>().SetUp(playerType == PlayerType.Normal ? _fielderData : _goalkeeperData);
+            go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? _fielderData : _goalkeeperData);
 
             return go;
         }
@@ -36,13 +35,13 @@ namespace Gameplay.Spawners
         public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition)
         {
             GameObject go = Instantiate(
-                playerType == PlayerType.Normal ? _fielderPrefab : _goalkeeperPrefab,
+                playerType == PlayerType.Normal ? _cpuFielderPrefab : _cpuGoalkeeperPrefab,
                 spawnPosition.position, 
                 Quaternion.identity
                 );
  
             CpuDifficultyPreset.DifficultySettings settings = _cpuDifficultyPreset.GetSettingsForDifficulty(_currentDifficulty);
-            go.AddComponent<Cpu>().SetUp(new CpuConfiguration(
+            go.GetComponent<Cpu>().SetUp(new CpuConfiguration(
                 playerType == PlayerType.Normal ? _fielderData : _goalkeeperData,
                 settings
             ));

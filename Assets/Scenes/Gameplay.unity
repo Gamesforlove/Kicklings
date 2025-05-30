@@ -1117,12 +1117,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e0a97e0d33ed1429425c66eeeaaf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fielderPrefab: {fileID: 2659666017150017233, guid: ee6e5d4719187554bba7be991dcefd7e, type: 3}
-  _goalkeeperPrefab: {fileID: 2969339635674153530, guid: 378fdb470c4f8f0419b4e6db45653fae, type: 3}
+  _playerFielderPrefab: {fileID: 1634548824086165313, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
+  _playerGoalkeeperPrefab: {fileID: 5210569215972624256, guid: 592e1b96a2266bc4fb60494ef13200e4, type: 3}
+  _cpuFielderPrefab: {fileID: 1178916472177682611, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
+  _cpuGoalkeeperPrefab: {fileID: 3355545389959970860, guid: c53a8b6a3b36b7d4388481a0dd935282, type: 3}
   _fielderData: {fileID: 11400000, guid: 8b44f6b5b38bffd478230f3afb48c309, type: 2}
   _goalkeeperData: {fileID: 11400000, guid: 7e8d6b8dcb18b4840a336d836933fcbe, type: 2}
   _cpuDifficultyPreset: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
-  _currentDifficulty: 0
+  _currentDifficulty: 3
 --- !u!4 &1805551016
 Transform:
   m_ObjectHideFlags: 0
