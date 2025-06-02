@@ -4,24 +4,24 @@ namespace UI.MainMenu.TournamentMode
 {
     public class BracketEntry : MonoBehaviour
     {
-        [SerializeField] TeamEntry[] _teamEntries;
-        [SerializeField] GameObject _visualEffect;
+        [SerializeField] protected TeamEntry[] TeamEntries;
+        [SerializeField] protected BracketVisualEffect VisualEffect;
 
-        public void Initialize(Bracket bracketData)
+        public virtual void Initialize(Bracket bracketData)
         {
             for (int i = 0; i < bracketData.Participants.Length; i++)
             {
-                _teamEntries[i].ChangeVisualElements(bracketData.Participants[i].TeamData);
+                TeamEntries[i].ChangeVisualElements(bracketData.Participants[i].TeamData);
             }
             
-            if (bracketData.IsPlayerBracket()) _visualEffect.SetActive(true);
+            if (bracketData.IsPlayerBracket()) VisualEffect.SetActive(true);
         }
         
         public void Clear()
         {
-            for (int i = 0; i < _teamEntries.Length; i++)
+            foreach (TeamEntry entry in TeamEntries)
             {
-                _teamEntries[i].Clear();
+                entry.Clear();
             }
         }
     }

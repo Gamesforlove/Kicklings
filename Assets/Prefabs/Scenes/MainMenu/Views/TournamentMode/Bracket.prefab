@@ -187,10 +187,10 @@ RectTransform:
   - {fileID: 5357294539578525960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 205, y: 166.41}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -125, y: 83}
+  m_SizeDelta: {x: 205, y: 166}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1382655192113037824
 MonoBehaviour:
@@ -204,10 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bda714d191b443da31790718ac42619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamEntries:
+  TeamEntries:
   - {fileID: 9089176543820702267}
   - {fileID: 5593146348525942196}
-  _visualEffect: {fileID: 6866101630117186844}
+  VisualEffect: {fileID: 2345513419950601836}
 --- !u!1 &4950293041208827110
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3995478678947390253}
+  - component: {fileID: 2345513419950601836}
   m_Layer: 0
   m_Name: Selector
   m_TagString: Untagged
@@ -356,6 +357,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 24, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2345513419950601836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866101630117186844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62489562fcb9474b989a01dbfb370183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Glow: {fileID: 3274278648018578120}
+  Background: {fileID: 706847726724524039}
 --- !u!1 &6874022440801326216
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +605,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5273378336921098296}
     m_Modifications:
+    - target: {fileID: 1245743831906352241, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6.299988
+      objectReference: {fileID: 0}
     - target: {fileID: 3527160417824549219, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
       propertyPath: m_Name
       value: TeamEntry (1)
@@ -703,9 +722,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5273378336921098296}
     m_Modifications:
+    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 88
+      objectReference: {fileID: 0}
+    - target: {fileID: 210139399905759476, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 52
+      objectReference: {fileID: 0}
+    - target: {fileID: 1245743831906352241, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6.299988
+      objectReference: {fileID: 0}
     - target: {fileID: 3527160417824549219, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
       propertyPath: m_Name
       value: TeamEntry
+      objectReference: {fileID: 0}
+    - target: {fileID: 6388341939486529204, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8486511668117219164, guid: 9ed14f66d31f7d04aa878cdbad57e81a, type: 3}
       propertyPath: m_Pivot.x
