@@ -13,6 +13,7 @@ namespace UI.Customization.Countries
         [SerializeField] TeamsData _teamsData;
         [SerializeField] UIViewsManager _uiViewsManager;
         [SerializeField] CountryCustomizationView _countryCustomizationView;
+        [SerializeField] UIView _countrySelectionView;
         
         bool _isSelected;
         
@@ -38,7 +39,7 @@ namespace UI.Customization.Countries
             if (!_isSelected) return;
             
             ChangeCountryImage(payload.TeamData);
-            _uiViewsManager.HideCurrentView();
+            _uiViewsManager.HideView(_countrySelectionView);
         }
 
         void ChangeCountryImage(TeamsData.TeamData teamData)

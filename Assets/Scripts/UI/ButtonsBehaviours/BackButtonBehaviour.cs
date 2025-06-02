@@ -1,14 +1,23 @@
-﻿using CommonDataTypes;
-using EventBusSystem;
+﻿using UI.UiSystem.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace UI
+namespace UI.ButtonsBehaviours
 {
+    [RequireComponent(typeof(Button))]
     public class BackButtonBehaviour : MonoBehaviour
     {
-        public void OnClick()
+        UIViewsManager _uiViewsManager;
+        Button _button;
+        void Awake()
         {
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
+            _uiViewsManager = FindFirstObjectByType<UIViewsManager>();
+            _button = GetComponent<Button>();
+        }
+
+        void Start()
+        {
+            _button.onClick.AddListener(() => _uiViewsManager.BackToPreviousView());
         }
     }
 }

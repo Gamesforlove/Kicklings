@@ -14,15 +14,6 @@ namespace UI.UiSystem.Core
         
         readonly Stack<UIView> _viewsHistory = new();
 
-        void Awake()
-        {
-            if (_firstFocusItem != null)
-                EventSystem.current.SetSelectedGameObject(_firstFocusItem);
-
-            if (_initialPage != null)
-                ShowView(_initialPage);
-        }
-
         public void ShowView(UIView view) => StartCoroutine(ShowViewRoutine(view));
 
         public void ShowView<T>(UIView view, T data)
@@ -45,18 +36,39 @@ namespace UI.UiSystem.Core
 
         public void TransitionToView(UIView view) => StartCoroutine(TransitionToViewRoutine(view));
 
+        public void BackToPreviousView()
+        {
+            UIView currentView = _viewsHistory.Pop();
+            UIView previousView = _viewsHistory.Peek();
+    
+            StartCoroutine(BackToPreviousViewRoutine(currentView, previousView));
+
+        }
+        
+        void Awake()
+        {
+            if (_firstFocusItem)
+                EventSystem.current.SetSelectedGameObject(_firstFocusItem);
+
+            if (_initialPage)
+                ShowView(_initialPage);
+        }
+
         IEnumerator ShowViewRoutine(UIView view)
         {
             yield return view.Show();
+            if (!IsReady) IsReady = true;
+            
+            
+            
             if (view.KeepOnHistory)
                 _viewsHistory.Push(view);
             
-            if (!IsReady) IsReady = true;
         }
 
         IEnumerator HideViewRoutine(UIView view)
         {
-            if (_viewsHistory.Contains(view))
+            if (_viewsHistory.Contains(view) && !view.KeepOnHistory)
                 _viewsHistory.Pop();
             
             yield return view.Hide();
@@ -67,6 +79,13 @@ namespace UI.UiSystem.Core
             yield return HideViewRoutine(_viewsHistory.Peek());
             yield return ShowViewRoutine(view);
         }
+        
+        IEnumerator BackToPreviousViewRoutine(UIView currentView, UIView previousView)
+        {
+            yield return currentView.Hide();
+            yield return previousView.Show();
+        }
+
         
 #if UNITY_EDITOR
         // Internal accessor for custom editor use only

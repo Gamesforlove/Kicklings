@@ -321,13 +321,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5899571454768930121}
     - target: {fileID: 4642796409425190107, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 4045409175838356232}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideView
+      objectReference: {fileID: 0}
     - target: {fileID: 6190837140556198788, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
       propertyPath: _uiViewsManager
       value: 
       objectReference: {fileID: 5899571454768930121}
+    - target: {fileID: 6190837140556198788, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
+      propertyPath: _countrySelectionView
+      value: 
+      objectReference: {fileID: 2107844233773465521}
     - target: {fileID: 8684406422298414073, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -433,17 +437,6 @@ RectTransform:
 --- !u!114 &8814654443100537392 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7990582665825044147, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
-  m_PrefabInstance: {fileID: 1492856530250679427}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 296a5a716f156b94b83761afc38b9706, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9033768378065479667 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7631865655197246320, guid: 1a5c03054a28ea64aabd7bfecb91a7eb, type: 3}
   m_PrefabInstance: {fileID: 1492856530250679427}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -703,10 +696,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 8814654443100537392}
-    - target: {fileID: 4436565114344399546, guid: e3a93cd0120be5f45937e8f76b93cf9a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 9033768378065479667}
     - target: {fileID: 4929743885329019789, guid: e3a93cd0120be5f45937e8f76b93cf9a, type: 3}
       propertyPath: m_Name
       value: MainView
@@ -1522,6 +1511,10 @@ PrefabInstance:
       propertyPath: _uiViewsManager
       value: 
       objectReference: {fileID: 5899571454768930121}
+    - target: {fileID: 2141734919000304918, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
+      propertyPath: _countrySelectionView
+      value: 
+      objectReference: {fileID: 2107844233773465521}
     - target: {fileID: 4534658864951223912, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1534,6 +1527,10 @@ PrefabInstance:
       propertyPath: _uiViewsManager
       value: 
       objectReference: {fileID: 5899571454768930121}
+    - target: {fileID: 6459448031108998588, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
+      propertyPath: _countrySelectionView
+      value: 
+      objectReference: {fileID: 2107844233773465521}
     - target: {fileID: 6761357647405958182, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
       propertyPath: m_Name
       value: FreeModeView

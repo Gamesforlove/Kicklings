@@ -363,6 +363,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 63f9f09b194a74b43842b7b38aca96f2, type: 2}
+    - target: {fileID: 3002348934174070073, guid: e5dd23e3741700544b67506bd4230bea, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5368986568764725994, guid: e5dd23e3741700544b67506bd4230bea, type: 3}
       propertyPath: m_Color.a
       value: 0.8627451

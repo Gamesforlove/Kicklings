@@ -360,6 +360,7 @@ MonoBehaviour:
   _teamsData: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
   _uiViewsManager: {fileID: 0}
   _countryCustomizationView: {fileID: 1278681611903385877}
+  _countrySelectionView: {fileID: 3498246441454979413, guid: 806a456a24cfc65479d46d07d9178aba, type: 3}
 --- !u!114 &1278681611903385877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +941,7 @@ MonoBehaviour:
   _teamsData: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
   _uiViewsManager: {fileID: 0}
   _countryCustomizationView: {fileID: 2195036123325568971}
+  _countrySelectionView: {fileID: 3498246441454979413, guid: 806a456a24cfc65479d46d07d9178aba, type: 3}
 --- !u!114 &2195036123325568971
 MonoBehaviour:
   m_ObjectHideFlags: 0
