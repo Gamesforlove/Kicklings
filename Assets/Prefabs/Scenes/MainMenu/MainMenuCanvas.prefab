@@ -453,9 +453,73 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 912710605192064514}
     m_Modifications:
+    - target: {fileID: 577003706600136193, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 577003706600136193, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 577003706600136193, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1903540262530679479, guid: 3339cd594400047489715032c4ba0e65, type: 3}
       propertyPath: m_Name
       value: SettingsView
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903540262530679479, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483562406805371121, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483562406805371121, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549016921771687407, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549016921771687407, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4549016921771687407, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774392823935876715, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774392823935876715, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4774392823935876715, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781605246813798898, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781605246813798898, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948262174905515186, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5948262174905515186, guid: 3339cd594400047489715032c4ba0e65, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7601032024803544083, guid: 3339cd594400047489715032c4ba0e65, type: 3}
       propertyPath: m_Pivot.x
@@ -1117,6 +1181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HowToPlayView
       objectReference: {fileID: 0}
+    - target: {fileID: 4665964966970878297, guid: 0680532805f695344b12d4a362955a25, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8934051199054719993, guid: 0680532805f695344b12d4a362955a25, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1319,6 +1387,10 @@ PrefabInstance:
     - target: {fileID: 1822455470025555045, guid: 0b3eb159f858c914ebe2159ef4d6f9e3, type: 3}
       propertyPath: m_Name
       value: CreditsView
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822455470025555045, guid: 0b3eb159f858c914ebe2159ef4d6f9e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2580018660753549310, guid: 0b3eb159f858c914ebe2159ef4d6f9e3, type: 3}
       propertyPath: m_Pivot.x
@@ -1574,6 +1646,10 @@ PrefabInstance:
     - target: {fileID: 6761357647405958182, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
       propertyPath: m_Name
       value: FreeModeView
+      objectReference: {fileID: 0}
+    - target: {fileID: 6761357647405958182, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9132118633107610943, guid: c79dd6c5268ac9744a4377744f1a219a, type: 3}
       propertyPath: m_Pivot.x
