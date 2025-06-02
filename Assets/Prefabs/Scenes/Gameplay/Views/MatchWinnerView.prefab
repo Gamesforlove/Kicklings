@@ -245,7 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ff9de595a7458fae67810d4120deee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animationSpeed: 0.5
+  <KeepOnHistory>k__BackingField: 1
+  _animationSpeed: 0.2
   _entryMode: 1
   _entryDirection: 1
   _exitMode: 1

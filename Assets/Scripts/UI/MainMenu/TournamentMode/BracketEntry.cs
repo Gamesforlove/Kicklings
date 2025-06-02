@@ -16,5 +16,13 @@ namespace UI.MainMenu.TournamentMode
             
             if (bracketData.IsPlayerBracket()) _visualEffect.SetActive(true);
         }
+        
+        public void Clear()
+        {
+            for (int i = 0; i < _teamEntries.Length; i++)
+            {
+                _teamEntries[i].Clear();
+            }
+        }
     }
 }

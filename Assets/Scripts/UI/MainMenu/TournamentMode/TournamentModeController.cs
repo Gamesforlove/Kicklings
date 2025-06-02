@@ -17,7 +17,7 @@ namespace UI.MainMenu.TournamentMode
         public TeamsData.TeamData PlayerTeamData { get; private set; }
         
         [SerializeField] UIViewsManager _uiViewsManager;
-        [SerializeField] UIView _typeSelectionView, _matchConfigurationView, _layoutView, _backgroundView;
+        [SerializeField] UIView _typeSelectionView, _matchConfigurationView, _layoutView;
         
         [SerializeField] CharacterCustomizationController _characterCustomizationController;
         [SerializeField] CountryCustomizationController _countryCustomizationController;
@@ -35,8 +35,14 @@ namespace UI.MainMenu.TournamentMode
                 yield return null;
 
             Tournament.SimulateRound(Tournament.CurrentRound);
-            _uiViewsManager.TransitionToView(MatchFlow.Match.IsPlayerWinner ? _layoutView : _typeSelectionView);
-            _uiViewsManager.ShowView(_backgroundView);
+            
+            if (MatchFlow.Match.IsPlayerWinner)
+                _uiViewsManager.TransitionToView(_layoutView );
+            else
+            {
+                if (MatchFlow.Match.IsPlayAgain)
+                    _uiViewsManager.TransitionToView(_typeSelectionView);
+            }
         }
 
         public TournamentLayoutMode GetLayoutMode() => _tournamentConfiguration.LayoutMode;

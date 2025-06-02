@@ -4,8 +4,9 @@ namespace Scene_Management
 {
     public class Match
     {
-        public MatchSettings Settings { get; private set; }
+        public MatchSettings Settings { get; }
         public bool IsPlayerWinner { get; set; }
+        public bool IsPlayAgain { get; set; }
         
         public Match(MatchSettings settings)
         {
@@ -16,6 +17,7 @@ namespace Scene_Management
         {
             Settings.Dispose();
             IsPlayerWinner = false;
+            IsPlayAgain = false;
         }
     }
 }

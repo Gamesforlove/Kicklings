@@ -14,11 +14,12 @@ namespace UI.MainMenu.TournamentMode
         public void Show(Tournament tournament)
         {
             _tournament = tournament;
-            PopulateTeamEntries();
+            ClearEntries();
+            PopulateEntries();
             gameObject.SetActive(true);
         }
-
-        void PopulateTeamEntries()
+        
+        void PopulateEntries()
         {
             List<Bracket> brackets = new();
 
@@ -30,6 +31,14 @@ namespace UI.MainMenu.TournamentMode
             for (int i = 0; i < brackets.Count; i++)
             {
                 _bracketEntries[i].Initialize(brackets[i]);
+            }
+        }
+        
+        void ClearEntries()
+        {
+            foreach (BracketEntry bracketEntry in _bracketEntries)
+            {
+                bracketEntry.Clear();
             }
         }
     }

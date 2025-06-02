@@ -17,5 +17,11 @@ namespace UI.MainMenu.TournamentMode
             _flagImage.sprite = data.Icon;
             _flagImage.enabled = true;
         }
+
+        public void Clear()
+        {
+            _flagImage.enabled = false;
+            _name.text = "";
+        }
     }
 }

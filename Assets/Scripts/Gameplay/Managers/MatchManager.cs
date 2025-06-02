@@ -13,6 +13,7 @@ namespace Gameplay.Managers
     {
         [SerializeField] UIViewsManager _uiViewsManager;
         [SerializeField] MatchWinnerView _matchWinnerView;
+        [SerializeField] UIView _tournamentKnockOutView;
         [SerializeField] PlayersManager _playersManager;
         [SerializeField] BallManager _ballManager;
         [SerializeField] ScoreBoard _scoreBoard;
@@ -78,8 +79,7 @@ namespace Gameplay.Managers
             if (_scoreBoard.GetScoreFromSide(payload.ScoringSideData.SideType) >=
                 _match.Settings.GoalsToEndMatch)
             {
-                if(payload.ScoringSideData.SideType == FieldSideType.Left) _match.IsPlayerWinner = true;
-                _uiViewsManager.ShowView(_matchWinnerView, payload.ScoringSideData);
+                ShowEndgame(payload);
                 yield break;
             }
             
@@ -99,6 +99,21 @@ namespace Gameplay.Managers
             _playersManager.ResetPlayers();
             _ballManager.ResetBall(sideType);
             _goalsManager.SetCollidersEnabled(true);
+        }
+
+        void ShowEndgame(GoalEvent payload)
+        {
+            if(payload.ScoringSideData.SideType == FieldSideType.Left) _match.IsPlayerWinner = true;
+
+            if (_match.Settings.IsTournamentMatch)
+            {
+                if (!_match.IsPlayerWinner)
+                    _uiViewsManager.ShowView(_tournamentKnockOutView);
+                else
+                    EndGame();
+            }
+            else
+                _uiViewsManager.ShowView(_matchWinnerView, payload.ScoringSideData);
         }
     }
 }

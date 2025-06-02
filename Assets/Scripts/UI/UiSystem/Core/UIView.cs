@@ -27,7 +27,7 @@ namespace UI.UiSystem.Core
         [SerializeField] UnityEvent _preHideAction;
         [SerializeField] UnityEvent _postHideAction;
 
-        void Awake()
+        protected virtual void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
             _canvasGroup = GetComponent<CanvasGroup>();
