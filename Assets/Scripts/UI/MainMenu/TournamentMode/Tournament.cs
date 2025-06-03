@@ -11,9 +11,11 @@ namespace UI.MainMenu.TournamentMode
         public List<Participant> Participants;
         public Round CurrentRound;
         public List<Round> Rounds = new();
+        public int NumberOfRounds { get; private set; }
         
         TournamentModeController _controller;
         TeamsGenerator _teamsGenerator;
+        
         public Tournament(TournamentModeController controller)
         {
             _controller = controller;
@@ -39,6 +41,12 @@ namespace UI.MainMenu.TournamentMode
                 TournamentLayoutMode.Four => 0,
                 TournamentLayoutMode.Eight => 1,
                 TournamentLayoutMode.Sixteen => 2
+            };
+            NumberOfRounds = _controller.GetLayoutMode() switch
+            {
+                TournamentLayoutMode.Four => 2,
+                TournamentLayoutMode.Eight => 3,
+                TournamentLayoutMode.Sixteen => 4
             };
             TeamsData = new List<TeamsData.TeamData>(_controller.TeamsData.Teams);
             PlayerTeamData = _controller.PlayerTeamData;

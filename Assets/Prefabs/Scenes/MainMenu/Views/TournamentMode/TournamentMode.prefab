@@ -56,7 +56,7 @@ MonoBehaviour:
   _typeSelectionView: {fileID: 7990582665825044147}
   _matchConfigurationView: {fileID: 6201442960491270545}
   _layoutView: {fileID: 7970673317119484410}
-  _backgroundView: {fileID: 0}
+  _celebrationPopup: {fileID: 0}
   _characterCustomizationController: {fileID: 1065509177441696200}
   _countryCustomizationController: {fileID: 6190837140556198788}
   _scoreToWinController: {fileID: 3083451763361442566}
