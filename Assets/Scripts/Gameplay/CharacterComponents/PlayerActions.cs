@@ -8,7 +8,7 @@ namespace Gameplay.CharacterComponents
     public class PlayerActions : MonoBehaviour
     {
         EntityData _entityData;
-        int _kickingDirectionMultiplier = 1; // Default direction
+        int _kickingDirectionMultiplier = 1;
 
         const float jumpCdTime = 1f;
         bool _jumpOnCd;
@@ -61,7 +61,6 @@ namespace Gameplay.CharacterComponents
     
         void Jump()
         {
-            Debug.Log("Jump");
             _rigidbody.AddForce(transform.up * _entityData.JumpPower);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
@@ -70,16 +69,12 @@ namespace Gameplay.CharacterComponents
 
         void Kick()
         {
-            Debug.Log("Kick");
             ApplyKickingPower(-1);
-
         }
 
         void ReturnLeftLegToOriginalPosition()
         {
-            Debug.Log("Return leg to original position");
             ApplyKickingPower(1);
-
         }
         
         void ApplyKickingPower(float direction)
