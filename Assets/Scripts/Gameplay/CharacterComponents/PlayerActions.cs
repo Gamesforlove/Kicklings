@@ -62,7 +62,7 @@ namespace Gameplay.CharacterComponents
         void Jump()
         {
             Debug.Log("Jump");
-            _rigidbody.AddForce(new Vector2(transform.up.x, Mathf.Abs(transform.up.y)) * _entityData.JumpPower);
+            _rigidbody.AddForce(transform.up * _entityData.JumpPower);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();

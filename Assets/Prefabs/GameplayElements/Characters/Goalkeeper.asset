@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60537cea90538a4d91ffd6b1f120d4c, type: 3}
   m_Name: Goalkeeper
   m_EditorClassIdentifier: 
-  JumpPower: 4000
+  JumpPower: 2500
   KickingPower: 1000
-  StabilizationFactor: 35
+  StabilizationFactor: 25
