@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296a5a716f156b94b83761afc38b9706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <KeepOnHistory>k__BackingField: 1
   _animationSpeed: 1
   _entryMode: 0
   _entryDirection: 0
@@ -89,6 +90,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8937351802309387872}
     m_Modifications:
+    - target: {fileID: 3346362803285562493, guid: 67886628649c67f449adcf560999ca81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3346362803285562493, guid: 67886628649c67f449adcf560999ca81, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4935425697021989874, guid: 67886628649c67f449adcf560999ca81, type: 3}
       propertyPath: m_Name
       value: PauseButton
@@ -293,6 +302,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8937351802309387872}
     m_Modifications:
+    - target: {fileID: 279351899133699615, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
+    - target: {fileID: 279351899133699615, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3428143943676615420, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
     - target: {fileID: 2145511299787837967, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -372,6 +389,18 @@ PrefabInstance:
     - target: {fileID: 2145511299787837967, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618505954171819885, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
+    - target: {fileID: 3618505954171819885, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3428143943676615420, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
+    - target: {fileID: 6297572216227158878, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
+      propertyPath: _waitTimeUntilHide
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9021580098789464767, guid: 114edd5520677e749b53436eb4f8571e, type: 3}
       propertyPath: m_Name

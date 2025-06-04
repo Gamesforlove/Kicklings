@@ -200,7 +200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &814852214262283409
 RectTransform:
   m_ObjectHideFlags: 0
@@ -253,7 +253,19 @@ MonoBehaviour:
   _exitDirection: 1
   _preShowAction:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Gameplay.Managers.PauseManager, Assembly-CSharp
+        m_MethodName: PauseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _postShowAction:
     m_PersistentCalls:
       m_Calls: []
@@ -262,7 +274,19 @@ MonoBehaviour:
       m_Calls: []
   _postHideAction:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Gameplay.Managers.PauseManager, Assembly-CSharp
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _text: {fileID: 1083555472499348928}
 --- !u!1001 &643581282441167834
 PrefabInstance:
@@ -274,7 +298,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -290,11 +314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ResumeGame
+      value: EndGame
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Gameplay.Managers.PauseManager, Assembly-CSharp
+      value: Gameplay.Managers.MatchManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -407,6 +431,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9093075139757162015}
     m_Modifications:
+    - target: {fileID: 965451982382137868, guid: a7a6492e872dd16419aa84e25a700460, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -39.999374
+      objectReference: {fileID: 0}
     - target: {fileID: 1960033236445651693, guid: a7a6492e872dd16419aa84e25a700460, type: 3}
       propertyPath: m_Name
       value: RematchButton
@@ -517,7 +545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8159928105003345250, guid: a7a6492e872dd16419aa84e25a700460, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: HideView
+      value: HideCurrentView
       objectReference: {fileID: 0}
     - target: {fileID: 8159928105003345250, guid: a7a6492e872dd16419aa84e25a700460, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -525,7 +553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8159928105003345250, guid: a7a6492e872dd16419aa84e25a700460, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UI.UIViewsManager, Assembly-CSharp
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8159928105003345250, guid: a7a6492e872dd16419aa84e25a700460, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

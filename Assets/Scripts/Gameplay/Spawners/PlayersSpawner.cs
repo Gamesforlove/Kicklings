@@ -11,10 +11,10 @@ namespace Gameplay.Spawners
         public enum PlayerType { Normal, Goalkeeper }
         
         [SerializeField] GameObject _playerFielderPrefab, _playerGoalkeeperPrefab, _cpuFielderPrefab, _cpuGoalkeeperPrefab;
-        [SerializeField] EntityData _fielderData, _goalkeeperData;
-        [SerializeField] CpuDifficultyPreset _cpuDifficultyPreset;
-        
-        [SerializeField] DifficultyLevel _currentDifficulty = DifficultyLevel.Default;
+        [field: SerializeField] public EntityData FielderData { get; private set; }
+        [field: SerializeField] public EntityData GoalkeeperData { get; private set; }
+        [field: SerializeField] public CpuDifficultyPreset CpuDifficultyPreset { get; private set; }
+        [field: SerializeField] public DifficultyLevel CurrentDifficulty { get; private set; } = DifficultyLevel.Default;
 
         
         public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
@@ -27,7 +27,7 @@ namespace Gameplay.Spawners
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
             
-            go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? _fielderData : _goalkeeperData);
+            go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
 
             return go;
         }
@@ -40,9 +40,9 @@ namespace Gameplay.Spawners
                 Quaternion.identity
                 );
  
-            CpuDifficultyPreset.DifficultySettings settings = _cpuDifficultyPreset.GetSettingsForDifficulty(_currentDifficulty);
+            CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
             go.GetComponent<Cpu>().SetUp(new CpuConfiguration(
-                playerType == PlayerType.Normal ? _fielderData : _goalkeeperData,
+                playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
                 settings
             ));
             
@@ -51,7 +51,7 @@ namespace Gameplay.Spawners
         
         public void SetDifficulty(DifficultyLevel newDifficulty)
         {
-            _currentDifficulty = newDifficulty;
+            CurrentDifficulty = newDifficulty;
         }
     }
 }
