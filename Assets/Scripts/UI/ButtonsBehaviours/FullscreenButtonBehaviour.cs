@@ -7,8 +7,11 @@ namespace UI.ButtonsBehaviours
     {
         void Start()
         {
+           #if !UNITY_WEBGL
+            // Solo aplicar automáticamente el fullscreen en plataformas que lo permiten directamente
             bool savedFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
             Screen.fullScreen = savedFullscreen;
+            #endif
         }
 
         public void ToggleFullscreen()

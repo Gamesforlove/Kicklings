@@ -27,18 +27,21 @@ public class SoundMixerManager : MonoBehaviour
     {
         _audioMixer.SetFloat("MasterVolume", ConvertToDecibels(volume));
         PlayerPrefs.SetFloat("MasterVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public void SetMusicVolume(float volume)
     {
         _audioMixer.SetFloat("MusicVolume", ConvertToDecibels(volume));
         PlayerPrefs.SetFloat("MusicVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public void SetSFXVolume(float volume)
     {
         _audioMixer.SetFloat("SFXVolume", ConvertToDecibels(volume));
         PlayerPrefs.SetFloat("SFXVolume", volume);
+        PlayerPrefs.Save();
     }
 
     private float ConvertToDecibels(float volume)
