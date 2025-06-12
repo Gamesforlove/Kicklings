@@ -12,34 +12,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0076cb3b8f2f293408b228a1295e37af, type: 3}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2074008487505099623}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleFullscreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UI.ButtonsBehaviours.FullscreenButtonBehaviour, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1665432274029310128, guid: 3c6389e773f695c48b58639033b56311, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 5940883792929974123, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

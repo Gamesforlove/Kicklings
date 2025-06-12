@@ -17,7 +17,7 @@ namespace UI.MainMenu.TournamentMode
         public TeamsData.TeamData PlayerTeamData { get; private set; }
         
         [SerializeField] UIViewsManager _uiViewsManager;
-        [SerializeField] UIView _typeSelectionView, _matchConfigurationView, _layoutView, _celebrationPopup;
+        [SerializeField] UIView _typeSelectionView, _matchConfigurationView, _layoutView;
         
         [SerializeField] CharacterCustomizationController _characterCustomizationController;
         [SerializeField] CountryCustomizationController _countryCustomizationController;
@@ -31,12 +31,13 @@ namespace UI.MainMenu.TournamentMode
             
             if (!MatchFlow.Match.Settings.IsTournamentMatch) yield break;
             
+            if (Tournament.CurrentRound.IsLastRound()) yield break;
+            
             while (!_uiViewsManager.IsReady)
                 yield return null;
             
             if (MatchFlow.Match.IsPlayerWinner)
-                if (Tournament.CurrentRound.IsLastRound()) _uiViewsManager.ShowView(_celebrationPopup);
-                else _uiViewsManager.TransitionToView(_layoutView );
+                _uiViewsManager.TransitionToView(_layoutView);
             else
             {
                 if (MatchFlow.Match.IsPlayAgain)
@@ -84,7 +85,7 @@ namespace UI.MainMenu.TournamentMode
                 .WithIsTournamentMatch(true)
                 .Build();
             
-            MatchFlow.CreateMatch(matchSettings);
+            MatchFlow.CreateTournamentMatch(matchSettings, Tournament);
         }
     }
 

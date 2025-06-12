@@ -59,11 +59,8 @@ namespace UI.UiSystem.Core
             yield return view.Show();
             if (!IsReady) IsReady = true;
             
-            
-            
             if (view.KeepOnHistory)
                 _viewsHistory.Push(view);
-            
         }
 
         IEnumerator HideViewRoutine(UIView view)

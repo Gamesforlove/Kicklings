@@ -1,5 +1,6 @@
 ﻿using CommonDataTypes;
 using EventBusSystem;
+using UI.MainMenu.TournamentMode;
 
 namespace Scene_Management
 {
@@ -9,7 +10,14 @@ namespace Scene_Management
         public static void CreateMatch(MatchSettings matchSettings)
         {
             DisposeMatch();
-            Match = new Match(matchSettings);
+            Match = new FreeMatch(matchSettings);
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
+        }
+
+        public static void CreateTournamentMatch(MatchSettings matchSettings, Tournament tournament)
+        {
+            DisposeMatch();
+            Match = new TournamentMatch(matchSettings, tournament);
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
 
