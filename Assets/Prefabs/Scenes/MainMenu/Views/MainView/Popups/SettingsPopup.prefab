@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215623929361808826}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundMixerManager, Assembly-CSharp
         m_MethodName: SetMusicVolume
         m_Mode: 4
@@ -1276,7 +1276,6 @@ GameObject:
   m_Component:
   - component: {fileID: 943449286819909840}
   - component: {fileID: 3348944437411469923}
-  - component: {fileID: 2215623929361808826}
   m_Layer: 0
   m_Name: Management
   m_TagString: Untagged
@@ -1311,23 +1310,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1a9b64f544f7b4e9affdb0cac8e5f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundMixerManager: {fileID: 2215623929361808826}
+  _soundMixerManager: {fileID: 0}
   _masterVolumeSlider: {fileID: 7814588712035978508}
   _musicVolumeSlider: {fileID: 3603934072263973505}
   _sfxVolumeSlider: {fileID: 797670935729531256}
---- !u!114 &2215623929361808826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7978981729819128138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e304e1ceb0707e7459f74ce97f83011b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioMixer: {fileID: 24100000, guid: b7158bad28b57e84c8b33f370884dfda, type: 2}
 --- !u!1 &8454183769477865163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,7 +1405,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215623929361808826}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundMixerManager, Assembly-CSharp
         m_MethodName: SetMasterVolume
         m_Mode: 4
@@ -1658,7 +1644,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2215623929361808826}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SoundMixerManager, Assembly-CSharp
         m_MethodName: SetSFXVolume
         m_Mode: 4
