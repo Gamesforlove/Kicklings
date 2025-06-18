@@ -60,8 +60,7 @@ namespace UI.MainMenu.TournamentMode
             {
                 LayoutMode = _tournamentLayoutComponent.LayoutMode,
                 PlayerShirtIndex = _characterCustomizationController.ShirtIndex,
-                PlayerShoesIndex = _characterCustomizationController.ShoesIndex,
-                GoalsToEndMatch = _scoreToWinController.SelectedGoals
+                PlayerShoesIndex = _characterCustomizationController.ShoesIndex
             };
 
             PlayerTeamData = TeamsData.GetTeamById(_countryCustomizationController.TeamDataIndex);
@@ -80,7 +79,6 @@ namespace UI.MainMenu.TournamentMode
                 .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
                 .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
                 .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
-                .WithGoalsToEndMatch(_tournamentConfiguration.GoalsToEndMatch)
                 .WithIsTournamentMatch(true)
                 .Build();
             
@@ -94,6 +92,5 @@ namespace UI.MainMenu.TournamentMode
         public TeamsData.TeamData TeamData { get; set; }
         public int PlayerShirtIndex { get; set; }
         public int PlayerShoesIndex { get; set; }
-        public int GoalsToEndMatch { get; set; }
     }
 }

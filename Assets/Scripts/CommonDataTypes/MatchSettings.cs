@@ -13,7 +13,7 @@ namespace CommonDataTypes
         public int RightSideShoesIndex { get; set; }
         public int LeftCountryImageIndex { get; set; }
         public int RightCountryImageIndex { get; set; }
-        public int GoalsToEndMatch { get; set; }
+        public int GoalsToEndMatch { get; set; } = 5;
         public bool IsTournamentMatch {get; private set;}
         
         public MatchSettings() { }
@@ -41,7 +41,7 @@ namespace CommonDataTypes
             int _rightSideShoesIndex;
             int _leftCountryImageIndex;
             int _rightCountryImageIndex;
-            int _goalsToEndMatch = 1;
+            int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
