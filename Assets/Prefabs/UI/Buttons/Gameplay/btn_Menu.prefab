@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3662740962004002922, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_Name
-      value: MenuButton
+      value: btn_Menu
       objectReference: {fileID: 0}
     - target: {fileID: 4173256854532045977, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
       propertyPath: m_text
@@ -215,25 +215,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3662740962004002922, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8419235410717428952}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
---- !u!1 &5674610700221578267 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3662740962004002922, guid: d223656f603dd2d4f96ceb25dd20515e, type: 3}
-  m_PrefabInstance: {fileID: 8941034091320644721}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8419235410717428952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5674610700221578267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73467c91ed4f4f21865dc51d65673c2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

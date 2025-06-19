@@ -33,17 +33,6 @@ namespace UI.MainMenu.TournamentMode
             
             if (Tournament.CurrentRound.IsLastRound()) yield break;
             
-            while (!_uiViewsManager.IsReady)
-                yield return null;
-            
-            if (MatchFlow.Match.IsPlayerWinner)
-                _uiViewsManager.TransitionToView(_layoutView);
-            else
-            {
-                if (MatchFlow.Match.IsPlayAgain)
-                    _uiViewsManager.TransitionToView(_typeSelectionView);
-            }
-            
             Tournament.SimulateRound(Tournament.CurrentRound);
         }
 
