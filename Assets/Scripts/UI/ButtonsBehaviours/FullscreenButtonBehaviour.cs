@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace UI.ButtonsBehaviours
 {
-    public class FullscreenButtonBehaviour : MonoBehaviour
+    public class FullscreenButtonBehaviour : ButtonBehaviour
     {
-        void Start()
+        protected override void Start()
         {
+            base.Start();
            #if !UNITY_WEBGL
             // Solo aplicar automáticamente el fullscreen en plataformas que lo permiten directamente
             bool savedFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
@@ -14,7 +15,7 @@ namespace UI.ButtonsBehaviours
             #endif
         }
 
-        public void ToggleFullscreen()
+        protected override void OnClick()
         {
             bool newFullscreenState = !Screen.fullScreen;
             

@@ -1,38 +1,37 @@
+using System;
 using System.Collections;
 using CommonDataTypes;
 using EventBusSystem;
 using Scene_Management;
-using UI.Gameplay;
-using UI.UiSystem;
-using UI.UiSystem.Core;
 using UnityEngine;
 
 namespace Gameplay.Managers
 {
     public class MatchManager : MonoBehaviour
     {
-        [SerializeField] UIViewsManager _uiViewsManager;
-        [SerializeField] MatchWinnerView _matchWinnerView;
-        [SerializeField] UIView _tournamentKnockOutView;
+        [SerializeField] UiManager _uiManager;
         [SerializeField] PlayersManager _playersManager;
         [SerializeField] BallManager _ballManager;
-        [SerializeField] ScoreBoard _scoreBoard;
-        [SerializeField] GameplayNotifications _gameplayNotifications;
         [SerializeField] GoalsManager _goalsManager;
         
         Match _match;
 
+        int _leftScore, _rightScore;
+
         public void ResetGame()
         {
+            _leftScore = 0;
+            _rightScore = 0;
+            _uiManager.ChangeScore(_leftScore, _rightScore);
             _playersManager.ResetPlayers();
             _ballManager.ResetBall();
-            _scoreBoard.ResetScore();
             _goalsManager.SetCollidersEnabled(true);
+            TimeScaleManager.SetGameplayTimeScale();
         }
 
         public void EndGame()
         {
-            Time.timeScale = 1f;
+            TimeScaleManager.SetDefaultTimeScale();
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
 
@@ -41,9 +40,10 @@ namespace Gameplay.Managers
             _match = MatchFlow.Match;
             _playersManager.SpawnEntities(_match.Settings);
             _ballManager.SpawnBall();
-            _scoreBoard.ResetScore();
             _goalsManager.SetCollidersEnabled(true);
-            Time.timeScale = 1.5f;
+            _leftScore = 0;
+            _rightScore = 0;
+            TimeScaleManager.SetGameplayTimeScale();
         }
     
         void OnEnable()
@@ -60,7 +60,7 @@ namespace Gameplay.Managers
 
         void OnGoalEvent(GoalEvent payload)
         {
-            _scoreBoard.ChangeScore(payload.ScoringSideData.SideType);
+            ChangeScore(payload.ScoringSideData.SideType);
             _goalsManager.SetCollidersEnabled(false);
             StartCoroutine(OnGoalEventRoutine(payload));
         }
@@ -72,12 +72,13 @@ namespace Gameplay.Managers
 
         IEnumerator OnGoalEventRoutine(GoalEvent payload)
         {
-            Time.timeScale = .2f;
-            yield return StartCoroutine(_gameplayNotifications.ShowGoalNotification(payload));
-            Time.timeScale = 1.5f;
+            TimeScaleManager.SlowMotion();
             
-            if (_scoreBoard.GetScoreFromSide(payload.ScoringSideData.SideType) >=
-                _match.Settings.GoalsToEndMatch)
+            yield return StartCoroutine(_uiManager.ShowGoalNotification(payload));
+            
+            TimeScaleManager.SetGameplayTimeScale();
+            
+            if (_leftScore >= _match.Settings.GoalsToEndMatch || _rightScore >= _match.Settings.GoalsToEndMatch)
             {
                 ShowEndgame(payload);
                 yield break;
@@ -88,9 +89,9 @@ namespace Gameplay.Managers
     
         IEnumerator OnOutEventRoutine(OutEvent payload)
         {
-            Time.timeScale = .2f;
-            yield return StartCoroutine(_gameplayNotifications.ShowOutNotification(payload));
-            Time.timeScale = 1.5f;
+            TimeScaleManager.SlowMotion();
+            yield return StartCoroutine(_uiManager.ShowOutNotification(payload));
+            TimeScaleManager.SetGameplayTimeScale();
             RespawnGameplayElements(payload.FieldSideData.SideType);
         }
 
@@ -103,17 +104,25 @@ namespace Gameplay.Managers
 
         void ShowEndgame(GoalEvent payload)
         {
-            if(payload.ScoringSideData.SideType == FieldSideType.Left) _match.IsPlayerWinner = true;
-
-            if (_match.Settings.IsTournamentMatch)
+            TimeScaleManager.PauseGame();
+            _match.HandleEndgameUI(this, _uiManager, payload);
+        }
+        
+        void ChangeScore(FieldSideType scoringSide)
+        {
+            switch (scoringSide)
             {
-                if (!_match.IsPlayerWinner)
-                    _uiViewsManager.ShowView(_tournamentKnockOutView);
-                else
-                    EndGame();
+                case FieldSideType.Right:
+                    _rightScore++;
+                    break;
+                case FieldSideType.Left:
+                    _leftScore++;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(scoringSide), scoringSide, null);
             }
-            else
-                _uiViewsManager.ShowView(_matchWinnerView, payload.ScoringSideData);
+            
+            _uiManager.ChangeScore(_leftScore, _rightScore);
         }
     }
 }

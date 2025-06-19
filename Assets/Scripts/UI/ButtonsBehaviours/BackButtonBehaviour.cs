@@ -1,23 +1,20 @@
 ﻿using UI.UiSystem.Core;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace UI.ButtonsBehaviours
 {
-    [RequireComponent(typeof(Button))]
-    public class BackButtonBehaviour : MonoBehaviour
+    public class BackButtonBehaviour : ButtonBehaviour
     {
         UIViewsManager _uiViewsManager;
-        Button _button;
-        void Awake()
+
+        protected override void Awake()
         {
+            base.Awake();
             _uiViewsManager = FindFirstObjectByType<UIViewsManager>();
-            _button = GetComponent<Button>();
         }
 
-        void Start()
+        protected override void OnClick()
         {
-            _button.onClick.AddListener(() => _uiViewsManager.BackToPreviousView());
+            _uiViewsManager.BackToPreviousView();
         }
     }
 }

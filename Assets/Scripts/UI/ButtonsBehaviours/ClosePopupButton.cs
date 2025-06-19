@@ -1,27 +1,22 @@
-﻿using System;
-using UI.UiSystem.Core;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UI.UiSystem.Core;
 
 namespace UI.ButtonsBehaviours
 {
-    [RequireComponent(typeof(Button))]
-    public class ClosePopupButton : MonoBehaviour
+    public class ClosePopupButton : ButtonBehaviour
     {
         UIViewsManager _uiViewsManager;
         UIView _view;
-        Button _button;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _uiViewsManager = FindFirstObjectByType<UIViewsManager>();
             _view = GetComponentInParent<UIView>();
-            _button = GetComponent<Button>();
         }
 
-        void Start()
+        protected override void OnClick()
         {
-            _button.onClick.AddListener(() => _uiViewsManager.HideView(_view));
+            _uiViewsManager.HideView(_view);
         }
     }
 }
