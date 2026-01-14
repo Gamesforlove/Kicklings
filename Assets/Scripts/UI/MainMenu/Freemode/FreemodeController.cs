@@ -11,7 +11,6 @@ namespace UI.MainMenu.Freemode
     {
         [SerializeField] CharacterCustomizationController _leftCharacterCustomizationController, _rightCharacterCustomizationController;
         [SerializeField] CountryCustomizationController _leftCountryCustomizationController, _rightCountryCustomizationController;
-        [SerializeField] ScoreToWinController _scoreToWinController;
         
         public void StartMatch(int numberOfPlayers)
         {
@@ -23,7 +22,6 @@ namespace UI.MainMenu.Freemode
                 .WithRightShirtIndex(_rightCharacterCustomizationController.ShirtIndex)
                 .WithRightShoesIndex(_rightCharacterCustomizationController.ShoesIndex)
                 .WithRightCountryImageIndex(_rightCountryCustomizationController.TeamDataIndex)
-                .WithGoalsToEndMatch(_scoreToWinController.SelectedGoals)
                 .Build();
             
             MatchFlow.CreateMatch(matchSettings);

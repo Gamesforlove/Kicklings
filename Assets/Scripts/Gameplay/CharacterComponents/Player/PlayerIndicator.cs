@@ -1,3 +1,5 @@
+using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +20,8 @@ namespace Gameplay.CharacterComponents.Player
             
             if (gameObject.transform.root.transform.position.x > 0)
                 gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            
+            StartCoroutine(FadOutRoutine());
         }
         
         void ChangeVisuals(string controlScheme)
@@ -45,6 +49,19 @@ namespace Gameplay.CharacterComponents.Player
                     _spriteRenderer.color = _playerColors[3];
                     break;
             }
+        }
+
+        IEnumerator FadOutRoutine()
+        {
+            const float fadeTime = .5f;
+            yield return new WaitForSeconds(1f);
+            
+            Sequence sequence = DOTween.Sequence();
+            yield return sequence.Append(_spriteRenderer.DOFade(0, fadeTime))
+                .Join(_text.DOFade(0, fadeTime))
+                .WaitForCompletion();
+            
+            gameObject.SetActive(false);
         }
     }
 }

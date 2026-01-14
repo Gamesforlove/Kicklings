@@ -33,17 +33,6 @@ namespace UI.MainMenu.TournamentMode
             
             if (Tournament.CurrentRound.IsLastRound()) yield break;
             
-            while (!_uiViewsManager.IsReady)
-                yield return null;
-            
-            if (MatchFlow.Match.IsPlayerWinner)
-                _uiViewsManager.TransitionToView(_layoutView);
-            else
-            {
-                if (MatchFlow.Match.IsPlayAgain)
-                    _uiViewsManager.TransitionToView(_typeSelectionView);
-            }
-            
             Tournament.SimulateRound(Tournament.CurrentRound);
         }
 
@@ -61,8 +50,7 @@ namespace UI.MainMenu.TournamentMode
             {
                 LayoutMode = _tournamentLayoutComponent.LayoutMode,
                 PlayerShirtIndex = _characterCustomizationController.ShirtIndex,
-                PlayerShoesIndex = _characterCustomizationController.ShoesIndex,
-                GoalsToEndMatch = _scoreToWinController.SelectedGoals
+                PlayerShoesIndex = _characterCustomizationController.ShoesIndex
             };
 
             PlayerTeamData = TeamsData.GetTeamById(_countryCustomizationController.TeamDataIndex);
@@ -81,7 +69,6 @@ namespace UI.MainMenu.TournamentMode
                 .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
                 .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
                 .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
-                .WithGoalsToEndMatch(_tournamentConfiguration.GoalsToEndMatch)
                 .WithIsTournamentMatch(true)
                 .Build();
             
@@ -95,6 +82,5 @@ namespace UI.MainMenu.TournamentMode
         public TeamsData.TeamData TeamData { get; set; }
         public int PlayerShirtIndex { get; set; }
         public int PlayerShoesIndex { get; set; }
-        public int GoalsToEndMatch { get; set; }
     }
 }

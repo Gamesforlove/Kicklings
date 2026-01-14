@@ -42,8 +42,17 @@ namespace UI.UiSystem.Core
             UIView previousView = _viewsHistory.Peek();
     
             StartCoroutine(BackToPreviousViewRoutine(currentView, previousView));
-
         }
+        
+        public void TransitionToViewWithHistory(UIView historyView, UIView targetView)
+        {
+            if (_viewsHistory.Count > 0)
+                _viewsHistory.Clear();
+            
+            _viewsHistory.Push(historyView);
+            StartCoroutine(ShowViewRoutine(targetView));
+        }
+
         
         void Awake()
         {
@@ -59,7 +68,7 @@ namespace UI.UiSystem.Core
             yield return view.Show();
             if (!IsReady) IsReady = true;
             
-            if (view.KeepOnHistory)
+            if (view.KeepOnHistory && !_viewsHistory.Contains(view))
                 _viewsHistory.Push(view);
         }
 
