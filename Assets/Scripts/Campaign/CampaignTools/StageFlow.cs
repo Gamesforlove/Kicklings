@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "StageFlow", menuName = "Scriptable Objects/StageFlow")]
+[System.Serializable]
 public class StageFlow : ScriptableObject
 {
     public List<SceneInfo> scenes;
