@@ -10,35 +10,23 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - WebGL # WebGL.
+          - StandaloneWindows64
+          - WebGL
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-        # Git LFS
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v3
-        id: lfs-cache
         with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-      - name: Git LFS Pull
-        run: |
-          git lfs pull
-          git add .
-          git reset --hard
+          lfs: true
 
       - name: Cache Library
         uses: actions/cache@v3
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}
-          restore-keys: Library-
+          key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-${{ matrix.targetPlatform }}-
+            Library-
 
       - name: Build project
         uses: game-ci/unity-builder@v4
@@ -50,7 +38,17 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
 
       - name: Upload artifacts
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
+
+      - name: Deploy WebGL to itch.io
+        if: matrix.targetPlatform == 'WebGL'
+        uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
+          gameData: ./build/${{ matrix.targetPlatform }}
+          itchUsername: ahmedfawzi
+          itchGameId: kicklings
+          buildChannel: webgl
