@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7839936276263836803}
   - component: {fileID: 2444806426551532735}
   - component: {fileID: 3306609747080911640}
+  - component: {fileID: 1225273121144187122}
   m_Layer: 0
   m_Name: CampaignButton
   m_TagString: Untagged
@@ -121,7 +122,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2444806426551532735}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1225273121144187122}
+        m_TargetAssemblyTypeName: LoadCampaign, Assembly-CSharp
+        m_MethodName: LoadCampaignScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1225273121144187122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183076593591131287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3f9191bf9514c45941c190c0699c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6261904289863365881
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +325,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
