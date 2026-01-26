@@ -20,8 +20,20 @@ namespace AudioSystem
         Dictionary<MusicType, AudioClip> _clipMap;
         AudioSource _audioSource;
 
+
+        public static MusicManager Instance { get; private set; }
         void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             _audioSource = GetComponent<AudioSource>();
             _audioSource.outputAudioMixerGroup = _musicMixerGroup;
             _clipMap = new Dictionary<MusicType, AudioClip>();
@@ -49,6 +61,11 @@ namespace AudioSystem
             {
                 Debug.LogWarning($"No clip assigned for {type}");
             }
+        }
+
+        public void StopMusic()
+        {
+            _audioSource.Stop();
         }
     }
 }
