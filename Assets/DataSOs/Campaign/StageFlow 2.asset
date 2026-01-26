@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: StageFlow 2
   m_EditorClassIdentifier: 
   scenes:
-  - sceneName: TestGameplay2
+  - sceneAsset: {fileID: 102900000, guid: db34384da6e22e645a1fe92ffd304375, type: 3}
     sceneType: 0
-    Description: TestGameplay
-  - sceneName: TestCutscene2
+    description: 
+    scenePath: Assets/Scenes/Rishi Test Scenes/TestGameplay2.unity
+  - sceneAsset: {fileID: 102900000, guid: 271a2c1732f1765418d212f652182333, type: 3}
     sceneType: 1
-    Description: TestCutscene
-  - sceneName: TestGameplay3
+    description: 
+    scenePath: Assets/Scenes/Rishi Test Scenes/TestCutscene2.unity
+  - sceneAsset: {fileID: 102900000, guid: 66421e03fc51d634580e46c96451a842, type: 3}
     sceneType: 1
-    Description: TestGameplay
+    description: 
+    scenePath: Assets/Scenes/Rishi Test Scenes/TestCutscene3.unity

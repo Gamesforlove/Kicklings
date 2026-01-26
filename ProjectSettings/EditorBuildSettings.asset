@@ -14,6 +14,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rishi Test Scenes/TestCampaignStart.unity
     guid: 1bb927231a93cec4b8d37cb62561c287
+  - enabled: 1
+    path: Assets/Scenes/Rishi Test Scenes/TestGameplay.unity
+    guid: 797ec69938fdb514b8c5e0eeb8d573dd
+  - enabled: 1
+    path: Assets/Scenes/Rishi Test Scenes/TestCutscene.unity
+    guid: 6d5f36dea110d7d4a89b7a4df0b75315
+  - enabled: 1
+    path: Assets/Scenes/Rishi Test Scenes/TestCutscene2.unity
+    guid: 271a2c1732f1765418d212f652182333
+  - enabled: 1
+    path: Assets/Scenes/Rishi Test Scenes/TestGameplay2.unity
+    guid: db34384da6e22e645a1fe92ffd304375
+  - enabled: 1
+    path: Assets/Scenes/Rishi Test Scenes/TestCutscene3.unity
+    guid: 66421e03fc51d634580e46c96451a842
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
