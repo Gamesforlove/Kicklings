@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "CampaignFlow", menuName = "Scriptable Objects/CampaignFlow")]
 [System.Serializable]
-public class CampaignFlow : ScriptableObject
+public class CampaignFlowSO : ScriptableObject
 {
-    public List<StageFlow> stages;
+    public List<StageFlowSO> stages;
 }

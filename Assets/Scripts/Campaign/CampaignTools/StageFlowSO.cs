@@ -7,7 +7,7 @@ using System.Collections.Generic;
 #endif
 
 [CreateAssetMenu(fileName = "StageFlow", menuName = "Scriptable Objects/StageFlow")]
-public class StageFlow : ScriptableObject
+public class StageFlowSO : ScriptableObject
 {
     public List<SceneInfo> scenes = new();
 
