@@ -29,11 +29,16 @@ namespace Gameplay.Managers
             TimeScaleManager.SetGameplayTimeScale();
         }
 
+        public void SetNewMatch(Match match) { _match = match; ResetGame(); }
+
         public void EndGame()
         {
             TimeScaleManager.SetDefaultTimeScale();
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
+
+        public static MatchManager Instance { get; private set; }
+        private void Awake() => Instance = this;
 
         void Start()
         {
@@ -102,8 +107,11 @@ namespace Gameplay.Managers
             _goalsManager.SetCollidersEnabled(true);
         }
 
+        public bool MatchDone { get; private set; }
+
         void ShowEndgame(GoalEvent payload)
         {
+            MatchDone = true;
             TimeScaleManager.PauseGame();
             _match.HandleEndgameUI(this, _uiManager, payload);
         }

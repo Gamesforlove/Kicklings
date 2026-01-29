@@ -1,20 +1,22 @@
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CommonDataTypes
 {
+    [System.Serializable]
     public class MatchSettings
     {
-        public int MaxNumberOfEntities { get; private set; } = 4;
-        public int NumberOfPlayers { get; set; }
-        public int LeftSideShirtIndex { get; set; }
-        public int RightSideShirtIndex { get; set; }
-        public int LeftSideShoesIndex { get; set; }
-        public int RightSideShoesIndex { get; set; }
-        public int LeftCountryImageIndex { get; set; }
-        public int RightCountryImageIndex { get; set; }
-        public int GoalsToEndMatch { get; set; } = 5;
-        public bool IsTournamentMatch {get; private set;}
+        [field: SerializeField] public int MaxNumberOfEntities { get; private set; } = 4;
+        [field: SerializeField] public int NumberOfPlayers { get; set; }
+        [field: SerializeField] public int LeftSideShirtIndex { get; set; }
+        [field: SerializeField] public int RightSideShirtIndex { get; set; }
+        [field: SerializeField] public int LeftSideShoesIndex { get; set; }
+        [field: SerializeField] public int RightSideShoesIndex { get; set; }
+        [field: SerializeField] public int LeftCountryImageIndex { get; set; }
+        [field: SerializeField] public int RightCountryImageIndex { get; set; }
+        [field: SerializeField] public int GoalsToEndMatch { get; set; } = 5;
+        [field: SerializeField] public bool IsTournamentMatch {get; private set;}
         
         public MatchSettings() { }
 

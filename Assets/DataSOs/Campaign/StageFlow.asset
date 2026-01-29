@@ -9,15 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b110321a9a37c874f8bc2c6a2f402aa1, type: 3}
+  m_Script: {fileID: 11500000, guid: f18df90ef74f9bf4cac580a62117b12e, type: 3}
   m_Name: StageFlow
   m_EditorClassIdentifier: 
-  scenes:
-  - sceneAsset: {fileID: 102900000, guid: 797ec69938fdb514b8c5e0eeb8d573dd, type: 3}
-    sceneType: 0
-    description: 
-    scenePath: Assets/Scenes/Rishi Test Scenes/TestGameplay.unity
-  - sceneAsset: {fileID: 102900000, guid: 6d5f36dea110d7d4a89b7a4df0b75315, type: 3}
-    sceneType: 1
-    description: 
-    scenePath: Assets/Scenes/Rishi Test Scenes/TestCutscene.unity
+  scenes: []

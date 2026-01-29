@@ -4,14 +4,14 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 
-[CustomEditor(typeof(StageFlow))]
+[CustomEditor(typeof(StageFlowSO))]
 public class StageFlowEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        var flow = (StageFlow)target;
+        var flow = (StageFlowSO)target;
         if (flow == null || flow.scenes == null) return;
 
         var referencedPaths = new HashSet<string>();
