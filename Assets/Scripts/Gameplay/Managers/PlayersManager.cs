@@ -17,7 +17,7 @@ namespace Gameplay.Managers
         List<InputControlScheme> _controlSchemes = new();
         MatchSettings _matchSettings;
 
-        void Start()
+        void Awake()
         {
             InputActionAsset actionAsset = InputSystem.actions;
 
