@@ -29,7 +29,7 @@ namespace Gameplay.Managers
             TimeScaleManager.SetGameplayTimeScale();
         }
 
-        public void SetNewMatch(Match match) { _match = match; ResetGame(); }
+        public void SetNewMatch(Match match) { _match = match; if (ranStart) ResetGame();}
 
         public void EndGame()
         {
@@ -40,6 +40,7 @@ namespace Gameplay.Managers
         public static MatchManager Instance { get; private set; }
         private void Awake() => Instance = this;
 
+        bool ranStart = false;
         void Start()
         {
             _match = MatchFlow.Match;
@@ -49,6 +50,7 @@ namespace Gameplay.Managers
             _leftScore = 0;
             _rightScore = 0;
             TimeScaleManager.SetGameplayTimeScale();
+            ranStart = true;
         }
     
         void OnEnable()

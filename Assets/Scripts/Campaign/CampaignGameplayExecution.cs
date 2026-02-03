@@ -11,7 +11,7 @@ public class CampaignGameplayExecution : MonoBehaviour
 {
     public List<CampaignMatchBuilder> matchBuilders;
 
-    void Start()
+    void Awake()
     {
         StartCoroutine(executeMatchesAndTransitions());
     }
@@ -21,15 +21,23 @@ public class CampaignGameplayExecution : MonoBehaviour
     {
         foreach (CampaignMatchBuilder builder in matchBuilders)
         {
-            foreach (StageAction action in builder.preMatchTransitionsAndTutorials)
-                yield return action.Execute();
+            if (builder != null && builder.preMatchTransitionsAndTutorials != null)
+            {
+                foreach (StageAction action in builder.preMatchTransitionsAndTutorials)
+                    if (action != null)
+                        yield return action.Execute();
+            }
 
             builder.BuildMatch();
             yield return null;
             yield return new WaitUntil(() => mm == null || !mm.enabled || mm.MatchDone);
 
-            foreach (StageAction action in builder.postMatchTransitionsAndTutorials)
-                yield return action.Execute();
+            if (builder != null && builder.postMatchTransitionsAndTutorials != null)
+            {
+                foreach (StageAction action in builder.postMatchTransitionsAndTutorials)
+                if (action != null)
+                    yield return action.Execute();
+            }
         }
     }
 }
