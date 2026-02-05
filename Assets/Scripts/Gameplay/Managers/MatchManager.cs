@@ -17,7 +17,6 @@ namespace Gameplay.Managers
         Match _match;
 
         int _leftScore, _rightScore;
-
         public void ResetGame()
         {
             _leftScore = 0;

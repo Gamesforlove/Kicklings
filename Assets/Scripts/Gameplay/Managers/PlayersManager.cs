@@ -101,7 +101,5 @@ namespace Gameplay.Managers
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
             }
         }
-
-    
     }
 }
