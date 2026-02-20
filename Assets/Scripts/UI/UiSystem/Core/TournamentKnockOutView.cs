@@ -20,7 +20,8 @@ namespace UI.UiSystem.Core
         void Start()
         {
             _playAgainButton.onClick.AddListener(OnPlayAgainClicked);
-            _mainMenuButton.onClick.AddListener(_matchManager.EndGame);
+            if (_matchManager)
+                _mainMenuButton.onClick.AddListener(_matchManager.EndGame);
         }
 
         void OnPlayAgainClicked()
