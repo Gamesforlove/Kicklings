@@ -15,11 +15,11 @@ MonoBehaviour:
   MatchSettings:
     <MaxNumberOfEntities>k__BackingField: 4
     <NumberOfPlayers>k__BackingField: 2
-    <LeftSideShirtIndex>k__BackingField: 1
-    <RightSideShirtIndex>k__BackingField: 1
-    <LeftSideShoesIndex>k__BackingField: 1
-    <RightSideShoesIndex>k__BackingField: 1
-    <LeftCountryImageIndex>k__BackingField: 1
-    <RightCountryImageIndex>k__BackingField: 1
+    <LeftSideShirtIndex>k__BackingField: 3
+    <RightSideShirtIndex>k__BackingField: 3
+    <LeftSideShoesIndex>k__BackingField: 4
+    <RightSideShoesIndex>k__BackingField: 4
+    <LeftCountryImageIndex>k__BackingField: 3
+    <RightCountryImageIndex>k__BackingField: 5
     <GoalsToEndMatch>k__BackingField: 3
     <IsTournamentMatch>k__BackingField: 0
