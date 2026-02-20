@@ -8,6 +8,6 @@ public class LoadCampaign : MonoBehaviour
     public void LoadCampaignScene()
     {
         MusicManager.Instance.StopMusic();
-        EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.TestCampaignStart));
+        EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Stage0Scene2TutorialMatch));
     }
 }
