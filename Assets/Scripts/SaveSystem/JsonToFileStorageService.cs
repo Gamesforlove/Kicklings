@@ -3,14 +3,93 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class JsonToFileStorageService : IStorageService
+namespace SaveSystem
 {
-    public void Save(string key, object data, Action<bool> callback = null)
+    public class JsonToFileStorageService : IStorageService
     {
-        try
+        public void Save(string key, object data, Action<bool> callback = null)
         {
-            string path = BuildPath(key);
-            var settings = new JsonSerializerSettings
+            try
+            {
+                string path = BuildPath(key);
+                JsonSerializerSettings settings = MakeSerializerSettings();
+                string json = JsonConvert.SerializeObject(data, settings);
+
+                using (var fileStream = new StreamWriter(path))
+                {
+                    fileStream.Write(json);
+                }
+
+                callback?.Invoke(true);
+                Debug.Log($"Game saved successfuly to {path}");
+            }
+            catch (Exception e)
+            {
+                LogExseption(e);
+                callback?.Invoke(false);
+            }
+        }
+
+
+        public void Load<T>(string key, Action<T> callback)
+        {
+            try
+            {
+                string path = BuildPath(key);
+
+                if (!File.Exists(path))
+                {
+                    Debug.LogWarning($"File not found: {path}");
+                    callback?.Invoke(default);
+                    return;
+                }
+
+                JsonSerializerSettings settings = MakeSerializerSettings();
+
+                callback?.Invoke(ReadFile<T>(path, settings));
+            }
+            catch (Exception e)
+            {
+                LogExseption(e);
+                callback?.Invoke(default);
+            }
+        }
+
+        public T Load<T>(string key)
+        {
+            try
+            {
+                string path = BuildPath(key);
+
+                if (!File.Exists(path))
+                {
+                    Debug.LogWarning($"File not found: {path}");
+                    return default;
+                }
+
+                JsonSerializerSettings settings = MakeSerializerSettings();
+
+                return ReadFile<T>(path, settings);
+            }
+            catch (Exception e)
+            {
+                LogExseption(e);
+                return default;
+            }
+        }
+
+        private T ReadFile<T>(string path, JsonSerializerSettings settings)
+        {
+            using (var fileStream = new StreamReader(path))
+            {
+                var json = fileStream.ReadToEnd();
+                var data = JsonConvert.DeserializeObject<T>(json, settings);
+                return data;
+            }
+        }
+        private JsonSerializerSettings MakeSerializerSettings()
+        {
+            return new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.Auto,
@@ -21,89 +100,18 @@ public class JsonToFileStorageService : IStorageService
                 }
 
             };
-            string json = JsonConvert.SerializeObject(data, settings);
-
-            using (var fileStream = new StreamWriter(path))
-            {
-                fileStream.Write(json);
-            }
-
-            callback?.Invoke(true);
-            Debug.Log($"Game saved successfuly to {path}");
         }
-        catch (Exception e)
+        private string BuildPath(string key)
         {
-            Debug.LogError($"Save error: {e.Message}");
-            callback?.Invoke(false);
+            return Path.Combine(Application.persistentDataPath, key);
         }
-    }
-    public void Load<T>(string key, Action<T> callback)
-    {
-        try
+        private void LogExseption(Exception e)
         {
-            string path = BuildPath(key);
-
-            if (!File.Exists(path))
-            {
-                Debug.LogWarning($"File not found: {path}");
-                callback?.Invoke(default);
-                return;
-            }
-            var settings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver
-                {
-                    IgnoreSerializableAttribute = true
-                }
-            };
-            using (var fileStream = new StreamReader(path))
-            {
-                var json = fileStream.ReadToEnd();
-                var data = JsonConvert.DeserializeObject<T>(json, settings);
-                callback?.Invoke(data);
-            }
+            #if UNITY_EDITOR
+                Debug.LogError($"Save error: {e.Message}");
+            #else
+                Debug.LogWarning($"Save error: {e.Message}");
+            #endif
         }
-        catch (Exception e)
-        {
-            Debug.LogError($"Load error: {e.Message}");
-            callback?.Invoke(default);
-        }
-    }
-    public T Load<T>(string key)
-    {
-        try
-        {
-            string path = BuildPath(key);
-
-            if (!File.Exists(path))
-            {
-                Debug.LogWarning($"File not found: {path}");
-                return default;
-            }
-            var settings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver
-                {
-                    IgnoreSerializableAttribute = true
-                }
-            };
-            using (var fileStream = new StreamReader(path))
-            {
-                var json = fileStream.ReadToEnd();
-                var data = JsonConvert.DeserializeObject<T>(json, settings);
-                return data;
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Load error: {e.Message}");
-            return default;
-        }
-    }
-    private string BuildPath(string key)
-    {
-        return Path.Combine(Application.persistentDataPath, key);
     }
 }
