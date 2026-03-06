@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "com.invictus.art": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/RuntimeAssets#main",
+    "com.invictus.art.campaign": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Campaign#main",
+    "com.invictus.art.common": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main",
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.unity.collab-proxy": "2.10.2",
     "com.unity.feature.2d": "2.0.1",
