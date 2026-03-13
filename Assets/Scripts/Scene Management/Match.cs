@@ -8,7 +8,7 @@ namespace Scene_Management
     public abstract class Match
     {
         public MatchSettings Settings { get; }
-        
+
         public bool IsPlayerWinner { get; set; }
         public bool IsPlayAgain { get; set; }
 
@@ -38,11 +38,11 @@ namespace Scene_Management
         }
 
     }
-    
+
     public class TournamentMatch : Match
     {
         readonly Tournament _tournament;
-        
+
         public TournamentMatch(MatchSettings settings, Tournament tournament) : base(settings)
         {
             _tournament = tournament;
