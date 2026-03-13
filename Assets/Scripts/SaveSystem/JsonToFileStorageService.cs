@@ -25,7 +25,7 @@ namespace SaveSystem
             }
             catch (Exception e)
             {
-                LogExseption(e);
+                LogException(e);
                 callback?.Invoke(false);
             }
         }
@@ -50,7 +50,7 @@ namespace SaveSystem
             }
             catch (Exception e)
             {
-                LogExseption(e);
+                LogException(e);
                 callback?.Invoke(default);
             }
         }
@@ -73,7 +73,7 @@ namespace SaveSystem
             }
             catch (Exception e)
             {
-                LogExseption(e);
+                LogException(e);
                 return default;
             }
         }
@@ -105,7 +105,7 @@ namespace SaveSystem
         {
             return Path.Combine(Application.persistentDataPath, key);
         }
-        private void LogExseption(Exception e)
+        private void LogException(Exception e)
         {
             #if UNITY_EDITOR
                 Debug.LogError($"Save error: {e.Message}");
