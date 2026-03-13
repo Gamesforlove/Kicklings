@@ -10,11 +10,11 @@ using UnityEngine;
 public static class InvictusArtAutoUpdater
 {
     private const string PrefKey = "InvictusArt.AutoUpdateOnLaunch";
-    private const string PackageName = "com.invictus.art";
+    private const string PackageName = "com.invictus.art.common";
 
     // Must match your manifest entry
     private const string PackageUrl =
-        "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets#main";
+        "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main";
 
     private static AddRequest _addRequest;
     private static bool _started;
