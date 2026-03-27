@@ -53,9 +53,12 @@ namespace UI.UiSystem.Core
             StartCoroutine(ShowViewRoutine(targetView));
         }
 
-        
+
+        public static UIViewsManager Instance { get; private set; }
         void Awake()
         {
+            Instance = this;
+
             if (_firstFocusItem)
                 EventSystem.current.SetSelectedGameObject(_firstFocusItem);
 

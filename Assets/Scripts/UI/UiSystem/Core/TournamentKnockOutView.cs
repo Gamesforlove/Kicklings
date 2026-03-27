@@ -14,7 +14,7 @@ namespace UI.UiSystem.Core
         protected override void Awake()
         {
             base.Awake();
-            _matchManager = FindFirstObjectByType<MatchManager>();
+            _matchManager = MatchManager.Instance;
         }
         
         void Start()

@@ -22,10 +22,10 @@ namespace Gameplay.Managers
         {
             _leftScore = 0;
             _rightScore = 0;
-            _uiManager.ChangeScore(_leftScore, _rightScore);
-            _playersManager.ResetPlayers();
-            _ballManager.ResetBall();
-            _goalsManager.SetCollidersEnabled(true);
+            _uiManager?.ChangeScore(_leftScore, _rightScore);
+            _playersManager?.ResetPlayers();
+            _ballManager?.ResetBall();
+            _goalsManager?.SetCollidersEnabled(true);
             TimeScaleManager.SetGameplayTimeScale();
         }
 

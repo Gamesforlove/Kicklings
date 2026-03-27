@@ -8,6 +8,9 @@ namespace Gameplay.Spawners
 {
     public class PlayersSpawner : MonoBehaviour
     {
+        public static PlayersSpawner Instance { get; private set; }
+        void Awake() => Instance = this;
+
         public enum PlayerType { Normal, Goalkeeper }
         
         [SerializeField] GameObject _playerFielderPrefab, _playerGoalkeeperPrefab, _cpuFielderPrefab, _cpuGoalkeeperPrefab;
@@ -27,7 +30,7 @@ namespace Gameplay.Spawners
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
             
-            go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
 
             return go;
         }
@@ -41,14 +44,14 @@ namespace Gameplay.Spawners
                 );
  
             CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
-            go.GetComponent<Cpu>().SetUp(new CpuConfiguration(
+            go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
                 playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
                 settings
             ));
             
             return go;
         }
-        
+
         public void SetDifficulty(DifficultyLevel newDifficulty)
         {
             CurrentDifficulty = newDifficulty;

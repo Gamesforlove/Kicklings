@@ -9,7 +9,7 @@ namespace UI.ButtonsBehaviours
         protected override void Awake()
         {
             base.Awake();
-            _uiViewsManager = FindFirstObjectByType<UIViewsManager>();
+            _uiViewsManager = UIViewsManager.Instance;
         }
 
         protected override void OnClick()

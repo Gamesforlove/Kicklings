@@ -8,6 +8,9 @@ namespace Gameplay.Managers
     {
         [SerializeField] BallSpawner _ballSpawner;
 
+        public static BallManager Instance { get; private set; }
+        void Awake() => Instance = this;
+
         public BallScript Ball { get; private set; }
     
         public void SpawnBall() => Ball = _ballSpawner.SpawnBall();
