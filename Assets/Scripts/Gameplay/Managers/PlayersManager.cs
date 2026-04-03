@@ -11,11 +11,13 @@ namespace Gameplay.Managers
     {
         [SerializeField] PlayersSpawner _playersSpawner;
         [SerializeField] Transform[] _spawnPoints;
-    
+        [SerializeField] bool oneOnOneForCampaign;
+
         readonly List<GameObject> _players = new();
         readonly Dictionary<GameObject, Vector2> _playersPositions = new();
         List<InputControlScheme> _controlSchemes = new();
         MatchSettings _matchSettings;
+        bool campaign;
 
         void Awake()
         {
@@ -30,6 +32,14 @@ namespace Gameplay.Managers
         public void SpawnEntities(MatchSettings matchSettings)
         {
             _matchSettings  = matchSettings;
+
+            if (matchSettings.IsCampaignMatch)
+            {
+                campaign = true;
+                SpawnCampaign();
+                return;
+            }
+
             switch (matchSettings.NumberOfPlayers)
             {
                 case 0:
@@ -81,23 +91,40 @@ namespace Gameplay.Managers
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
         }
 
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
+        }
+
+
+        void SpawnCampaign()
+        {
+            if (oneOnOneForCampaign)
+            {
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+                SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[1]);
+            }
+            else
+            {
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+                SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0]);
+                SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[2]);
+                SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3]);
+            }
         }
 
         public void ResetPlayers()
         {
             foreach (GameObject player in _players)
             {
-                player.GetComponent<IEntity>().Reset();
+                player.GetComponent<IEntity>()?.Reset();
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
             }
         }

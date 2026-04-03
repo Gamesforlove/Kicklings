@@ -29,9 +29,9 @@ namespace Gameplay.CharacterComponents.Cpu
         
         BallProximityChecker _ballProximityChecker;
 
-        public void SetUp(CpuConfiguration config)
+        public void SetUp(CpuConfiguration config, bool campaign)
         {
-            base.SetUp(config.EntityData);
+            base.SetUp(config.EntityData, campaign);
             _difficultySettings = config.DifficultySettings;
             
             _ballProximityChecker.SetUp(_difficultySettings.ProximityPoints);

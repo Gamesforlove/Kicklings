@@ -7,7 +7,7 @@ namespace Gameplay.CharacterComponents
 {
     public interface IEntity
     {
-        public void SetUp(EntityData entityData);
+        public void SetUp(EntityData entityData, bool campaign);
         public void Reset();
     }
 
@@ -21,10 +21,12 @@ namespace Gameplay.CharacterComponents
         protected BodyPartsController BodyPartsController;
         protected StabilizeComponent StabilizeComponent;
         protected Rigidbody2D Rigidbody;
+        protected bool campaign;
 
-        public virtual void SetUp(EntityData entityData)
+        public virtual void SetUp(EntityData entityData, bool campaign)
         {
             EntityData = entityData;
+            this.campaign = campaign;
             CacheComponents();
             
             bool isRightSide = gameObject.transform.position.x > 0;
@@ -64,6 +66,8 @@ namespace Gameplay.CharacterComponents
         
         void SetCharacterClothes(bool isRightSide)
         {
+            if (campaign) // For now, campaign clothes are set by prefab. For different version of the player, bully etc we can use different prefabs.
+                return;
 
             if (isRightSide)
             {

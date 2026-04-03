@@ -20,7 +20,7 @@ namespace Gameplay.Spawners
         [field: SerializeField] public DifficultyLevel CurrentDifficulty { get; private set; } = DifficultyLevel.Default;
 
         
-        public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
+        public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme, bool campaign)
         {
             GameObject go = PlayerInput.Instantiate(
                 playerType == PlayerType.Normal ? _playerFielderPrefab : _playerGoalkeeperPrefab,
@@ -30,12 +30,12 @@ namespace Gameplay.Spawners
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
             
-            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, campaign);
 
             return go;
         }
 
-        public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition)
+        public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition, bool campaign)
         {
             GameObject go = Instantiate(
                 playerType == PlayerType.Normal ? _cpuFielderPrefab : _cpuGoalkeeperPrefab,
@@ -47,7 +47,7 @@ namespace Gameplay.Spawners
             go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
                 playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
                 settings
-            ));
+            ), campaign);
             
             return go;
         }

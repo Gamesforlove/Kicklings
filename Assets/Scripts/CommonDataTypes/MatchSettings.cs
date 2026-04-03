@@ -17,6 +17,7 @@ namespace CommonDataTypes
         [field: SerializeField] public int RightCountryImageIndex { get; set; }
         [field: SerializeField] public int GoalsToEndMatch { get; set; } = 5;
         [field: SerializeField] public bool IsTournamentMatch {get; private set;}
+        [field: SerializeField] public bool IsCampaignMatch {get; private set;}
         
         public MatchSettings() { }
 
@@ -31,6 +32,7 @@ namespace CommonDataTypes
             RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
             IsTournamentMatch = false;
+            IsCampaignMatch = false;
         }
 
         public class Builder
@@ -45,6 +47,7 @@ namespace CommonDataTypes
             int _rightCountryImageIndex;
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
+            bool _isCampaignMatch = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
             {
@@ -99,6 +102,12 @@ namespace CommonDataTypes
                 _isTournamentMatch = isTournamentMatch;
                 return this;
             }
+            
+            public Builder WithIsCampaignMatch(bool isCampaignMatch)
+            {
+                _isCampaignMatch = isCampaignMatch;
+                return this;
+            }
 
             public MatchSettings Build()
             {
@@ -113,7 +122,8 @@ namespace CommonDataTypes
                     LeftCountryImageIndex = _leftCountryImageIndex,
                     RightCountryImageIndex = _rightCountryImageIndex,
                     GoalsToEndMatch = _goalsToEndMatch,
-                    IsTournamentMatch = _isTournamentMatch
+                    IsTournamentMatch = _isTournamentMatch,
+                    IsCampaignMatch = _isCampaignMatch
                 };
             }
         }
