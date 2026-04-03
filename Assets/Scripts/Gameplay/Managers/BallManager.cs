@@ -7,6 +7,9 @@ namespace Gameplay.Managers
     public class BallManager : MonoBehaviour
     {
         [SerializeField] BallSpawner _ballSpawner;
+        
+        public static BallManager Instance { get; private set; }
+        void Awake() => Instance = this;
 
         public BallScript Ball { get; private set; }
     

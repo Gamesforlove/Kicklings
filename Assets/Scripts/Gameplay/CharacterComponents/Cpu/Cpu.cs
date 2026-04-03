@@ -52,7 +52,7 @@ namespace Gameplay.CharacterComponents.Cpu
         void Awake()
         {
             _ballProximityChecker = GetComponent<BallProximityChecker>();
-            _ballManager = FindFirstObjectByType<BallManager>();
+            _ballManager = BallManager.Instance;
         }
 
         void Update()
