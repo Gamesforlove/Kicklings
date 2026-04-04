@@ -44,9 +44,9 @@ namespace Gameplay.Managers
         void Start()
         {
             _match = MatchFlow.Match;
-            _playersManager.SpawnEntities(_match.Settings);
-            _ballManager.SpawnBall();
-            _goalsManager.SetCollidersEnabled(true);
+            _playersManager?.SpawnEntities(_match.Settings);
+            _ballManager?.SpawnBall();
+            _goalsManager?.SetCollidersEnabled(true);
             _leftScore = 0;
             _rightScore = 0;
             TimeScaleManager.SetGameplayTimeScale();
