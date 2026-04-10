@@ -29,6 +29,7 @@ public class CampaignMatchBuilder : MonoBehaviour
             .WithRightShirtIndex(matchDataSO.MatchSettings.RightSideShirtIndex)
             .WithRightShoesIndex(matchDataSO.MatchSettings.RightSideShoesIndex)
             .WithRightCountryImageIndex(matchDataSO.MatchSettings.RightCountryImageIndex)
+            .WithIsCampaignMatch(true)
             .Build();
 
         matchManager.enabled = true;

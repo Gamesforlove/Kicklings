@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13079f2b54e6ee24a8298c8962827cff, type: 3}
-  m_Name: MatchData - Example
+  m_Name: MatchData - Campaign Start
   m_EditorClassIdentifier: 
   MatchSettings:
-    <MaxNumberOfEntities>k__BackingField: 4
+    <MaxNumberOfEntities>k__BackingField: 2
     <NumberOfPlayers>k__BackingField: 2
     <LeftSideShirtIndex>k__BackingField: 3
     <RightSideShirtIndex>k__BackingField: 3
@@ -23,3 +23,4 @@ MonoBehaviour:
     <RightCountryImageIndex>k__BackingField: 5
     <GoalsToEndMatch>k__BackingField: 3
     <IsTournamentMatch>k__BackingField: 0
+    <IsCampaignMatch>k__BackingField: 1

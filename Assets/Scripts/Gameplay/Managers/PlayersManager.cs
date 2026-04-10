@@ -12,6 +12,7 @@ namespace Gameplay.Managers
         [SerializeField] PlayersSpawner _playersSpawner;
         [SerializeField] Transform[] _spawnPoints;
         [SerializeField] bool oneOnOneForCampaign;
+        [SerializeField] bool justPlayerForCampaign;
 
         readonly List<GameObject> _players = new();
         readonly Dictionary<GameObject, Vector2> _playersPositions = new();
@@ -106,7 +107,11 @@ namespace Gameplay.Managers
 
         void SpawnCampaign()
         {
-            if (oneOnOneForCampaign)
+            if (justPlayerForCampaign)
+            {
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+            }
+            else if (oneOnOneForCampaign)
             {
                 SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
                 SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[1]);

@@ -26,6 +26,9 @@ namespace Gameplay.CharacterComponents.Player
         
         void ChangeVisuals(string controlScheme)
         {
+            if (_playerColors == null || _playerColors.Length < 4)
+                return;
+
             switch (controlScheme)
             {
                 case "KeyboardPlayer1":
