@@ -77,6 +77,10 @@ namespace Gameplay.Managers
             SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[1]);
             SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[2], _controlSchemes[2]);
             SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], _controlSchemes[3]);
+            foreach (var player in _players)
+            {
+                player.GetComponent<AbilityActor>().SetUpPlayersList(_players);
+            }
         }
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)

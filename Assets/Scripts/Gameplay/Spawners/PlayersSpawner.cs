@@ -26,8 +26,16 @@ namespace Gameplay.Spawners
                 ).gameObject;
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
-            
-            go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+
+            bool isRightSide = go.transform.position.x > 0;
+            Team team;
+            if (isRightSide)
+                team = Team.B;
+            else
+                team = Team.A;
+
+                go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+            go.GetComponent<AbilityActor>().SetUp(team, playerType);
 
             return go;
         }
