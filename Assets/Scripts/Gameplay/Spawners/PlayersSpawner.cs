@@ -1,6 +1,7 @@
 using Gameplay.CharacterComponents;
 using Gameplay.CharacterComponents.Cpu;
 using Gameplay.CharacterComponents.Player;
+using Gameplay.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +17,9 @@ namespace Gameplay.Spawners
         [field: SerializeField] public CpuDifficultyPreset CpuDifficultyPreset { get; private set; }
         [field: SerializeField] public DifficultyLevel CurrentDifficulty { get; private set; } = DifficultyLevel.Default;
 
-        
+        public static PlayersSpawner Instance { get; private set; }
+        void Awake() => Instance = this;
+
         public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
         {
             GameObject go = PlayerInput.Instantiate(
@@ -27,7 +30,7 @@ namespace Gameplay.Spawners
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
             
-            go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
 
             return go;
         }
@@ -41,7 +44,7 @@ namespace Gameplay.Spawners
                 );
  
             CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
-            go.GetComponent<Cpu>().SetUp(new CpuConfiguration(
+            go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
                 playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
                 settings
             ));
