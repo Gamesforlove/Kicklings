@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &383635457265683225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7587435894477862068}
+  m_Layer: 8
+  m_Name: BallPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7587435894477862068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383635457265683225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.15, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1634548824086653793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1257592198652363407
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +258,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -369,9 +401,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6100006, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197161903604135438, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: _kickingLegColliders.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197161903604135438, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: '_kickingLegColliders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1634548824090125781}
+    - target: {fileID: 6197161903604135438, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: '_kickingLegColliders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 4697110556926269435}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7587435894477862068}
     - targetCorrespondingSourceObject: {fileID: 5938353695748567, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       insertIndex: 0
       addedObject: {fileID: 3692339245569310085}
@@ -382,6 +433,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9117300563700463119}
+    - targetCorrespondingSourceObject: {fileID: 100018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8709054974698196723}
   m_SourcePrefab: {fileID: 100100000, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
 --- !u!1 &1634548824086165313 stripped
 GameObject:
@@ -469,6 +523,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8709054974698196723}
+        m_TargetAssemblyTypeName: AbilityActor, Assembly-CSharp
+        m_MethodName: OnAbilityPerformed_EVENT
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3eecd853-7f8b-450a-a593-d390f5750c25
+    m_ActionName: 'Gameplay/Ability[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -486,6 +556,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0690b0a4d16a2dd4e94c352d6df0013b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8709054974698196723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634548824086165313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 882b33d31c7c5f2428876627e6713704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <BallPoint>k__BackingField: {fileID: 7587435894477862068}
+  <Player>k__BackingField: {fileID: 9117300563700463119}
+  abilityConfigs:
+  - {fileID: 11400000, guid: 76e41458520c466479029514bd82ec0d, type: 2}
+  BodyColliders: []
+--- !u!4 &1634548824086653793 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+  m_PrefabInstance: {fileID: 1634548824086262259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1634548824090125781 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6100006, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+  m_PrefabInstance: {fileID: 1634548824086262259}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1637636363088314404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5938353695748567, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
@@ -502,3 +599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cceebc1712ed96b4d960a9860bdaf500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &4697110556926269435 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6305154190517888520, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+  m_PrefabInstance: {fileID: 1634548824086262259}
+  m_PrefabAsset: {fileID: 0}
