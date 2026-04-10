@@ -22,8 +22,8 @@ namespace UI.Gameplay
         protected override void Awake()
         {
             base.Awake();
-            _uiViewsManager = GetComponentInParent<UIViewsManager>();
-            _playersSpawner = FindFirstObjectByType<PlayersSpawner>();
+            _uiViewsManager = UIViewsManager.Instance;
+            _playersSpawner = PlayersSpawner.Instance;
         }
 
         void Start()

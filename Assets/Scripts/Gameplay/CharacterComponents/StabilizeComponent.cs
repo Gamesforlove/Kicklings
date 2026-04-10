@@ -23,7 +23,7 @@ namespace Gameplay.CharacterComponents
 
         void FixedUpdate()
         {
-            if (_groundChecks.Any(check => check.IsGrounded))
+            if (_entityData != null && _groundChecks.Any(check => check.IsGrounded))
                 StabilizeRotation(_entityData.StabilizationFactor);
             
             _rigidBody.angularVelocity = Mathf.Clamp(_rigidBody.angularVelocity, -40f, 40f);
