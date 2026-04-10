@@ -22,10 +22,10 @@ namespace Gameplay.Managers
         {
             _leftScore = 0;
             _rightScore = 0;
-            _uiManager.ChangeScore(_leftScore, _rightScore);
-            _playersManager.ResetPlayers();
-            _ballManager.ResetBall();
-            _goalsManager.SetCollidersEnabled(true);
+            _uiManager?.ChangeScore(_leftScore, _rightScore);
+            _playersManager?.ResetPlayers();
+            _ballManager?.ResetBall();
+            _goalsManager?.SetCollidersEnabled(true);
             TimeScaleManager.SetGameplayTimeScale();
         }
 
@@ -38,9 +38,9 @@ namespace Gameplay.Managers
         void Start()
         {
             _match = MatchFlow.Match;
-            _playersManager.SpawnEntities(_match.Settings);
-            _ballManager.SpawnBall();
-            _goalsManager.SetCollidersEnabled(true);
+            _playersManager?.SpawnEntities(_match.Settings);
+            _ballManager?.SpawnBall();
+            _goalsManager?.SetCollidersEnabled(true);
             _leftScore = 0;
             _rightScore = 0;
             TimeScaleManager.SetGameplayTimeScale();
