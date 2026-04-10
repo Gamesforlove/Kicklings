@@ -1,5 +1,6 @@
 using CommonDataTypes;
 using EventBusSystem;
+using TMPro;
 using UI.UiSystem.Core;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace UI.Customization.Countries
         [SerializeField] UIViewsManager _uiViewsManager;
         [SerializeField] CountryCustomizationView _countryCustomizationView;
         [SerializeField] UIView _countrySelectionView;
+        [SerializeField] CountryFacts _countryFacts;
+        [SerializeField] TextMeshProUGUI _countryFactTextBox;
         
         bool _isSelected;
         
@@ -22,6 +25,7 @@ namespace UI.Customization.Countries
         void Start()
         {
             ChangeCountryImage(_teamsData.GetTeamById(0));
+            ChangeCountryFact(_teamsData.GetTeamById(0));
         }
 
         void OnEnable()
@@ -37,9 +41,18 @@ namespace UI.Customization.Countries
         void OnCountryChanged(OnCountryChanged payload)
         {
             if (!_isSelected) return;
-            
+
             ChangeCountryImage(payload.TeamData);
+
+            ChangeCountryFact(payload.TeamData);
+
             _uiViewsManager.HideView(_countrySelectionView);
+        }
+
+        private void ChangeCountryFact(TeamsData.TeamData teamData)
+        {
+            if (_countryFactTextBox && _countryFacts)
+                _countryFactTextBox.text = _countryFacts.GetRandomCountryFactByName(teamData.Name);
         }
 
         void ChangeCountryImage(TeamsData.TeamData teamData)

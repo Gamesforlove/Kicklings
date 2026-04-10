@@ -16,144 +16,240 @@ MonoBehaviour:
   - Id: 0
     Name: ARG
     Icon: {fileID: 21300000, guid: df94767dc2f6e82448b85cbc52e87563, type: 3}
+    ShirtSprite: {fileID: 1988503692, guid: 39d30a38e87f6544f8f6ee675db0abaf, type: 3}
+    CountryColor: {r: 0.5176471, g: 0.69803923, b: 0.8705883, a: 1}
   - Id: 1
     Name: AUS
     Icon: {fileID: 21300000, guid: 4cce0004bfee5a04fa215c7fd2ffc151, type: 3}
+    ShirtSprite: {fileID: -315389461, guid: 889c3ba891c4c7f4783a324696ecf494, type: 3}
+    CountryColor: {r: 0.03137255, g: 0.23529413, b: 0, a: 1}
   - Id: 2
     Name: AUT
     Icon: {fileID: 21300000, guid: bfe2c357e5d235045b26fe314dd1b368, type: 3}
+    ShirtSprite: {fileID: -1331367416, guid: b1acdaae7014e8748b07762ab39a3f16, type: 3}
+    CountryColor: {r: 1, g: 0.9803922, b: 0.9686275, a: 1}
   - Id: 3
     Name: BEL
     Icon: {fileID: 21300000, guid: 663e61202b7b7e64d8c7656ad64a3f90, type: 3}
+    ShirtSprite: {fileID: 346249908, guid: 651dc84395114ca49a865c121bf55037, type: 3}
+    CountryColor: {r: 0.10943389, g: 0.10943389, b: 0.10943389, a: 1}
   - Id: 4
     Name: BRA
     Icon: {fileID: 21300000, guid: de6ce8f242d05c54dab1421a0fe693d8, type: 3}
+    ShirtSprite: {fileID: -7342893226663689644, guid: d9bc98913d7f0894baec4ed665fd55e9, type: 3}
+    CountryColor: {r: 0.2901961, g: 0.50980395, b: 0.19215688, a: 1}
   - Id: 5
     Name: CAN
     Icon: {fileID: 21300000, guid: 0662cddb11b519943acef8c06097dda9, type: 3}
+    ShirtSprite: {fileID: 1814236400, guid: 5d091363637f93e40accef90989a671d, type: 3}
+    CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 6
     Name: CHI
     Icon: {fileID: 21300000, guid: 7f2d00fe3d5dbdf4c9b4b1d650e15e9a, type: 3}
+    ShirtSprite: {fileID: 1223270264, guid: ba6fe2cca7876044a82fb987efdefe0f, type: 3}
+    CountryColor: {r: 0.6666667, g: 0, b: 0, a: 1}
   - Id: 7
     Name: CZE
     Icon: {fileID: 21300000, guid: ab721f222d4e30c48838c79c2742dddd, type: 3}
+    ShirtSprite: {fileID: -1962112123, guid: 9f6e66d7e57dc6844be2a25d0306df93, type: 3}
+    CountryColor: {r: 0, g: 0.057644956, b: 0.4113207, a: 0}
   - Id: 8
     Name: DEN
     Icon: {fileID: 21300000, guid: 1e2fc66e86f09d0449ee8055702762ce, type: 3}
+    ShirtSprite: {fileID: -919300836, guid: 62f0ef3761dce2644bfe9e53ddc637c7, type: 3}
+    CountryColor: {r: 0.64705884, g: 0, b: 0, a: 1}
   - Id: 9
     Name: ESP
     Icon: {fileID: 21300000, guid: 40461b956e32338469a696132166f8d2, type: 3}
+    ShirtSprite: {fileID: -332807047, guid: 96f96a8090a643f4aa9468607d9ac4eb, type: 3}
+    CountryColor: {r: 0.9058824, g: 0.8431373, b: 0.09411766, a: 1}
   - Id: 10
     Name: EST
     Icon: {fileID: 21300000, guid: 3c828d50360f422429cb834a6ecdb3e2, type: 3}
+    ShirtSprite: {fileID: -4752291463086217351, guid: 45af630d33e220e43bf56d1fee44e1a7, type: 3}
+    CountryColor: {r: 0.23529413, g: 0.36862746, b: 0.54901963, a: 1}
   - Id: 11
     Name: FIN
     Icon: {fileID: 21300000, guid: c1b80a47ecf099c4fb7f5fa687e73066, type: 3}
+    ShirtSprite: {fileID: -5129116891530735936, guid: 5184e90af32845944bd49718b172972b, type: 3}
+    CountryColor: {r: 0.6784314, g: 0.74509805, b: 0.7843138, a: 1}
   - Id: 12
     Name: FRA
     Icon: {fileID: 21300000, guid: 3b0a7beaed1641b4d9fadcc99ab835ba, type: 3}
+    ShirtSprite: {fileID: 1133428494, guid: ca23612a1256fe64ca0ecad7e362dc43, type: 3}
+    CountryColor: {r: 0, g: 0.47843137, b: 0.9019608, a: 1}
   - Id: 13
     Name: GBR
     Icon: {fileID: 21300000, guid: a77774c40df89a34792ab96eb0fab2ed, type: 3}
+    ShirtSprite: {fileID: -621482068, guid: 9424367e3ba49354eb8efb93d752f323, type: 3}
+    CountryColor: {r: 0.37647063, g: 0.41176474, b: 0.91372555, a: 1}
   - Id: 14
     Name: GER
     Icon: {fileID: 21300000, guid: 652e0ea8cad0c5846a634ebae56fd97a, type: 3}
+    ShirtSprite: {fileID: -678913239, guid: bd50e2b2e51c843488731b8181066d4a, type: 3}
+    CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 15
     Name: GRE
     Icon: {fileID: 21300000, guid: 0a104cfbf2c69ac4382317c56a4b9ddb, type: 3}
+    ShirtSprite: {fileID: -393763865, guid: 3e2a35c74c008bc4191fab3121d5c41c, type: 3}
+    CountryColor: {r: 0.48235297, g: 0.56078434, b: 0.77647066, a: 1}
   - Id: 16
     Name: HKG
     Icon: {fileID: 21300000, guid: c6e1394c4b4f37f47b01ded56a1c1b82, type: 3}
+    ShirtSprite: {fileID: 6602041516721445457, guid: 973e60fb95ff5b44cbcf1f3cf7889205, type: 3}
+    CountryColor: {r: 0.4431373, g: 0.14509805, b: 0.22352943, a: 1}
   - Id: 17
     Name: HUN
     Icon: {fileID: 21300000, guid: 9ffcce90371e9c443b068876bbb5c662, type: 3}
+    ShirtSprite: {fileID: -1699654445, guid: 8cdb0e77816928140ba674aaa0d96b79, type: 3}
+    CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 18
     Name: INA
     Icon: {fileID: 21300000, guid: 6c6d43fa2826aca4ab4da427b54e84d5, type: 3}
+    ShirtSprite: {fileID: -1844956815, guid: bfb63349db5c39843bdb544d0cc9b895, type: 3}
+    CountryColor: {r: 0.6666667, g: 0, b: 0, a: 1}
   - Id: 19
     Name: IND
     Icon: {fileID: 21300000, guid: 7f64b921d92d1764a95d56056173a092, type: 3}
+    ShirtSprite: {fileID: 8770338165855190925, guid: 8a13f25a1da1c6341ae3fc3a11cdc5c8, type: 3}
+    CountryColor: {r: 0.29803923, g: 0.54509807, b: 0.6901961, a: 1}
   - Id: 20
     Name: IRL
     Icon: {fileID: 21300000, guid: dc42969883ca6ae4b9f70ca843501193, type: 3}
+    ShirtSprite: {fileID: -4676077713329283105, guid: b4f4ddebd810584408a41b542a543031, type: 3}
+    CountryColor: {r: 0.22352943, g: 0.43921572, b: 0.18431373, a: 1}
   - Id: 21
     Name: ISR
     Icon: {fileID: 21300000, guid: 29ca1fef0d91dd6428a4b4d1ca562a5a, type: 3}
+    ShirtSprite: {fileID: -8592250847268943720, guid: 366060973b8a0684ca5930a76227153c, type: 3}
+    CountryColor: {r: 0.22352943, g: 0.3647059, b: 0.54901963, a: 1}
   - Id: 22
     Name: ITA
     Icon: {fileID: 21300000, guid: 233f913d49877044e809c8e516e9cd6f, type: 3}
+    ShirtSprite: {fileID: 2003829969, guid: 7b6ec0410b599de4f81aa6b35d33e046, type: 3}
+    CountryColor: {r: 0, g: 0, b: 0.38823533, a: 1}
   - Id: 23
     Name: JPN
     Icon: {fileID: 21300000, guid: 9ca610e3210f6144f9fe08dc2294b1fa, type: 3}
+    ShirtSprite: {fileID: -755306831, guid: 692dff0d77601bc4380858ac39022311, type: 3}
+    CountryColor: {r: 0.043137256, g: 0.12941177, b: 0.23529413, a: 1}
   - Id: 24
     Name: KOR
     Icon: {fileID: 21300000, guid: c4e3432db2632e74aaf2d93508cea84f, type: 3}
+    ShirtSprite: {fileID: 550798496, guid: 541afd32f3298eb41acd06838c282df5, type: 3}
+    CountryColor: {r: 0.82745105, g: 0, b: 0, a: 1}
   - Id: 25
     Name: KSA
     Icon: {fileID: 21300000, guid: 74c9ad3a971d47c4ba884f077763e66b, type: 3}
+    ShirtSprite: {fileID: -1196413923, guid: 32b5883c71178bb48a2fea2b0a719e3a, type: 3}
+    CountryColor: {r: 0.2392157, g: 0.39607847, b: 0.2392157, a: 1}
   - Id: 26
     Name: LTU
     Icon: {fileID: 21300000, guid: 43b7919aba49bdc48b5940afb8c978c8, type: 3}
+    ShirtSprite: {fileID: -7289935893730319966, guid: 59d5c46166fca3647b47a94de22d415f, type: 3}
+    CountryColor: {r: 0.7960785, g: 0.6156863, b: 0.37647063, a: 1}
   - Id: 27
     Name: MAS
     Icon: {fileID: 21300000, guid: 8cc6c193e4266aa4588ed4e1830ed0b9, type: 3}
+    ShirtSprite: {fileID: -3786628340683635707, guid: e4db855fae32e0248a7b6dc06729f9aa, type: 3}
+    CountryColor: {r: 0.09411766, g: 0.10980393, b: 0.16078432, a: 1}
   - Id: 28
     Name: MEX
     Icon: {fileID: 21300000, guid: 81109e3d71db0d340a915468fc4d3173, type: 3}
+    ShirtSprite: {fileID: -898240259, guid: 67d1de5c24f7ee44ab18cd6e57d6d09d, type: 3}
+    CountryColor: {r: 1, g: 0.9058824, b: 0.8078432, a: 1}
   - Id: 29
     Name: NED
     Icon: {fileID: 21300000, guid: 9d5f05b1d4a9d9548a26ab00202bf9dd, type: 3}
+    ShirtSprite: {fileID: 1139671957, guid: fa69dcf3d40c09b4bb7b5689f76fab52, type: 3}
+    CountryColor: {r: 0.8196079, g: 0.38431376, b: 0.08627451, a: 1}
   - Id: 30
     Name: NOR
     Icon: {fileID: 21300000, guid: ad2c8155ca72caf49a00c1eee68c787b, type: 3}
+    ShirtSprite: {fileID: -1938901745168536630, guid: 802fe3104b4e1b34b991168884c60620, type: 3}
+    CountryColor: {r: 0.38823533, g: 0.20392159, b: 0.2901961, a: 1}
   - Id: 31
     Name: NZL
     Icon: {fileID: 21300000, guid: d5e13a074aad4974e8573b180c089471, type: 3}
+    ShirtSprite: {fileID: -7691610408069362846, guid: bd732bd5011496a41b8149458587ffcc, type: 3}
+    CountryColor: {r: 0.08627451, g: 0.10980393, b: 0.16078432, a: 1}
   - Id: 32
     Name: PAK
     Icon: {fileID: 21300000, guid: 2c2d9e8c62b514a418796c2e250d84c7, type: 3}
+    ShirtSprite: {fileID: 7474425050080620282, guid: b704f1dda1a80144fad715c16864cdbe, type: 3}
+    CountryColor: {r: 0.15294118, g: 0.32941177, b: 0.18431373, a: 1}
   - Id: 33
     Name: PHI
     Icon: {fileID: 21300000, guid: 2d7576bcdcc4f7141a20bac3bc7ad293, type: 3}
+    ShirtSprite: {fileID: -2705501801250411954, guid: acc3740c81f423d42b8306cbda09170d, type: 3}
+    CountryColor: {r: 0.7137255, g: 0.92549026, b: 0.95294124, a: 1}
   - Id: 34
     Name: POL
     Icon: {fileID: 21300000, guid: b90616fe634ecf448ba454982c48befc, type: 3}
+    ShirtSprite: {fileID: -2138632860, guid: c1dc3b62e48e2c04a8e76525d762f560, type: 3}
+    CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 35
     Name: POR
     Icon: {fileID: 21300000, guid: 0b2f84c8ad818b84cba3f432d52385f4, type: 3}
+    ShirtSprite: {fileID: -887299394, guid: e8e310bcc1d6b7647981b2599ff41f34, type: 3}
+    CountryColor: {r: 0.24313727, g: 0.5019608, b: 0.0627451, a: 1}
   - Id: 36
     Name: ROC
     Icon: {fileID: 21300000, guid: 9ff437eec8ad2384baf9bbe492a26608, type: 3}
+    ShirtSprite: {fileID: 5557001849324846069, guid: 0f7d0441737e3244bb67286f7b2ba742, type: 3}
+    CountryColor: {r: 0.64705884, g: 0.18823531, b: 0.19215688, a: 1}
   - Id: 37
     Name: ROU
     Icon: {fileID: 21300000, guid: ef696053722a5b44b93defd867dc3625, type: 3}
+    ShirtSprite: {fileID: 1516594778, guid: 5c53baf5b3a7fd14ebc8a20111b8f7d2, type: 3}
+    CountryColor: {r: 0.6784314, g: 0.75294125, b: 0.30980393, a: 1}
   - Id: 38
     Name: RSA
     Icon: {fileID: 21300000, guid: 70af9d03328086f4db115bf9377246e4, type: 3}
+    ShirtSprite: {fileID: -614041500, guid: 864c52487c737f544aec317e7ccd0a19, type: 3}
+    CountryColor: {r: 0.77647066, g: 0.92549026, b: 0.20000002, a: 1}
   - Id: 39
     Name: SIN
     Icon: {fileID: 21300000, guid: 645942ac953593147b8f53cc92fa083b, type: 3}
+    ShirtSprite: {fileID: -5707271846974475503, guid: 00bb31ed7bdea5a4a9f4fb1a2fb28208, type: 3}
+    CountryColor: {r: 0.6039216, g: 0.24313727, b: 0.20392159, a: 1}
   - Id: 40
     Name: SUI
     Icon: {fileID: 21300000, guid: bc150a6472bb806489083ff3c995d6dc, type: 3}
+    ShirtSprite: {fileID: 68686569, guid: f99dea49f73038c47a0f405fd1ffaf65, type: 3}
+    CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 41
-    Name: USA
-    Icon: {fileID: 21300000, guid: 86a143e2789b07649914534abb0809b9, type: 3}
-  - Id: 42
     Name: SVK
     Icon: {fileID: 21300000, guid: 08361887325ff514884847bd83346add, type: 3}
-  - Id: 43
+    ShirtSprite: {fileID: 1289501815, guid: 97db7af07e669fb48b2c9e5bbeafc19e, type: 3}
+    CountryColor: {r: 0.09411766, g: 0.27058825, b: 0.70980394, a: 1}
+  - Id: 42
     Name: SWE
     Icon: {fileID: 21300000, guid: d98166a15273acb43a6256b07055be8a, type: 3}
-  - Id: 44
+    ShirtSprite: {fileID: -705479417, guid: 61cd929a800bc7649bb3692c54653dc7, type: 3}
+    CountryColor: {r: 0.12941177, g: 0.34901962, b: 0.9058824, a: 1}
+  - Id: 43
     Name: THA
     Icon: {fileID: 21300000, guid: fb792c6485924be46baba20876b77d05, type: 3}
-  - Id: 45
+    ShirtSprite: {fileID: 1930036905, guid: d52076b5b99a12e4d9a1cccaa5035e42, type: 3}
+    CountryColor: {r: 0.03137255, g: 0.043137256, b: 0.18039216, a: 1}
+  - Id: 44
     Name: TUR
     Icon: {fileID: 21300000, guid: 796895f76e934e04d8b4c1d4b71b9091, type: 3}
-  - Id: 46
+    ShirtSprite: {fileID: 1047575602, guid: e2048114c1f5995488ef0dfbe630df73, type: 3}
+    CountryColor: {r: 0.09411766, g: 0, b: 0, a: 1}
+  - Id: 45
     Name: UAE
     Icon: {fileID: 21300000, guid: 859e30362dd79fb4b80e62fe27c75f2b, type: 3}
+    ShirtSprite: {fileID: 1739579714, guid: b3fe024727097c6409c1fd605d9203a4, type: 3}
+    CountryColor: {r: 0.39607847, g: 0.22352943, b: 0.22352943, a: 1}
+  - Id: 46
+    Name: UKR
+    Icon: {fileID: 21300000, guid: eb265585eae899146ac2d186f4609d01, type: 3}
+    ShirtSprite: {fileID: -1179478713, guid: 6667f51ef854c6f48b12639cd21f72cc, type: 3}
+    CountryColor: {r: 1, g: 0.7137255, b: 0.22352943, a: 1}
   - Id: 47
     Name: USA
     Icon: {fileID: 21300000, guid: 86a143e2789b07649914534abb0809b9, type: 3}
+    ShirtSprite: {fileID: 736693566, guid: 9142adffe1d78a741be27c201d506487, type: 3}
+    CountryColor: {r: 0.03137255, g: 0.20392159, b: 0.41960788, a: 1}

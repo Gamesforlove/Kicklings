@@ -2,6 +2,6 @@
 {
     public enum FieldSideType
     {
-        Left, Right
+        Left, Right, None
     }
 }

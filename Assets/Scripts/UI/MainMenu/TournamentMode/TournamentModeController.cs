@@ -63,13 +63,14 @@ namespace UI.MainMenu.TournamentMode
             Bracket playerBracket = Tournament.GetPlayerBracket();
             Participant player = playerBracket.Participants[0];
             Participant rival =  playerBracket.Participants[1];
-            
+
             MatchSettings matchSettings = new MatchSettings.Builder()
                 .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
                 .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
                 .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
                 .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
                 .WithIsTournamentMatch(true)
+                .WithGoalsToEndMatch(5)
                 .Build();
             
             MatchFlow.CreateTournamentMatch(matchSettings, Tournament);

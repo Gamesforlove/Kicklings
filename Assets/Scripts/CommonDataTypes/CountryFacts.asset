@@ -1,0 +1,328 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f7c8d2a27296d45bb7b3833fc30451, type: 3}
+  m_Name: CountryFacts
+  m_EditorClassIdentifier: 
+  Countries:
+  - countryName: ARG
+    facts:
+    - Argentina's offical language is spanish
+    - Argentina is the second largest country in South America
+  - countryName: AUS
+    facts:
+    - Australia is the only country that is also a continent.
+    - "Austrlia has the world\u2019s longest fence: The Dingo Fence, stretching over
+      3,480 miles."
+  - countryName: AUT
+    facts:
+    - Austria's offical language is german
+    - Austria's capital is Vienna
+    - Austria is landlocked, meaning they have no coastline
+    - Austria has the Europe's tallest waterfall, the Krimml falls 1,246 feet (380
+      meters)
+    - Austria has Europe's longest river - the Danube river
+    - Austria borders eight other countries - Germany, Switzerland, Italy, Slovenia,
+      Hungary, Slovakia, Czech Republic and Liechtenstein
+  - countryName: BEL
+    facts:
+    - Belgium has three offical languages - dutch, french, and german
+    - Belgium uses the Euro as it's currency
+    - Belgium is the birth place of fries and saxophone
+    - Belgium has over 1,500 distinct beer types
+    - The comic Tin Tin was developed in Belgium
+  - countryName: BRA
+    facts:
+    - Brazil is the largest coffee and sugarcane in the world
+    - Brazil is the fifth largest country in the world
+    - Brazil touches nearly every country in South America
+  - countryName: CAN
+    facts:
+    - Canada has the longest coastline of any country in the world.
+    - Canada has the largest moose population in the world.
+    - Canada has the largest collection of Inuit Art
+    - Canada is the second largest country
+    - Basketball was born in Canada
+    - Canada still has a monarchy
+    - Canada's national sport is lacrosse
+    - The telephone was invented in Canada
+  - countryName: CHI
+    facts:
+    - Chile is the second longest country in the world
+    - Chile is the fourth largest exporter of wine
+  - countryName: CZE
+    facts:
+    - Czechia has the largest castle in the world
+    - In the 2019, Czechia was ranted the seventh safest country in the world
+    - Czechia's language is Czech
+    - Czechia's official language is the Czech koruna
+  - countryName: DEN
+    facts:
+    - Swans are Denmark's national bird
+    - Denmark hosts 444 islands, only 76 of them are inhabited
+  - countryName: ESP
+    facts:
+    - Spanish is one of the most widely spoken languages in the world
+    - Spain's national anthem has no words
+    - Spain produces approximately 40% of the global production of olive oil
+    - Spain is the birthplace of flamenco
+    - Spain has over 1,000 islands
+    - Spain has four offical languages, besides spain, it's catalan, galician, and
+      basque
+  - countryName: EST
+    facts:
+    - Roughly half of Estonia is covered by forests
+    - Tallinn is Estonia's capital
+    - Wife-carrying is a sport in Estonia
+  - countryName: FIN
+    facts:
+    - Nearly three-quarters of Finland is forested
+    - The inventor of text messaging is Finnish
+  - countryName: FRA
+    facts:
+    - The Eiffel Tower is located in Paris
+    - The statue of liberty originated in france
+    - France has over 1,600 types of cheese
+    - Paris is nicknamed the city of light
+    - The louvre is the most visited musem in the world
+    - Paris is nine times smaller than Berlin
+  - countryName: GBR
+    facts:
+    - Stamps originated in the United Kingdom
+    - London is the capital of United Kingdom
+    - English is the primary language United Kingdom
+    - Christianity is the primary religion of the United Kingdom
+    - Pounds and Pences are the currency of the United Kingdom
+    - Lions are the United Kingdom's national animal
+    - Blue, red, and white are the official colors of the United Kingdom
+  - countryName: GER
+    facts:
+    - In Germany, there are highways that don't have a speed limit
+    - Berlin is nine times bigger than Paris
+    - Germany is the seventh largest European country
+    - German is the fifth most taught language of the world
+    - "The longest German word is Donaudampfschifffahrtselektrizit\xE4tenhauptbetriebswerkbauunterbeamtengesellschaft"
+  - countryName: GRE
+    facts:
+    - Athens has 148 theartical stages
+    - Greek is one of the oldest languages still in use
+    - The Olympic Games were founded in Greece
+    - Greek's tallest mountain is mount olympus
+    - Greece is made up of 80% mountains
+    - Athens is named after the greek goddess, Athena
+    - Greece is the third largest producer of olives
+  - countryName: HKG
+    facts:
+    - Hong Kong is a special administrative region of the People's Republic of China
+    - Hong Kong's official languages is English and Chinese
+    - Hong Kong's main religions are Buddhism and Christianity
+  - countryName: HUN
+    facts:
+    - Hungary has 44 letters in it's alphabet
+    - Hungarian forint is the currency of Hungary
+    - Hungarian is the national language of Hungary
+    - English and German are common foreign languages taught in Hungary
+  - countryName: INA
+    facts:
+    - Komodo Dragons are one of Indonesia's most iconic animals
+    - The world's largest flower, the Rafflesia Arnoldii (also nicknamed the corpse
+      flower), finds it's home in Indonesia
+    - Indonesia layson both sides of the equator
+    - There are around 130 active volcanoes in Indonesia
+  - countryName: IND
+    facts:
+    - India is one of the most populous countries, tied with China, each with over
+      a billion people.
+    - There is no national language of India, but the official languages in the Union
+      are Hindi and English
+    - Indian rupee is the offical currency of india
+  - countryName: IRL
+    facts:
+    - The offical languages of Ireland is irish and english
+    - St. Patrick wasn't actually irish
+    - Halloween originated in Ireland
+    - Count Dracula was wrritten by Bram Stoker, who born in Dublin - the capital
+      of Ireland
+  - countryName: ISR
+    facts:
+    - Israel has 137 beaches
+    - About three quarters of the people who live in isreal are jewish
+  - countryName: ITA
+    facts:
+    - The Roman Empire was born in Italy
+    - Mount Etna, located in Sicily, Italy, is one of Europe's most active volcano
+    - Itally produces around 50 million hectoliters of wine each year
+    - Michelangelo took four years to paint the sistine Chapel
+    - Eyeglasses were invented in Italy
+    - There are over 600 different pasta shapes
+    - The Roman Colosseum is nearly 2,000 years old
+    - There are more than 30 kinds of pizza
+    - Italy has more than 1,500 lakes
+    - Italian is one of the two most similar languages to Latin
+  - countryName: JPN
+    facts:
+    - In Japan, the number four is similar to the word death
+    - Japan's capital is Tokyo
+    - Japan's offical language is Japanese
+  - countryName: KOR
+    facts:
+    - South Korea's official language is Korean
+    - South Korea's currency is South Korea won
+    - South Korea's capital is Seoul
+    - South Korea's main religions are buddhism and christianity
+  - countryName: KSA
+    facts:
+    - Saudi Arabia's official language is Arabic
+    - Saudi Arabia's currency is Riyal
+    - Saudi Arabi's capital is Riyadh
+  - countryName: LTU
+    facts:
+    - Lithuania capital city is Vilnius
+    - Lithuania's major languages are lithuanian, russian, and polish
+    - Lithuani's major religion is christianity
+  - countryName: MAS
+    facts:
+    - Malaysia has over 80,000 islands
+    - Malaysia's offical currency is the Malaysian ringgit
+    - Malay is Malaysia's national language
+  - countryName: MEX
+    facts:
+    - The golden eagle is Mexico's national bird
+    - Color TV was invented in Mexico
+    - Mexico's official language is spanish
+    - Mexico's capital mexico city
+  - countryName: NED
+    facts:
+    - Amsterdam has over 1,200 bridges
+    - One-third of the Netherlands is under sea level
+  - countryName: NOR
+    facts:
+    - Norway's capital is Oslo
+    - "Norway's official languages are Norwegian and S\xE1mi"
+  - countryName: NZL
+    facts:
+    - New Zealand was the first country to grant women the right to vote in 1893.
+    - 'New Zealand has three official languages: English, Te Reo Maori, and New Sealand
+      Sign Language'
+    - New Zealand Sign Language became an official language in 2026.
+    - New Zealand dollar is New Zealand's currency
+  - countryName: PAK
+    facts:
+    - Pakistan's offical languages are Urdu and English
+    - 252 million people lived in Pakistan in 2025
+    - Pakistan's capital city is Islamabad
+    - Pakistan's primary religion is mainly Muslims
+    - The currency of Pakistan is Pakistani rupee
+  - countryName: PHI
+    facts:
+    - Philippines has 7641
+    - The largest pearl was found in the Philippines
+    - Filipino is the official language in the Philippines
+    - The Philippines are the second largest producer of coconut products in the
+      world
+  - countryName: POL
+    facts:
+    - Vodka originated in Poland
+    - Poland has one of the world's oldest salt mines
+    - In Poland, if a couple has been married for 50 years, they get a reward from
+      the government
+  - countryName: POR
+    facts:
+    - Portugal is the world's largest cork producer
+    - Portugal's main religion is Christianity
+    - Portugal's capital is Lisbon
+    - Portugal's offical language is Portuguese
+  - countryName: ROC
+    facts:
+    - Bubble tea was inveted in Taiwan
+    - Cat cafes started in Taiwan
+    - Taiwan is only officially recognized by 13 countries
+    - Taiwan has it's one calander, with its year zero being 1912
+  - countryName: ROU
+    facts:
+    - "Romania comes from the latin word \u201CRomanus\u201D which means \u201Ccitizen
+      of the Roman Empire.\u201D"
+    - Romania's official language us Romanian
+    - Romania's main religion is christianity
+  - countryName: RSA
+    facts:
+    - South Africa has 12 offical languages
+    - South Africa has three capital cities
+  - countryName: SIN
+    facts:
+    - Singapore's offical languages are English, Malay, Singaporean, Mandarin, and
+      Tamil
+    - Singapore is both a country and a city as it's capital is singapore
+    - Singapore's currency is singapore dollar
+    - Singapore is 284.1 square miles (735.7 square kilometers)
+    - Singapore's main religions are buddhism, christianity, islam, taoism, and hinduism
+  - countryName: SUI
+    facts:
+    - Switzerland has four offical languages. German, italian, french, and romansh
+    - Switzerland has been neutral since 1516
+    - Switzerland's currency is the Swiss franc
+  - countryName: SVK
+    facts:
+    - Slovakia's capital, Bratislava, borders two countries - Austria and Hungary
+    - Slovaki's offical language is Slovak
+    - Slovaki's currency is the Euro
+  - countryName: SWE
+    facts:
+    - Sweden's capital is stockholm
+    - Sweden's offical language is swedish
+    - In 2024, Sweden had twice the population of Norway
+    - Sweden's main language is Swedish
+    - 'Sweden has five offical minority languages: Sami, Finnish, Meankieli, Yiddish,
+      and Romani Chib'
+    - Sweden's main religion is The Church of Sweden is Evangelical Lutheran - but
+      there are many other religious and faiths
+    - Sweden's currency is the Swedish Krona
+  - countryName: THA
+    facts:
+    - Thailand has 1420 islands
+    - Thailand's capital is bangkok
+    - Baht is Thailand's currency
+    - Thailand's main religion is buddhism
+  - countryName: TUR
+    facts:
+    - Turkey uses a latin based alphabet
+    - Turkey's capital is ankara
+    - Turkish is Turkey's offical language
+    - Turkey's currency is Turkish lira
+    - Troy is located in Turkey
+    - Turkey uses the Turkish Iira as it's currency
+    - Turkish is Turkey's offical language
+  - countryName: UAE
+    facts:
+    - United Arab Emirates's offical language is Arabic
+    - United Arab Emirates's currency is the United Arab Emirates Dirham
+  - countryName: USA
+    facts:
+    - Alaska is the largest state in the United States
+    - English is the second most common language spoken in the United States
+    - The first people to walk on the moon are from the united states
+    - The Statue of Liberty was a gift to the united states from France
+    - The united states is the third most populous country in the world after India
+      and China.
+    - There are 50 states in the united states
+    - Washington DC, the capital of the united states, is not a state
+    - 'The united states holds several territories: Puerto Rico, Guam, U.S. Virgin
+      Islands, American Samoa, and the Northern Mariana Islands.'
+    - The united states uses the Fahrenheit temperature system
+    - People from the united states write the date as Month/Day/Year instead of Day/Month/Year
+    - The united states has over 400 national parks
+    - Alcohol is not legal to drink in the united states until age 21
+    - The most common language spoken in the united states is English
+  - countryName: UKR
+    facts:
+    - The Trembita, a traditional Ukrainian alpine horn, is the world's longest musical
+      wind instrument
+    - Ukraine is the largest country located entirely in Europe.

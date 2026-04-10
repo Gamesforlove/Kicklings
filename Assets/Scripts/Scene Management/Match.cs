@@ -47,7 +47,7 @@ namespace Scene_Management
         {
             _tournament = tournament;
         }
-
+        public bool IsTournamentWinner { get; private set; }
         public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
         {
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
@@ -55,7 +55,10 @@ namespace Scene_Management
             if (!IsPlayerWinner)
                 uiManager.ShowTournamentKnockOutView();
             else if (_tournament.CurrentRound.IsLastRound())
+            {
                 uiManager.ShowTournamentWinnerView();
+                IsTournamentWinner = true;
+            }
             else
                 matchManager.EndGame();
         }

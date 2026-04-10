@@ -13,6 +13,8 @@ namespace CommonDataTypes
             public int Id;
             public string Name;
             public Sprite Icon;
+            public Sprite ShirtSprite;
+            public Color CountryColor;
         }
         
         public List<TeamData> Teams;

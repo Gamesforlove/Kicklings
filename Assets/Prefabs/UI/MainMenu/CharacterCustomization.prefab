@@ -1196,7 +1196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4512913527105548897
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2418,9 +2418,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
   _fieldSideType: 0
-  _shirtImage: {fileID: 7025194256165088701}
+  _shirtImage: {fileID: 4820772040598444025}
+  _shirtPatternImage: {fileID: 0}
   _shoesLeftImage: {fileID: 4601737017086220434}
   _shoesRightImage: {fileID: 3182101409993182155}
+  _leftSleeveImage: {fileID: 1186542499088731627}
+  _rightSleeveImage: {fileID: 2156529917543345522}
+  _leftShortSockImage: {fileID: 3140385408322484319}
+  _rightShortSockImage: {fileID: 1926716928119864603}
 --- !u!1 &6965556509366949161
 GameObject:
   m_ObjectHideFlags: 0
@@ -2480,7 +2485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.60784316, g: 1, b: 0.227451, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2525,9 +2530,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4393576793898726154}
   - {fileID: 4512913527105548803}
   - {fileID: 4512913527105548815}
+  - {fileID: 4393576793898726154}
   m_Father: {fileID: 4518251822195775858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

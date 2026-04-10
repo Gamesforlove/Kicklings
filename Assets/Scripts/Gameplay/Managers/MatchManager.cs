@@ -1,8 +1,9 @@
-using System;
-using System.Collections;
 using CommonDataTypes;
+using DG.Tweening;
 using EventBusSystem;
 using Scene_Management;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -31,6 +32,8 @@ namespace Gameplay.Managers
 
         public void EndGame()
         {
+            DOTween.KillAll();
+
             TimeScaleManager.SetDefaultTimeScale();
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }

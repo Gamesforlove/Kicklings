@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 861873555795257794, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b
-      value: 0.3764706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 861873555795257794, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.g
-      value: 0.3764706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 861873555795257794, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.r
-      value: 0.3764706
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472177682611, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Name
@@ -126,15 +126,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730395, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730395, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.g
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730395, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.r
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730395, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_SortingOrder
@@ -174,15 +174,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730403, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730403, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.g
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730403, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.r
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730403, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_SortingOrder
@@ -190,15 +190,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730405, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730405, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.g
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730405, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.r
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730407, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b
@@ -226,15 +226,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730413, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730413, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.g
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730413, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.r
-      value: 0.3764706
+      value: 0.27450982
       objectReference: {fileID: 0}
     - target: {fileID: 1178916472198730415, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
       propertyPath: m_Color.b

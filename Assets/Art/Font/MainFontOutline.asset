@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: MainFont
+  m_Name: MainFontOutline
   m_EditorClassIdentifier: 
   m_Version: 1.1.0
   m_FaceInfo:
@@ -2572,7 +2572,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _OutlineWidth: 0
+    - _OutlineWidth: 0.581
     - _UnderlayDilate: 0
     m_Colors:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}

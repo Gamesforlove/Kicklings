@@ -67,18 +67,37 @@ namespace Gameplay.CharacterComponents
 
             if (isRightSide)
             {
+                if (!MatchFlow.Match.Settings.IsTournamentMatch)
+                    SetClothesFreeMode(isRightSide);
+                else
+                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.RightCountryImageIndex);
+            }
+            else
+            {
+                if (!MatchFlow.Match.Settings.IsTournamentMatch)
+                    SetClothesFreeMode(isRightSide);
+                else
+                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.LeftCountryImageIndex);
+            }
+        }
+
+        private void SetClothesFreeMode(bool isRightSide)
+        {
+            if (isRightSide)
+            {
                 ClothesSetter.SetClothes(
-                    MatchFlow.Match.Settings.RightSideShirtIndex,
-                    MatchFlow.Match.Settings.RightSideShoesIndex
+                MatchFlow.Match.Settings.RightSideShirtIndex,
+                MatchFlow.Match.Settings.RightSideShoesIndex
                 );
             }
             else
             {
                 ClothesSetter.SetClothes(
-                    MatchFlow.Match.Settings.LeftSideShirtIndex,
-                    MatchFlow.Match.Settings.LeftSideShoesIndex
+                MatchFlow.Match.Settings.LeftSideShirtIndex,
+                MatchFlow.Match.Settings.LeftSideShoesIndex
                 );
             }
+
         }
     }
 }
