@@ -11,7 +11,10 @@ namespace Gameplay.Managers
     {
         [SerializeField] PlayersSpawner _playersSpawner;
         [SerializeField] Transform[] _spawnPoints;
-    
+
+        public static PlayersManager Instance { get; private set; }
+        void Awake() => Instance = this;
+
         readonly List<GameObject> _players = new();
         readonly Dictionary<GameObject, Vector2> _playersPositions = new();
         List<InputControlScheme> _controlSchemes = new();

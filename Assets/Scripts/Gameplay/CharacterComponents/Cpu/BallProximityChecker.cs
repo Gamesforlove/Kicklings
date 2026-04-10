@@ -49,7 +49,7 @@ namespace Gameplay.CharacterComponents.Cpu
         {
             if (!Application.isPlaying || _proximityPoints == null) return;
 
-            BallScript ball = FindFirstObjectByType<BallManager>()?.Ball;
+            BallScript ball = BallManager.Instance?.Ball;
             if (!ball) return;
 
             float speedMultiplier = ball.Rigidbody.linearVelocity.magnitude / _speedNormalization;
