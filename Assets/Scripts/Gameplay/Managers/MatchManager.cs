@@ -13,6 +13,7 @@ namespace Gameplay.Managers
         [SerializeField] PlayersManager _playersManager;
         [SerializeField] BallManager _ballManager;
         [SerializeField] GoalsManager _goalsManager;
+        [SerializeField] AbilityTestingManager _abilityTestingManager;
         
         Match _match;
 
@@ -38,6 +39,7 @@ namespace Gameplay.Managers
         {
             _match = MatchFlow.Match;
             _playersManager.SpawnEntities(_match.Settings);
+            _abilityTestingManager.SetUpAbilityActors(_playersManager.GetAbilityActors());
             _ballManager.SpawnBall();
             _goalsManager.SetCollidersEnabled(true);
             _leftScore = 0;

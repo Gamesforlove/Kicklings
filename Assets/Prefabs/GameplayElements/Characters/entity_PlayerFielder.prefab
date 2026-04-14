@@ -570,6 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BallPoint>k__BackingField: {fileID: 7587435894477862068}
   <Player>k__BackingField: {fileID: 9117300563700463119}
+  <TestingAbility>k__BackingField: 1
   abilityConfigs:
   - {fileID: 11400000, guid: 76e41458520c466479029514bd82ec0d, type: 2}
   BodyColliders: []

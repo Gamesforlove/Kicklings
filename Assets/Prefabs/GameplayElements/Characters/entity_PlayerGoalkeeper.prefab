@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8709054974698196723, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
       propertyPath: abilityConfigs.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8709054974698196723, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
       propertyPath: <BallPoint>k__BackingField
@@ -228,6 +228,10 @@ PrefabInstance:
       propertyPath: 'abilityConfigs.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 171446f4c549ca14d8818bbecb0291ed, type: 2}
+    - target: {fileID: 8709054974698196723, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
+      propertyPath: 'abilityConfigs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 76e41458520c466479029514bd82ec0d, type: 2}
     - target: {fileID: 8932576229432364334, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
       propertyPath: m_AngleLimits.m_LowerAngle
       value: -5

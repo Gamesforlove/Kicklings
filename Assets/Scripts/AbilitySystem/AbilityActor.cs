@@ -14,7 +14,7 @@ public class AbilityActor : MonoBehaviour
     public Team Team { get; private set; }
     [field:SerializeField] public Transform BallPoint { get; private set; }
     [field: SerializeField] public Player Player { get; private set; }
-
+    [field: SerializeField] public AbilityName TestingAbility { get; set; }
     public bool PerformingAbility { get; private set; } = false;
 
     public event Action BallTouched;
@@ -54,7 +54,13 @@ public class AbilityActor : MonoBehaviour
     }
     public async void ExecuteAbility(AbilityName abilityName, AbilityExecutionContext context)
     {
-        Debug.Log($"{gameObject.name} uses *{abilityName.ToString()}* ability!");
+        if (!abilities.ContainsKey(abilityName))
+        {
+            Debug.Log($"{gameObject.name} doesn't have *{abilityName.ToString()}* ability!");
+            return;
+        }
+
+        Debug.Log($"{gameObject.name} begins *{abilityName.ToString()}* ability!");
         if (PerformingAbility)
         {
             Debug.Log($"{gameObject.name} is performing ability!");
@@ -70,7 +76,7 @@ public class AbilityActor : MonoBehaviour
     }
     public void OnAbilityPerformed_EVENT(InputAction.CallbackContext context)
     {
-        if (context.performed) ExecuteAbility(abilities.Keys.First(), this.context);
+        if (context.performed) ExecuteAbility(TestingAbility, this.context);
     }
     public void SetUp(Team team, PlayerType playerType)
     {

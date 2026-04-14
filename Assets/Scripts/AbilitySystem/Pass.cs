@@ -37,6 +37,7 @@ public class Pass : IAbility
 
 
         ctx.Ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        ctx.Ball.Rigidbody.linearVelocity = Vector2.zero;
         ctx.Ball.Collider.enabled = false;
 
         while (progress < 1)
