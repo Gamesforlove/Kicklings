@@ -15,6 +15,7 @@ namespace Gameplay.CharacterComponents
         CountdownTimer _jumpCdTimer;
         
         [SerializeField] GameObject _kickingLeg;
+        [SerializeField] Collider2D[] _kickingLegColliders;
         [SerializeField] GroundCheck[] _groundChecks;
     
         Rigidbody2D _rigidbody;
@@ -67,12 +68,21 @@ namespace Gameplay.CharacterComponents
             _jumpCdTimer.Start();
         }
 
-        void Kick()
+        public void Kick()
         {
             ApplyKickingPower(-1);
         }
-
-        void ReturnLeftLegToOriginalPosition()
+        public void DisableKickingLeg()
+        {
+            foreach (Collider2D collider in _kickingLegColliders)
+                collider.enabled = false;
+        }
+        public void EnableKickingLeg()
+        {
+            foreach (Collider2D collider in _kickingLegColliders)
+                collider.enabled = true;
+        }
+        public void ReturnLeftLegToOriginalPosition()
         {
             ApplyKickingPower(1);
         }

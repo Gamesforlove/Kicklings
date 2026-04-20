@@ -19,6 +19,8 @@ namespace Gameplay.Managers
         readonly Dictionary<GameObject, Vector2> _playersPositions = new();
         List<InputControlScheme> _controlSchemes = new();
         MatchSettings _matchSettings;
+        private List<AbilityActor> abilityActors = new();
+
 
         void Start()
         {
@@ -80,6 +82,12 @@ namespace Gameplay.Managers
             SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[1]);
             SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[2], _controlSchemes[2]);
             SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], _controlSchemes[3]);
+            foreach (var player in _players)
+            {
+                var abilityActor = player.GetComponent<AbilityActor>();
+                abilityActor.SetUpPlayersList(_players);
+                abilityActors.Add(abilityActor);
+            }
         }
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
@@ -104,7 +112,9 @@ namespace Gameplay.Managers
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
             }
         }
-
-    
+        public IReadOnlyList<AbilityActor> GetAbilityActors()
+        {
+            return abilityActors.AsReadOnly();
+        }
     }
 }

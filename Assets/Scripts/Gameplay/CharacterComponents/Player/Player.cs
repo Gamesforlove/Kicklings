@@ -5,7 +5,7 @@ namespace Gameplay.CharacterComponents.Player
 {
     public class Player : Entity
     {
-        PlayerActions _playerActions;
+        public PlayerActions _playerActions { get; private set; }
 
         void Awake()
         {
