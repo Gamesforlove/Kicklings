@@ -37,8 +37,8 @@ namespace Gameplay.Spawners
             else
                 team = Team.A;
 
-                go.GetComponent<Player>().SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
-            go.GetComponent<AbilityActor>().SetUp(team, playerType);
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+            go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
 
             return go;
         }

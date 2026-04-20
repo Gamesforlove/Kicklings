@@ -15,14 +15,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a9379796119d1be39a4a3b7ad5270ca4bd24aaa0"
+      "hash": "c028a6e804b73c4690d4f23298ba9ad20195d136"
     },
     "com.invictus.art.tournament": {
       "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a9379796119d1be39a4a3b7ad5270ca4bd24aaa0"
+      "hash": "c028a6e804b73c4690d4f23298ba9ad20195d136"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",
@@ -212,6 +212,13 @@
     "com.unity.nuget.mono-cecil": {
       "version": "1.11.5",
       "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.2",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
