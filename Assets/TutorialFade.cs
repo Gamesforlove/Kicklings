@@ -2,27 +2,20 @@ using UnityEngine;
 using System.Collections;
 public class TutorialFade : MonoBehaviour
 {
-    [SerializeField] private float InitialDelay;
     [SerializeField] private CanvasGroup canvasGroup;
-
+    
     private void Awake()
     {
         if (canvasGroup != null)
             canvasGroup.alpha = 0f;
     }
 
-    void Start()
+    public void FadeIn() => StartCoroutine(fadeInRoutine());
+    IEnumerator fadeInRoutine()
     {
-        if (canvasGroup != null)
-            StartCoroutine(fadeIn());
-    }
-
-    IEnumerator fadeIn()
-    {
-        yield return new WaitForSeconds(InitialDelay);
         while (canvasGroup != null && canvasGroup.alpha < 1f && !fadingOut)
         {
-            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.unscaledDeltaTime * 0.8f);
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, 1f, Time.unscaledDeltaTime * 1.2f);
             yield return null;
         }
     }

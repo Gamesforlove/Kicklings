@@ -47,10 +47,12 @@ namespace Gameplay.CharacterComponents
             else if (context.canceled) OnActionCancelled();
         }
 
+        public bool CanKick { get; set; } = true;
+
         public void OnActionPerformed()
         {
             Kick();
-            if (_groundChecks.Any(gc =>  gc.IsGrounded) && !_jumpOnCd)
+            if (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd)
                 Jump();
         }
 

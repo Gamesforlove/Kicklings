@@ -20,8 +20,10 @@ namespace Gameplay.Managers
         MatchSettings _matchSettings;
         bool campaign;
 
+        public static PlayersManager Instance { get; private set; }
         void Awake()
         {
+            Instance = this;
             InputActionAsset actionAsset = InputSystem.actions;
 
             foreach (InputControlScheme scheme in actionAsset.controlSchemes)
@@ -134,6 +136,16 @@ namespace Gameplay.Managers
             }
         }
 
-    
+        public List<GameObject> Players { get => _players; }
+        public List<PlayerActions> GetPlayerActions()
+        {
+            List<PlayerActions> allPlayerActions = new List<PlayerActions>();
+            foreach (var player in _players)
+            {
+                var actions = player.GetComponent<PlayerActions>();
+                if (actions != null) allPlayerActions.Add(actions);
+            }
+            return allPlayerActions;
+        }
     }
 }
