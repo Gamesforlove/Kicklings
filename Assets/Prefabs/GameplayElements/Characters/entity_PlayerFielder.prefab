@@ -403,11 +403,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400038, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_LocalScale.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400042, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_LocalScale.y
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 21200016, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_SortingOrder

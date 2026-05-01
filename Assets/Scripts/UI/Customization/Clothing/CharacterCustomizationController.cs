@@ -3,6 +3,7 @@ using EventBusSystem;
 using Scene_Management;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 using UnityEngine.UI;
 using static CommonDataTypes.TeamsData;
@@ -14,21 +15,30 @@ namespace UI.Customization.Clothing
         public int ShirtIndex { get; private set; } 
         public int ShoesIndex { get; private set; }
         public int CountryIndex { get; private set; }
+        [field: SerializeField] public Gradient SkinTone { get; private set; }
+        [field: SerializeField, Range(0, 1)] public float SkinToneValue { get; private set; }
         
         [SerializeField] CharacterCustomizationImages _customizationImages;
         [SerializeField] FieldSideType  _fieldSideType;
         [SerializeField] Image _shirtImage, _shirtPatternImage, _shoesLeftImage, _shoesRightImage, _leftSleeveImage, 
-        _rightSleeveImage, _leftShortSockImage, _rightShortSockImage;
+        _rightSleeveImage, _leftShortSockImage, _rightShortSockImage, _leftArmFleshImage, _rightArmFleshImage, 
+        _leftLegFleshImage, _rightLegFleshImage, _faceImage;
 
         void Start()
         {
 /*            ChangeShirt(0);
             ChangeShoes(0);*/
         }
+        private void OnValidate()
+        {
+            //ChangeSkinTone(SkinToneValue);
+        }
         private void OnEnable()
         {
+            SetUpSkinTone();
             EventBus<OnCountryChanged>.OnEvent += OnCountyChanged;
         }
+
         private void OnDisable()
         {
             EventBus<OnCountryChanged>.OnEvent -= OnCountyChanged;
@@ -69,14 +79,39 @@ namespace UI.Customization.Clothing
                 return;
             if (evt.LastSelectedFieldSideType == FieldSideType.None)
             {
-                _shirtImage.sprite = evt.TeamData.ShirtSprite;
-                _leftSleeveImage.color = evt.TeamData.CountryColor;
-                _rightSleeveImage.color = evt.TeamData.CountryColor;
-                _leftShortSockImage.color = evt.TeamData.CountryColor;
-                _rightShortSockImage.color = evt.TeamData.CountryColor;
+                SetCountryOutfit(evt.TeamData);
 
                 CountryIndex = evt.TeamData.Id;
             }
+        }
+
+        public void SetCountryOutfit(TeamData teamData)
+        {
+            _shirtImage.sprite = teamData.ShirtSprite;
+            _leftSleeveImage.color = teamData.CountryColor;
+            _rightSleeveImage.color = teamData.CountryColor;
+            _leftShortSockImage.color = teamData.CountryColor;
+            _rightShortSockImage.color = teamData.CountryColor;
+        }
+        public void ChangeSkinTone(float skinToneValue)
+        {
+            _leftArmFleshImage.color = SkinTone.Evaluate(skinToneValue);
+            _rightArmFleshImage.color = SkinTone.Evaluate(skinToneValue);
+            _leftLegFleshImage.color = SkinTone.Evaluate(skinToneValue);
+            _rightLegFleshImage.color = SkinTone.Evaluate(skinToneValue);
+            _faceImage.color = SkinTone.Evaluate(skinToneValue);
+        }
+        private void SetUpSkinTone()
+        {
+            var m_Scene = SceneManager.GetActiveScene();
+            string sceneName = m_Scene.name;
+            if (sceneName == "Gameplay")
+            {
+                ChangeSkinTone(MatchFlow.Match.Settings.LeftSkinToneValue);
+                return;
+            }
+            SkinToneValue = Random.Range(0, 1.0f);
+            ChangeSkinTone(SkinToneValue);
         }
     }
 }

@@ -129,6 +129,8 @@ MonoBehaviour:
     Id: 0
     Name: 
     Icon: {fileID: 0}
+    ShirtSprite: {fileID: 0}
+    CountryColor: {r: 0, g: 0, b: 0, a: 0}
   _countryImage: {fileID: 0}
   _countriesImages: {fileID: 0}
 --- !u!1 &428364333984614632
@@ -1222,6 +1224,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1537,8 +1540,13 @@ MonoBehaviour:
   _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
   _fieldSideType: 0
   _shirtImage: {fileID: 950772459540085608}
+  _shirtPatternImage: {fileID: 0}
   _shoesLeftImage: {fileID: 6022426611511021127}
   _shoesRightImage: {fileID: 4640478004800134430}
+  _leftSleeveImage: {fileID: 0}
+  _rightSleeveImage: {fileID: 0}
+  _leftShortSockImage: {fileID: 0}
+  _rightShortSockImage: {fileID: 0}
 --- !u!1 &4783992239030402351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,8 +1752,13 @@ MonoBehaviour:
   _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
   _fieldSideType: 0
   _shirtImage: {fileID: 7842549228173110577}
+  _shirtPatternImage: {fileID: 0}
   _shoesLeftImage: {fileID: 4165651862585074221}
   _shoesRightImage: {fileID: 4251112920967252286}
+  _leftSleeveImage: {fileID: 0}
+  _rightSleeveImage: {fileID: 0}
+  _leftShortSockImage: {fileID: 0}
+  _rightShortSockImage: {fileID: 0}
 --- !u!1 &5014225596507205477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,6 +1926,8 @@ MonoBehaviour:
     Id: 0
     Name: 
     Icon: {fileID: 0}
+    ShirtSprite: {fileID: 0}
+    CountryColor: {r: 0, g: 0, b: 0, a: 0}
   _countryImage: {fileID: 4133117717928092752}
   _countriesImages: {fileID: 11400000, guid: 8c2ec60c7d0dd284a9fc470081db8ae6, type: 2}
 --- !u!1 &5499150178653042164
@@ -2032,6 +2047,9 @@ MonoBehaviour:
   _raysTransform: {fileID: 3779981619446091190}
   _character1Transform: {fileID: 5979474498698891175}
   _character2Transform: {fileID: 6498433134800806134}
+  _customization1: {fileID: 911957722045654691}
+  _customization2: {fileID: 1205806498642656516}
+  _teamsData: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
 --- !u!1 &5710164520950504887
 GameObject:
   m_ObjectHideFlags: 0

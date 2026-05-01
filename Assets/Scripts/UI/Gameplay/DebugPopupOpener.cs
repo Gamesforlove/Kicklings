@@ -7,8 +7,8 @@ namespace UI.Gameplay
     {
         UIViewsManager _uiViewsManager;
         [SerializeField] GameplayDebugPopup _popup;
-    
-        void Awake()
+
+        void Start()
         {
             _uiViewsManager = UIViewsManager.Instance;
             if (_popup == null)

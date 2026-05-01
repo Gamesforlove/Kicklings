@@ -84,6 +84,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: entity_PlayerGoalkeeper
       objectReference: {fileID: 0}
+    - target: {fileID: 1634548824086653781, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
+      propertyPath: m_LocalScale.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634548824086653785, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
+      propertyPath: m_LocalScale.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1634548824086653793, guid: 48b01894ec6c43c4a98617233f7778de, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

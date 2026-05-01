@@ -154,7 +154,7 @@ MonoBehaviour:
   - countryName: ISR
     facts:
     - Israel has 137 beaches
-    - About three quarters of the people who live in isreal are jewish
+    - About three quarters of the people who live in israel are jewish
   - countryName: ITA
     facts:
     - The Roman Empire was born in Italy
@@ -223,7 +223,6 @@ MonoBehaviour:
     - The currency of Pakistan is Pakistani rupee
   - countryName: PHI
     facts:
-    - Philippines has 7641
     - The largest pearl was found in the Philippines
     - Filipino is the official language in the Philippines
     - The Philippines are the second largest producer of coconut products in the

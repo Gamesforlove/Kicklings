@@ -70,14 +70,14 @@ namespace Gameplay.CharacterComponents
                 if (!MatchFlow.Match.Settings.IsTournamentMatch)
                     SetClothesFreeMode(isRightSide);
                 else
-                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.RightCountryImageIndex);
+                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.RightCountryImageIndex, MatchFlow.Match.Settings.RightSkinToneValue);
             }
             else
             {
                 if (!MatchFlow.Match.Settings.IsTournamentMatch)
                     SetClothesFreeMode(isRightSide);
                 else
-                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.LeftCountryImageIndex);
+                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.LeftCountryImageIndex, MatchFlow.Match.Settings.LeftSkinToneValue);
             }
         }
 
@@ -87,14 +87,16 @@ namespace Gameplay.CharacterComponents
             {
                 ClothesSetter.SetClothes(
                 MatchFlow.Match.Settings.RightSideShirtIndex,
-                MatchFlow.Match.Settings.RightSideShoesIndex
+                MatchFlow.Match.Settings.RightSideShoesIndex,
+                MatchFlow.Match.Settings.RightSkinToneValue
                 );
             }
             else
             {
                 ClothesSetter.SetClothes(
                 MatchFlow.Match.Settings.LeftSideShirtIndex,
-                MatchFlow.Match.Settings.LeftSideShoesIndex
+                MatchFlow.Match.Settings.LeftSideShoesIndex,
+                MatchFlow.Match.Settings.LeftSkinToneValue
                 );
             }
 

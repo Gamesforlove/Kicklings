@@ -12,6 +12,7 @@ TagManager:
   - Goal
   - Player Out
   - Ball
+  - Entity
   layers:
   - Default
   - TransparentFX
