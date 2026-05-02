@@ -23,9 +23,10 @@ namespace Gameplay.Spawners
             _ball.transform.position = _leftSidePosition.position;
         }
 
+        public bool OnlyPutOnLeft;
         public void ResetBallOnSide(FieldSideType sideType)
         {
-            if (sideType == FieldSideType.Left)
+            if (sideType == FieldSideType.Left || OnlyPutOnLeft)
                 _ball.transform.position = _leftSidePosition.position;
             else if (sideType == FieldSideType.Right)
                 _ball.transform.position = _rightSidePosition.position;

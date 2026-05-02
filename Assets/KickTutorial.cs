@@ -16,31 +16,48 @@ public class KickTutorial : MonoBehaviour
     void Start()
     {
         StartCoroutine(kickTutorialRoutine());
-        playerActions = PlayersManager.Instance?.GetPlayerActions();
     }
 
+    KeyCode kick = KeyCode.Z;
     IEnumerator kickTutorialRoutine()
     {
         yield return null;
+        playerActions = PlayersManager.Instance?.GetPlayerActions();
         ToggleKickAllowed(false);
+        ToggleForceKickToHold(true);
         yield return new WaitForSeconds(InitialDelay);
         BallScript ball = BallManager.Instance?.Ball;
         const float dist = 0.6f;
-        while (ball != null && !Input.GetKeyDown(KeyCode.Z) && Vector2.Distance(ball.transform.position, transform.position) > dist)
+        const float slowdownSpeed = 0.65f;
+        bool kicked = false;
+        while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && */Vector2.Distance(ball.transform.position, transform.position) > dist && Time.timeScale > 0f)
         {
-            Time.timeScale = Mathf.MoveTowards(Time.timeScale, 0f, Time.unscaledDeltaTime * 0.65f);
+            if (Time.timeScale < 0.05f && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
+            {
+                ToggleKickAllowed(true);
+                ScriptedKick();
+                kicked = true;
+                break;
+            }
+            Time.timeScale = Mathf.MoveTowards(Time.timeScale, 0f, Time.unscaledDeltaTime * slowdownSpeed);
             yield return null;
         }
 
-        TutorialFade?.FadeIn();
-        ToggleKickAllowed(true);
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
+        if (!kicked)
+        {
+            ToggleKickAllowed(true);
+            TutorialFade?.FadeIn();
+            yield return new WaitUntil(() => (Input.GetKeyDown(kick) || Input.GetKey(kick)));
+        }
+        yield return new WaitForSecondsRealtime(0.3f);
+        ToggleForceKickToHold(false);
         onTutorialDone?.Invoke();
         TutorialFade?.FadeOut();
 
+        const float speedup = 2f;
         while (Time.timeScale < 1f)
         {
-            Time.timeScale = Mathf.MoveTowards(Time.timeScale, 1f, Time.unscaledDeltaTime * 2f);
+            Time.timeScale = Mathf.MoveTowards(Time.timeScale, 1f, Time.unscaledDeltaTime * speedup);
             yield return null;
         }
     }
@@ -53,6 +70,30 @@ public class KickTutorial : MonoBehaviour
             {
                 if (playerAction != null)
                     playerAction.CanKick = allowed;
+            }
+        }
+    }
+
+    void ToggleForceKickToHold(bool force)
+    {
+        if (playerActions != null)
+        {
+            foreach (PlayerActions playerAction in playerActions)
+            {
+                if (playerAction != null)
+                    playerAction.ForcedToHoldKick = force;
+            }
+        }
+    }
+
+    void ScriptedKick()
+    {
+        if (playerActions != null)
+        {
+            foreach (PlayerActions playerAction in playerActions)
+            {
+                if (playerAction != null)
+                    playerAction.ScriptedKick();
             }
         }
     }

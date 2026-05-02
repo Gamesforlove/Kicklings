@@ -2659,6 +2659,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6100004, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
+      propertyPath: m_Size.y
+      value: 6.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100004, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100006, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
+      propertyPath: m_Size.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100006, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100008, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
+      propertyPath: m_Size.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100008, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 7143527826232429926, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}
       propertyPath: _scoredSideData
       value: 
@@ -3403,6 +3427,7 @@ MonoBehaviour:
   _leftSidePosition: {fileID: 1554996727}
   _rightSidePosition: {fileID: 1423391567}
   _ballPrefab: {fileID: 100004, guid: f847417e53b4a824abb1e6990987c385, type: 3}
+  OnlyPutOnLeft: 1
 --- !u!1 &1801568202
 GameObject:
   m_ObjectHideFlags: 0

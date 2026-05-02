@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using EventBusSystem;
 using UnityEngine;
@@ -48,9 +49,12 @@ namespace Gameplay.CharacterComponents
         }
 
         public bool CanKick { get; set; } = true;
-
+        public bool ForcedToHoldKick { get; set; } = false;
+        public void ScriptedKick() => OnActionPerformed();
         public void OnActionPerformed()
         {
+            if (!CanKick)
+                return;
             Kick();
             if (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd)
                 Jump();
@@ -58,7 +62,12 @@ namespace Gameplay.CharacterComponents
 
         public void OnActionCancelled()
         {
-            ReturnLeftLegToOriginalPosition();
+            if (!CanKick)
+                return;
+            if (ForcedToHoldKick)
+                StartCoroutine(forceKickToHold());
+            else
+                ReturnLeftLegToOriginalPosition();
         }
     
         void Jump()
@@ -83,6 +92,21 @@ namespace Gameplay.CharacterComponents
         {
             _kickingLegJointMotor.motorSpeed = _entityData.KickingPower * _kickingDirectionMultiplier * direction;
             _kickingLegJoint.motor = _kickingLegJointMotor;
+        }
+
+
+        bool inforceKickToHoldRoutine = false;
+        IEnumerator forceKickToHold()
+        {
+            if (inforceKickToHoldRoutine)
+                yield break;
+            inforceKickToHoldRoutine = true;
+            bool prevCanKick = CanKick;
+            CanKick = false;
+            yield return new WaitForSeconds(0.7f);
+            ReturnLeftLegToOriginalPosition();
+            CanKick = prevCanKick;
+            inforceKickToHoldRoutine = false;
         }
 
     }
