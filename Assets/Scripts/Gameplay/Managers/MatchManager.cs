@@ -103,7 +103,8 @@ namespace Gameplay.Managers
         void RespawnGameplayElements(FieldSideType sideType)
         {
             _playersManager.ResetPlayers();
-            _ballManager.ResetBall(sideType);
+            //_ballManager.ResetBall(sideType);
+            _ballManager.ResetBall();
             _goalsManager.SetCollidersEnabled(true);
         }
 

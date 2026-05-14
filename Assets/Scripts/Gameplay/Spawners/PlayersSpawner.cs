@@ -37,7 +37,7 @@ namespace Gameplay.Spawners
             else
                 team = Team.A;
 
-            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
             go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
 
             return go;
@@ -54,8 +54,9 @@ namespace Gameplay.Spawners
             CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
             go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
                 playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
-                settings
-            ));
+                settings),
+                playerType
+                );
             
             return go;
         }

@@ -21,7 +21,15 @@ namespace Gameplay.CharacterComponents
             _shoesLeftSpriteRenderer.sprite = _customizationImages.GetShoesSprite(shoesIndex);
             _shoesRightSpriteRenderer.sprite = _customizationImages.GetShoesSprite(shoesIndex);
 
-            SetSkinColor(skinToneValue);
+
+            if (GetComponent<Entity>().PlayerType == Spawners.PlayersSpawner.PlayerType.Normal)
+            {
+                SetSkinColor(skinToneValue);
+            }
+            else
+            {
+                SetRandomSkinColor();
+            }
         }
         public void SetClothes(int countryIndex, float skinToneValue)
         {
@@ -31,7 +39,14 @@ namespace Gameplay.CharacterComponents
             _leftShortSockSpriteRenderer.color = _teamsData.GetTeamById(countryIndex).CountryColor;
             _rightShortSockSpriteRenderer.color = _teamsData.GetTeamById(countryIndex).CountryColor;
 
-            SetSkinColor(skinToneValue);
+            if (GetComponent<Entity>().PlayerType == Spawners.PlayersSpawner.PlayerType.Normal)
+            {
+                SetSkinColor(skinToneValue);
+            }
+            else 
+            { 
+                SetRandomSkinColor();
+            }
         }
 
         private void SetSkinColor(float skinToneValue)
@@ -42,6 +57,14 @@ namespace Gameplay.CharacterComponents
             _rightLegFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
             _faceSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
         }
-
+        private void SetRandomSkinColor()
+        {
+            float skinToneValue = Random.Range(0, 1);
+            _leftArmFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
+            _rightArmFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
+            _leftLegFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
+            _rightLegFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
+            _faceSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
+        }
     }
 }

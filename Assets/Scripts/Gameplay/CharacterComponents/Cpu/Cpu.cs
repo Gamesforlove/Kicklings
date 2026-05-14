@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Gameplay.Managers;
 using UnityEngine;
+using static Gameplay.Spawners.PlayersSpawner;
 
 namespace Gameplay.CharacterComponents.Cpu
 {
@@ -29,11 +30,11 @@ namespace Gameplay.CharacterComponents.Cpu
         
         BallProximityChecker _ballProximityChecker;
 
-        public void SetUp(CpuConfiguration config)
+        public void SetUp(CpuConfiguration config, PlayerType type)
         {
             if (config == null) return;
 
-            base.SetUp(config.EntityData);
+            base.SetUp(config.EntityData, type);
             _difficultySettings = config.DifficultySettings;
             
             if (_difficultySettings != null)

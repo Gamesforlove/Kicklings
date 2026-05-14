@@ -1,18 +1,19 @@
 ﻿using Gameplay.CharacterComponents.Player;
 using Scene_Management;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static Gameplay.Spawners.PlayersSpawner;
 
 namespace Gameplay.CharacterComponents
 {
     public interface IEntity
     {
-        public void SetUp(EntityData entityData);
+        public void SetUp(EntityData entityData, PlayerType type);
         public void Reset();
     }
 
     public abstract class Entity : MonoBehaviour, IEntity
     {
+        public PlayerType PlayerType { get; private set; }
         protected EntityData EntityData;
         
         protected JointsController JointsController;
@@ -22,8 +23,9 @@ namespace Gameplay.CharacterComponents
         protected StabilizeComponent StabilizeComponent;
         protected Rigidbody2D Rigidbody;
 
-        public virtual void SetUp(EntityData entityData)
+        public virtual void SetUp(EntityData entityData, PlayerType type)
         {
+            PlayerType = type;
             EntityData = entityData;
             CacheComponents();
             
