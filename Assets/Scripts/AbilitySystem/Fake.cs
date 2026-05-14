@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -23,6 +24,15 @@ public class Fake : IAbility
         await Task.Delay(100);
         owner.Player._playerActions.ReturnLeftLegToOriginalPosition();
         await Task.Delay(100);
+        owner.Player._playerActions.EnableKickingLeg();
+    }
+    public IEnumerator ExecuteCoroutine(AbilityExecutionContext ctx)
+    {
+        owner.Player._playerActions.DisableKickingLeg();
+        owner.Player._playerActions.Kick();
+        yield return new WaitForSeconds(.1f); 
+        owner.Player._playerActions.ReturnLeftLegToOriginalPosition();
+        yield return new WaitForSeconds(.1f);
         owner.Player._playerActions.EnableKickingLeg();
     }
 }

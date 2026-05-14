@@ -361,6 +361,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: entity_PlayerFielder
       objectReference: {fileID: 0}
+    - target: {fileID: 100050, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_TagString
+      value: Entity
+      objectReference: {fileID: 0}
+    - target: {fileID: 100054, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_TagString
+      value: Entity
+      objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -408,6 +416,22 @@ PrefabInstance:
     - target: {fileID: 400042, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100006, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100010, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100014, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 21200016, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_SortingOrder
@@ -533,6 +557,10 @@ PrefabInstance:
       propertyPath: '_kickingLegColliders.Array.data[1]'
       value: 
       objectReference: {fileID: 4697110556926269435}
+    - target: {fileID: 6305154190517888520, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 6671426424375598052, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_AngleLimits.m_UpperAngle
       value: 5
@@ -615,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0087c92067ab64093f0531f6692227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPart: 2
 --- !u!1 &1634548824086165285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100054, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
@@ -632,6 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0087c92067ab64093f0531f6692227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPart: 3
 --- !u!1 &1634548824086165313 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
@@ -765,9 +795,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BallPoint>k__BackingField: {fileID: 4143650212249706186}
   <Player>k__BackingField: {fileID: 9117300563700463119}
-  <TestingAbility>k__BackingField: 1
+  <TestingAbility>k__BackingField: 3
   abilityConfigs:
   - {fileID: 11400000, guid: 76e41458520c466479029514bd82ec0d, type: 2}
+  - {fileID: 11400000, guid: 44b600c68bff36544b2fe9e86d88834c, type: 2}
   BodyColliders:
   - {fileID: 6532666315726999199}
   - {fileID: 6393402186852975353}
@@ -785,6 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0087c92067ab64093f0531f6692227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPart: 1
 --- !u!1 &1634548824086165317 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100022, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
@@ -802,6 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0087c92067ab64093f0531f6692227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPart: 0
 --- !u!4 &1634548824086653793 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}

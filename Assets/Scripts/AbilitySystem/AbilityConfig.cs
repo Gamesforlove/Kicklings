@@ -13,6 +13,7 @@ public enum AbilityName
 {
     Pass,
     Fake,
-    TimeFreeze
+    TimeFreeze,
+    RearKick
 }
 
