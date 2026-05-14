@@ -9,7 +9,8 @@ namespace UI.Customization.Countries
     public class CountryCustomizationController : MonoBehaviour
     {
         public int TeamDataIndex { get; private set; }
-        
+        public bool IsSelected { get; private set; }
+
         [SerializeField] FieldSideType _fieldSideType;
         [SerializeField] TeamsData _teamsData;
         [SerializeField] UIViewsManager _uiViewsManager;
@@ -18,14 +19,13 @@ namespace UI.Customization.Countries
         [SerializeField] CountryFacts _countryFacts;
         [SerializeField] TextMeshProUGUI _countryFactTextBox;
         
-        bool _isSelected;
         
-        public void Select() => _isSelected = true;
+        public void Select() => IsSelected = true;
 
         void Start()
         {
-            ChangeCountryImage(_teamsData.GetTeamById(0));
-            ChangeCountryFact(_teamsData.GetTeamById(0));
+/*            ChangeCountryImage(_teamsData.GetTeamById(randomIndex));
+            ChangeCountryFact(_teamsData.GetTeamById(randomIndex));*/
         }
 
         void OnEnable()
@@ -40,7 +40,7 @@ namespace UI.Customization.Countries
 
         void OnCountryChanged(OnCountryChanged payload)
         {
-            if (!_isSelected) return;
+            if (!IsSelected) return;
 
             ChangeCountryImage(payload.TeamData);
 
@@ -49,17 +49,17 @@ namespace UI.Customization.Countries
             _uiViewsManager.HideView(_countrySelectionView);
         }
 
-        private void ChangeCountryFact(TeamsData.TeamData teamData)
+        public void ChangeCountryFact(TeamsData.TeamData teamData)
         {
             if (_countryFactTextBox && _countryFacts)
                 _countryFactTextBox.text = _countryFacts.GetRandomCountryFactByName(teamData.Name);
         }
 
-        void ChangeCountryImage(TeamsData.TeamData teamData)
+        public void ChangeCountryImage(TeamsData.TeamData teamData)
         {
             _countryCustomizationView.ChangeViewElements(teamData);
             TeamDataIndex = teamData.Id;
-            _isSelected = false;
+            IsSelected = false;
         }
     }
 }

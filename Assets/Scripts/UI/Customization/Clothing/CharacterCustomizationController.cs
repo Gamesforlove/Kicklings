@@ -24,15 +24,6 @@ namespace UI.Customization.Clothing
         _rightSleeveImage, _leftShortSockImage, _rightShortSockImage, _leftArmFleshImage, _rightArmFleshImage, 
         _leftLegFleshImage, _rightLegFleshImage, _faceImage;
 
-        void Start()
-        {
-/*            ChangeShirt(0);
-            ChangeShoes(0);*/
-        }
-        private void OnValidate()
-        {
-            //ChangeSkinTone(SkinToneValue);
-        }
         private void OnEnable()
         {
             SetUpSkinTone();
@@ -93,6 +84,7 @@ namespace UI.Customization.Clothing
             _leftShortSockImage.color = teamData.CountryColor;
             _rightShortSockImage.color = teamData.CountryColor;
         }
+
         public void ChangeSkinTone(float skinToneValue)
         {
             _leftArmFleshImage.color = SkinTone.Evaluate(skinToneValue);
