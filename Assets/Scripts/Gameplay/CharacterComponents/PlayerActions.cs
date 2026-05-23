@@ -94,7 +94,7 @@ namespace Gameplay.CharacterComponents
             _kickingLegJoint.motor = _kickingLegJointMotor;
         }
 
-
+        // used to scripted events, tutorials, in-game cutscenes, etc.
         bool inforceKickToHoldRoutine = false;
         IEnumerator forceKickToHold()
         {

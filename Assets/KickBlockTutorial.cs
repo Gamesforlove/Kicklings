@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Gameplay.Managers;
 using Gameplay.CharacterComponents;
 
-public class KickTutorial : MonoBehaviour
+public class KickBlockTutorial : MonoBehaviour
 {
     [SerializeField] private float InitialDelay;
     [SerializeField] private TutorialFade TutorialFade;
@@ -15,11 +15,11 @@ public class KickTutorial : MonoBehaviour
     List<PlayerActions> playerActions;
     void Start()
     {
-        StartCoroutine(kickTutorialRoutine());
+        StartCoroutine(tutorialRoutine());
     }
 
     KeyCode kick = KeyCode.Z;
-    IEnumerator kickTutorialRoutine()
+    IEnumerator tutorialRoutine()
     {
         yield return null;
         playerActions = PlayersManager.Instance?.GetPlayerActions();
