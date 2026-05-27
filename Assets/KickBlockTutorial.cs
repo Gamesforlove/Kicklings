@@ -13,24 +13,26 @@ public class KickBlockTutorial : MonoBehaviour
     public UnityEvent onTutorialDone;
 
     List<PlayerActions> playerActions;
-    void Start()
+    public void StartTutorial()
     {
         StartCoroutine(tutorialRoutine());
     }
 
     KeyCode kick = KeyCode.Z;
+    public float stopDistance;
     IEnumerator tutorialRoutine()
     {
         yield return null;
         playerActions = PlayersManager.Instance?.GetPlayerActions();
         ToggleKickAllowed(false);
         ToggleForceKickToHold(true);
-        yield return new WaitForSeconds(InitialDelay);
-        BallScript ball = BallManager.Instance?.Ball;
-        const float dist = 0.6f;
+        if (InitialDelay > 0)
+            yield return new WaitForSeconds(InitialDelay);
+
         const float slowdownSpeed = 0.65f;
+        BallScript ball = BallManager.Instance?.Ball;
         bool kicked = false;
-        while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && */Vector2.Distance(ball.transform.position, transform.position) > dist && Time.timeScale > 0f)
+        while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && */Vector2.Distance(ball.transform.position, transform.position) > stopDistance && Time.timeScale > 0f)
         {
             if (Time.timeScale < 0.05f && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
             {
@@ -49,6 +51,7 @@ public class KickBlockTutorial : MonoBehaviour
             TutorialFade?.FadeIn();
             yield return new WaitUntil(() => (Input.GetKeyDown(kick) || Input.GetKey(kick)));
         }
+
         yield return new WaitForSecondsRealtime(0.3f);
         ToggleForceKickToHold(false);
         onTutorialDone?.Invoke();

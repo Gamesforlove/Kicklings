@@ -604,6 +604,7 @@ MonoBehaviour:
   onTutorialDone:
     m_PersistentCalls:
       m_Calls: []
+  stopDistance: 0.6
 --- !u!114 &373567314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,6 +1771,7 @@ GameObject:
   - component: {fileID: 1104483539}
   - component: {fileID: 1104483538}
   - component: {fileID: 1104483540}
+  - component: {fileID: 1104483541}
   m_Layer: 0
   m_Name: Tutorial - Block
   m_TagString: Untagged
@@ -1804,11 +1806,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1cd523452927e46bb8f41a5a9ae926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialDelay: 0.32
+  InitialDelay: 0
   TutorialFade: {fileID: 1104483539}
   onTutorialDone:
     m_PersistentCalls:
       m_Calls: []
+  stopDistance: 1
 --- !u!114 &1104483539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1836,6 +1839,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textToSet: Press Z to block
   UIText: {fileID: 290816184}
+--- !u!114 &1104483541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104483536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da956df17ddb644ebe2cf7361c6ab4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 0}
+  startPoint: {fileID: 0}
+  midPoint: {fileID: 0}
+  endPoint: {fileID: 0}
+  duration: 2
 --- !u!1 &1140962566
 GameObject:
   m_ObjectHideFlags: 0
@@ -3172,7 +3192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2194100682125000529, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 151.57912
+      value: 151.57913
       objectReference: {fileID: 0}
     - target: {fileID: 2257153646316179208, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_IsActive
@@ -3264,7 +3284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7294825633533386631, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -300
+      value: -300.00003
       objectReference: {fileID: 0}
     - target: {fileID: 7347605310270021032, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3288,7 +3308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8662469398673913331, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90.000015
+      value: -90.00003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3690,6 +3710,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 373567313}
+        m_TargetAssemblyTypeName: KickBlockTutorial, Assembly-CSharp
+        m_MethodName: StartTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   BlockTutorial:
     m_PersistentCalls:
       m_Calls:
@@ -3705,9 +3737,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1104483540}
+        m_TargetAssemblyTypeName: SetUIText, Assembly-CSharp
+        m_MethodName: SetText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   GoalTutorial:
     m_PersistentCalls:
       m_Calls: []
+  ballMoveScript: {fileID: 1104483541}
+  blockTutorial: {fileID: 1104483538}
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0

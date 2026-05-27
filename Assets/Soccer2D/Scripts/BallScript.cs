@@ -41,10 +41,16 @@ public class BallScript : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         Renderer.enabled = true;
         yield return new WaitForSeconds(0.2f);
-        Renderer.enabled =false;
+        Renderer.enabled = false;
         yield return new WaitForSeconds(0.2f);
-        Renderer.enabled =true;
+        Renderer.enabled = true;
         Rigidbody.bodyType = RigidbodyType2D.Dynamic;
         Collider.enabled = true;
+    }
+
+    public void ResetWithoutBlink() // for special cases
+    {
+        Rigidbody.linearVelocity = Vector2.zero;
+        Rigidbody.angularVelocity = 0;
     }
 }
