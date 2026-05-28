@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Gameplay.Managers;
 using Gameplay.CharacterComponents;
 
-public class KickBlockTutorial : MonoBehaviour
+public class KickBasicTutorial : MonoBehaviour
 {
     [SerializeField] private float InitialDelay;
     [SerializeField] private TutorialFade TutorialFade;

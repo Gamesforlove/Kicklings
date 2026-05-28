@@ -9,11 +9,11 @@ public class MoveToPointCurved : MonoBehaviour
     public Transform endPoint;
     public float duration = 1f;
 
-    public void StartCurveMove(Transform obj, Vector2 start, Vector2 mid, Vector2 end, float duration)
+    public void StartCurveMove(Transform obj, Vector2 start, Vector2 mid, Vector2 end, float duration, float stopDistance)
     {
         this.obj = obj;
         this.duration = duration;
-        StartCoroutine(MoveAlongCurve(start, mid, end));
+        StartCoroutine(MoveAlongCurve(start, mid, end, stopDistance));
     }
 
     public void StartCurveMove()
@@ -22,11 +22,11 @@ public class MoveToPointCurved : MonoBehaviour
     }
 
     public bool Moving { get; private set; } = false;
-    IEnumerator MoveAlongCurve(Vector2 start, Vector2 mid, Vector2 end)
+    IEnumerator MoveAlongCurve(Vector2 start, Vector2 mid, Vector2 end, float stopDistance = 1)
     {
         Moving = true;
         float elapsed = 0f;
-        while (elapsed < duration && Vector2.Distance(obj.position, end) > 1f)
+        while (elapsed < duration && Vector2.Distance(obj.position, end) > stopDistance)
         {
             float t = elapsed / duration;
             // Optional easing
