@@ -50,6 +50,7 @@ namespace Gameplay.CharacterComponents
 
         public bool CanKick { get; set; } = true;
         public bool ForcedToHoldKick { get; set; } = false;
+        [field: SerializeField] public bool LockMovementToFacingDirection { get; set; } = false;
         public void ScriptedKick() => OnActionPerformed();
         public void OnActionPerformed()
         {
@@ -72,7 +73,10 @@ namespace Gameplay.CharacterComponents
     
         void Jump()
         {
-            _rigidbody.AddForce(transform.up * _entityData.JumpPower);
+            Vector2 jumpForce = transform.up * _entityData.JumpPower;
+            if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
+                jumpForce.x = 0f;
+            _rigidbody.AddForce(jumpForce);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();

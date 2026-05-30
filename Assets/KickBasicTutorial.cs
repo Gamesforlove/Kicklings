@@ -20,33 +20,46 @@ public class KickBasicTutorial : MonoBehaviour
 
     KeyCode kick = KeyCode.Z;
     public float stopDistance;
+    public Transform ballDropTarget;
     IEnumerator tutorialRoutine()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.1f);
         playerActions = PlayersManager.Instance?.GetPlayerActions();
+        yield return null;
         ToggleKickAllowed(false);
         ToggleForceKickToHold(true);
         if (InitialDelay > 0)
             yield return new WaitForSeconds(InitialDelay);
 
-        const float slowdownSpeed = 0.65f;
         BallScript ball = BallManager.Instance?.Ball;
         bool kicked = false;
-        while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && */Vector2.Distance(ball.transform.position, transform.position) > stopDistance && Time.timeScale > 0f)
+        bool prompted = false;
+        float startDistance = distance();
+        while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && *//*Vector2.Distance(ball.transform.position, ballDropTarget.position) > stopDistance && */Time.timeScale > 0f)
         {
-            if (Time.timeScale < 0.05f && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
+            if (Time.timeScale < 0.13f && !prompted)
             {
                 ToggleKickAllowed(true);
-                ScriptedKick();
+                TutorialFade?.FadeIn();
+                prompted = true;
+            }
+
+            if (prompted && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
+            {
+                //ScriptedKick();
+                ToggleForceKickToHold(true);
                 kicked = true;
                 break;
             }
-            Time.timeScale = Mathf.MoveTowards(Time.timeScale, 0f, Time.unscaledDeltaTime * slowdownSpeed);
+            Time.timeScale = Mathf.Lerp(1f, 0f, 1f - (distance() / startDistance));
             yield return null;
         }
 
+        float distance() => Vector2.Distance(ball.transform.position, ballDropTarget.position) - stopDistance;
+
         if (!kicked)
         {
+            ToggleForceKickToHold(true);
             ToggleKickAllowed(true);
             TutorialFade?.FadeIn();
             yield return new WaitUntil(() => (Input.GetKeyDown(kick) || Input.GetKey(kick)));
@@ -54,6 +67,7 @@ public class KickBasicTutorial : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.3f);
         ToggleForceKickToHold(false);
+        ToggleKickAllowed(false);
         onTutorialDone?.Invoke();
         TutorialFade?.FadeOut();
 

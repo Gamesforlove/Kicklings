@@ -7,7 +7,6 @@ using Gameplay.CharacterComponents;
 
 public class BlockBasicTutorial : MonoBehaviour
 {
-    [SerializeField] private float InitialDelay;
     [SerializeField] private TutorialFade TutorialFade;
 
     public UnityEvent onTutorialDone;
@@ -23,6 +22,7 @@ public class BlockBasicTutorial : MonoBehaviour
     public MoveToPointCurved ballMoveScript;
     IEnumerator tutorialRoutine()
     {
+        playerActions = PlayersManager.Instance?.GetPlayerActions();
         ToggleKickAllowed(false);
         ToggleForceKickToHold(true);
         GoalsManager.Instance.SetCollidersEnabled(false);
@@ -41,28 +41,33 @@ public class BlockBasicTutorial : MonoBehaviour
         if (ballMoveScript == null)
             yield break;
 
+        const float moveDuration = 3f;
         Vector2 startPoint = ball.transform.position;
         Vector2 endPoint = (Vector2)PlayersManager.Instance.Players[0].transform.position + Vector2.up * 0.5f;
         Vector2 midPoint = (Vector2.up * 3f) + ((startPoint + endPoint) / 2f);
-        ballMoveScript.StartCurveMove(ball.transform, startPoint, midPoint, endPoint, 2f, stopDistance);
+        ballMoveScript.StartCurveMove(ball.transform, startPoint, midPoint, endPoint, moveDuration, stopDistance);
         yield return new WaitUntil(() => ballMoveScript.Moving);
-        yield return new WaitForSeconds(ballMoveScript.duration / 2f);
+        yield return new WaitForSeconds(1f);
 
         //yield return new WaitWhile(() => ballMoveScript.Moving);
         GoalsManager.Instance.SetCollidersEnabled(true);
         //TimeScaleManager.SlowMotion();
 
-        playerActions = PlayersManager.Instance?.GetPlayerActions();
-
-        const float slowdownSpeed = 1.7f;
+        const float slowdownSpeed = 0.94f;
         bool kicked = false;
+        bool prompted = false;
         while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && *//*Vector2.Distance(ball.transform.position, transform.position) > stopDistance && */Time.timeScale > 0f)
         {
-            if (Time.timeScale < 0.05f && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
+            if (Time.timeScale < 0.25f && !prompted)
+            {
+                ToggleKickAllowed(true);
+                TutorialFade?.FadeIn();
+                prompted = true;
+            }
+
+            if (prompted && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
             {
                 ball.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
-                ToggleKickAllowed(true);
-                ScriptedKick();
                 kicked = true;
                 break;
             }

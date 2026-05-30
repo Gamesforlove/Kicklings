@@ -535,6 +535,7 @@ MonoBehaviour:
   _groundChecks:
   - {fileID: 5588305525187344252}
   - {fileID: 8374246201076789711}
+  <LockMovementToFacingDirection>k__BackingField: 1
 --- !u!114 &2906329488930597588
 MonoBehaviour:
   m_ObjectHideFlags: 0

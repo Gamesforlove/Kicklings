@@ -599,12 +599,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e1cd523452927e46bb8f41a5a9ae926, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialDelay: 0.32
+  InitialDelay: 1
   TutorialFade: {fileID: 373567314}
   onTutorialDone:
     m_PersistentCalls:
       m_Calls: []
-  stopDistance: 0.6
+  stopDistance: 0.15
+  ballDropTarget: {fileID: 1344938872}
 --- !u!114 &373567314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,7 +631,8 @@ Transform:
   m_LocalPosition: {x: -3.015429, y: 0.7902092, z: 0.10165563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1344938872}
   m_Father: {fileID: 1928391806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &373567316
@@ -1837,7 +1839,7 @@ MonoBehaviour:
   startPoint: {fileID: 0}
   midPoint: {fileID: 0}
   endPoint: {fileID: 0}
-  duration: 2
+  duration: 0
 --- !u!114 &1104483542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,7 +1852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9166c61b6cdd4f4fa103d753b5c1398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialDelay: 0
   TutorialFade: {fileID: 1104483539}
   onTutorialDone:
     m_PersistentCalls:
@@ -2298,6 +2299,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1385523274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1344938871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344938872}
+  m_Layer: 0
+  m_Name: Ball Drop Target for Kick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1344938872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344938871}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.274571, y: -2.3902092, z: -0.10165563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 373567315}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1385523274 stripped
 Transform:
