@@ -27,14 +27,20 @@ public class AbilityTestingManager : MonoBehaviour
             DropdownContainer.SetActive(!DropdownContainer.activeSelf);
         }
     }
-    private void Start()
+    private void OnEnable()
     {
         LeftGoalkeeper.onValueChanged.AddListener(delegate { OnLeftGoalkeeperDropdown(LeftGoalkeeper); });
         LeftPlayer.onValueChanged.AddListener(delegate { OnLeftPlayerDropdown(LeftPlayer); });
         RightGoalkeeper.onValueChanged.AddListener(delegate { OnRightGoalkeeperDropdown(RightGoalkeeper); });
         RightPlayer.onValueChanged.AddListener(delegate { OnRightPlayerDropdown(RightPlayer); });
     }
-
+    private void OnDisable()
+    {
+        LeftGoalkeeper.onValueChanged.RemoveListener(delegate { OnLeftGoalkeeperDropdown(LeftGoalkeeper); });
+        LeftPlayer.onValueChanged.RemoveListener(delegate { OnLeftPlayerDropdown(LeftPlayer); });
+        RightGoalkeeper.onValueChanged.RemoveListener(delegate { OnRightGoalkeeperDropdown(RightGoalkeeper); });
+        RightPlayer.onValueChanged.RemoveListener(delegate { OnRightPlayerDropdown(RightPlayer); });
+    }
     public void SetUpAbilityActors(IReadOnlyList<AbilityActor> abilityActors)
     {
         if (abilityActors.Count == 0)
@@ -42,10 +48,10 @@ public class AbilityTestingManager : MonoBehaviour
             return;
         }
 
-        LeftGoalkeeperAA = abilityActors.First(x => x.Team == Team.A && x.PlayerType == PlayersSpawner.PlayerType.Goalkeeper);
-        LeftPlayerAA = abilityActors.First(x => x.Team == Team.A && x.PlayerType == PlayersSpawner.PlayerType.Normal);
-        RightGoalkeeperAA = abilityActors.First(x => x.Team == Team.B && x.PlayerType == PlayersSpawner.PlayerType.Goalkeeper);
-        RightPlayerAA = abilityActors.First(x => x.Team == Team.B && x.PlayerType == PlayersSpawner.PlayerType.Normal);
+        LeftGoalkeeperAA = abilityActors.First(x => x.Team == Team.Left && x.PlayerType == PlayersSpawner.PlayerType.Goalkeeper);
+        LeftPlayerAA = abilityActors.First(x => x.Team == Team.Left && x.PlayerType == PlayersSpawner.PlayerType.Normal);
+        RightGoalkeeperAA = abilityActors.First(x => x.Team == Team.Right && x.PlayerType == PlayersSpawner.PlayerType.Goalkeeper);
+        RightPlayerAA = abilityActors.First(x => x.Team == Team.Right && x.PlayerType == PlayersSpawner.PlayerType.Normal);
 
         OnLeftGoalkeeperDropdown(LeftGoalkeeper);
         OnLeftPlayerDropdown(LeftPlayer);

@@ -56,11 +56,13 @@ namespace Scene_Management
                 uiManager.ShowTournamentKnockOutView();
             else if (_tournament.CurrentRound.IsLastRound())
             {
-                uiManager.ShowTournamentWinnerView();
+                uiManager.ShowTournamentFinalWinnerView();
                 IsTournamentWinner = true;
             }
             else
-                matchManager.EndGame();
+            {
+                uiManager.ShowTournamentRoundWinnerView();
+            }
         }
     }
 }

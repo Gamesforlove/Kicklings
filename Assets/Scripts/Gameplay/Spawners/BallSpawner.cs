@@ -23,14 +23,21 @@ namespace Gameplay.Spawners
         {
             //_ball.transform.position = _leftSidePosition.position;
             _ball.transform.position = _centerPosition.position;
+            _ball.transform.rotation = Quaternion.identity;
         }
 
         public void ResetBallOnSide(FieldSideType sideType)
         {
             if (sideType == FieldSideType.Left)
+            {
                 _ball.transform.position = _leftSidePosition.position;
+                _ball.transform.rotation = Quaternion.identity;
+            }
             else if (sideType == FieldSideType.Right)
+            {
                 _ball.transform.position = _rightSidePosition.position;
+                _ball.transform.rotation = Quaternion.identity;
+            }
         }
     }
 }

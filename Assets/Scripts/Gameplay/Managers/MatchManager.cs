@@ -15,6 +15,8 @@ namespace Gameplay.Managers
         [SerializeField] BallManager _ballManager;
         [SerializeField] GoalsManager _goalsManager;
         [SerializeField] AbilityTestingManager _abilityTestingManager;
+        [SerializeField] FieldSideData _leftSideData;
+        [SerializeField] FieldSideData _rightSideData;
         
         Match _match;
 
@@ -25,7 +27,7 @@ namespace Gameplay.Managers
             _rightScore = 0;
             _uiManager?.ChangeScore(_leftScore, _rightScore);
             _playersManager?.ResetPlayers();
-            _ballManager?.ResetBall();
+            _ballManager?.ResetBallWithSpin(FieldSideType.Left);
             _goalsManager?.SetCollidersEnabled(true);
             TimeScaleManager.SetGameplayTimeScale();
         }
@@ -103,17 +105,29 @@ namespace Gameplay.Managers
         void RespawnGameplayElements(FieldSideType sideType)
         {
             _playersManager.ResetPlayers();
-            //_ballManager.ResetBall(sideType);
-            _ballManager.ResetBall();
+            _ballManager.ResetBallWithSpin(sideType);
+            //_ballManager.ResetBall();
             _goalsManager.SetCollidersEnabled(true);
         }
-
         void ShowEndgame(GoalEvent payload)
         {
             TimeScaleManager.PauseGame();
             _match.HandleEndgameUI(this, _uiManager, payload);
         }
-        
+
+        public void InstantWin()
+        {
+            GoalEvent payload = new GoalEvent(_leftSideData, _rightSideData);
+            TimeScaleManager.PauseGame();
+            _match.HandleEndgameUI(this, _uiManager, payload);
+        }
+        public void InstantLose()
+        {
+            GoalEvent payload = new GoalEvent(_rightSideData, _leftSideData);
+            TimeScaleManager.PauseGame();
+            _match.HandleEndgameUI(this, _uiManager, payload);
+        }
+
         void ChangeScore(FieldSideType scoringSide)
         {
             switch (scoringSide)

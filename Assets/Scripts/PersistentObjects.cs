@@ -1,8 +1,10 @@
+using AudioSystem;
 using UnityEngine;
 
 public class PersistentObjects : MonoBehaviour
 {
     public static PersistentObjects Instance;
+    [field: SerializeField] public SoundMixerManager SoundMixerManager { get; private set; }
 
     void Awake()
     {
@@ -14,6 +16,11 @@ public class PersistentObjects : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        if (!SoundMixerManager)
+        {
+            Debug.LogWarning("PersistentObjects -> SoundMixerManager is null");
         }
     }
 }

@@ -28,23 +28,21 @@ namespace UI.MainMenu
             {
                 if (MatchFlow.Match.IsPlayerWinner)
                 {
-                    if (MatchFlow.Match.Settings.IsTournamentMatch)
-                    {
-                        TournamentMatch match = MatchFlow.Match as TournamentMatch;
-                        UIView targetView = match.IsTournamentWinner ? _selectionModeView : _layoutView;
-                        _uiViewsManager.TransitionToViewWithHistory(_startingView, targetView);
-                    }
-                    else
-                    {
-                        _uiViewsManager.TransitionToViewWithHistory(_startingView, _layoutView);
-                    }
+                    TournamentMatch match = MatchFlow.Match as TournamentMatch;
+                    UIView targetView = match.IsTournamentWinner ? _selectionModeView : _layoutView;
+                    _uiViewsManager.TransitionToViewWithHistory(_startingView, targetView);
                 }
                 else
                 {
-                    UIView targetView = MatchFlow.Match.IsPlayAgain ? _typeSelectionView : _selectionModeView;
-                    _uiViewsManager.TransitionToViewWithHistory(_startingView, targetView);
+                    if (MatchFlow.Match.IsPlayAgain)
+                    {
+                        _uiViewsManager.TransitionToViewWithHistory(_selectionModeView, _typeSelectionView);
+                    }
+                    else
+                    {
+                        _uiViewsManager.TransitionToViewWithHistory(_startingView, _selectionModeView);
+                    }
                 }
-
             }
         }
     }

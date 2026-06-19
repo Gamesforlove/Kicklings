@@ -11,16 +11,17 @@ namespace UI.Customization.Countries
         [SerializeField] GameObject _flagButtonPrefab;
         private Dictionary<int, FlagButtonBehaviour> _buttons = new Dictionary<int, FlagButtonBehaviour>();
 
-        void Awake()
+        public void PrepareButtons()
         {
             foreach (TeamsData.TeamData team in _teamsData.Teams)
             {
                 GameObject countryFlag = Instantiate(_flagButtonPrefab, transform);
-                FlagButtonBehaviour flagButton = countryFlag.GetComponent<FlagButtonBehaviour>();
+                FlagButtonBehaviour flagButton = countryFlag.GetComponentInChildren<FlagButtonBehaviour>();
                 flagButton.SetUp(team);
                 _buttons.Add(team.Id, flagButton);
             }
         }
+
         public void DisableButton(int id)
         {
             if(_buttons.TryGetValue(id, out FlagButtonBehaviour flagButton))

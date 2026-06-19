@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IAbility
 {
-    Task Execute(AbilityExecutionContext ctx);
     IEnumerator ExecuteCoroutine(AbilityExecutionContext ctx);
     bool CanExecute();
+    public bool ExecutableOnKick { get; }
 }

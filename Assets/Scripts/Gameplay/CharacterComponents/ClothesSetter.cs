@@ -13,10 +13,17 @@ namespace Gameplay.CharacterComponents
         _leftSleeveSpriteRenderer, _rightSleeveSpriteRenderer, _leftShortSockSpriteRenderer, _rightShortSockSpriteRenderer, _leftArmFleshSpriteRenderer, 
         _rightArmFleshSpriteRenderer, _leftLegFleshSpriteRenderer, _rightLegFleshSpriteRenderer, _faceSpriteRenderer;
 
-        public void SetClothes(int shirtIndex, int shoesIndex, float skinToneValue)
+        public void SetClothes(int shirtIndex, int shoesIndex, float skinToneValue, Color clothesColor, Color patternColor)
         {
             _shirtPatternSpriteRenderer.gameObject.SetActive(true);
-            _shirtSpriteRenderer.color = _leftSleeveSpriteRenderer.color;
+            _shirtPatternSpriteRenderer.color = patternColor;
+
+            _shirtSpriteRenderer.color = clothesColor;
+            _leftSleeveSpriteRenderer.color = clothesColor;
+            _rightSleeveSpriteRenderer.color = clothesColor;
+            _leftShortSockSpriteRenderer.color = clothesColor;
+            _rightShortSockSpriteRenderer.color = clothesColor;
+
             _shirtPatternSpriteRenderer.sprite = _customizationImages.GetShirtSprite(shirtIndex);
             _shoesLeftSpriteRenderer.sprite = _customizationImages.GetShoesSprite(shoesIndex);
             _shoesRightSpriteRenderer.sprite = _customizationImages.GetShoesSprite(shoesIndex);
@@ -59,7 +66,7 @@ namespace Gameplay.CharacterComponents
         }
         private void SetRandomSkinColor()
         {
-            float skinToneValue = Random.Range(0, 1);
+            float skinToneValue = Random.Range(0, 1.0f);
             _leftArmFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
             _rightArmFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);
             _leftLegFleshSpriteRenderer.color = _skinToneGradient.Evaluate(skinToneValue);

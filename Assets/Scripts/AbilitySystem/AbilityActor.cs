@@ -3,13 +3,12 @@ using Gameplay.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static ColliderEventForwarder;
 using static Gameplay.Spawners.PlayersSpawner;
 
-public enum Team { A, B }
+public enum Team { Left, Right }
 public class AbilityActor : MonoBehaviour
 {
     public PlayerType PlayerType { get; private set; }
@@ -60,28 +59,6 @@ public class AbilityActor : MonoBehaviour
             forwarder.CollisionEntered -= OnColliderTouched;
         }
     }
-    public async void ExecuteAbility(AbilityName abilityName, AbilityExecutionContext context)
-    {
-        if (!abilities.ContainsKey(abilityName))
-        {
-            Debug.Log($"{gameObject.name} doesn't have *{abilityName.ToString()}* ability!");
-            return;
-        }
-
-        Debug.Log($"{gameObject.name} begins *{abilityName.ToString()}* ability!");
-        if (PerformingAbility)
-        {
-            Debug.Log($"{gameObject.name} is performing ability!");
-            return;
-        }
-
-        PerformingAbility = true;
-        if (abilities.TryGetValue(abilityName, out var ability))
-        {
-            await ability.Execute(context);
-        }
-        PerformingAbility = false;
-    }
     public IEnumerator ExecuteAbilityCoroutine(AbilityName abilityName, AbilityExecutionContext context)
     {
         if (!abilities.ContainsKey(abilityName))
@@ -90,10 +67,10 @@ public class AbilityActor : MonoBehaviour
             yield break;
         }
 
-        Debug.Log($"{gameObject.name} begins *{abilityName.ToString()}* ability!");
+        Debug.Log($"{gameObject.name} begins {abilityName.ToString()} ability!");
         if (PerformingAbility)
         {
-            Debug.Log($"{gameObject.name} is performing ability!");
+            Debug.Log($"{gameObject.name} is already performing ability!");
             yield break;
         }
 
@@ -106,8 +83,19 @@ public class AbilityActor : MonoBehaviour
     }
     public void OnAbilityPerformed_EVENT(InputAction.CallbackContext context)
     {
-        //if (context.performed) ExecuteAbility(TestingAbility, this.context);
         if (context.performed) StartCoroutine(ExecuteAbilityCoroutine(TestingAbility, this.context));
+    }
+    public void OnKickPerformed_EVENT(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        foreach (var pair in abilities)
+        {
+            if (pair.Value.ExecutableOnKick)
+            {
+                StartCoroutine(ExecuteAbilityCoroutine(pair.Key, this.context));
+            }
+        }
     }
     public void SetUp(Team team, PlayerType playerType)
     {

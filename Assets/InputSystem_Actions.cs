@@ -199,17 +199,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f23966a1-4374-4e59-91cc-02b0777143d8"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": ""MultiTap"",
-                    ""processors"": """",
-                    ""groups"": "";KeyboardPlayer1"",
-                    ""action"": ""Ability"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },

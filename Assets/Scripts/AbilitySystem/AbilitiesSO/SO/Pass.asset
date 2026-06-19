@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Cooldown>k__BackingField: 60
   <AbilityName>k__BackingField: 0
+  <ExecutableOnKick>k__BackingField: 1
+  <PassFlyTime>k__BackingField: 1.5
+  <PassCurveHeight>k__BackingField: 10

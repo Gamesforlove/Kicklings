@@ -33,9 +33,9 @@ namespace Gameplay.Spawners
             bool isRightSide = go.transform.position.x > 0;
             Team team;
             if (isRightSide)
-                team = Team.B;
+                team = Team.Right;
             else
-                team = Team.A;
+                team = Team.Left;
 
             go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
             go.GetComponent<AbilityActor>()?.SetUp(team, playerType);

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 27808382458899709}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.13, y: -2.02, z: 0}
+  m_LocalPosition: {x: 1.5, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -597,6 +597,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100050, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7723582302972952731}
+    - targetCorrespondingSourceObject: {fileID: 100012, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6526087473082051802}
     - targetCorrespondingSourceObject: {fileID: 100054, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1801330007561198777}
@@ -694,6 +697,18 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 5148373205494000151}
+        m_TargetAssemblyTypeName: AbilityActor, Assembly-CSharp
+        m_MethodName: OnKickPerformed_EVENT
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 4661129493436024829}
         m_TargetAssemblyTypeName: Gameplay.CharacterComponents.PlayerActions, Assembly-CSharp
         m_MethodName: OnKick
@@ -781,6 +796,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0690b0a4d16a2dd4e94c352d6df0013b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftSideColor: {r: 1, g: 0.20392157, b: 0, a: 1}
+  _rightSideColor: {r: 0, g: 0.14117648, b: 0.93333334, a: 1}
+  _leftPatternColor: {r: 1, g: 1, b: 1, a: 1}
+  _rightPatternColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &5148373205494000151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,15 +814,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BallPoint>k__BackingField: {fileID: 4143650212249706186}
   <Player>k__BackingField: {fileID: 9117300563700463119}
-  <TestingAbility>k__BackingField: 3
+  <TestingAbility>k__BackingField: 1
   abilityConfigs:
   - {fileID: 11400000, guid: 76e41458520c466479029514bd82ec0d, type: 2}
+  - {fileID: 11400000, guid: 171446f4c549ca14d8818bbecb0291ed, type: 2}
   - {fileID: 11400000, guid: 44b600c68bff36544b2fe9e86d88834c, type: 2}
   BodyColliders:
   - {fileID: 6532666315726999199}
   - {fileID: 6393402186852975353}
   - {fileID: 1801330007561198777}
   - {fileID: 7723582302972952731}
+  - {fileID: 6526087473082051802}
 --- !u!114 &6532666315726999199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,6 +856,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyPart: 0
+--- !u!1 &1634548824086165343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100012, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+  m_PrefabInstance: {fileID: 1634548824086262259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6526087473082051802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634548824086165343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0087c92067ab64093f0531f6692227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyPart: 4
 --- !u!4 &1634548824086653793 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400018, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}

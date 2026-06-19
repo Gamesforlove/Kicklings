@@ -11,7 +11,7 @@ namespace Gameplay.Managers
     {
         [SerializeField] UIViewsManager _uiViewsManager;
         [SerializeField] MatchWinnerView _matchWinnerView;
-        [SerializeField] UIView _tournamentKnockOutView, _tournamentWinnerView;
+        [SerializeField] UIView _tournamentKnockOutView, _tournamentFinalWinnerView, _tournamentRoundWinnerView;
         [SerializeField] GameplayNotifications _gameplayNotifications;
         [SerializeField] ScoreBoard _scoreBoard;
 
@@ -32,7 +32,8 @@ namespace Gameplay.Managers
         
         public void ShowMatchWinnerView(GoalEvent goalEvent) => _uiViewsManager.ShowView(_matchWinnerView, goalEvent.ScoringSideData);
         public void ShowTournamentKnockOutView() => _uiViewsManager.ShowView(_tournamentKnockOutView);
-        public void ShowTournamentWinnerView() => _uiViewsManager.ShowView(_tournamentWinnerView);
+        public void ShowTournamentFinalWinnerView() => _uiViewsManager.ShowView(_tournamentFinalWinnerView);
+        public void ShowTournamentRoundWinnerView() => _uiViewsManager.ShowView(_tournamentRoundWinnerView);
         
         public IEnumerator ShowGoalNotification(GoalEvent payload)
         {

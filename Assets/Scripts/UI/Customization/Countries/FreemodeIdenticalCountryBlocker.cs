@@ -7,6 +7,10 @@ public class FreemodeIdenticalCountryBlocker : MonoBehaviour
     [SerializeField] private CountryCustomizationController _rightCountry;
     [SerializeField] private CountrySelectionListing _countrySelectionListing;
 
+    private void Awake()
+    {
+        _countrySelectionListing.PrepareButtons();
+    }
     private void OnEnable()
     {
         _countrySelectionListing.EnableAlButtons();

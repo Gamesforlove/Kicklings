@@ -14,6 +14,10 @@ namespace Gameplay.CharacterComponents
     public abstract class Entity : MonoBehaviour, IEntity
     {
         public PlayerType PlayerType { get; private set; }
+        [SerializeField] protected Color _leftSideColor;
+        [SerializeField] protected Color _rightSideColor;
+        [SerializeField] protected Color _leftPatternColor;
+        [SerializeField] protected Color _rightPatternColor;
         protected EntityData EntityData;
         
         protected JointsController JointsController;
@@ -90,7 +94,9 @@ namespace Gameplay.CharacterComponents
                 ClothesSetter.SetClothes(
                 MatchFlow.Match.Settings.RightSideShirtIndex,
                 MatchFlow.Match.Settings.RightSideShoesIndex,
-                MatchFlow.Match.Settings.RightSkinToneValue
+                MatchFlow.Match.Settings.RightSkinToneValue,
+                _rightSideColor,
+                _rightPatternColor
                 );
             }
             else
@@ -98,7 +104,9 @@ namespace Gameplay.CharacterComponents
                 ClothesSetter.SetClothes(
                 MatchFlow.Match.Settings.LeftSideShirtIndex,
                 MatchFlow.Match.Settings.LeftSideShoesIndex,
-                MatchFlow.Match.Settings.LeftSkinToneValue
+                MatchFlow.Match.Settings.LeftSkinToneValue,
+                _leftSideColor,
+                _leftPatternColor
                 );
             }
 

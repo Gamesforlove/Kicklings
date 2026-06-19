@@ -29,13 +29,13 @@ namespace UI.ButtonsBehaviours
 
         public void OnClick()
         {
-            transform.parent.parent.TryGetComponent(out LastSelectedCountryController lastSelectedCountryController);
+/*            transform.parent.parent.TryGetComponent(out LastSelectedCountryController lastSelectedCountryController);
             if (!lastSelectedCountryController)
             {
                 Debug.Log("lastSelectedFieldSideType Null");
                 return;
-            }
-            EventBus<OnCountryChanged>.Raise(new OnCountryChanged(_teamData, lastSelectedCountryController.lastSelectedFieldSideType));
+            }*/
+            EventBus<OnCountryChanged>.Raise(new OnCountryChanged(_teamData, LastSelectedCountryController.lastSelectedFieldSideType));
         }
         public void Activate()
         {
