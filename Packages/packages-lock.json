@@ -15,14 +15,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "fc0705fef595415df5da38162db57628a02db802"
+      "hash": "ebcddaccfa1f9b76bda069e72318ba18e1b742cd"
     },
     "com.invictus.art.tournament": {
-      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main",
+      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#rishi-work-ashley-cutscenes",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "fc0705fef595415df5da38162db57628a02db802"
+      "hash": "f49c4e7bf5c60cc98a4bf73c2ca908e4b71079d2"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",
