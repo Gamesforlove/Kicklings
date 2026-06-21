@@ -88,7 +88,7 @@ namespace Gameplay.CharacterComponents.Cpu
         {
             yield return new WaitForSeconds(time);
             PlayerActions.OnActionPerformed();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.3f); // TODO: Maybe randomize this too, or make it a setting in the difficulty preset
             PlayerActions.OnActionCancelled();
         }
     }

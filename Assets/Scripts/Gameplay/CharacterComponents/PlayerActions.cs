@@ -112,6 +112,5 @@ namespace Gameplay.CharacterComponents
             CanKick = prevCanKick;
             inforceKickToHoldRoutine = false;
         }
-
     }
 }

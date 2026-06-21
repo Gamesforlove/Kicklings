@@ -2,9 +2,9 @@
 {
     public enum SceneName
     {
-        MainMenu, Gameplay, 
+        MainMenu, Gameplay,
         
         //rishi test ones for campaign
-        Stage0Scene2TutorialMatch
+        Stage0Scene2TutorialMatch,
     }
 }
