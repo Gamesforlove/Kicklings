@@ -12,6 +12,7 @@ namespace CommonDataTypes
         {
             public int Id;
             public string Name;
+            public string FullName;
             public Sprite Icon;
             public Sprite ShirtSprite;
             public Color CountryColor;

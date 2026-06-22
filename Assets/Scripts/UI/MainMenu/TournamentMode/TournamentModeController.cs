@@ -66,7 +66,7 @@ namespace UI.MainMenu.TournamentMode
             Participant rival = playerBracket.Participants[1];
 
             StartTournamentAfterCutscene.Instance?.TriggerCutsceneThenTournament(
-                PlayerTeamData.Name,
+                PlayerTeamData.FullName,
                 _tournamentLayoutComponent,
                 _tournamentConfiguration,
                 Tournament,
