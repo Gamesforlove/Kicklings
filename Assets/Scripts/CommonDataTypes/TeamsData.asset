@@ -159,13 +159,13 @@ MonoBehaviour:
     CountryColor: {r: 0.043137256, g: 0.12941177, b: 0.23529413, a: 1}
   - Id: 24
     Name: KOR
-    FullName: 
+    FullName: Korea
     Icon: {fileID: 21300000, guid: c4e3432db2632e74aaf2d93508cea84f, type: 3}
     ShirtSprite: {fileID: 550798496, guid: 541afd32f3298eb41acd06838c282df5, type: 3}
     CountryColor: {r: 0.82745105, g: 0, b: 0, a: 1}
   - Id: 25
     Name: KSA
-    FullName: 
+    FullName: Saudi Arabia
     Icon: {fileID: 21300000, guid: 74c9ad3a971d47c4ba884f077763e66b, type: 3}
     ShirtSprite: {fileID: -1196413923, guid: 32b5883c71178bb48a2fea2b0a719e3a, type: 3}
     CountryColor: {r: 0.2392157, g: 0.39607847, b: 0.2392157, a: 1}
@@ -225,7 +225,7 @@ MonoBehaviour:
     CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 35
     Name: POR
-    FullName: 
+    FullName: Portugal
     Icon: {fileID: 21300000, guid: 0b2f84c8ad818b84cba3f432d52385f4, type: 3}
     ShirtSprite: {fileID: -887299394, guid: e8e310bcc1d6b7647981b2599ff41f34, type: 3}
     CountryColor: {r: 0.24313727, g: 0.5019608, b: 0.0627451, a: 1}
@@ -261,7 +261,7 @@ MonoBehaviour:
     CountryColor: {r: 1, g: 1, b: 1, a: 1}
   - Id: 41
     Name: SVK
-    FullName: 
+    FullName: Slovakia
     Icon: {fileID: 21300000, guid: 08361887325ff514884847bd83346add, type: 3}
     ShirtSprite: {fileID: 1289501815, guid: 97db7af07e669fb48b2c9e5bbeafc19e, type: 3}
     CountryColor: {r: 0.09411766, g: 0.27058825, b: 0.70980394, a: 1}
@@ -273,25 +273,25 @@ MonoBehaviour:
     CountryColor: {r: 0.12941177, g: 0.34901962, b: 0.9058824, a: 1}
   - Id: 43
     Name: THA
-    FullName: 
+    FullName: Thailand
     Icon: {fileID: 21300000, guid: fb792c6485924be46baba20876b77d05, type: 3}
     ShirtSprite: {fileID: 1930036905, guid: d52076b5b99a12e4d9a1cccaa5035e42, type: 3}
     CountryColor: {r: 0.03137255, g: 0.043137256, b: 0.18039216, a: 1}
   - Id: 44
     Name: TUR
-    FullName: 
+    FullName: Turkey
     Icon: {fileID: 21300000, guid: 796895f76e934e04d8b4c1d4b71b9091, type: 3}
     ShirtSprite: {fileID: 1047575602, guid: e2048114c1f5995488ef0dfbe630df73, type: 3}
     CountryColor: {r: 0.09411766, g: 0, b: 0, a: 1}
   - Id: 45
     Name: UAE
-    FullName: 
+    FullName: United Arab Emirates
     Icon: {fileID: 21300000, guid: 859e30362dd79fb4b80e62fe27c75f2b, type: 3}
     ShirtSprite: {fileID: 1739579714, guid: b3fe024727097c6409c1fd605d9203a4, type: 3}
     CountryColor: {r: 0.39607847, g: 0.22352943, b: 0.22352943, a: 1}
   - Id: 46
     Name: UKR
-    FullName: 
+    FullName: Ukraine
     Icon: {fileID: 21300000, guid: eb265585eae899146ac2d186f4609d01, type: 3}
     ShirtSprite: {fileID: -1179478713, guid: 6667f51ef854c6f48b12639cd21f72cc, type: 3}
     CountryColor: {r: 1, g: 0.7137255, b: 0.22352943, a: 1}
