@@ -50,5 +50,11 @@ namespace AudioSystem
                 Debug.LogWarning($"No clip assigned for {type}");
             }
         }
+
+        public void StopMusic()
+        {
+            if ( _audioSource != null && _audioSource.isPlaying)
+                _audioSource.Stop();
+        }
     }
 }
