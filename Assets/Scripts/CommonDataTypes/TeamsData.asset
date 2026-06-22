@@ -297,7 +297,7 @@ MonoBehaviour:
     CountryColor: {r: 1, g: 0.7137255, b: 0.22352943, a: 1}
   - Id: 47
     Name: USA
-    FullName: 
+    FullName: The United States of America
     Icon: {fileID: 21300000, guid: 86a143e2789b07649914534abb0809b9, type: 3}
     ShirtSprite: {fileID: 736693566, guid: 9142adffe1d78a741be27c201d506487, type: 3}
     CountryColor: {r: 0.03137255, g: 0.20392159, b: 0.41960788, a: 1}
