@@ -36,13 +36,13 @@ namespace UI.MainMenu.TournamentMode
         
         void Initialize()
         {
-            LayoutMode = _controller.GetLayoutMode() switch
+            LayoutMode = TournamentModeController.GetLayoutMode() switch
             {
                 TournamentLayoutMode.Four => 0,
                 TournamentLayoutMode.Eight => 1,
                 TournamentLayoutMode.Sixteen => 2
             };
-            NumberOfRounds = _controller.GetLayoutMode() switch
+            NumberOfRounds = TournamentModeController.GetLayoutMode() switch
             {
                 TournamentLayoutMode.Four => 2,
                 TournamentLayoutMode.Eight => 3,

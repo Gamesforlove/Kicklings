@@ -36,7 +36,7 @@ namespace UI.MainMenu.TournamentMode
             Tournament.SimulateRound(Tournament.CurrentRound);
         }
 
-        public TournamentLayoutMode GetLayoutMode() => _tournamentConfiguration.LayoutMode;
+        public static TournamentLayoutMode GetLayoutMode() => _tournamentConfiguration.LayoutMode;
 
         public void AssignLayoutMode(TournamentLayoutComponent component)
         {
@@ -63,20 +63,16 @@ namespace UI.MainMenu.TournamentMode
         {
             Bracket playerBracket = Tournament.GetPlayerBracket();
             Participant player = playerBracket.Participants[0];
-            Participant rival =  playerBracket.Participants[1];
+            Participant rival = playerBracket.Participants[1];
 
-            MatchSettings matchSettings = new MatchSettings.Builder()
-                .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
-                .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
-                .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
-                .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
-                .WithRightSkinToneValue(Random.Range(0, 1.0f))
-                .WithLeftSkinToneValue(_tournamentConfiguration.PlayerSkinTone)
-                .WithIsTournamentMatch(true)
-                .WithGoalsToEndMatch(5)
-                .Build();
-            
-            MatchFlow.CreateTournamentMatch(matchSettings, Tournament);
+            StartTournamentAfterCutscene.Instance?.TriggerCutsceneThenTournament(
+                PlayerTeamData.Name,
+                _tournamentLayoutComponent,
+                _tournamentConfiguration,
+                Tournament,
+                TeamsData.GetTeamByName(player.TeamData.Name).Id, 
+                TeamsData.GetTeamByName(rival.TeamData.Name).Id
+            );
         }
     }
 

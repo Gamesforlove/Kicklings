@@ -676,7 +676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3244b361aa775b34f9ca2539e4e8b0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastSelectedFieldSideType: 2
 --- !u!114 &1280445139 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5762221946302747731, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
@@ -1435,6 +1434,10 @@ PrefabInstance:
     - target: {fileID: 1188724793559324819, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_Color.r
       value: 0.5176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 1286557496461526823, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 71.45996
       objectReference: {fileID: 0}
     - target: {fileID: 1328588759578168036, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2248,7 +2251,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1943922111}
     - targetCorrespondingSourceObject: {fileID: 1952670259575970446, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 1759005642}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3506352938287618700, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
