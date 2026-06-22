@@ -171,55 +171,55 @@ MonoBehaviour:
     CountryColor: {r: 0.2392157, g: 0.39607847, b: 0.2392157, a: 1}
   - Id: 26
     Name: LTU
-    FullName: 
+    FullName: Lithuania
     Icon: {fileID: 21300000, guid: 43b7919aba49bdc48b5940afb8c978c8, type: 3}
     ShirtSprite: {fileID: -7289935893730319966, guid: 59d5c46166fca3647b47a94de22d415f, type: 3}
     CountryColor: {r: 0.7960785, g: 0.6156863, b: 0.37647063, a: 1}
   - Id: 27
     Name: MAS
-    FullName: 
+    FullName: Malaysia
     Icon: {fileID: 21300000, guid: 8cc6c193e4266aa4588ed4e1830ed0b9, type: 3}
     ShirtSprite: {fileID: -3786628340683635707, guid: e4db855fae32e0248a7b6dc06729f9aa, type: 3}
     CountryColor: {r: 0.09411766, g: 0.10980393, b: 0.16078432, a: 1}
   - Id: 28
     Name: MEX
-    FullName: 
+    FullName: Mexico
     Icon: {fileID: 21300000, guid: 81109e3d71db0d340a915468fc4d3173, type: 3}
     ShirtSprite: {fileID: -898240259, guid: 67d1de5c24f7ee44ab18cd6e57d6d09d, type: 3}
     CountryColor: {r: 1, g: 0.9058824, b: 0.8078432, a: 1}
   - Id: 29
     Name: NED
-    FullName: 
+    FullName: The Netherlands
     Icon: {fileID: 21300000, guid: 9d5f05b1d4a9d9548a26ab00202bf9dd, type: 3}
     ShirtSprite: {fileID: 1139671957, guid: fa69dcf3d40c09b4bb7b5689f76fab52, type: 3}
     CountryColor: {r: 0.8196079, g: 0.38431376, b: 0.08627451, a: 1}
   - Id: 30
     Name: NOR
-    FullName: 
+    FullName: Norway
     Icon: {fileID: 21300000, guid: ad2c8155ca72caf49a00c1eee68c787b, type: 3}
     ShirtSprite: {fileID: -1938901745168536630, guid: 802fe3104b4e1b34b991168884c60620, type: 3}
     CountryColor: {r: 0.38823533, g: 0.20392159, b: 0.2901961, a: 1}
   - Id: 31
     Name: NZL
-    FullName: 
+    FullName: New Zealand
     Icon: {fileID: 21300000, guid: d5e13a074aad4974e8573b180c089471, type: 3}
     ShirtSprite: {fileID: -7691610408069362846, guid: bd732bd5011496a41b8149458587ffcc, type: 3}
     CountryColor: {r: 0.08627451, g: 0.10980393, b: 0.16078432, a: 1}
   - Id: 32
     Name: PAK
-    FullName: 
+    FullName: Pakistan
     Icon: {fileID: 21300000, guid: 2c2d9e8c62b514a418796c2e250d84c7, type: 3}
     ShirtSprite: {fileID: 7474425050080620282, guid: b704f1dda1a80144fad715c16864cdbe, type: 3}
     CountryColor: {r: 0.15294118, g: 0.32941177, b: 0.18431373, a: 1}
   - Id: 33
     Name: PHI
-    FullName: 
+    FullName: Philippines
     Icon: {fileID: 21300000, guid: 2d7576bcdcc4f7141a20bac3bc7ad293, type: 3}
     ShirtSprite: {fileID: -2705501801250411954, guid: acc3740c81f423d42b8306cbda09170d, type: 3}
     CountryColor: {r: 0.7137255, g: 0.92549026, b: 0.95294124, a: 1}
   - Id: 34
     Name: POL
-    FullName: 
+    FullName: Poland
     Icon: {fileID: 21300000, guid: b90616fe634ecf448ba454982c48befc, type: 3}
     ShirtSprite: {fileID: -2138632860, guid: c1dc3b62e48e2c04a8e76525d762f560, type: 3}
     CountryColor: {r: 1, g: 1, b: 1, a: 1}
@@ -231,31 +231,31 @@ MonoBehaviour:
     CountryColor: {r: 0.24313727, g: 0.5019608, b: 0.0627451, a: 1}
   - Id: 36
     Name: ROC
-    FullName: 
+    FullName: Taiwan
     Icon: {fileID: 21300000, guid: 9ff437eec8ad2384baf9bbe492a26608, type: 3}
     ShirtSprite: {fileID: 5557001849324846069, guid: 0f7d0441737e3244bb67286f7b2ba742, type: 3}
     CountryColor: {r: 0.64705884, g: 0.18823531, b: 0.19215688, a: 1}
   - Id: 37
     Name: ROU
-    FullName: 
+    FullName: Romania
     Icon: {fileID: 21300000, guid: ef696053722a5b44b93defd867dc3625, type: 3}
     ShirtSprite: {fileID: 1516594778, guid: 5c53baf5b3a7fd14ebc8a20111b8f7d2, type: 3}
     CountryColor: {r: 0.6784314, g: 0.75294125, b: 0.30980393, a: 1}
   - Id: 38
     Name: RSA
-    FullName: 
+    FullName: South Africa
     Icon: {fileID: 21300000, guid: 70af9d03328086f4db115bf9377246e4, type: 3}
     ShirtSprite: {fileID: -614041500, guid: 864c52487c737f544aec317e7ccd0a19, type: 3}
     CountryColor: {r: 0.77647066, g: 0.92549026, b: 0.20000002, a: 1}
   - Id: 39
     Name: SIN
-    FullName: 
+    FullName: Singapore
     Icon: {fileID: 21300000, guid: 645942ac953593147b8f53cc92fa083b, type: 3}
     ShirtSprite: {fileID: -5707271846974475503, guid: 00bb31ed7bdea5a4a9f4fb1a2fb28208, type: 3}
     CountryColor: {r: 0.6039216, g: 0.24313727, b: 0.20392159, a: 1}
   - Id: 40
     Name: SUI
-    FullName: 
+    FullName: Switzerland
     Icon: {fileID: 21300000, guid: bc150a6472bb806489083ff3c995d6dc, type: 3}
     ShirtSprite: {fileID: 68686569, guid: f99dea49f73038c47a0f405fd1ffaf65, type: 3}
     CountryColor: {r: 1, g: 1, b: 1, a: 1}
@@ -267,7 +267,7 @@ MonoBehaviour:
     CountryColor: {r: 0.09411766, g: 0.27058825, b: 0.70980394, a: 1}
   - Id: 42
     Name: SWE
-    FullName: 
+    FullName: Sweden
     Icon: {fileID: 21300000, guid: d98166a15273acb43a6256b07055be8a, type: 3}
     ShirtSprite: {fileID: -705479417, guid: 61cd929a800bc7649bb3692c54653dc7, type: 3}
     CountryColor: {r: 0.12941177, g: 0.34901962, b: 0.9058824, a: 1}
