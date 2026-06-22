@@ -17,6 +17,7 @@ public class StartTournamentAfterCutscene : MonoBehaviour
         }
 
         Instance = this;
+        transform.parent = null;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -27,12 +28,12 @@ public class StartTournamentAfterCutscene : MonoBehaviour
 
     IEnumerator playCutsceneThenTournamentRoutine(string country, TournamentLayoutComponent _tournamentLayoutComponent, TournamentConfiguration _tournamentConfiguration, Tournament Tournament, int leftCountryImageIndex, int rightCountryImageIndex)
     {
-
         // play cutscene
         TournamentCutsceneContext.Country = country;
         TournamentCutsceneContext.NumPoints = goalsToEndMatch;
         TournamentCutsceneContext.NumTeams = _tournamentLayoutComponent.GetLayoutModeTeams();
         EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.TournamentIntroCutscene));
+        yield return null;
         yield return new WaitUntil(() => TournamentCutsceneState.Instance != null && TournamentCutsceneState.Instance.CutsceneStarted);
         yield return new WaitUntil(() => TournamentCutsceneState.Instance == null || TournamentCutsceneState.Instance.CutsceneFinished);
 
@@ -52,7 +53,7 @@ public class StartTournamentAfterCutscene : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    private float RandomSkinTone() => Random.Range(0, 1.0f);
-    const bool isTournamentMatch = true;
-    const int goalsToEndMatch = 5;
+    public static float RandomSkinTone() => Random.Range(0, 1.0f);
+    public const bool isTournamentMatch = true;
+    public const int goalsToEndMatch = 5;
 }
