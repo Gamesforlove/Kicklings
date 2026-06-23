@@ -19,7 +19,7 @@ public static class InvictusArtAutoUpdater
         ),
         new PackageTarget(
             "com.invictus.art.tournament",
-            "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#rishi-work-ashley-cutscenes"
+            "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#ashley-cutscenes"
         )
     };
 
