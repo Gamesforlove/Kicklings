@@ -13,7 +13,6 @@ namespace Gameplay.Spawners
         public BallScript SpawnBall()
         {
             GameObject go = Instantiate(_ballPrefab);
-            //go.transform.position = _leftSidePosition.position;
             go.transform.position = _centerPosition.position;
             _ball = go;
             return go.GetComponent<BallScript>();
@@ -21,7 +20,6 @@ namespace Gameplay.Spawners
 
         public void ResetBall()
         {
-            //_ball.transform.position = _leftSidePosition.position;
             _ball.transform.position = _centerPosition.position;
             _ball.transform.rotation = Quaternion.identity;
         }

@@ -110,12 +110,16 @@ namespace Gameplay.Managers
 
             layer = LayerMask.NameToLayer(EntityLayer.Player2_GoalKeeper.ToString());
             SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], _controlSchemes[3], layer);
-            foreach (var player in _players)
-            {
-                var abilityActor = player.GetComponent<AbilityActor>();
-                abilityActor.SetUpPlayersList(_players);
-                abilityActors.Add(abilityActor);
-            }
+
+            #if UNITY_EDITOR
+                foreach (var player in _players)
+                {
+                    var abilityActor = player.GetComponent<AbilityActor>();
+                    abilityActor.SetUpPlayersList(_players);
+                    abilityActors.Add(abilityActor);
+                }
+            #endif
+
         }
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
@@ -152,6 +156,13 @@ namespace Gameplay.Managers
             {
                 player.GetComponent<IEntity>().Reset();
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
+            }
+        }
+        public void DisablePlayers()
+        {
+            foreach (GameObject player in _players)
+            {
+                player.GetComponent<PlayerActions>().DisableInput = true;
             }
         }
         public IReadOnlyList<AbilityActor> GetAbilityActors()
