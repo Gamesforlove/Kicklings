@@ -7,6 +7,8 @@ namespace Gameplay.CharacterComponents
 {
     public class PlayerActions : MonoBehaviour
     {
+        public bool DisableInput { get; set; }
+
         EntityData _entityData;
         int _kickingDirectionMultiplier = 1;
 
@@ -50,6 +52,7 @@ namespace Gameplay.CharacterComponents
 
         public void OnActionPerformed()
         {
+            if (DisableInput) return;
             Kick();
             if (_groundChecks.Any(gc =>  gc.IsGrounded) && !_jumpOnCd)
                 Jump();

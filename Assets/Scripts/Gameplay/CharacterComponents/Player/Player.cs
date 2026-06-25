@@ -21,6 +21,7 @@ namespace Gameplay.CharacterComponents.Player
         void OnDisable()
         {
             EventBus<PlayerActionPerformed>.OnEvent -= PerformAction;
+            EventBus<PlayerActionCanceled>.OnEvent -= CancelAction;
         }
     
         void PerformAction(PlayerActionPerformed _) => _playerActions.OnActionPerformed();

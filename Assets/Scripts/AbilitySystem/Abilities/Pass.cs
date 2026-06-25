@@ -14,6 +14,9 @@ public class Pass : IAbility
     private Coroutine passRoutine = null;
     private AbilityExecutionContext ctx;
     private Vector3 _blockerPosition;
+    private Vector2 _teammate;
+    private Vector2 _oponentGoalkeeper;
+    private Vector2 _oponentPlayer;
     public Pass(PassConfig config, AbilityActor owner)
     {
         this.config = config;
@@ -26,20 +29,19 @@ public class Pass : IAbility
     }
     public IEnumerator ExecuteCoroutine(AbilityExecutionContext ctx)
     {
-        Vector2 teammate = GetTeammate(ctx).transform.position;
-        Vector2 oponentGoalkeeper = GetOponentGoalkeeper(ctx).transform.position;
-        Vector2 oponentPlayer = GetOponentPlayer(ctx).transform.position;
-        if (owner.transform.position.x > teammate.x && owner.Team == Team.Left) yield break;
-        if (owner.transform.position.x < teammate.x && owner.Team == Team.Right) yield break;
-        if (owner.Team == Team.Left)
+        _teammate = GetTeammate(ctx).transform.position;
+        _oponentGoalkeeper = GetOponentGoalkeeper(ctx).transform.position;
+        _oponentPlayer = GetOponentPlayer(ctx).transform.position;
+        if (owner.transform.position.x > _teammate.x && owner.Team == Team.Left) yield break;
+        if (owner.transform.position.x < _teammate.x && owner.Team == Team.Right) yield break;
+/*        if (owner.Team == Team.Left)
         {
             if (teammate.x < oponentPlayer.x && teammate.x < oponentGoalkeeper.x) yield break;
         }
         else
         {
             if (teammate.x > oponentPlayer.x && teammate.x > oponentGoalkeeper.x) yield break;
-        }
-        _blockerPosition = FoundBlockerPosition(oponentGoalkeeper, oponentPlayer);
+        }*/
         this.ctx = ctx;
         owner.BallTouched += OnPlayerTouchedBall;
         if (!config.ExecutableOnKick)
@@ -61,6 +63,8 @@ public class Pass : IAbility
         //owner.Player._playerActions.ReturnLeftLegToOriginalPosition();
         BallScript.TouchedPlayer += OnBallTouchedPlayer;
 
+
+        _blockerPosition = FoundBlockerPosition(_oponentGoalkeeper, _oponentPlayer, _teammate, out bool blockerExists);
         AbilityActor Teammate = GetTeammate(ctx);
         Transform BallTargetPosition = Teammate.BallPoint;
         float expieredTime = 0;
@@ -68,7 +72,10 @@ public class Pass : IAbility
 
         Vector2 startPos = ctx.Ball.transform.position;
         Vector2 middle = (startPos + (Vector2)BallTargetPosition.position) / 2;
-        middle = new Vector2(_blockerPosition.x, startPos.y + config.PassCurveHeight);
+
+        if (blockerExists) middle = new Vector2(_blockerPosition.x, startPos.y + config.PassCurveHighHeight);
+        else middle = new Vector2(middle.x, startPos.y + config.PassCurveLowHeight);
+
         Vector2 newPos;
         Debug.DrawLine(startPos, BallTargetPosition.position, Color.red, 5f);
 
@@ -110,8 +117,17 @@ public class Pass : IAbility
         AbilityActor teammate = ctx.Players.First(x => x.Team != owner.Team && x.PlayerType == Gameplay.Spawners.PlayersSpawner.PlayerType.Goalkeeper);
         return teammate;
     }
-    private Vector3 FoundBlockerPosition(Vector2 oponentGoalkeeper, Vector2 oponentPlayer)
+    private Vector3 FoundBlockerPosition(Vector2 oponentGoalkeeper, Vector2 oponentPlayer, Vector2 teammate,  out bool blockerExists)
     {
+        blockerExists = true;
+        if (owner.Team == Team.Left)
+        {
+            if (teammate.x < oponentPlayer.x && teammate.x < oponentGoalkeeper.x) blockerExists = false;
+        }
+        else
+        {
+            if (teammate.x > oponentPlayer.x && teammate.x > oponentGoalkeeper.x) blockerExists = false;
+        }
         if (owner.Team == Team.Left)
         {            
             if (owner.transform.position.x - oponentPlayer.x > owner.transform.position.x - oponentGoalkeeper.x)

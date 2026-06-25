@@ -111,20 +111,24 @@ namespace Gameplay.Managers
         }
         void ShowEndgame(GoalEvent payload)
         {
-            TimeScaleManager.PauseGame();
+            //TimeScaleManager.PauseGame();
+
+            _playersManager.DisablePlayers();
             _match.HandleEndgameUI(this, _uiManager, payload);
         }
 
         public void InstantWin()
         {
+            //TimeScaleManager.PauseGame();
             GoalEvent payload = new GoalEvent(_leftSideData, _rightSideData);
-            TimeScaleManager.PauseGame();
+            _playersManager.DisablePlayers();
             _match.HandleEndgameUI(this, _uiManager, payload);
         }
         public void InstantLose()
         {
+            //TimeScaleManager.PauseGame();
             GoalEvent payload = new GoalEvent(_rightSideData, _leftSideData);
-            TimeScaleManager.PauseGame();
+            _playersManager.DisablePlayers();
             _match.HandleEndgameUI(this, _uiManager, payload);
         }
 
