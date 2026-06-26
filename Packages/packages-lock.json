@@ -18,11 +18,11 @@
       "hash": "0ad9d0ba6dd784b3989fae085d03619a887e8bdb"
     },
     "com.invictus.art.tournament": {
-      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#ashley-cutscenes",
+      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "16b3e5dfb7b45e2ffbf6460071b2c1f4b4e9affc"
+      "hash": "0ad9d0ba6dd784b3989fae085d03619a887e8bdb"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",

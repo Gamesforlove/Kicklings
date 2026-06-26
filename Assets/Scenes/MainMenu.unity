@@ -2371,10 +2371,6 @@ PrefabInstance:
       propertyPath: <AudioManager>k__BackingField
       value: 
       objectReference: {fileID: 5823204399021927607}
-    - target: {fileID: 6919742171775934926, guid: 01d59552f9783b242ae25f7d9afe88db, type: 3}
-      propertyPath: <SoundMixerManager>k__BackingField
-      value: 
-      objectReference: {fileID: 5823204399021927605}
     - target: {fileID: 8703303136494428086, guid: 01d59552f9783b242ae25f7d9afe88db, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
