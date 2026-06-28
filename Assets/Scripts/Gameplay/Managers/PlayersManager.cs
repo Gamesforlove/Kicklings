@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CommonDataTypes;
 using Gameplay.CharacterComponents;
+using Gameplay.CharacterComponents.Cpu;
 using Gameplay.Spawners;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -148,6 +149,11 @@ namespace Gameplay.Managers
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
             SetLayerAllChildren(cpu.transform, layer);
+        }
+
+        public void SetDifficulty(DifficultyLevel difficulty)
+        {
+            _playersSpawner.SetDifficulty(difficulty);
         }
 
         public void ResetPlayers()

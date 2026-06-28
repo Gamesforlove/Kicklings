@@ -1,9 +1,11 @@
 using CommonDataTypes;
 using DG.Tweening;
 using EventBusSystem;
+using Gameplay.CharacterComponents.Cpu;
 using Scene_Management;
 using System;
 using System.Collections;
+using UI.MainMenu.TournamentMode;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -43,6 +45,12 @@ namespace Gameplay.Managers
         void Start()
         {
             _match = MatchFlow.Match;
+
+            if (_match is TournamentMatch tournamentMatch)
+            {
+                DifficultyLevel difficulty = tournamentMatch.Tournament.GetDifficultyForRound();
+                _playersManager?.SetDifficulty(difficulty);
+            }
 
             _playersManager?.SpawnEntities(_match.Settings);
             _abilityTestingManager?.SetUpAbilityActors(_playersManager.GetAbilityActors());
