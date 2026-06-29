@@ -37,6 +37,8 @@ public class StartTournamentAfterCutscene : MonoBehaviour
         yield return new WaitUntil(() => TournamentCutsceneState.Instance != null && TournamentCutsceneState.Instance.CutsceneStarted);
         yield return new WaitUntil(() => TournamentCutsceneState.Instance == null || TournamentCutsceneState.Instance.CutsceneFinished);
 
+        yield return new WaitForSeconds(2.5f);
+
         // play match
         MatchSettings matchSettings = new MatchSettings.Builder()
             .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
