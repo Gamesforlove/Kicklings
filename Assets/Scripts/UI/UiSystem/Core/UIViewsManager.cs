@@ -36,7 +36,9 @@ namespace UI.UiSystem.Core
             }
             else
             {
+#if UNITY_EDITOR
                 Debug.LogWarning($"View {view.name} does not support data of type {typeof(T)}");
+#endif
                 ShowView(view); // fallback to default
             }
         }

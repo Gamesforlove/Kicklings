@@ -21,7 +21,9 @@ namespace SaveSystem
                 }
 
                 callback?.Invoke(true);
+#if UNITY_EDITOR
                 Debug.Log($"Game saved successfuly to {path}");
+#endif
             }
             catch (Exception e)
             {
@@ -39,7 +41,9 @@ namespace SaveSystem
 
                 if (!File.Exists(path))
                 {
+#if UNITY_EDITOR
                     Debug.LogWarning($"File not found: {path}");
+#endif
                     callback?.Invoke(default);
                     return;
                 }
@@ -63,7 +67,9 @@ namespace SaveSystem
 
                 if (!File.Exists(path))
                 {
+#if UNITY_EDITOR
                     Debug.LogWarning($"File not found: {path}");
+#endif
                     return default;
                 }
 

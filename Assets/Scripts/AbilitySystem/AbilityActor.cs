@@ -63,14 +63,20 @@ public class AbilityActor : MonoBehaviour
     {
         if (!abilities.ContainsKey(abilityName))
         {
+#if UNITY_EDITOR
             Debug.Log($"{gameObject.name} doesn't have *{abilityName.ToString()}* ability!");
+#endif
             yield break;
         }
 
+#if UNITY_EDITOR
         Debug.Log($"{gameObject.name} begins {abilityName.ToString()} ability!");
+#endif
         if (PerformingAbility)
         {
+#if UNITY_EDITOR
             Debug.Log($"{gameObject.name} is already performing ability!");
+#endif
             yield break;
         }
 

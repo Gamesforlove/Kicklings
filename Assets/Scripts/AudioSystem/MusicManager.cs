@@ -32,7 +32,6 @@ namespace AudioSystem
             }
         }
 
-        //TODO: This should be done by the bootstrapper scene
         void Start()
         {
             ChangeMusic(MusicType.MainMenu);
@@ -47,7 +46,9 @@ namespace AudioSystem
             }
             else
             {
+#if UNITY_EDITOR
                 Debug.LogWarning($"No clip assigned for {type}");
+#endif
             }
         }
 

@@ -54,11 +54,13 @@ public class Pass : IAbility
 
     private IEnumerator MakePass(AbilityExecutionContext ctx)
     {
+#if UNITY_EDITOR
         Debug.Log($"{owner.gameObject.name} + performs Pass ability");
         if (ctx == null)
         {
             Debug.LogWarning("Ability exec context in pass ability is null");
         }
+#endif
 
         //owner.Player._playerActions.ReturnLeftLegToOriginalPosition();
         BallScript.TouchedPlayer += OnBallTouchedPlayer;

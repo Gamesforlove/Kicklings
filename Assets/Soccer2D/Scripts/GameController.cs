@@ -170,13 +170,17 @@ public class GameController : MonoBehaviour {
 
     public void IncreaseEndScore()
     {
+#if UNITY_EDITOR
         Debug.Log("End Score Increased");
+#endif
         endScore++;
         UpdateEndScoreDisplay();
     }
     public void DecreaseEndScore()
     {
+#if UNITY_EDITOR
         Debug.Log("End Score Decreased");
+#endif
         endScore = Mathf.Max(1, endScore - 1);
         UpdateEndScoreDisplay();
     }
@@ -239,7 +243,9 @@ public class GameController : MonoBehaviour {
         }
         else if (Input.GetKeyDown(keyCode) && onExitingDialog && !isPlaying)
         {
+#if UNITY_EDITOR
             Debug.Log("Quit Called");
+#endif
             Application.Quit();
         }
     }
@@ -445,7 +451,9 @@ public class GameController : MonoBehaviour {
 
     public void GoPlay()
     {
+#if UNITY_EDITOR
         Debug.Log("Go To Play!");
+#endif
         isOnMenu = false;
         isPlaying = true;
         finished = false;
@@ -459,7 +467,9 @@ public class GameController : MonoBehaviour {
 
     public void GoMenu()
     {
+#if UNITY_EDITOR
         Debug.Log("Return To The Menu!");
+#endif
         isPaused = false;
         isOnMenu = true;
         Screen.sleepTimeout = SleepTimeout.SystemSetting;
@@ -485,7 +495,9 @@ public class GameController : MonoBehaviour {
 
     public void GoMenuEndGame()
     {
+#if UNITY_EDITOR
         Debug.Log("End Game!");
+#endif
         isPaused = false;
         isOnMenu = true;
         Screen.sleepTimeout = SleepTimeout.SystemSetting;
