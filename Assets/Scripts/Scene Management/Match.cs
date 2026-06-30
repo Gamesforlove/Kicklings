@@ -42,6 +42,7 @@ namespace Scene_Management
     public class TournamentMatch : Match
     {
         readonly Tournament _tournament;
+        public Tournament Tournament => _tournament;
 
         public TournamentMatch(MatchSettings settings, Tournament tournament) : base(settings)
         {

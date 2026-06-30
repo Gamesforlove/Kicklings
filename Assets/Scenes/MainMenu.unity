@@ -1791,6 +1791,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3780259685469322490, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 28.499939
+      objectReference: {fileID: 0}
     - target: {fileID: 3907786235902875266, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1

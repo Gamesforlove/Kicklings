@@ -74,7 +74,9 @@ public class CountryFactsImporter : EditorWindow
         so.ApplyModifiedProperties();
         EditorUtility.SetDirty(db);
         AssetDatabase.SaveAssets();
-        Debug.Log($"Imported {grouped.Count} cointries, {grouped.Values.Sum(f => f.Count)} facts -> {outputPath}");
+#if UNITY_EDITOR
+        Debug.Log($"Imported {grouped.Count} countries, {grouped.Values.Sum(f => f.Count)} facts -> {outputPath}");
+#endif
     }
 
     private List<string> ParseCSVLine(string line)

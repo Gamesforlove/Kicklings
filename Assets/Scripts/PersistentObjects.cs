@@ -20,7 +20,9 @@ public class PersistentObjects : MonoBehaviour
 
         if (!SoundMixerManager)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("PersistentObjects -> SoundMixerManager is null");
+#endif
         }
     }
 }

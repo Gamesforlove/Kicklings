@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CommonDataTypes;
+using Gameplay.CharacterComponents.Cpu;
 
 namespace UI.MainMenu.TournamentMode
 {
@@ -61,6 +62,16 @@ namespace UI.MainMenu.TournamentMode
             Rounds.Add(round);
             CurrentRound = round;
             return round;
+        }
+
+        public DifficultyLevel GetDifficultyForRound()
+        {
+            if (CurrentRound.IsFirstRound())
+                return DifficultyLevel.Easy;
+            else if (CurrentRound.IsLastRound() && NumberOfRounds > 2)
+                return DifficultyLevel.Hard;
+            else
+                return DifficultyLevel.Medium;
         }
     }
 }
