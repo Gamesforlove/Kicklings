@@ -203,8 +203,10 @@ MonoBehaviour:
   _soundClips:
   - Type: 0
     Clip: {fileID: 8300000, guid: 0603ebce1ab39dd408361867b71b6201, type: 3}
+    Volume: 0.85
   - Type: 1
     Clip: {fileID: 8300000, guid: 25a3c4b068bdea747a1081e0bb9fa59a, type: 3}
+    Volume: 0.5
 --- !u!82 &7538756857691196159
 AudioSource:
   m_ObjectHideFlags: 0
