@@ -57,5 +57,5 @@ public class StartTournamentAfterCutscene : MonoBehaviour
 
     public static float RandomSkinTone() => Random.Range(0, 1.0f);
     public const bool isTournamentMatch = true;
-    public const int goalsToEndMatch = 5;
+    public const int goalsToEndMatch = 3;
 }

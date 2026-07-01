@@ -21,6 +21,7 @@ namespace Gameplay.Managers
         [SerializeField] FieldSideData _rightSideData;
         
         Match _match;
+        float _matchStartTime;
 
         int _leftScore, _rightScore;
         public void ResetGame()
@@ -58,6 +59,7 @@ namespace Gameplay.Managers
             _goalsManager?.SetCollidersEnabled(true);
             _leftScore = 0;
             _rightScore = 0;
+            _matchStartTime = Time.time;
             TimeScaleManager.SetGameplayTimeScale();
         }
     
@@ -123,6 +125,26 @@ namespace Gameplay.Managers
 
             _playersManager.DisablePlayers();
             _match.HandleEndgameUI(this, _uiManager, payload);
+
+            var data = GameAndPlayerData.Instance;
+            if (data != null)
+            {
+                data.numGamesPlayed++;
+                data.numGamesPlayedToday++;
+                data.totalPlaytime += Time.time - _matchStartTime;
+
+                if (_match.IsPlayerWinner)
+                {
+                    data.numGamesWon++;
+                    data.numGamesWonToday++;
+                }
+                else
+                {
+                    data.numGamesLost++;
+                    data.numGamesLostToday++;
+                }
+                data.UpdateElo(_match.IsPlayerWinner);
+            }
         }
 
         public void InstantWin()
