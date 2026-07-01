@@ -53,6 +53,24 @@ namespace Scene_Management
         {
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
 
+            var data = GameAndPlayerData.Instance;
+            if (data != null)
+            {
+                data.numTournamentMatchesPlayed++;
+                data.numTournamentMatchesPlayedToday++;
+
+                if (IsPlayerWinner)
+                {
+                    data.numTournamentMatchesWon++;
+                    data.numTournamentMatchesWonToday++;
+                }
+                else
+                {
+                    data.numTournamentMatchesLost++;
+                    data.numTournamentMatchesLostToday++;
+                }
+            }
+
             if (!IsPlayerWinner)
                 uiManager.ShowTournamentKnockOutView();
             else if (_tournament.CurrentRound.IsLastRound())

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonDataTypes;
 using Gameplay.CharacterComponents.Cpu;
+using UnityEngine;
 
 namespace UI.MainMenu.TournamentMode
 {
@@ -66,12 +67,23 @@ namespace UI.MainMenu.TournamentMode
 
         public DifficultyLevel GetDifficultyForRound()
         {
+            // Base Score -> 0 = Easy, 1 = Medium, 2 = Hard
+            float baseScore;
             if (CurrentRound.IsFirstRound())
-                return DifficultyLevel.Easy;
+                baseScore = 0f;
             else if (CurrentRound.IsLastRound() && NumberOfRounds > 2)
-                return DifficultyLevel.Hard;
+                baseScore = 2f;
             else
-                return DifficultyLevel.Medium;
+                baseScore = 1f;
+
+            // T is centered at 0.35. Below 0.35 pulls tiers down, above pushes them up.
+            float t = GameAndPlayerData.Instance != null ? GameAndPlayerData.Instance.T : 0.35f; // basically player's skill level, starts at 0.35
+            float shift = (t - 0.35f) * 2f;
+            float noise = Random.Range(-0.4f, 0.4f);
+            float score = Mathf.Clamp(baseScore + shift + noise, 0f, 2f);
+            if (score < 0.5f)  return DifficultyLevel.Easy;
+            if (score >= 1.5f) return DifficultyLevel.Hard;
+            return DifficultyLevel.Medium;
         }
     }
 }
