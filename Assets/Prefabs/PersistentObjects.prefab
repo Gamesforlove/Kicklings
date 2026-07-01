@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2059283927596459328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4165298672119615925}
+  - component: {fileID: 7777393436564981447}
+  m_Layer: 0
+  m_Name: GameAndPlayerData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4165298672119615925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059283927596459328}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8703303136494428086}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7777393436564981447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059283927596459328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5fbafc46ab62b74aae66e7f04fbf0d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2682249539236510962
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +76,7 @@ Transform:
   m_Children:
   - {fileID: 9148108211230182708}
   - {fileID: 1292664567035427746}
+  - {fileID: 4165298672119615925}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6919742171775934926
@@ -46,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7571dfeced6a04bb304e1b1e7448ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <SoundMixerManager>k__BackingField: {fileID: 1965076913095405189}
 --- !u!1 &4611841405047171980
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioMixer: {fileID: 24100000, guid: b7158bad28b57e84c8b33f370884dfda, type: 2}
+  _tournamentAudioMixer: {fileID: 24100000, guid: e1fa6d581d4a98244b24ec91651cbb18, type: 2}
 --- !u!1 &7122863744371467588
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,8 +248,10 @@ MonoBehaviour:
   _soundClips:
   - Type: 0
     Clip: {fileID: 8300000, guid: 0603ebce1ab39dd408361867b71b6201, type: 3}
+    Volume: 0.85
   - Type: 1
     Clip: {fileID: 8300000, guid: 25a3c4b068bdea747a1081e0bb9fa59a, type: 3}
+    Volume: 0.5
 --- !u!82 &7538756857691196159
 AudioSource:
   m_ObjectHideFlags: 0

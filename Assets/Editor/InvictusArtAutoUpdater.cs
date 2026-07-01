@@ -10,17 +10,37 @@ using UnityEngine;
 public static class InvictusArtAutoUpdater
 {
     private const string PrefKey = "InvictusArt.AutoUpdateOnLaunch";
-    private const string PackageName = "com.invictus.art.common";
 
-    // Must match your manifest entry
-    private const string PackageUrl =
-        "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main";
+    private static readonly PackageTarget[] Targets =
+    {
+        new PackageTarget(
+            "com.invictus.art.common",
+            "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main"
+        ),
+        new PackageTarget(
+            "com.invictus.art.tournament",
+            "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main"
+        )
+    };
 
-    private static AddRequest _addRequest;
     private static bool _started;
+    private static int _currentTargetIndex = -1;
+    private static AddRequest _addRequest;
 
-    private static string _revBefore;
-    private static HashSet<string> _filesBefore;
+    private static readonly Dictionary<string, string> RevBefore = new();
+    private static readonly Dictionary<string, HashSet<string>> FilesBefore = new();
+
+    private class PackageTarget
+    {
+        public string Name;
+        public string Url;
+
+        public PackageTarget(string name, string url)
+        {
+            Name = name;
+            Url = url;
+        }
+    }
 
     static InvictusArtAutoUpdater()
     {
@@ -48,8 +68,7 @@ public static class InvictusArtAutoUpdater
     [MenuItem("Tools/Packages/Invictus Art/Update now")]
     private static void UpdateNow()
     {
-        CaptureBeforeState();
-        StartUpdate();
+        BeginUpdateSequence();
     }
 
     private static void TryAutoUpdateOnce()
@@ -60,27 +79,47 @@ public static class InvictusArtAutoUpdater
         if (!EditorPrefs.GetBool(PrefKey, true)) return;
         if (Application.isBatchMode) return;
 
-        // Avoid updating during compile/playmode; retry next tick.
         if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling)
         {
             EditorApplication.delayCall += TryAutoUpdateOnce;
             return;
         }
 
-        CaptureBeforeState();
-        Debug.Log($"Invictus Art: Checking for updates... (before rev: {Short(_revBefore)})");
-        StartUpdate();
+        BeginUpdateSequence();
     }
 
-    private static void CaptureBeforeState()
+    private static void BeginUpdateSequence()
     {
-        _revBefore = GetLockedRevisionSafe(PackageName);
-        _filesBefore = SnapshotPackageFiles(PackageName);
+        RevBefore.Clear();
+        FilesBefore.Clear();
+
+        foreach (var target in Targets)
+        {
+            RevBefore[target.Name] = GetLockedRevisionSafe(target.Name);
+            FilesBefore[target.Name] = SnapshotPackageFiles(target.Name);
+#if UNITY_EDITOR
+            Debug.Log($"Invictus Art: Checking {target.Name}... (before rev: {Short(RevBefore[target.Name])})");
+#endif
+        }
+
+        _currentTargetIndex = -1;
+        UpdateNextTarget();
     }
 
-    private static void StartUpdate()
+    private static void UpdateNextTarget()
     {
-        _addRequest = Client.Add(PackageUrl);
+        _currentTargetIndex++;
+
+        if (_currentTargetIndex >= Targets.Length)
+        {
+#if UNITY_EDITOR
+            Debug.Log("Invictus Art: All package updates complete.");
+#endif
+            return;
+        }
+
+        var target = Targets[_currentTargetIndex];
+        _addRequest = Client.Add(target.Url);
         EditorApplication.update += PollAdd;
     }
 
@@ -90,64 +129,76 @@ public static class InvictusArtAutoUpdater
 
         EditorApplication.update -= PollAdd;
 
+        var target = Targets[_currentTargetIndex];
+
         if (_addRequest.Status != StatusCode.Success)
         {
-            Debug.LogError("Invictus Art update failed: " + _addRequest.Error.message);
-            ShowNotification("Art package update FAILED (see Console)");
+            Debug.LogError($"Invictus Art update failed for {target.Name}: " + _addRequest.Error.message);
+            ShowNotification($"Update FAILED: {target.Name}");
             _addRequest = null;
+            UpdateNextTarget();
             return;
         }
 
-        // Give Unity a moment to write packages-lock.json / refresh PackageCache
-        EditorApplication.delayCall += OnUpdateFinished;
         _addRequest = null;
+        EditorApplication.delayCall += () =>
+        {
+            OnUpdateFinished(target);
+            UpdateNextTarget();
+        };
     }
 
-    private static void OnUpdateFinished()
+    private static void OnUpdateFinished(PackageTarget target)
     {
-        string revAfter = GetLockedRevisionSafe(PackageName);
-        var filesAfter = SnapshotPackageFiles(PackageName);
+        string revBefore = RevBefore.TryGetValue(target.Name, out var rb) ? rb : null;
+        var filesBefore = FilesBefore.TryGetValue(target.Name, out var fb) ? fb : null;
 
-        Debug.Log($"Invictus Art: resolved rev {Short(_revBefore)} → {Short(revAfter)}");
+        string revAfter = GetLockedRevisionSafe(target.Name);
+        var filesAfter = SnapshotPackageFiles(target.Name);
+
+#if UNITY_EDITOR
+        Debug.Log($"{target.Name}: resolved rev {Short(revBefore)} → {Short(revAfter)}");
+#endif
 
         var added = new List<string>();
         var removed = new List<string>();
 
-        if (_filesBefore != null && filesAfter != null)
+        if (filesBefore != null && filesAfter != null)
         {
             foreach (var f in filesAfter)
-                if (!_filesBefore.Contains(f)) added.Add(f);
+                if (!filesBefore.Contains(f)) added.Add(f);
 
-            foreach (var f in _filesBefore)
+            foreach (var f in filesBefore)
                 if (!filesAfter.Contains(f)) removed.Add(f);
         }
 
-        bool changed = !StringEquals(_revBefore, revAfter) || added.Count > 0 || removed.Count > 0;
+        bool changed = !StringEquals(revBefore, revAfter) || added.Count > 0 || removed.Count > 0;
 
         if (!changed)
         {
-            Debug.Log("Invictus Art already up to date.");
+#if UNITY_EDITOR
+            Debug.Log($"{target.Name} already up to date.");
+#endif
             return;
         }
 
-        Debug.Log($"Invictus Art updated. Added: {added.Count}, Removed: {removed.Count}");
+#if UNITY_EDITOR
+        Debug.Log($"{target.Name} updated. Added: {added.Count}, Removed: {removed.Count}");
 
-        foreach (var a in Limit(added, 25)) Debug.Log("  + " + a);
-        foreach (var r in Limit(removed, 25)) Debug.Log("  - " + r);
+        foreach (var a in Limit(added, 25)) Debug.Log($"  [{target.Name}] + " + a);
+        foreach (var r in Limit(removed, 25)) Debug.Log($"  [{target.Name}] - " + r);
 
         if (added.Count > 25 || removed.Count > 25)
-            Debug.Log($"(Showing up to 25 of each. Total Added={added.Count}, Removed={removed.Count})");
+            Debug.Log($"[{target.Name}] (Showing up to 25 of each. Total Added={added.Count}, Removed={removed.Count})");
 
-        ShowNotification($"Art package updated ({Short(revAfter)})");
+        ShowNotification($"{target.Name} updated ({Short(revAfter)})");
+#endif
     }
 
     private static HashSet<string> SnapshotPackageFiles(string packageName)
     {
         try
         {
-            string rev = GetLockedRevisionSafe(packageName);
-            if (string.IsNullOrEmpty(rev)) return null;
-
             string cacheRoot = Path.Combine(Directory.GetCurrentDirectory(), "Library", "PackageCache");
             if (!Directory.Exists(cacheRoot)) return null;
 
@@ -160,15 +211,21 @@ public static class InvictusArtAutoUpdater
             for (int i = 1; i < dirs.Length; i++)
             {
                 var t = Directory.GetLastWriteTimeUtc(dirs[i]);
-                if (t > best) { best = t; pkgDir = dirs[i]; }
+                if (t > best)
+                {
+                    best = t;
+                    pkgDir = dirs[i];
+                }
             }
 
             var set = new HashSet<string>();
             foreach (var file in Directory.GetFiles(pkgDir, "*", SearchOption.AllDirectories))
             {
-                var rel = file.Substring(pkgDir.Length).TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                var rel = file.Substring(pkgDir.Length)
+                    .TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
                 set.Add(rel.Replace('\\', '/'));
             }
+
             return set;
         }
         catch
@@ -188,12 +245,10 @@ public static class InvictusArtAutoUpdater
         int pkgIndex = json.IndexOf($"\"{packageName}\"", StringComparison.Ordinal);
         if (pkgIndex < 0) return null;
 
-        // Try revision first
         string value = ExtractValue(json, pkgIndex, "revision");
         if (!string.IsNullOrEmpty(value))
             return value;
 
-        // Fallback to hash (Git packages)
         value = ExtractValue(json, pkgIndex, "hash");
         if (!string.IsNullOrEmpty(value))
             return value;
@@ -231,7 +286,8 @@ public static class InvictusArtAutoUpdater
     private static IEnumerable<string> Limit(List<string> list, int max)
     {
         int n = Mathf.Min(max, list.Count);
-        for (int i = 0; i < n; i++) yield return list[i];
+        for (int i = 0; i < n; i++)
+            yield return list[i];
     }
 
     private static bool StringEquals(string a, string b) =>

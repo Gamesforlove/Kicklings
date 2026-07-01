@@ -5,7 +5,7 @@ namespace Gameplay.CharacterComponents.Player
 {
     public class Player : Entity
     {
-        PlayerActions _playerActions;
+        public PlayerActions _playerActions { get; private set; }
 
         void Awake()
         {
@@ -21,6 +21,7 @@ namespace Gameplay.CharacterComponents.Player
         void OnDisable()
         {
             EventBus<PlayerActionPerformed>.OnEvent -= PerformAction;
+            EventBus<PlayerActionCanceled>.OnEvent -= CancelAction;
         }
     
         void PerformAction(PlayerActionPerformed _) => _playerActions.OnActionPerformed();

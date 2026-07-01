@@ -224,6 +224,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flagButtonImage: {fileID: 4001022734459328200}
   _flagButtonText: {fileID: 7730409255724947514}
+  _disabledFlagColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+  _disabledTextColor: {r: 1, g: 1, b: 1, a: 0.5411765}
 --- !u!1 &6133793103867066733
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +329,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

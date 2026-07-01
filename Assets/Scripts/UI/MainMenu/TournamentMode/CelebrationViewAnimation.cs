@@ -1,4 +1,9 @@
+using CommonDataTypes;
 using DG.Tweening;
+using EventBusSystem;
+using Scene_Management;
+using System;
+using UI.Customization.Clothing;
 using UnityEngine;
 
 namespace UI.MainMenu.TournamentMode
@@ -12,10 +17,15 @@ namespace UI.MainMenu.TournamentMode
         [Header("Characters")]
         [SerializeField] Transform _character1Transform;
         [SerializeField] Transform _character2Transform;
+        [Header("Customization")]
+        [SerializeField] CharacterCustomizationController _customization1;
+        [SerializeField] CharacterCustomizationController _customization2;
+        [SerializeField] TeamsData _teamsData;
 
         void Start()
         {
             AnimateVictoryScreen();
+            CustomizeCharacters();
         }
 
         void AnimateVictoryScreen()
@@ -50,6 +60,11 @@ namespace UI.MainMenu.TournamentMode
            //     .SetLoops(-1, LoopType.Yoyo)
            //     .SetEase(Ease.InOutSine)
            //     .SetUpdate(true);
+        }
+        void CustomizeCharacters()
+        {
+            _customization1.SetCountryOutfit(_teamsData.GetTeamById(MatchFlow.Match.Settings.LeftCountryImageIndex));
+            _customization2.SetCountryOutfit(_teamsData.GetTeamById(MatchFlow.Match.Settings.LeftCountryImageIndex));
         }
     }
 }

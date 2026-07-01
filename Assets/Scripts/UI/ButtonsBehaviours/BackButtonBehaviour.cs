@@ -4,7 +4,7 @@ namespace UI.ButtonsBehaviours
 {
     public class BackButtonBehaviour : ButtonBehaviour
     {
-        UIViewsManager _uiViewsManager;
+        protected UIViewsManager _uiViewsManager;
 
         protected override void Awake()
         {

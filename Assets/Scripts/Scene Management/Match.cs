@@ -8,7 +8,7 @@ namespace Scene_Management
     public abstract class Match
     {
         public MatchSettings Settings { get; }
-        
+
         public bool IsPlayerWinner { get; set; }
         public bool IsPlayAgain { get; set; }
 
@@ -38,26 +38,50 @@ namespace Scene_Management
         }
 
     }
-    
+
     public class TournamentMatch : Match
     {
         readonly Tournament _tournament;
-        
+        public Tournament Tournament => _tournament;
+
         public TournamentMatch(MatchSettings settings, Tournament tournament) : base(settings)
         {
             _tournament = tournament;
         }
-
+        public bool IsTournamentWinner { get; private set; }
         public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
         {
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
 
+            var data = GameAndPlayerData.Instance;
+            if (data != null)
+            {
+                data.numTournamentMatchesPlayed++;
+                data.numTournamentMatchesPlayedToday++;
+
+                if (IsPlayerWinner)
+                {
+                    data.numTournamentMatchesWon++;
+                    data.numTournamentMatchesWonToday++;
+                }
+                else
+                {
+                    data.numTournamentMatchesLost++;
+                    data.numTournamentMatchesLostToday++;
+                }
+            }
+
             if (!IsPlayerWinner)
                 uiManager.ShowTournamentKnockOutView();
             else if (_tournament.CurrentRound.IsLastRound())
-                uiManager.ShowTournamentWinnerView();
+            {
+                uiManager.ShowTournamentFinalWinnerView();
+                IsTournamentWinner = true;
+            }
             else
-                matchManager.EndGame();
+            {
+                uiManager.ShowTournamentRoundWinnerView();
+            }
         }
     }
 }
