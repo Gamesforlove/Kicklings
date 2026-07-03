@@ -15,14 +15,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "101c3cee25cb12dc9ffe8e62b89464995a79a4b8"
+      "hash": "c2b8bba2ced447bd79c1ba7b114d7a371ab5e431"
     },
     "com.invictus.art.tournament": {
       "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "101c3cee25cb12dc9ffe8e62b89464995a79a4b8"
+      "hash": "c2b8bba2ced447bd79c1ba7b114d7a371ab5e431"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",
