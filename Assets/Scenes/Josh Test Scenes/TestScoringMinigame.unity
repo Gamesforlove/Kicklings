@@ -1093,7 +1093,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2194100682125000529, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 151.5791
+      value: 151.57912
       objectReference: {fileID: 0}
     - target: {fileID: 2313976501645865382, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1261,8 +1261,8 @@ MonoBehaviour:
   maxArc: 5
   spreadDegrees: 5
   autoLaunch: 1
-  minDelay: 2
-  maxDelay: 4
+  minDelay: 5
+  maxDelay: 8
   onLaunch:
     m_PersistentCalls:
       m_Calls: []
