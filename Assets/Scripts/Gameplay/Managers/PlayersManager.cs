@@ -167,10 +167,15 @@ namespace Gameplay.Managers
         public void DisablePlayers()
         {
             foreach (GameObject player in _players)
-            {
                 player.GetComponent<PlayerActions>().DisableInput = true;
-            }
         }
+
+        public void EnablePlayers()
+        {
+            foreach (GameObject player in _players)
+                player.GetComponent<PlayerActions>().DisableInput = false;
+        }
+
         public IReadOnlyList<AbilityActor> GetAbilityActors()
         {
             return abilityActors.AsReadOnly();
