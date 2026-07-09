@@ -2572,6 +2572,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _FaceDilate: 0
     - _OutlineWidth: 0
     - _ScaleRatioA: 0.9
     - _ScaleRatioB: 0.73125

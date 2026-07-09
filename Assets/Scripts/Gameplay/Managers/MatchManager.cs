@@ -30,6 +30,7 @@ namespace Gameplay.Managers
             _rightScore = 0;
             _uiManager?.ChangeScore(_leftScore, _rightScore);
             _playersManager?.ResetPlayers();
+            _playersManager?.EnablePlayers();
             _ballManager?.ResetBallWithSpin(FieldSideType.Left);
             _goalsManager?.SetCollidersEnabled(true);
             TimeScaleManager.SetGameplayTimeScale();

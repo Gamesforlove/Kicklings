@@ -31,6 +31,12 @@ namespace Gameplay.CharacterComponents
             _kickingLegJointMotor = _kickingLegJoint.motor;
             _jumpCdTimer = new CountdownTimer(jumpCdTime);
             _jumpCdTimer.OnTimerStop += () => _jumpOnCd = false;
+            DisableInput = false;
+        }
+
+        private void Start()
+        {
+            DisableInput = false;
         }
 
         void Update()
