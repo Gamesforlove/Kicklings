@@ -18,8 +18,8 @@ public static class InvictusArtAutoUpdater
             "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main"
         ),
         new PackageTarget(
-            "com.invictus.art.tournament",
-            "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main"
+            "com.invictus.art.campaign",
+            "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Campaign#main"
         )
     };
 
