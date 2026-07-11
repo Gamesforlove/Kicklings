@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.9960785
       objectReference: {fileID: 0}
+    - target: {fileID: 5820112488385859500, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.7
+      objectReference: {fileID: 0}
     - target: {fileID: 5940883792929974123, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Pivot.x
       value: 0

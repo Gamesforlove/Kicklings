@@ -1,5 +1,7 @@
-﻿using Gameplay.Managers;
+﻿using CommonDataTypes;
+using Gameplay.Managers;
 using Scene_Management;
+using UI.Customization.Clothing;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +13,11 @@ namespace UI.UiSystem.Core
         
         MatchManager _matchManager;
 
+        [Header("Customization")]
+        [SerializeField] CharacterCustomizationController _customization1;
+        [SerializeField] CharacterCustomizationController _customization2;
+        [SerializeField] TeamsData _teamsData;
+
         protected override void Awake()
         {
             base.Awake();
@@ -19,6 +26,7 @@ namespace UI.UiSystem.Core
         
         void Start()
         {
+            CustomizeCharacters();
             _playAgainButton.onClick.AddListener(OnPlayAgainClicked);
             _mainMenuButton.onClick.AddListener(_matchManager.EndGame);
         }
@@ -27,6 +35,11 @@ namespace UI.UiSystem.Core
         {
             MatchFlow.Match.IsPlayAgain = true;
             _matchManager.EndGame();
+        }
+        void CustomizeCharacters()
+        {
+            _customization1.SetCountryOutfit(_teamsData.GetTeamById(MatchFlow.Match.Settings.LeftCountryImageIndex));
+            _customization2.SetCountryOutfit(_teamsData.GetTeamById(MatchFlow.Match.Settings.LeftCountryImageIndex));
         }
     }
 }

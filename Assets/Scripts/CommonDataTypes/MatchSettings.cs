@@ -13,6 +13,8 @@ namespace CommonDataTypes
         public int RightSideShoesIndex { get; set; }
         public int LeftCountryImageIndex { get; set; }
         public int RightCountryImageIndex { get; set; }
+        public float LeftSkinToneValue { get; set; }
+        public float RightSkinToneValue { get; set; }
         public int GoalsToEndMatch { get; set; } = 5;
         public bool IsTournamentMatch {get; private set;}
         
@@ -41,6 +43,8 @@ namespace CommonDataTypes
             int _rightSideShoesIndex;
             int _leftCountryImageIndex;
             int _rightCountryImageIndex;
+            float _leftSkinToneValue;
+            float _rightSkinToneValue;
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
 
@@ -85,6 +89,16 @@ namespace CommonDataTypes
                 _rightCountryImageIndex = index;
                 return this;
             }
+            public Builder WithLeftSkinToneValue(float value)
+            {
+                _leftSkinToneValue = value;
+                return this;
+            }
+            public Builder WithRightSkinToneValue(float value)
+            {
+                _rightSkinToneValue = value;
+                return this;
+            }
 
             public Builder WithGoalsToEndMatch(int goalsToEndMatch)
             {
@@ -110,6 +124,8 @@ namespace CommonDataTypes
                     RightSideShoesIndex = _rightSideShoesIndex,
                     LeftCountryImageIndex = _leftCountryImageIndex,
                     RightCountryImageIndex = _rightCountryImageIndex,
+                    LeftSkinToneValue = _leftSkinToneValue,
+                    RightSkinToneValue = _rightSkinToneValue,
                     GoalsToEndMatch = _goalsToEndMatch,
                     IsTournamentMatch = _isTournamentMatch
                 };

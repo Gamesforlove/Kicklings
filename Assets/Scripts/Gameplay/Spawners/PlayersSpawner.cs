@@ -29,8 +29,16 @@ namespace Gameplay.Spawners
                 ).gameObject;
             
             go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
-            
-            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData);
+
+            bool isRightSide = go.transform.position.x > 0;
+            Team team;
+            if (isRightSide)
+                team = Team.Right;
+            else
+                team = Team.Left;
+
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
+            go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
 
             return go;
         }
@@ -46,8 +54,9 @@ namespace Gameplay.Spawners
             CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
             go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
                 playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
-                settings
-            ));
+                settings),
+                playerType
+                );
             
             return go;
         }

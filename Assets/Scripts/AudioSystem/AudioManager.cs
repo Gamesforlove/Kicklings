@@ -31,6 +31,9 @@ namespace AudioSystem
                 case SceneName.Gameplay:
                     _musicManager.ChangeMusic(MusicType.Gameplay);
                     break;
+                case SceneName.TournamentIntroCutscene:
+                    _musicManager.StopMusic(); // Cutscene has its own music handling, just stop current music.
+                    break;
             }
         }
         

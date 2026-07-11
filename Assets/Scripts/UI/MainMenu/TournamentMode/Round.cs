@@ -46,5 +46,7 @@ namespace UI.MainMenu.TournamentMode
         public bool IsCurrentRound() => Id == _tournament.CurrentRound.Id;
         
         public bool IsLastRound() => Id == _tournament.NumberOfRounds;
+
+        public bool IsFirstRound() => Id == 1;
     }
 }
