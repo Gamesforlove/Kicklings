@@ -16,7 +16,9 @@ namespace UI.UiSystem.Core
         
         protected virtual void OnDataReceived(T sideData)
         {
+#if UNITY_EDITOR
             Debug.Log($"Data received in view: {sideData}");
+#endif
         }
     }
 }

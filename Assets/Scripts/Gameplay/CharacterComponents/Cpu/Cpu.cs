@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Gameplay.Managers;
 using UnityEngine;
+using static Gameplay.Spawners.PlayersSpawner;
 
 namespace Gameplay.CharacterComponents.Cpu
 {
@@ -29,16 +30,22 @@ namespace Gameplay.CharacterComponents.Cpu
         
         BallProximityChecker _ballProximityChecker;
 
-        public void SetUp(CpuConfiguration config)
+        public void SetUp(CpuConfiguration config, PlayerType type)
         {
-            base.SetUp(config.EntityData);
+            if (config == null) return;
+
+            base.SetUp(config.EntityData, type);
             _difficultySettings = config.DifficultySettings;
             
-            _ballProximityChecker.SetUp(_difficultySettings.ProximityPoints);
+            if (_difficultySettings != null)
+                _ballProximityChecker?.SetUp(_difficultySettings.ProximityPoints);
             
             _actionTimer = new CountdownTimer(_difficultySettings.TimeBetweenKicks.RandomValue);
-            _actionTimer.OnTimerStop += DoAction;
-            _actionTimer.Start();
+            if (_actionTimer != null)
+            {
+                _actionTimer.OnTimerStop += DoAction;
+                _actionTimer.Start();
+            }
         }
 
 
@@ -46,24 +53,25 @@ namespace Gameplay.CharacterComponents.Cpu
         {
             base.Reset();
             StopAllCoroutines();
-            _actionTimer.Reset();
+            _actionTimer?.Reset();
         }
 
-        void Awake()
+        void Start()
         {
             _ballProximityChecker = GetComponent<BallProximityChecker>();
-            _ballManager = FindFirstObjectByType<BallManager>();
+            _ballManager = BallManager.Instance;
         }
 
         void Update()
         {
             CpuPlayer();
-            _actionTimer.Tick(Time.deltaTime);
+            _actionTimer?.Tick(Time.deltaTime);
         }
     
         void CpuPlayer()
         {
-            if (_ballProximityChecker.IsBallWithinRange(_ballManager.Ball.Rigidbody))
+            if (_ballManager != null && _ballManager.Ball != null && _ballProximityChecker != null &&
+                _ballProximityChecker.IsBallWithinRange(_ballManager.Ball.Rigidbody))
             {
                 DoAction();
             }

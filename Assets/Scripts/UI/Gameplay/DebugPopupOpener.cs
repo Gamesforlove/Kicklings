@@ -6,12 +6,17 @@ namespace UI.Gameplay
     public class DebugPopupOpener : MonoBehaviour
     {
         UIViewsManager _uiViewsManager;
-        GameplayDebugPopup _popup;
-    
-        void Awake()
+        [SerializeField] GameplayDebugPopup _popup;
+
+        void Start()
         {
-            _uiViewsManager = FindFirstObjectByType<UIViewsManager>();
-            _popup = FindFirstObjectByType<GameplayDebugPopup>(FindObjectsInactive.Include);
+            #if !UNITY_EDITOR
+                this.enabled = false;
+                return;
+            #endif
+            _uiViewsManager = UIViewsManager.Instance;
+            if (_popup == null)
+                _popup = FindFirstObjectByType<GameplayDebugPopup>(FindObjectsInactive.Include);
         }
 
         void Update()

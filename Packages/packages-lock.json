@@ -8,7 +8,21 @@
         "com.unity.ugui": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
-      "hash": "4b98abd7469b10d55c9c623830cb6e1518f72731"
+      "hash": "51a4708b7ba4daa8483a4936eae9bffe15d0bfd0"
+    },
+    "com.invictus.art.common": {
+      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8914eaa50469a87abaed0f629d6c2e667501257c"
+    },
+    "com.invictus.art.tournament": {
+      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8914eaa50469a87abaed0f629d6c2e667501257c"
     },
     "com.invictus.art.campaign": {
       "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Campaign#main",
@@ -38,7 +52,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.aseprite": {
-      "version": "1.1.10",
+      "version": "1.1.11",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -164,7 +178,7 @@
         "com.unity.2d.spriteshape": "10.0.7",
         "com.unity.2d.tilemap": "1.0.0",
         "com.unity.2d.tilemap.extras": "4.1.0",
-        "com.unity.2d.aseprite": "1.1.10"
+        "com.unity.2d.aseprite": "1.1.11"
       }
     },
     "com.unity.ide.rider": {

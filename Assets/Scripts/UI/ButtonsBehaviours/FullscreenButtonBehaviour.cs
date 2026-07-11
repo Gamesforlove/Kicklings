@@ -24,8 +24,10 @@ namespace UI.ButtonsBehaviours
             
             PlayerPrefs.SetInt("Fullscreen", newFullscreenState ? 1 : 0);
             PlayerPrefs.Save();
-            
+
+#if UNITY_EDITOR
             Debug.Log($"Modo pantalla completa actualizado: {newFullscreenState}");
+#endif
         }
     }
 }

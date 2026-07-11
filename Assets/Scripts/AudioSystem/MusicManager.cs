@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio; 
+using UnityEngine.Audio;
 
 namespace AudioSystem
 {
@@ -13,6 +14,7 @@ namespace AudioSystem
         {
             public MusicType Type;
             public AudioClip Clip;
+            public float Volume;
         }
 
         [SerializeField] List<MusicClip> _soundClips;
@@ -32,23 +34,85 @@ namespace AudioSystem
             }
         }
 
-        //TODO: This should be done by the bootstrapper scene
         void Start()
         {
-            ChangeMusic(MusicType.MainMenu);
+            ChangeMusic(MusicType.MainMenu, instant: true);
         }
 
-        public void ChangeMusic(MusicType type)
+        public void ChangeMusic(MusicType type, bool instant = false)
         {
-            if (_clipMap.TryGetValue(type, out AudioClip clip) && clip != null)
+            MusicClip clip = _soundClips.Find(s => s.Type == type);
+            if (clip.Clip == null)
             {
-                _audioSource.clip = clip;
+#if UNITY_EDITOR
+                Debug.LogWarning($"No clip assigned for {type}");
+#endif
+                return;
+            }
+
+
+            float volume = clip.Volume;
+            if (instant)
+            {
+                _audioSource.clip = clip.Clip;
+                _audioSource.volume = volume;
                 _audioSource.Play();
             }
             else
             {
-                Debug.LogWarning($"No clip assigned for {type}");
+                StopAllCoroutines();
+                StartCoroutine(changeMusicRoutine(clip.Clip, volume));
             }
+        }
+
+        public void StopMusic()
+        {
+            if ( _audioSource != null && _audioSource.isPlaying && !fadingOutMusic)
+            {
+                StopAllCoroutines();
+                StartCoroutine(FadeOutMusic(fadeOutTime));
+            }
+        }
+
+        const float fadeInTime = 0.5f;
+        const float fadeOutTime = 0.7f;
+        bool inChangeMusicRoutine = false;
+        IEnumerator changeMusicRoutine(AudioClip clip, float volume)
+        {
+            inChangeMusicRoutine = true;
+            yield return StartCoroutine(FadeOutMusic(fadeOutTime));
+            _audioSource.clip = clip;
+            yield return StartCoroutine(FadeInMusic(fadeInTime, volume));
+            inChangeMusicRoutine = false;
+        }
+
+        bool fadingInMusic = false;
+        IEnumerator FadeOutMusic(float duration)
+        {
+            fadingOutMusic = true;
+            float startVolume = _audioSource.volume;
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                _audioSource.volume = Mathf.Lerp(startVolume, 0, t / duration);
+                yield return null;
+            }
+            _audioSource.Stop();
+            fadingOutMusic = false;
+        }
+
+        bool fadingOutMusic = false;
+        IEnumerator FadeInMusic(float duration, float volume)
+        {
+            fadingInMusic = true;
+            _audioSource.volume = 0f;
+            _audioSource.Play();
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                _audioSource.volume = Mathf.Lerp(0, volume, t / duration);
+                yield return null;
+            }
+            _audioSource.volume = volume;
+            fadingInMusic = false;
         }
     }
 }

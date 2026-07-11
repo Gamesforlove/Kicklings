@@ -3,7 +3,7 @@ using UnityEngine.Audio;
 
 public class SoundMixerManager : MonoBehaviour
 {
-    [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioMixer _audioMixer, _tournamentAudioMixer;
 
     private void Awake()
     {
@@ -25,21 +25,24 @@ public class SoundMixerManager : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
-        _audioMixer.SetFloat("MasterVolume", ConvertToDecibels(volume));
+        _audioMixer?.SetFloat("MasterVolume", ConvertToDecibels(volume));
+        _tournamentAudioMixer?.SetFloat("MasterVolume", ConvertToDecibels(volume));
         PlayerPrefs.SetFloat("MasterVolume", volume);
         PlayerPrefs.Save();
     }
 
     public void SetMusicVolume(float volume)
     {
-        _audioMixer.SetFloat("MusicVolume", ConvertToDecibels(volume));
+        _audioMixer?.SetFloat("MusicVolume", ConvertToDecibels(volume));
+        _tournamentAudioMixer?.SetFloat("MusicVolume", ConvertToDecibels(volume));
         PlayerPrefs.SetFloat("MusicVolume", volume);
         PlayerPrefs.Save();
     }
 
     public void SetSFXVolume(float volume)
     {
-        _audioMixer.SetFloat("SFXVolume", ConvertToDecibels(volume));
+        _audioMixer?.SetFloat("SFXVolume", ConvertToDecibels(volume));
+        _tournamentAudioMixer?.SetFloat("SFXVolume", ConvertToDecibels(volume));
         PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
     }
