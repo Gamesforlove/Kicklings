@@ -67,23 +67,36 @@ namespace UI.MainMenu.TournamentMode
 
         public DifficultyLevel GetDifficultyForRound()
         {
-            // Base Score -> 0 = Easy, 1 = Medium, 2 = Hard
-            float baseScore;
+            // Easy 1-3 → centered 2 | Medium 4-6 → centered 5 | Hard 7-9 → centered 8
+            float baseLevel;
             if (CurrentRound.IsFirstRound())
-                baseScore = 0f;
+                baseLevel = 2f;
             else if (CurrentRound.IsLastRound() && NumberOfRounds > 2)
-                baseScore = 2f;
+                baseLevel = 8f;
             else
-                baseScore = 1f;
+                baseLevel = 5f;
 
-            // T is centered at 0.35. Below 0.35 pulls tiers down, above pushes them up.
-            float t = GameAndPlayerData.Instance != null ? GameAndPlayerData.Instance.T : 0.35f; // basically player's skill level, starts at 0.35
-            float shift = (t - 0.35f) * 2f;
-            float noise = Random.Range(-0.4f, 0.4f);
-            float score = Mathf.Clamp(baseScore + shift + noise, 0f, 2f);
-            if (score < 0.5f)  return DifficultyLevel.Easy;
-            if (score >= 1.5f) return DifficultyLevel.Hard;
-            return DifficultyLevel.Medium;
+            // T at 0.35 is neutral (shift=0). The range of shift from T then is -2 to +4 depending on how good the player is.
+            float t = GameAndPlayerData.Instance != null ? GameAndPlayerData.Instance.T : 0.35f;
+            float shift = (t - 0.35f) * 6f;
+
+            // ±0.8 level of noise — only crosses a major difficulty boundary when T has already pushed close to one.
+            float noise = Random.Range(-0.8f, 0.8f);
+
+            int level = Mathf.RoundToInt(Mathf.Clamp(baseLevel + shift + noise, 1f, 10f));
+            return level switch
+            {
+                1  => DifficultyLevel.Easy1,
+                2  => DifficultyLevel.Easy2,
+                3  => DifficultyLevel.Easy3,
+                4  => DifficultyLevel.Medium4,
+                5  => DifficultyLevel.Medium5,
+                6  => DifficultyLevel.Medium6,
+                7  => DifficultyLevel.Hard7,
+                8  => DifficultyLevel.Hard8,
+                9  => DifficultyLevel.Hard9,
+                _  => DifficultyLevel.Default
+            };
         }
     }
 }

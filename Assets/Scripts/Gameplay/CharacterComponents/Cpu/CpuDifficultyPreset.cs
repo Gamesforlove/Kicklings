@@ -33,19 +33,34 @@ namespace Gameplay.CharacterComponents.Cpu
             public ProximityPoint[] ProximityPoints;
         }
 
-        [Header("Difficulty Configurations")] 
-        [SerializeField] DifficultySettings _easySettings;
-        [SerializeField] DifficultySettings _mediumSettings;
-        [SerializeField] DifficultySettings _hardSettings;
+        [Header("Default")]
         [SerializeField] DifficultySettings _defaultSettings;
+        [Header("Easy")] 
+        [SerializeField] DifficultySettings _easy1;
+        [SerializeField] DifficultySettings _easy2;
+        [SerializeField] DifficultySettings _easy3;
+        [Header("Medium")]
+        [SerializeField] DifficultySettings _medium4;
+        [SerializeField] DifficultySettings _medium5;
+        [SerializeField] DifficultySettings _medium6;
+        [Header("Hard")]
+        [SerializeField] DifficultySettings _hard7;
+        [SerializeField] DifficultySettings _hard8;
+        [SerializeField] DifficultySettings _hard9;
 
         public DifficultySettings GetSettingsForDifficulty(DifficultyLevel level)
         {
             return level switch
             {
-                DifficultyLevel.Easy => _easySettings,
-                DifficultyLevel.Medium => _mediumSettings,
-                DifficultyLevel.Hard => _hardSettings,
+                DifficultyLevel.Easy1 => _easy1,
+                DifficultyLevel.Easy2 => _easy2,
+                DifficultyLevel.Easy3 => _easy3,
+                DifficultyLevel.Medium4 => _medium4,
+                DifficultyLevel.Medium5 => _medium5,
+                DifficultyLevel.Medium6 => _medium6,
+                DifficultyLevel.Hard7 => _hard7,
+                DifficultyLevel.Hard8 => _hard8,
+                DifficultyLevel.Hard9 => _hard9,
                 _ => _defaultSettings // Default to medium if custom or invalid
             };
         }
@@ -53,9 +68,15 @@ namespace Gameplay.CharacterComponents.Cpu
     
     public enum DifficultyLevel
     {
-        Easy,
-        Medium,
-        Hard,
+        Easy1,
+        Easy2,
+        Easy3,
+        Medium4,
+        Medium5,
+        Medium6,
+        Hard7,
+        Hard8,
+        Hard9,
         Default
     }
 }

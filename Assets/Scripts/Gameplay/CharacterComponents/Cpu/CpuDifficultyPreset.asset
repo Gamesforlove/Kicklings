@@ -12,51 +12,123 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c904040d5364287a34483dffa1b07cb, type: 3}
   m_Name: CpuDifficultyPreset
   m_EditorClassIdentifier: 
-  _easySettings:
+  _defaultSettings:
+    TimeBetweenKicks:
+      Min: 3
+      Max: 9
+    ReactionTime:
+      Min: 0.05
+      Max: 0.25
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 2
+    - _name: Feet
+      BaseRadius: 1.5
+  _easy1:
     TimeBetweenKicks:
       Min: 4
       Max: 11
     ReactionTime:
-      Min: 0.17
+      Min: 0.22
       Max: 0.4
     ProximityPoints:
     - _name: Head
-      BaseRadius: 0.5
+      BaseRadius: 1
     - _name: Feet
-      BaseRadius: 0.5
-  _mediumSettings:
+      BaseRadius: 0.8
+  _easy2:
     TimeBetweenKicks:
-      Min: 3
-      Max: 8
-    ReactionTime:
-      Min: 0.1
-      Max: 0.3
-    ProximityPoints:
-    - _name: Head
-      BaseRadius: 0.5
-    - _name: Feet
-      BaseRadius: 0.5
-  _hardSettings:
-    TimeBetweenKicks:
-      Min: 1.8
-      Max: 7
-    ReactionTime:
-      Min: 0.05
-      Max: 0.2
-    ProximityPoints:
-    - _name: Head
-      BaseRadius: 0.5
-    - _name: Feet
-      BaseRadius: 0.5
-  _defaultSettings:
-    TimeBetweenKicks:
-      Min: 3
+      Min: 4
       Max: 10
     ReactionTime:
+      Min: 0.2
+      Max: 0.38
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 1
+    - _name: Feet
+      BaseRadius: 0.8
+  _easy3:
+    TimeBetweenKicks:
+      Min: 3.7
+      Max: 9.5
+    ReactionTime:
+      Min: 0.17
+      Max: 0.38
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 1
+    - _name: Feet
+      BaseRadius: 0.8
+  _medium4:
+    TimeBetweenKicks:
+      Min: 3.2
+      Max: 8
+    ReactionTime:
+      Min: 0.15
+      Max: 0.35
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 1.3
+    - _name: Feet
+      BaseRadius: 1
+  _medium5:
+    TimeBetweenKicks:
+      Min: 2.9
+      Max: 8
+    ReactionTime:
+      Min: 0.13
+      Max: 0.33
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 1.3
+    - _name: Feet
+      BaseRadius: 1
+  _medium6:
+    TimeBetweenKicks:
+      Min: 2.7
+      Max: 8
+    ReactionTime:
+      Min: 0.12
+      Max: 0.28
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 1.3
+    - _name: Feet
+      BaseRadius: 1
+  _hard7:
+    TimeBetweenKicks:
+      Min: 2.3
+      Max: 7
+    ReactionTime:
+      Min: 0.08
+      Max: 0.26
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 2
+    - _name: Feet
+      BaseRadius: 1.5
+  _hard8:
+    TimeBetweenKicks:
+      Min: 2
+      Max: 6.6
+    ReactionTime:
+      Min: 0.1
+      Max: 0.24
+    ProximityPoints:
+    - _name: Head
+      BaseRadius: 2
+    - _name: Feet
+      BaseRadius: 1.8
+  _hard9:
+    TimeBetweenKicks:
+      Min: 1.8
+      Max: 5.5
+    ReactionTime:
       Min: 0.05
-      Max: 0.3
+      Max: 0.15
     ProximityPoints:
     - _name: Head
       BaseRadius: 2.5
     - _name: Feet
-      BaseRadius: 1.5
+      BaseRadius: 1.8
