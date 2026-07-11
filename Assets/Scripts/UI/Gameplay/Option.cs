@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using TMPro;
@@ -10,6 +12,7 @@ namespace UI.Gameplay
     {
         [SerializeField] TextMeshProUGUI _text;
         [SerializeField] TMP_InputField _inputField;
+        [SerializeField] TMP_Dropdown _dropdown;
         
         private FieldInfo _fieldInfo;
         private object _target;
@@ -53,13 +56,27 @@ namespace UI.Gameplay
             _target = null;
         }
         
+        public void SetUpDropdown(string label, IEnumerable<string> options, int currentIndex, Action<int> onChanged)
+        {
+            _text.text = label;
+            _inputField.gameObject.SetActive(false);
+            _dropdown.gameObject.SetActive(true);
+
+            _dropdown.ClearOptions();
+            _dropdown.AddOptions(new List<string>(options));
+            _dropdown.value = currentIndex;
+            _dropdown.RefreshShownValue();
+            _dropdown.onValueChanged.AddListener(index => onChanged(index));
+        }
+
         private void SetupCommon(string text, float value)
         {
             string formattedText = string.Concat(text.Select((c, i) => 
                 i > 0 && char.IsUpper(c) ? " " + c : c.ToString()));
-        
+
             _text.text = formattedText;
             _inputField.text = value.ToString(CultureInfo.InvariantCulture);
+            _dropdown.gameObject.SetActive(false);
         }
 
         private void OnValueChanged(string newValue)
