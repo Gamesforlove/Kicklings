@@ -2,10 +2,13 @@ using CommonDataTypes;
 using DG.Tweening;
 using EventBusSystem;
 using Gameplay.CharacterComponents.Cpu;
+using Gameplay.Spawners;
 using Scene_Management;
 using System;
 using System.Collections;
 using UI.MainMenu.TournamentMode;
+using Unity.Services.Analytics;
+using Unity.Services.Core;
 using UnityEngine;
 
 namespace Gameplay.Managers
@@ -44,7 +47,7 @@ namespace Gameplay.Managers
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
 
-        void Start()
+        async void Start()
         {
             _match = MatchFlow.Match;
 
@@ -62,8 +65,20 @@ namespace Gameplay.Managers
             _rightScore = 0;
             _matchStartTime = Time.time;
             TimeScaleManager.SetGameplayTimeScale();
+
+#if UNITY_EDITOR == false
+            try
+            {
+                await UnityServices.InitializeAsync();
+                AnalyticsService.Instance.StartDataCollection();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Analytics init failed: {e.Message}");
+            }
+#endif
         }
-    
+
         void OnEnable()
         {
             EventBus<GoalEvent>.OnEvent += OnGoalEvent;
@@ -124,9 +139,6 @@ namespace Gameplay.Managers
         {
             //TimeScaleManager.PauseGame();
 
-            _playersManager.DisablePlayers();
-            _match.HandleEndgameUI(this, _uiManager, payload);
-
             var data = GameAndPlayerData.Instance;
             if (data != null)
             {
@@ -146,6 +158,29 @@ namespace Gameplay.Managers
                 }
                 data.UpdateElo(_match.IsPlayerWinner);
             }
+
+#if UNITY_EDITOR == false
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                Debug.Log("Analytics was not initialized by the time the match ended. Event not sent.");
+            }
+            else
+            {
+                var analyticsEvent = new MatchEndedEvent
+                {
+                    Mode = _match.Settings.IsTournamentMatch ? "tournament" : "regular",
+                    Difficulty = (int)(PlayersSpawner.Instance ? PlayersSpawner.Instance.CurrentDifficulty : 0),
+                    EndReason = _match.IsPlayerWinner ? "win" : "lose",
+                    MatchDuration = Mathf.RoundToInt(Time.time - _matchStartTime),
+                    PlayerSkillRating = Mathf.RoundToInt(100f * (data != null ? data.T : 0.35f))
+                };
+                AnalyticsService.Instance.RecordEvent(analyticsEvent); // sends to unity dashboard, ask Rishi
+                Debug.Log("sent match ended event to analytics");
+            }
+#endif
+
+            _playersManager.DisablePlayers();
+            _match.HandleEndgameUI(this, _uiManager, payload);
         }
 
         public void InstantWin()
