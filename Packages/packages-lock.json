@@ -17,22 +17,8 @@
       "dependencies": {},
       "hash": "8914eaa50469a87abaed0f629d6c2e667501257c"
     },
-    "com.invictus.art.tournament": {
-      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Tournament#main",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "8914eaa50469a87abaed0f629d6c2e667501257c"
-    },
     "com.invictus.art.campaign": {
       "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Campaign#main",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "35569d63af9872683967e4773de1a267cbee26d5"
-    },
-    "com.invictus.art.common": {
-      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
