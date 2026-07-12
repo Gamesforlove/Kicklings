@@ -786,7 +786,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -808,11 +814,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: b8a7e392-99aa-40cf-b83d-33fe5aadf455
+  cloudProjectId: c3f6fd30-3c98-4988-862d-1a78588e0b8b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: WorldSoccer2D
-  organizationId: bemi080
+  projectName: Kicklings
+  organizationId: rsaamar
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
