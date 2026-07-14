@@ -1013,7 +1013,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &468988732
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3268,8 +3268,8 @@ MonoBehaviour:
   - {fileID: 1808987985}
   - {fileID: 1295270894}
   - {fileID: 550765043}
-  oneOnOneForCampaign: 0
-  justPlayerForCampaign: 1
+  oneOnOneForCampaign: 1
+  justPlayerForCampaign: 0
 --- !u!1001 &1617595364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3380,7 +3380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3428167664387596773, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.999992
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4339111864184791353, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3400,7 +3400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6168770553179096075, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.999992
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 7294825633533386631, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3416,7 +3416,7 @@ PrefabInstance:
       objectReference: {fileID: 2124663409}
     - target: {fileID: 8071459254118539252, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.999992
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 8206125276192974698, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _preShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4082,12 +4082,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerFielderPrefab: {fileID: 511039046881491241, guid: 7aa1345f30dff6e43bd685db882c9a6b, type: 3}
   _playerGoalkeeperPrefab: {fileID: 511039046881491241, guid: 7aa1345f30dff6e43bd685db882c9a6b, type: 3}
-  _cpuFielderPrefab: {fileID: 1178916472177682611, guid: 56a88cad49b8ed44b96a1e2654dcb3b8, type: 3}
-  _cpuGoalkeeperPrefab: {fileID: 3355545389959970860, guid: c53a8b6a3b36b7d4388481a0dd935282, type: 3}
+  _cpuFielderPrefab: {fileID: 8710130874239727514, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
+  _cpuGoalkeeperPrefab: {fileID: 8710130874239727514, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
   <FielderData>k__BackingField: {fileID: 11400000, guid: bec7f6fc26976154cb700ce21df73402, type: 2}
   <GoalkeeperData>k__BackingField: {fileID: 11400000, guid: bec7f6fc26976154cb700ce21df73402, type: 2}
   <CpuDifficultyPreset>k__BackingField: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
-  <CurrentDifficulty>k__BackingField: 3
+  <CurrentDifficulty>k__BackingField: 1
 --- !u!1 &2107275403
 GameObject:
   m_ObjectHideFlags: 0
@@ -4457,6 +4457,10 @@ PrefabInstance:
     - target: {fileID: 8710130874239727514, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
       propertyPath: m_Name
       value: grandpa_Fielder
+      objectReference: {fileID: 0}
+    - target: {fileID: 8710130874239727514, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8710130874240150458, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
       propertyPath: m_LocalPosition.x
