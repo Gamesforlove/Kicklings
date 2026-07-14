@@ -73,7 +73,7 @@ namespace Gameplay.Managers
         {
             _goalsManager.SetCollidersEnabled(false);
 
-            if (ScriptedGoalEventInstead != null)
+            if (ScriptedGoalEventInstead != null && ScriptedGoalEventInstead.GetPersistentEventCount() > 0)
             {
                 ScriptedGoalEventInstead.Invoke();
             }
