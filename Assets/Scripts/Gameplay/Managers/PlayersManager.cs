@@ -49,7 +49,7 @@ namespace Gameplay.Managers
                     SpawnCpuMode();
                     break;
                 case 1:
-                    SpawnOnePlayerMode();
+                    SpawnOnePlayerMode(matchSettings.SplitControls);
                     break;
                 case 2:
                     SpawnTwoPlayersMode();
@@ -68,10 +68,10 @@ namespace Gameplay.Managers
             SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3]);
         }
 
-        void SpawnOnePlayerMode()
+        void SpawnOnePlayerMode(bool twoControls = false)
         {
 			SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
-            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0]);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], twoControls ? _controlSchemes[1] : _controlSchemes[0]);
             SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[2]);
             SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3]);
         }

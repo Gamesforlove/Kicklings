@@ -70,6 +70,7 @@ namespace UI.MainMenu.TournamentMode
                 .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
                 .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
                 .WithIsTournamentMatch(true)
+                .WithSplitControls(true) // TODO: Turn this off if not split controls
                 .Build();
             
             MatchFlow.CreateTournamentMatch(matchSettings, Tournament);

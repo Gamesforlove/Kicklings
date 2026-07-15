@@ -18,7 +18,7 @@ namespace CommonDataTypes
         [field: SerializeField] public int GoalsToEndMatch { get; set; } = 5;
         [field: SerializeField] public bool IsTournamentMatch {get; private set;}
         [field: SerializeField] public bool IsCampaignMatch {get; private set;}
-        
+        [field: SerializeField] public bool SplitControls { get; private set; }
         public MatchSettings() { }
 
         public void Dispose()
@@ -33,6 +33,7 @@ namespace CommonDataTypes
             GoalsToEndMatch = 0;
             IsTournamentMatch = false;
             IsCampaignMatch = false;
+            SplitControls = false;
         }
 
         public class Builder
@@ -48,6 +49,7 @@ namespace CommonDataTypes
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
             bool _isCampaignMatch = false;
+            bool _splitControls = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
             {
@@ -109,6 +111,12 @@ namespace CommonDataTypes
                 return this;
             }
 
+            public Builder WithSplitControls(bool splitControls)
+            {
+                _splitControls = splitControls;
+                return this;
+            }
+
             public MatchSettings Build()
             {
                 return new MatchSettings
@@ -123,7 +131,8 @@ namespace CommonDataTypes
                     RightCountryImageIndex = _rightCountryImageIndex,
                     GoalsToEndMatch = _goalsToEndMatch,
                     IsTournamentMatch = _isTournamentMatch,
-                    IsCampaignMatch = _isCampaignMatch
+                    IsCampaignMatch = _isCampaignMatch,
+                    SplitControls = _splitControls
                 };
             }
         }
