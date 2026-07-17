@@ -2,6 +2,6 @@
 {
     public enum SceneName
     {
-        MainMenu, Gameplay, TournamentIntroCutscene
+        MainMenu, Gameplay, TournamentIntroCutscene, Campaign
     }
 }
