@@ -169,7 +169,9 @@ public static class ZPlayerPrefs
     {
         if (!hasSetPassword)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Set Your Own Password & Salt!!!");
+#endif
         }
     }
 
@@ -207,7 +209,9 @@ public static class ZPlayerPrefs
         }
         catch (Exception e)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Encrypt Exception: " + e);
+#endif
             return strPlain;
         }
     }
@@ -243,7 +247,9 @@ public static class ZPlayerPrefs
         }
         catch (Exception e)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("Decrypt Exception: " + e);
+#endif
             return strEncript;
         }
 

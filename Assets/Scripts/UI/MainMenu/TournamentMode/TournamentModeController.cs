@@ -36,7 +36,7 @@ namespace UI.MainMenu.TournamentMode
             Tournament.SimulateRound(Tournament.CurrentRound);
         }
 
-        public TournamentLayoutMode GetLayoutMode() => _tournamentConfiguration.LayoutMode;
+        public static TournamentLayoutMode GetLayoutMode() => _tournamentConfiguration.LayoutMode;
 
         public void AssignLayoutMode(TournamentLayoutComponent component)
         {
@@ -50,7 +50,8 @@ namespace UI.MainMenu.TournamentMode
             {
                 LayoutMode = _tournamentLayoutComponent.LayoutMode,
                 PlayerShirtIndex = _characterCustomizationController.ShirtIndex,
-                PlayerShoesIndex = _characterCustomizationController.ShoesIndex
+                PlayerShoesIndex = _characterCustomizationController.ShoesIndex,
+                PlayerSkinTone = _characterCustomizationController.SkinToneValue
             };
 
             PlayerTeamData = TeamsData.GetTeamById(_countryCustomizationController.TeamDataIndex);
@@ -62,7 +63,7 @@ namespace UI.MainMenu.TournamentMode
         {
             Bracket playerBracket = Tournament.GetPlayerBracket();
             Participant player = playerBracket.Participants[0];
-            Participant rival =  playerBracket.Participants[1];
+            Participant rival = playerBracket.Participants[1];
             
             MatchSettings matchSettings = new MatchSettings.Builder()
                 .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
@@ -83,5 +84,6 @@ namespace UI.MainMenu.TournamentMode
         public TeamsData.TeamData TeamData { get; set; }
         public int PlayerShirtIndex { get; set; }
         public int PlayerShoesIndex { get; set; }
+        public float PlayerSkinTone { get; set; }
     }
 }

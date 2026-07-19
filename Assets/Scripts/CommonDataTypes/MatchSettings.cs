@@ -19,6 +19,9 @@ namespace CommonDataTypes
         [field: SerializeField] public bool IsTournamentMatch {get; private set;}
         [field: SerializeField] public bool IsCampaignMatch {get; private set;}
         [field: SerializeField] public bool SplitControls { get; private set; }
+        [field: SerializeField] public float LeftSkinToneValue { get; private set; }
+        [field: SerializeField] public float RightSkinToneValue { get; private set; }
+
         public MatchSettings() { }
 
         public void Dispose()
@@ -46,6 +49,8 @@ namespace CommonDataTypes
             int _rightSideShoesIndex;
             int _leftCountryImageIndex;
             int _rightCountryImageIndex;
+            float _leftSkinToneValue;
+            float _rightSkinToneValue;
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
             bool _isCampaignMatch = false;
@@ -92,6 +97,16 @@ namespace CommonDataTypes
                 _rightCountryImageIndex = index;
                 return this;
             }
+            public Builder WithLeftSkinToneValue(float value)
+            {
+                _leftSkinToneValue = value;
+                return this;
+            }
+            public Builder WithRightSkinToneValue(float value)
+            {
+                _rightSkinToneValue = value;
+                return this;
+            }
 
             public Builder WithGoalsToEndMatch(int goalsToEndMatch)
             {
@@ -129,6 +144,8 @@ namespace CommonDataTypes
                     RightSideShoesIndex = _rightSideShoesIndex,
                     LeftCountryImageIndex = _leftCountryImageIndex,
                     RightCountryImageIndex = _rightCountryImageIndex,
+                    LeftSkinToneValue = _leftSkinToneValue,
+                    RightSkinToneValue = _rightSkinToneValue,
                     GoalsToEndMatch = _goalsToEndMatch,
                     IsTournamentMatch = _isTournamentMatch,
                     IsCampaignMatch = _isCampaignMatch,

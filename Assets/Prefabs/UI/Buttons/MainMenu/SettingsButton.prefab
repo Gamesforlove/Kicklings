@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1511047726306528378, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: df2efb641ee4c8a4cbf48a37dfdf5c4a, type: 3}
+      objectReference: {fileID: 21300000, guid: c039a7784c16fab459ed77ef40fd7439, type: 3}
     - target: {fileID: 1511047726306528378, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -49,6 +49,10 @@ PrefabInstance:
       value: UI.UiSystem.Core.UIView, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1950638777270851351, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1cfc0515c606c9f449457921a0c27c74, type: 3}
+    - target: {fileID: 1950638777270851351, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_Color.b
       value: 0.6
       objectReference: {fileID: 0}
@@ -60,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.5058824
       objectReference: {fileID: 0}
+    - target: {fileID: 3314947962773996876, guid: 3c6389e773f695c48b58639033b56311, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 70511c0de21c6234db0ce3764bd26cd6, type: 3}
     - target: {fileID: 5820112488385859500, guid: 3c6389e773f695c48b58639033b56311, type: 3}
       propertyPath: m_SizeDelta.y
       value: -32

@@ -7,13 +7,17 @@ namespace Gameplay.Managers
     public class BallManager : MonoBehaviour
     {
         [SerializeField] BallSpawner _ballSpawner;
-
+        
         public static BallManager Instance { get; private set; }
         void Awake() => Instance = this;
 
         public BallScript Ball { get; private set; }
     
-        public void SpawnBall() => Ball = _ballSpawner?.SpawnBall();
+        public void SpawnBall()
+        {
+            Ball = _ballSpawner?.SpawnBall();
+            ResetBallWithSpin(FieldSideType.Left);
+        }
     
         public void ResetBall()
         {
@@ -25,6 +29,12 @@ namespace Gameplay.Managers
         {
             _ballSpawner?.ResetBallOnSide(sideType);
             Ball?.Reset();
+        }
+
+        public void ResetBallWithSpin(FieldSideType sideType)
+        {
+            _ballSpawner?.ResetBall();
+            Ball?.ResetWithSpin(sideType);
         }
     }
 }

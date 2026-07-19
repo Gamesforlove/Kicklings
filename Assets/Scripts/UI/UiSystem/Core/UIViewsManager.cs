@@ -1,3 +1,4 @@
+using Gameplay.Spawners;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,16 @@ namespace UI.UiSystem.Core
         
         readonly Stack<UIView> _viewsHistory = new();
 
+        public static UIViewsManager Instance { get; private set; }
+        void Awake()
+        {
+            if (_firstFocusItem)
+                EventSystem.current.SetSelectedGameObject(_firstFocusItem);
+            if (_initialPage)
+                ShowView(_initialPage);
+            Instance = this;
+        }
+
         public void ShowView(UIView view) => StartCoroutine(ShowViewRoutine(view));
 
         public void ShowView<T>(UIView view, T data)
@@ -25,7 +36,9 @@ namespace UI.UiSystem.Core
             }
             else
             {
+#if UNITY_EDITOR
                 Debug.LogWarning($"View {view.name} does not support data of type {typeof(T)}");
+#endif
                 ShowView(view); // fallback to default
             }
         }
@@ -51,19 +64,6 @@ namespace UI.UiSystem.Core
             
             _viewsHistory.Push(historyView);
             StartCoroutine(ShowViewRoutine(targetView));
-        }
-
-
-        public static UIViewsManager Instance { get; private set; }
-        void Awake()
-        {
-            Instance = this;
-
-            if (_firstFocusItem)
-                EventSystem.current.SetSelectedGameObject(_firstFocusItem);
-
-            if (_initialPage)
-                ShowView(_initialPage);
         }
 
         IEnumerator ShowViewRoutine(UIView view)
