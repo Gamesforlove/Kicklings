@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Packages/com.invictus.art.tournament/Runtime/CutsceneAssets/TournamentIntroCutscene.unity
-    guid: bb04cdc93a70d1240a104387e2608dda
-  - enabled: 1
     path: Assets/Scenes/Gameplay.unity
     guid: 2b7199b399191124b874395f8a0dbe75
   - enabled: 0

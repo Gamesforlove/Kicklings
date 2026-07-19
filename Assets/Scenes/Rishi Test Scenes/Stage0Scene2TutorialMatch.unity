@@ -1755,6 +1755,9 @@ MonoBehaviour:
   _playersManager: {fileID: 1613009694}
   _ballManager: {fileID: 1165132587}
   _goalsManager: {fileID: 1722313586}
+  _abilityTestingManager: {fileID: 0}
+  _leftSideData: {fileID: 0}
+  _rightSideData: {fileID: 0}
   ScriptedGoalEventInstead:
     m_PersistentCalls:
       m_Calls:
@@ -3282,6 +3285,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1029011212}
+    - target: {fileID: 909691449211978734, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 34.599976
+      objectReference: {fileID: 0}
+    - target: {fileID: 909691449211978734, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 10.300003
+      objectReference: {fileID: 0}
     - target: {fileID: 966613035162337875, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _preShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3312,7 +3323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2194100682125000529, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 151.57913
+      value: 151.57916
       objectReference: {fileID: 0}
     - target: {fileID: 2257153646316179208, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_IsActive
@@ -3674,6 +3685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftSidePosition: {fileID: 1554996727}
   _rightSidePosition: {fileID: 1423391567}
+  _centerPosition: {fileID: 1554996727}
   _ballPrefab: {fileID: 100004, guid: f847417e53b4a824abb1e6990987c385, type: 3}
   OnlyPutOnLeft: 1
 --- !u!1 &1801568202
@@ -4454,6 +4466,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2804387617283198116, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8710130874239727514, guid: 58d74aa360c170148bb4b794cbbd4abc, type: 3}
       propertyPath: m_Name
       value: grandpa_Fielder

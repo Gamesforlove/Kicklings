@@ -427,6 +427,22 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 168893926413163439, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 168893926413163439, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 168893926413163439, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 168893926413163439, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1889397715758279080, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.05
@@ -515,6 +531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60920003d4b0f4488b9a682cd6ea800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftSideColor: {r: 0, g: 0, b: 0, a: 0}
+  _rightSideColor: {r: 0, g: 0, b: 0, a: 0}
+  _leftPatternColor: {r: 0, g: 0, b: 0, a: 0}
+  _rightPatternColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1635068816246698979
 MonoBehaviour:
   m_ObjectHideFlags: 0
