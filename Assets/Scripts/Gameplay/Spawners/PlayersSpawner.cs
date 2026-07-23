@@ -43,10 +43,50 @@ namespace Gameplay.Spawners
             return go;
         }
 
+        public GameObject SpawnPlayer(GameObject prefab, PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
+        {
+            GameObject go = PlayerInput.Instantiate(
+                prefab,
+                controlScheme: scheme.name,
+                pairWithDevice: Keyboard.current
+                ).gameObject;
+            
+            go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
+
+            bool isRightSide = go.transform.position.x > 0;
+            Team team;
+            if (isRightSide)
+                team = Team.Right;
+            else
+                team = Team.Left;
+
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
+            go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
+
+            return go;
+        }
+
         public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition)
         {
             GameObject go = Instantiate(
                 playerType == PlayerType.Normal ? _cpuFielderPrefab : _cpuGoalkeeperPrefab,
+                spawnPosition.position, 
+                Quaternion.identity
+                );
+ 
+            CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
+            go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
+                playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
+                settings),
+                playerType
+                );
+            
+            return go;
+        }
+        public GameObject SpawnCpu(GameObject prefab, PlayerType playerType, Transform spawnPosition)
+        {
+            GameObject go = Instantiate(
+                prefab,
                 spawnPosition.position, 
                 Quaternion.identity
                 );

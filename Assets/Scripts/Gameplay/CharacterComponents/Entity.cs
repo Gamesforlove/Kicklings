@@ -70,7 +70,7 @@ namespace Gameplay.CharacterComponents
         
         void SetCharacterClothes(bool isRightSide)
         {
-
+            if (MatchFlow.Match.Settings.IsCampaignMatch) return;
             if (isRightSide)
             {
                 if (!MatchFlow.Match.Settings.IsTournamentMatch)

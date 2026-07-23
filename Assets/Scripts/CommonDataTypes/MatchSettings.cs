@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CommonDataTypes
@@ -17,6 +18,10 @@ namespace CommonDataTypes
         public float RightSkinToneValue { get; set; }
         public int GoalsToEndMatch { get; set; } = 5;
         public bool IsTournamentMatch {get; private set;}
+
+        //Campaign
+        public bool IsCampaignMatch {get; private set;}
+        public GameObject[] SpecificPlayers { get; private set;} = new GameObject[4];
         
         public MatchSettings() { }
 
@@ -31,6 +36,11 @@ namespace CommonDataTypes
             RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
             IsTournamentMatch = false;
+            IsCampaignMatch = false;
+            if (SpecificPlayers != null)
+            {
+                System.Array.Clear(SpecificPlayers, 0, SpecificPlayers.Length);
+            }
         }
 
         public class Builder
@@ -47,6 +57,8 @@ namespace CommonDataTypes
             float _rightSkinToneValue;
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
+            bool _isCampaignMatch = false;
+            GameObject[] _specificPlayers = new GameObject[4];
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
             {
@@ -111,6 +123,19 @@ namespace CommonDataTypes
                 _isTournamentMatch = isTournamentMatch;
                 return this;
             }
+            public Builder WithIsCampaignMatch(bool isTournamentMatch)
+            {
+                _isCampaignMatch = isTournamentMatch;
+                return this;
+            }
+            public Builder WithSpecificPlayers(GameObject player1, GameObject player2, GameObject opponent1, GameObject opponent2)
+            {
+                _specificPlayers[0] = player1;
+                _specificPlayers[1] = player2;
+                _specificPlayers[2] = opponent1;
+                _specificPlayers[3] = opponent2;
+                return this;
+            }
 
             public MatchSettings Build()
             {
@@ -127,7 +152,9 @@ namespace CommonDataTypes
                     LeftSkinToneValue = _leftSkinToneValue,
                     RightSkinToneValue = _rightSkinToneValue,
                     GoalsToEndMatch = _goalsToEndMatch,
-                    IsTournamentMatch = _isTournamentMatch
+                    IsTournamentMatch = _isTournamentMatch,
+                    IsCampaignMatch = _isCampaignMatch,
+                    SpecificPlayers = _specificPlayers
                 };
             }
         }

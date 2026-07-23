@@ -1897,7 +1897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Campaign
+      value: CampaignMap
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
