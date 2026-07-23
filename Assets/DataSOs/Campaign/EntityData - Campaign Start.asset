@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EntityData - Campaign Start
   m_EditorClassIdentifier: 
   JumpPower: 2100
-  KickingPower: 1800
+  KickingPower: 1400
   StabilizationFactor: 25

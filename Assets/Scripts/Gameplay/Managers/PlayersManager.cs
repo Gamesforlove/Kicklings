@@ -186,6 +186,16 @@ namespace Gameplay.Managers
             }
         }
 
+        public void ResetMainPlayer()
+        {
+            if (_players.Count > 0)
+            {
+                GameObject mainPlayer = _players[0];
+                mainPlayer.GetComponent<IEntity>()?.Reset();
+                mainPlayer.transform.SetPositionAndRotation(_playersPositions[mainPlayer], Quaternion.identity);
+            }
+        }
+
         public void ResetPlayers()
         {
             foreach (GameObject player in _players)

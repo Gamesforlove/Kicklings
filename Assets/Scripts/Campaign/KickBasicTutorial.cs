@@ -21,6 +21,10 @@ public class KickBasicTutorial : MonoBehaviour
     KeyCode kick = KeyCode.Z;
     public float stopDistance;
     public Transform ballDropTarget;
+    public MoveToPointCurved ballMoveScript;
+    private const float headHeightOffset = 2.2f;
+    public float curveMidpointHeightOffset = 3f;
+    public float curveMoveDuration = 1.5f;
     IEnumerator tutorialRoutine()
     {
         yield return new WaitForSeconds(0.1f);
@@ -46,7 +50,6 @@ public class KickBasicTutorial : MonoBehaviour
 
             if (prompted && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
             {
-                //ScriptedKick();
                 ToggleForceKickToHold(true);
                 kicked = true;
                 break;
@@ -68,15 +71,43 @@ public class KickBasicTutorial : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.3f);
         ToggleForceKickToHold(false);
         ToggleKickAllowed(false);
-        onTutorialDone?.Invoke();
         TutorialFade?.FadeOut();
 
-        const float speedup = 2f;
-        while (Time.timeScale < 1f)
+        if (ball != null && ballMoveScript != null && GrandpaStage0.Instance != null)
         {
-            Time.timeScale = Mathf.MoveTowards(Time.timeScale, 1f, Time.unscaledDeltaTime * speedup);
+            ball.Rigidbody.linearVelocity = Vector2.zero;
+            ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            ball.Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            Vector2 startPoint = ball.transform.position;
+            Vector2 endPoint = (Vector2)GrandpaStage0.Instance.transform.position + Vector2.up * headHeightOffset;
+            Vector2 midPoint = new Vector2((startPoint.x + endPoint.x) * 0.5f, Mathf.Max(startPoint.y, endPoint.y) + curveMidpointHeightOffset);
+
+            ballMoveScript.StartCurveMove(ball.transform, startPoint, midPoint, endPoint, curveMoveDuration, stopDistance);
+            yield return new WaitUntil(() => ballMoveScript.Moving);
+            
+            float totalDistance = Vector2.Distance(startPoint, endPoint);
             yield return null;
+            while (ballMoveScript.Moving)
+            {
+                float remaining = Vector2.Distance(ball.transform.position, endPoint);
+                float t = remaining / totalDistance;
+                if (t > 0.5f)
+                    Time.timeScale = Mathf.Lerp(1f, 0.05f, (1f - t));
+                yield return null;
+            }
+            Time.timeScale = 0f;
         }
+
+        onTutorialDone?.Invoke();
+        Stage0Scene2Tutorials.Instance?.NextTutorial();
+
+        //const float speedup = 2f;
+        //while (Time.timeScale < 1f)
+        //{
+        //    Time.timeScale = Mathf.MoveTowards(Time.timeScale, 1f, Time.unscaledDeltaTime * speedup);
+        //    yield return null;
+        //}
     }
 
     void ToggleKickAllowed(bool allowed)
