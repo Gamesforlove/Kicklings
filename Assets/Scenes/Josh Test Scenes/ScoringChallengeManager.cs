@@ -12,10 +12,9 @@ namespace Gameplay.Managers
     public class ScoringChallengeManager : MonoBehaviour
     {
         [SerializeField] UiManager _uiManager;
-        [SerializeField] PlayersManager _playersManager;   // single-player spawn/reset
-        [SerializeField] BallLauncher _ballLauncher;       // fires balls at the player
-        [SerializeField] GoalsManager _goalsManager;       // goal trigger colliders
-
+        [SerializeField] PlayersManager _playersManager;  
+        [SerializeField] BallLauncher _ballLauncher;      
+        [SerializeField] GoalsManager _goalsManager;       
         [Header("Challenge Settings")]
         [SerializeField] int _scoreTarget = 10;
         [SerializeField] float _challengeDuration = 60f;
@@ -31,7 +30,7 @@ namespace Gameplay.Managers
 
         void Start()
         {
-            _playersManager?.SpawnEntities(null); 
+            _playersManager?.SpawnSinglePlayer();
             StartChallenge();
         }
 
@@ -57,10 +56,12 @@ namespace Gameplay.Managers
             _uiManager?.ChangeChallengeScore(_score, _scoreTarget);
             _uiManager?.InitializeChallengeTimer(_challengeDuration);
             _uiManager?.UpdateTimer(_timeRemaining);
+            
+            _playersManager?.ResetPlayers();
 
             _goalsManager?.SetCollidersEnabled(true);
             if (_ballLauncher != null) _ballLauncher.autoLaunch = true;
-
+            
             TimeScaleManager.SetGameplayTimeScale();
         }
 
@@ -103,7 +104,6 @@ namespace Gameplay.Managers
         #endregion
 
         #region OnOut
-        // Ball missed / went out of bounds — no score change, just let the launcher fire again.
         void OnOutEvent(OutEvent payload)
         {
             if (!_challengeActive) return;

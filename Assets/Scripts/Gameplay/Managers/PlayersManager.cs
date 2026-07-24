@@ -59,6 +59,10 @@ namespace Gameplay.Managers
                     break;
             }
         }
+        public void SpawnSinglePlayer()
+        {
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[0], _controlSchemes[0]);
+        }
 
         void SpawnCpuMode()
         {

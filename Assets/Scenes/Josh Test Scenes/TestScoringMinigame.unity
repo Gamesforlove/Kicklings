@@ -388,6 +388,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a67e4c56cff7ba4d8cc70f57d686af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &430213181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 430213185}
+  - component: {fileID: 430213184}
+  - component: {fileID: 430213183}
+  - component: {fileID: 430213182}
+  m_Layer: 5
+  m_Name: ChallengeTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &430213182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430213181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932f246b9d753a245b21f2edec66c568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fillImage: {fileID: 430213183}
+  _useUrgencyColor: 1
+  _normalColor: {r: 0.25, g: 0.75, b: 0.35, a: 1}
+  _urgentColor: {r: 0.85, g: 0.2, b: 0.2, a: 1}
+  _urgentThreshold: 0.25
+  _pulseWhenUrgent: 1
+  _pulseSpeed: 6
+  _pulseScale: 0.06
+--- !u!114 &430213183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430213181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b2c09aee3e44f274792fbc20e2945b46, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &430213184
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430213181}
+  m_CullTransparentMesh: 1
+--- !u!224 &430213185
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430213181}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 686066714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -47, y: 326}
+  m_SizeDelta: {x: 150, y: 150}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &440170256
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,6 +549,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1970829690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &581064516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7216415375650058457, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
+  m_PrefabInstance: {fileID: 914469804319679896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa4a2b15bc7e3240ae5e420fbb76858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &596995262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -741,9 +848,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb10e3360efb2be429299d2b589628f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiManager: {fileID: 1617595365}
   _playersManager: {fileID: 1613009694}
+  _ballLauncher: {fileID: 1657738698}
   _goalsManager: {fileID: 1722313586}
-  _scoreText: {fileID: 1943090474}
+  _scoreTarget: 10
+  _challengeDuration: 60
 --- !u!114 &1029011214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68005ea311a35a44dbc872f139deffa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiManager: {fileID: 1617595365}
+  _uiManager: {fileID: 0}
   _playersManager: {fileID: 1613009694}
   _ballManager: {fileID: 0}
   _goalsManager: {fileID: 0}
@@ -1284,7 +1394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4339111864184791353, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.997833
+      value: -39.997818
       objectReference: {fileID: 0}
     - target: {fileID: 4643076347865597527, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1318,6 +1428,10 @@ PrefabInstance:
       propertyPath: _scoreBoard
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7877446427155987420, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _challengeTimerView
+      value: 
+      objectReference: {fileID: 430213182}
     - target: {fileID: 8206125276192974698, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _preShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1337,6 +1451,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 336036625740966005, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1943090473}
+    - targetCorrespondingSourceObject: {fileID: 336036625740966005, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430213185}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
 --- !u!114 &1617595365 stripped
@@ -2167,11 +2284,11 @@ PrefabInstance:
     - target: {fileID: 998102609590621567, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: 'matchBuilders.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 581064516}
     - target: {fileID: 998102609590621567, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: 'matchBuilders.Array.data[2]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 581064516}
     - target: {fileID: 4469481054756461675, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
