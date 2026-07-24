@@ -26,7 +26,7 @@ public class CampaignController : MonoBehaviour
             .WithIsCampaignMatch(true)
             .Build();
 
-        MatchFlow.CreateMatch(matchSettings);
+        MatchFlow.CreateCampaignMatch(matchSettings);
     }
     public void StartMatch(int numberOfPlayers, GameObject Opponent1, GameObject Opponent2)
     {
@@ -44,6 +44,6 @@ public class CampaignController : MonoBehaviour
             .WithSpecificPlayers(Player1, Player2, Opponent1, Opponent2)
             .Build();
 
-        MatchFlow.CreateMatch(matchSettings);
+        MatchFlow.CreateCampaignMatch(matchSettings);
     }
 }

@@ -38,7 +38,6 @@ namespace Scene_Management
         }
 
     }
-
     public class TournamentMatch : Match
     {
         readonly Tournament _tournament;
@@ -82,6 +81,34 @@ namespace Scene_Management
             {
                 uiManager.ShowTournamentRoundWinnerView();
             }
+        }
+    }
+    public class CampaignMatch : Match
+    {
+        public CampaignMatch(MatchSettings settings) : base(settings) { }
+        public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
+        {
+            IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
+
+            var data = GameAndPlayerData.Instance;
+            if (data != null)
+            {
+                data.numTournamentMatchesPlayed++;
+                data.numTournamentMatchesPlayedToday++;
+
+                if (IsPlayerWinner)
+                {
+                    data.numTournamentMatchesWon++;
+                    data.numTournamentMatchesWonToday++;
+                }
+                else
+                {
+                    data.numTournamentMatchesLost++;
+                    data.numTournamentMatchesLostToday++;
+                }
+            }
+
+            uiManager.ShowMatchWinnerView(goalEvent);
         }
     }
 }

@@ -20,6 +20,12 @@ namespace Scene_Management
             Match = new TournamentMatch(matchSettings, tournament);
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
+        public static void CreateCampaignMatch(MatchSettings matchSettings)
+        {
+            DisposeMatch();
+            Match = new CampaignMatch(matchSettings);
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
+        }
 
         static void DisposeMatch() => Match?.Dispose();
     }
