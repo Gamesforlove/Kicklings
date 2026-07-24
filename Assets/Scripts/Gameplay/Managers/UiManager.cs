@@ -15,6 +15,10 @@ namespace Gameplay.Managers
         [SerializeField] GameplayNotifications _gameplayNotifications;
         [SerializeField] ScoreBoard _scoreBoard;
 
+       
+        [SerializeField] UIView _challengeResultView;     
+        [SerializeField] ChallengeTimerView _challengeTimerView;
+
         void Start()
         {
             _scoreBoard.ResetScore();
@@ -42,6 +46,45 @@ namespace Gameplay.Managers
         public IEnumerator ShowOutNotification(OutEvent payload)
         {
             yield return StartCoroutine(_gameplayNotifications.ShowOutNotification(payload));
+        }
+
+        #region Scoring Challenge
+        // Dedicated challenge-mode score display — distinct from ChangeScore(left, right),
+        // which is built for two-sided matches and would mislabel score/target.
+        public void ChangeChallengeScore(int score, int target)
+        {
+            _scoreBoard.ChangeScore(score, target);
+        }
+
+        public void InitializeChallengeTimer(float maxTime)
+        {
+            _challengeTimerView?.SetMaxTime(maxTime);
+            _challengeTimerView?.ResetView();
+        }
+
+        public void UpdateTimer(float timeRemaining)
+        {
+            _challengeTimerView?.SetTime(timeRemaining);
+        }
+
+        public void ShowChallengeResult(bool won, int score, int target)
+        {
+            _uiViewsManager.ShowView(_challengeResultView, new ChallengeResultData(won, score, target));
+        }
+        #endregion
+    }
+    
+    public readonly struct ChallengeResultData
+    {
+        public readonly bool Won;
+        public readonly int Score;
+        public readonly int Target;
+
+        public ChallengeResultData(bool won, int score, int target)
+        {
+            Won = won;
+            Score = score;
+            Target = target;
         }
     }
 }

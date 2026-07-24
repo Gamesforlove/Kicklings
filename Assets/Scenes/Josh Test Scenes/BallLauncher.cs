@@ -26,6 +26,7 @@ public class BallLauncher : MonoBehaviour
   
     public Vector3UnityEvent onLaunch;
 
+    public GameObject go;
 
     public RigidbodyUnityEvent onBeforeLaunch;
 
@@ -35,7 +36,8 @@ public class BallLauncher : MonoBehaviour
     {
         if (launchPoint == null) launchPoint = transform;
         ScheduleNextLaunch();
-        GameObject go = Instantiate(_ballPrefab);
+        go = Instantiate(_ballPrefab);
+        go.SetActive(false);
         _ball = go.GetComponent<Rigidbody2D>();
         
     }
@@ -58,6 +60,7 @@ public class BallLauncher : MonoBehaviour
 
     public void Fire()
     {
+        go.SetActive(true);
         if (_ball == null || target == null)
         {
             return;
