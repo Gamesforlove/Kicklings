@@ -31,7 +31,6 @@ namespace Gameplay.Managers
         void Start()
         {
             _playersManager?.SpawnSinglePlayer();
-            StartChallenge();
         }
 
         void OnEnable()
@@ -77,7 +76,9 @@ namespace Gameplay.Managers
                 EndChallenge(won: false);
             }
         }
+        
 
+        
         #region OnGoal
         void OnGoalEvent(GoalEvent payload)
         {

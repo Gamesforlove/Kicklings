@@ -549,17 +549,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1970829690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &581064516 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7216415375650058457, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
-  m_PrefabInstance: {fileID: 914469804319679896}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fa4a2b15bc7e3240ae5e420fbb76858, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &596995262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -692,6 +681,25 @@ Transform:
   - {fileID: 1722313585}
   m_Father: {fileID: 1950850750}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &946786754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4503193597074994680, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
+  m_PrefabInstance: {fileID: 914469804319679896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &946786757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946786754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847f153276d973545accb8b1a50c48d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matchBuilders:
+  - {fileID: 1324392073}
 --- !u!1 &1007675215
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,7 +820,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1029011211}
   - component: {fileID: 1029011213}
-  - component: {fileID: 1029011214}
   m_Layer: 0
   m_Name: MatchManager
   m_TagString: Untagged
@@ -854,25 +861,6 @@ MonoBehaviour:
   _goalsManager: {fileID: 1722313586}
   _scoreTarget: 10
   _challengeDuration: 60
---- !u!114 &1029011214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1029011210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68005ea311a35a44dbc872f139deffa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uiManager: {fileID: 0}
-  _playersManager: {fileID: 1613009694}
-  _ballManager: {fileID: 0}
-  _goalsManager: {fileID: 0}
-  ScriptedGoalEventInstead:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1165132585
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,6 +937,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1970829690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1324392071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1066825971278302887, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
+  m_PrefabInstance: {fileID: 914469804319679896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1324392073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324392071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d33cb27277bc624591d213bc6890714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matchDataSO: {fileID: 11400000, guid: 27bcef690f840b54c8b8dea75b9062cb, type: 2}
+  ScoringChallengeManager: {fileID: 1029011213}
 --- !u!1 &1423391566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,16 +2286,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 998102609590621567, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: matchBuilders.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 998102609590621567, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: 'matchBuilders.Array.data[1]'
       value: 
-      objectReference: {fileID: 581064516}
+      objectReference: {fileID: 0}
     - target: {fileID: 998102609590621567, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: 'matchBuilders.Array.data[2]'
       value: 
-      objectReference: {fileID: 581064516}
+      objectReference: {fileID: 0}
     - target: {fileID: 4469481054756461675, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2336,11 +2343,19 @@ PrefabInstance:
     - target: {fileID: 7216415375650058457, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
       propertyPath: matchManager
       value: 
-      objectReference: {fileID: 1029011214}
-    m_RemovedComponents: []
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 998102609590621567, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
+    - {fileID: 7216415375650058457, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4503193597074994680, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 946786757}
+    - targetCorrespondingSourceObject: {fileID: 1066825971278302887, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1324392073}
   m_SourcePrefab: {fileID: 100100000, guid: 892edaa1f28495a46b4808df698599d0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
