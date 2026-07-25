@@ -33,7 +33,7 @@ public class CampaignMatchBuilder : MonoBehaviour
             .Build();
 
         matchManager.enabled = true;
-        Match match = MatchFlow.CreateCampaignMatch(matchSettings);
+        Match match = MatchFlow.GetCampaignMatch(matchSettings);
         matchManager.SetNewMatch(match);
     }
 }

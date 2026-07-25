@@ -21,7 +21,6 @@ namespace Gameplay.Managers
         List<InputControlScheme> _controlSchemes = new();
         List<AbilityActor> abilityActors = new();
         MatchSettings _matchSettings;
-        bool campaign;
 
         public static PlayersManager Instance { get; private set; }
         void Awake()
@@ -145,7 +144,7 @@ namespace Gameplay.Managers
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
         }
@@ -158,7 +157,7 @@ namespace Gameplay.Managers
         }
         void SpawnPlayer(PlayersSpawner.PlayerType type, Transform position, InputControlScheme scheme, int layer)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
             SetLayerAllChildren(player.transform, layer);
@@ -166,14 +165,14 @@ namespace Gameplay.Managers
 
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
         }
 
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position, int layer)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
             SetLayerAllChildren(cpu.transform, layer);

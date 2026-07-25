@@ -28,7 +28,7 @@ namespace Scene_Management
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
 
-        public static Match CreateCampaignMatch(MatchSettings matchSettings)
+        public static Match GetCampaignMatch(MatchSettings matchSettings)
         {
             DisposeMatch();
             Match = new CampaignMatch(matchSettings);

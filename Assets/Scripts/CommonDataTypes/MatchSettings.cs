@@ -17,7 +17,6 @@ namespace CommonDataTypes
         [field: SerializeField] public int RightCountryImageIndex { get; set; }
         [field: SerializeField] public int GoalsToEndMatch { get; set; } = 5;
         [field: SerializeField] public bool IsTournamentMatch {get; private set;}
-        [field: SerializeField] public bool IsCampaignMatch {get; private set;}
         [field: SerializeField] public bool SplitControls { get; private set; }
         [field: SerializeField] public float LeftSkinToneValue { get; private set; }
         [field: SerializeField] public float RightSkinToneValue { get; private set; }
@@ -166,7 +165,7 @@ namespace CommonDataTypes
                     GoalsToEndMatch = _goalsToEndMatch,
                     IsTournamentMatch = _isTournamentMatch,
                     IsCampaignMatch = _isCampaignMatch,
-                    SpecificPlayers = _specificPlayers
+                    SpecificPlayers = _specificPlayers,
                     SplitControls = _splitControls
                 };
             }

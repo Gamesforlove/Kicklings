@@ -7,7 +7,7 @@ namespace Gameplay.CharacterComponents
 {
     public interface IEntity
     {
-        public void SetUp(EntityData entityData, PlayerType type, bool campaign);
+        public void SetUp(EntityData entityData, PlayerType type);
         public void Reset();
     }
 
@@ -26,14 +26,12 @@ namespace Gameplay.CharacterComponents
         protected BodyPartsController BodyPartsController;
         protected StabilizeComponent StabilizeComponent;
         protected Rigidbody2D Rigidbody;
-        protected bool campaign;
 
         //public virtual void SetUp(EntityData entityData, bool campaign)
-        public virtual void SetUp(EntityData entityData, PlayerType type, bool campaign)
+        public virtual void SetUp(EntityData entityData, PlayerType type)
         {
             PlayerType = type;
             EntityData = entityData;
-            this.campaign = campaign;
             CacheComponents();
             
             bool isRightSide = gameObject.transform.position.x > 0;
