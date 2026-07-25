@@ -24,9 +24,10 @@ namespace Gameplay.Spawners
             _ball.transform.rotation = Quaternion.identity;
         }
 
+        public bool OnlyPutOnLeft;
         public void ResetBallOnSide(FieldSideType sideType)
         {
-            if (sideType == FieldSideType.Left)
+            if (sideType == FieldSideType.Left || OnlyPutOnLeft)
             {
                 _ball.transform.position = _leftSidePosition.position;
                 _ball.transform.rotation = Quaternion.identity;

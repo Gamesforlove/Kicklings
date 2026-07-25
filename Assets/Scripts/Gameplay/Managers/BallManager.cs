@@ -30,6 +30,7 @@ namespace Gameplay.Managers
             _ballSpawner?.ResetBallOnSide(sideType);
             Ball?.Reset();
         }
+
         public void ResetBallWithSpin(FieldSideType sideType)
         {
             _ballSpawner?.ResetBall();

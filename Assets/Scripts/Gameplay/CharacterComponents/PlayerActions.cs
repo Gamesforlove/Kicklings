@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using EventBusSystem;
 using UnityEngine;
@@ -56,22 +57,37 @@ namespace Gameplay.CharacterComponents
             else if (context.canceled) OnActionCancelled();
         }
 
+        public bool CanKick { get; set; } = true;
+        public bool ForcedToHoldKick { get; set; } = false;
+        [field: SerializeField] public bool LockMovementToFacingDirection { get; set; } = false;
+        public void ScriptedKick() => OnActionPerformed();
         public void OnActionPerformed()
         {
-            if (DisableInput) return;
+            if (!CanKick)
+                return;
+            if (DisableInput)
+                return;
             Kick();
-            if (_groundChecks.Any(gc =>  gc.IsGrounded) && !_jumpOnCd)
+            if (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd)
                 Jump();
         }
 
         public void OnActionCancelled()
         {
-            ReturnLeftLegToOriginalPosition();
+            if (!CanKick)
+                return;
+            if (ForcedToHoldKick)
+                StartCoroutine(forceKickToHold());
+            else
+                ReturnLeftLegToOriginalPosition();
         }
     
         void Jump()
         {
-            _rigidbody.AddForce(transform.up * _entityData.JumpPower);
+            Vector2 jumpForce = transform.up * _entityData.JumpPower;
+            if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
+                jumpForce.x = 0f;
+            _rigidbody.AddForce(jumpForce);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();
@@ -102,5 +118,19 @@ namespace Gameplay.CharacterComponents
             _kickingLegJoint.motor = _kickingLegJointMotor;
         }
 
+        // used to scripted events, tutorials, in-game cutscenes, etc.
+        bool inforceKickToHoldRoutine = false;
+        IEnumerator forceKickToHold()
+        {
+            if (inforceKickToHoldRoutine)
+                yield break;
+            inforceKickToHoldRoutine = true;
+            bool prevCanKick = CanKick;
+            CanKick = false;
+            yield return new WaitForSeconds(0.7f);
+            ReturnLeftLegToOriginalPosition();
+            CanKick = prevCanKick;
+            inforceKickToHoldRoutine = false;
+        }
     }
 }

@@ -13,19 +13,20 @@ namespace Gameplay.Managers
     {
         [SerializeField] PlayersSpawner _playersSpawner;
         [SerializeField] Transform[] _spawnPoints;
-
-        public static PlayersManager Instance { get; private set; }
-        void Awake() => Instance = this;
+        [SerializeField] bool oneOnOneForCampaign;
+        [SerializeField] bool justPlayerForCampaign;
 
         readonly List<GameObject> _players = new();
         readonly Dictionary<GameObject, Vector2> _playersPositions = new();
         List<InputControlScheme> _controlSchemes = new();
+        List<AbilityActor> abilityActors = new();
         MatchSettings _matchSettings;
-        private List<AbilityActor> abilityActors = new();
+        bool campaign;
 
-
-        void Start()
+        public static PlayersManager Instance { get; private set; }
+        void Awake()
         {
+            Instance = this;
             InputActionAsset actionAsset = InputSystem.actions;
 
             foreach (InputControlScheme scheme in actionAsset.controlSchemes)
@@ -48,7 +49,7 @@ namespace Gameplay.Managers
                     SpawnCpuMode();
                     break;
                 case 1:
-                    SpawnOnePlayerMode();
+                    SpawnOnePlayerMode(matchSettings.SplitControls);
                     break;
                 case 2:
                     SpawnTwoPlayersMode();
@@ -74,13 +75,13 @@ namespace Gameplay.Managers
             SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], layer);
         }
 
-        void SpawnOnePlayerMode()
+        void SpawnOnePlayerMode(bool twoControls = false)
         {
             int layer = LayerMask.NameToLayer(EntityLayer.Player1_GoalKeeper.ToString());
             SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0], layer);
 
             layer = LayerMask.NameToLayer(EntityLayer.Player1_Player.ToString());
-            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0], layer);
+            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], twoControls ? _controlSchemes[1] : _controlSchemes[0], layer);
 
             layer = LayerMask.NameToLayer(EntityLayer.Player2_Player.ToString());
             SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[2], layer);
@@ -140,12 +141,11 @@ namespace Gameplay.Managers
                     abilityActors.Add(abilityActor);
                 }
             #endif
-
         }
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
         }
@@ -158,7 +158,7 @@ namespace Gameplay.Managers
         }
         void SpawnPlayer(PlayersSpawner.PlayerType type, Transform position, InputControlScheme scheme, int layer)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
             SetLayerAllChildren(player.transform, layer);
@@ -166,13 +166,14 @@ namespace Gameplay.Managers
 
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
         }
+
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position, int layer)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
             SetLayerAllChildren(cpu.transform, layer);
@@ -190,11 +191,42 @@ namespace Gameplay.Managers
             _playersSpawner.SetDifficulty(difficulty);
         }
 
+
+        void SpawnCampaign()
+        {
+            if (justPlayerForCampaign)
+            {
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+            }
+            else if (oneOnOneForCampaign)
+            {
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+                SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[1]);
+            }
+            else
+            {
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+                SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0]);
+                SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[2]);
+                SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3]);
+            }
+        }
+
+        public void ResetMainPlayer()
+        {
+            if (_players.Count > 0)
+            {
+                GameObject mainPlayer = _players[0];
+                mainPlayer.GetComponent<IEntity>()?.Reset();
+                mainPlayer.transform.SetPositionAndRotation(_playersPositions[mainPlayer], Quaternion.identity);
+            }
+        }
+
         public void ResetPlayers()
         {
             foreach (GameObject player in _players)
             {
-                player.GetComponent<IEntity>().Reset();
+                player.GetComponent<IEntity>()?.Reset();
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
             }
         }
@@ -202,6 +234,19 @@ namespace Gameplay.Managers
         {
             foreach (GameObject player in _players)
                 player.GetComponent<PlayerActions>().DisableInput = true;
+        }
+
+        public List<GameObject> Players { get => _players; }
+
+        public List<PlayerActions> GetPlayerActions()
+        {
+            List<PlayerActions> allPlayerActions = new List<PlayerActions>();
+            foreach (var player in _players)
+            {
+                var actions = player.GetComponent<PlayerActions>();
+                if (actions != null) allPlayerActions.Add(actions);
+            }
+            return allPlayerActions;
         }
 
         public void EnablePlayers()
@@ -214,6 +259,7 @@ namespace Gameplay.Managers
         {
             return abilityActors.AsReadOnly();
         }
+
         void SetLayerAllChildren(Transform root, int layer)
         {
             var children = root.GetComponentsInChildren<Transform>(includeInactive: true);
@@ -222,6 +268,7 @@ namespace Gameplay.Managers
                 child.gameObject.layer = layer;
             }
         }
+
         public enum EntityLayer
         {
             Player1_Player,

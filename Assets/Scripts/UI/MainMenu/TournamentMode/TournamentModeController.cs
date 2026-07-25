@@ -64,34 +64,17 @@ namespace UI.MainMenu.TournamentMode
             Bracket playerBracket = Tournament.GetPlayerBracket();
             Participant player = playerBracket.Participants[0];
             Participant rival = playerBracket.Participants[1];
-            StartTournamentAfterCutscene stac = StartTournamentAfterCutscene.Instance;
-
-            if (Tournament.CurrentRound.IsFirstRound() && stac != null)
-            {
-                stac.TriggerCutsceneThenTournament(
-                    PlayerTeamData.FullName,
-                    _tournamentLayoutComponent,
-                    _tournamentConfiguration,
-                    Tournament,
-                    TeamsData.GetTeamByName(player.TeamData.Name).Id,
-                    TeamsData.GetTeamByName(rival.TeamData.Name).Id
-                );
-            }
-            else
-            {
-                MatchSettings matchSettings = new MatchSettings.Builder()
-                    .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
-                    .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
-                    .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
-                    .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
-                    .WithRightSkinToneValue(StartTournamentAfterCutscene.RandomSkinTone())
-                    .WithLeftSkinToneValue(_tournamentConfiguration.PlayerSkinTone)
-                    .WithIsTournamentMatch(StartTournamentAfterCutscene.isTournamentMatch)
-                    .WithGoalsToEndMatch(StartTournamentAfterCutscene.goalsToEndMatch)
-                    .Build();
-
-                MatchFlow.CreateTournamentMatch(matchSettings, Tournament);
-            }
+            
+            MatchSettings matchSettings = new MatchSettings.Builder()
+                .WithLeftShirtIndex(_tournamentConfiguration.PlayerShirtIndex)
+                .WithLeftShoesIndex(_tournamentConfiguration.PlayerShoesIndex)
+                .WithLeftCountryImageIndex(TeamsData.GetTeamByName(player.TeamData.Name).Id)
+                .WithRightCountryImageIndex(TeamsData.GetTeamByName(rival.TeamData.Name).Id)
+                .WithIsTournamentMatch(true)
+                .WithSplitControls(true) // TODO: Turn this off if not split controls
+                .Build();
+            
+            MatchFlow.CreateTournamentMatch(matchSettings, Tournament);
         }
     }
 

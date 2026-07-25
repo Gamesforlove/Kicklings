@@ -1,6 +1,9 @@
+using UnityEngine.Events;
+using UnityEngine.Analytics;
 using Unity.Services.Analytics;
+using UnityEngine;
 
-public sealed class MatchEndedEvent : Event
+public sealed class MatchEndedEvent : CustomEvent
 {
     public MatchEndedEvent() : base("match_ended")
     {

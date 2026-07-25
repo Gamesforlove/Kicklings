@@ -1,6 +1,7 @@
 ﻿using CommonDataTypes;
 using EventBusSystem;
 using Gameplay.Managers;
+using System.Collections.Generic;
 using UI.MainMenu.TournamentMode;
 
 namespace Scene_Management
@@ -8,7 +9,6 @@ namespace Scene_Management
     public abstract class Match
     {
         public MatchSettings Settings { get; }
-
         public bool IsPlayerWinner { get; set; }
         public bool IsPlayAgain { get; set; }
 
@@ -83,31 +83,14 @@ namespace Scene_Management
             }
         }
     }
+    
     public class CampaignMatch : Match
     {
         public CampaignMatch(MatchSettings settings) : base(settings) { }
+
         public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
         {
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
-
-            var data = GameAndPlayerData.Instance;
-            if (data != null)
-            {
-                data.numTournamentMatchesPlayed++;
-                data.numTournamentMatchesPlayedToday++;
-
-                if (IsPlayerWinner)
-                {
-                    data.numTournamentMatchesWon++;
-                    data.numTournamentMatchesWonToday++;
-                }
-                else
-                {
-                    data.numTournamentMatchesLost++;
-                    data.numTournamentMatchesLostToday++;
-                }
-            }
-
             uiManager.ShowMatchWinnerView(goalEvent);
         }
     }
