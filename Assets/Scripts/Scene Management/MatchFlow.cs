@@ -1,5 +1,6 @@
 ﻿using CommonDataTypes;
 using EventBusSystem;
+using System;
 using UI.MainMenu.TournamentMode;
 
 namespace Scene_Management
@@ -19,6 +20,13 @@ namespace Scene_Management
             DisposeMatch();
             Match = new TournamentMatch(matchSettings, tournament);
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
+        }
+
+        public static Match CreateCampaignMatch(MatchSettings matchSettings)
+        {
+            DisposeMatch();
+            Match = new CampaignMatch(matchSettings);
+            return Match;
         }
 
         static void DisposeMatch() => Match?.Dispose();

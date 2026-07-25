@@ -10,6 +10,8 @@ using UI.MainMenu.TournamentMode;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.Analytics;
+using UnityEngine.Events;
 
 namespace Gameplay.Managers
 {
@@ -33,11 +35,13 @@ namespace Gameplay.Managers
             _rightScore = 0;
             _uiManager?.ChangeScore(_leftScore, _rightScore);
             _playersManager?.ResetPlayers();
-            _playersManager?.EnablePlayers();
+           _playersManager?.EnablePlayers();
             _ballManager?.ResetBallWithSpin(FieldSideType.Left);
             _goalsManager?.SetCollidersEnabled(true);
             TimeScaleManager.SetGameplayTimeScale();
         }
+
+        public void SetNewMatch(Match match) { _match = match; if (ranStart) ResetGame();}
 
         public void EndGame()
         {
@@ -47,10 +51,13 @@ namespace Gameplay.Managers
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
         }
 
+        public static MatchManager Instance { get; private set; }
+        private void Awake() => Instance = this;
+
+        bool ranStart = false;
         async void Start()
         {
             _match = MatchFlow.Match;
-
             if (_match is TournamentMatch tournamentMatch)
             {
                 DifficultyLevel difficulty = tournamentMatch.Tournament.GetDifficultyForRound();
@@ -65,6 +72,7 @@ namespace Gameplay.Managers
             _rightScore = 0;
             _matchStartTime = Time.time;
             TimeScaleManager.SetGameplayTimeScale();
+            ranStart = true;
 
 #if UNITY_EDITOR == false
             try
@@ -91,24 +99,28 @@ namespace Gameplay.Managers
             EventBus<OutEvent>.OnEvent -= OnOutEvent;
         }
 
+        #region OnGoal
+        [Tooltip("Instead of running the normal 'goal scored' code, do this.")]
+        public UnityEvent ScriptedGoalEventInstead;
         void OnGoalEvent(GoalEvent payload)
         {
-            ChangeScore(payload.ScoringSideData.SideType);
             _goalsManager.SetCollidersEnabled(false);
-            StartCoroutine(OnGoalEventRoutine(payload));
-        }
 
-        void OnOutEvent(OutEvent payload)
-        {
-            StartCoroutine(OnOutEventRoutine(payload));
+            if (ScriptedGoalEventInstead != null && ScriptedGoalEventInstead.GetPersistentEventCount() > 0)
+            {
+                ScriptedGoalEventInstead.Invoke();
+            }
+            else
+            {
+                ChangeScore(payload.ScoringSideData.SideType);
+                StartCoroutine(OnGoalEventRoutine(payload));
+            }
         }
 
         IEnumerator OnGoalEventRoutine(GoalEvent payload)
         {
             TimeScaleManager.SlowMotion();
-            
             yield return StartCoroutine(_uiManager.ShowGoalNotification(payload));
-            
             TimeScaleManager.SetGameplayTimeScale();
             
             if (_leftScore >= _match.Settings.GoalsToEndMatch || _rightScore >= _match.Settings.GoalsToEndMatch)
@@ -116,10 +128,16 @@ namespace Gameplay.Managers
                 ShowEndgame(payload);
                 yield break;
             }
-            
             RespawnGameplayElements(payload.ScoredSideData.SideType);
         }
-    
+        #endregion
+
+        #region OnOut
+        void OnOutEvent(OutEvent payload)
+        {
+            StartCoroutine(OnOutEventRoutine(payload));
+        }
+
         IEnumerator OnOutEventRoutine(OutEvent payload)
         {
             TimeScaleManager.SlowMotion();
@@ -127,6 +145,7 @@ namespace Gameplay.Managers
             TimeScaleManager.SetGameplayTimeScale();
             RespawnGameplayElements(payload.FieldSideData.SideType);
         }
+        #endregion
 
         void RespawnGameplayElements(FieldSideType sideType)
         {
@@ -135,8 +154,11 @@ namespace Gameplay.Managers
             //_ballManager.ResetBall();
             _goalsManager.SetCollidersEnabled(true);
         }
+
+        public bool MatchDone { get; private set; }
         void ShowEndgame(GoalEvent payload)
         {
+            MatchDone = true;
             //TimeScaleManager.PauseGame();
 
             var data = GameAndPlayerData.Instance;

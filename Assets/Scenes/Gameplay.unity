@@ -5775,6 +5775,7 @@ MonoBehaviour:
   - {fileID: 1449349239}
   - {fileID: 1900634766}
   - {fileID: 1695908218}
+  oneOnOneForCampaign: 0
 --- !u!1 &1100506746
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,23 +1,27 @@
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CommonDataTypes
 {
+    [System.Serializable]
     public class MatchSettings
     {
-        public int MaxNumberOfEntities { get; private set; } = 4;
-        public int NumberOfPlayers { get; set; }
-        public int LeftSideShirtIndex { get; set; }
-        public int RightSideShirtIndex { get; set; }
-        public int LeftSideShoesIndex { get; set; }
-        public int RightSideShoesIndex { get; set; }
-        public int LeftCountryImageIndex { get; set; }
-        public int RightCountryImageIndex { get; set; }
-        public float LeftSkinToneValue { get; set; }
-        public float RightSkinToneValue { get; set; }
-        public int GoalsToEndMatch { get; set; } = 5;
-        public bool IsTournamentMatch {get; private set;}
-        
+        [field: SerializeField] public int MaxNumberOfEntities { get; private set; } = 4;
+        [field: SerializeField] public int NumberOfPlayers { get; set; }
+        [field: SerializeField] public int LeftSideShirtIndex { get; set; }
+        [field: SerializeField] public int RightSideShirtIndex { get; set; }
+        [field: SerializeField] public int LeftSideShoesIndex { get; set; }
+        [field: SerializeField] public int RightSideShoesIndex { get; set; }
+        [field: SerializeField] public int LeftCountryImageIndex { get; set; }
+        [field: SerializeField] public int RightCountryImageIndex { get; set; }
+        [field: SerializeField] public int GoalsToEndMatch { get; set; } = 5;
+        [field: SerializeField] public bool IsTournamentMatch {get; private set;}
+        [field: SerializeField] public bool IsCampaignMatch {get; private set;}
+        [field: SerializeField] public bool SplitControls { get; private set; }
+        [field: SerializeField] public float LeftSkinToneValue { get; private set; }
+        [field: SerializeField] public float RightSkinToneValue { get; private set; }
+
         public MatchSettings() { }
 
         public void Dispose()
@@ -31,6 +35,8 @@ namespace CommonDataTypes
             RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
             IsTournamentMatch = false;
+            IsCampaignMatch = false;
+            SplitControls = false;
         }
 
         public class Builder
@@ -47,6 +53,8 @@ namespace CommonDataTypes
             float _rightSkinToneValue;
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
+            bool _isCampaignMatch = false;
+            bool _splitControls = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
             {
@@ -111,6 +119,18 @@ namespace CommonDataTypes
                 _isTournamentMatch = isTournamentMatch;
                 return this;
             }
+            
+            public Builder WithIsCampaignMatch(bool isCampaignMatch)
+            {
+                _isCampaignMatch = isCampaignMatch;
+                return this;
+            }
+
+            public Builder WithSplitControls(bool splitControls)
+            {
+                _splitControls = splitControls;
+                return this;
+            }
 
             public MatchSettings Build()
             {
@@ -127,7 +147,9 @@ namespace CommonDataTypes
                     LeftSkinToneValue = _leftSkinToneValue,
                     RightSkinToneValue = _rightSkinToneValue,
                     GoalsToEndMatch = _goalsToEndMatch,
-                    IsTournamentMatch = _isTournamentMatch
+                    IsTournamentMatch = _isTournamentMatch,
+                    IsCampaignMatch = _isCampaignMatch,
+                    SplitControls = _splitControls
                 };
             }
         }

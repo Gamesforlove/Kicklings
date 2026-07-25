@@ -2,6 +2,9 @@
 {
     public enum SceneName
     {
-        MainMenu, Gameplay, TournamentIntroCutscene
+        MainMenu, Gameplay,
+        
+        //rishi test ones for campaign
+        Stage0Scene2TutorialMatch,
     }
 }

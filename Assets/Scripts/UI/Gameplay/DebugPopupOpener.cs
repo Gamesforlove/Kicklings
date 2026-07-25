@@ -7,7 +7,6 @@ namespace UI.Gameplay
     {
         UIViewsManager _uiViewsManager;
         [SerializeField] GameplayDebugPopup _popup;
-
         void Start()
         {
             //#if !UNITY_EDITOR

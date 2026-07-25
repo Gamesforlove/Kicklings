@@ -21,14 +21,15 @@ namespace UI.UiSystem.Core
         protected override void Awake()
         {
             base.Awake();
-            _matchManager = FindFirstObjectByType<MatchManager>();
+            _matchManager = MatchManager.Instance;
         }
         
         void Start()
         {
             CustomizeCharacters();
             _playAgainButton.onClick.AddListener(OnPlayAgainClicked);
-            _mainMenuButton.onClick.AddListener(_matchManager.EndGame);
+            if (_matchManager)
+                _mainMenuButton.onClick.AddListener(_matchManager.EndGame);
         }
 
         void OnPlayAgainClicked()
