@@ -91,7 +91,12 @@ namespace Scene_Management
         public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
         {
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
-            uiManager.ShowMatchWinnerView(goalEvent);
+            ReturnToCampaignMap();
+            //uiManager.ShowMatchWinnerView(goalEvent);
+        }
+        private void ReturnToCampaignMap()
+        {
+            SceneHandler.LoadScene(SceneName.CampaignMap);
         }
     }
 }
