@@ -4,12 +4,15 @@ using UI.Customization.Clothing;
 using UI.Customization.Countries;
 using UnityEngine;
 
-public class CampaignController : MonoBehaviour
+public class CampaignMapController : MonoBehaviour
 {
-    [SerializeField] CharacterCustomizationController _leftCharacterCustomizationController, _rightCharacterCustomizationController;
-    [SerializeField] CountryCustomizationController _leftCountryCustomizationController, _rightCountryCustomizationController;
-    [SerializeField] GameObject Player1;
-    [SerializeField] GameObject Player2;
+    [SerializeField] private CharacterCustomizationController _leftCharacterCustomizationController, _rightCharacterCustomizationController;
+    [SerializeField] private CountryCustomizationController _leftCountryCustomizationController, _rightCountryCustomizationController;
+    [SerializeField] private GameObject _player1;
+    [SerializeField] private GameObject _player2;
+    [SerializeField] private RectTransform _character;
+    [SerializeField] private StageScrollController _currentStage;
+    [SerializeField] private int _currentLevelIndex;
 
     public void StartMatch(int numberOfPlayers)
     {
@@ -41,9 +44,17 @@ public class CampaignController : MonoBehaviour
             .WithRightCountryImageIndex(_rightCountryCustomizationController.TeamDataIndex)
             //.WithRightSkinToneValue(Random.Range(0f, 1f))
             .WithIsCampaignMatch(true)
-            .WithSpecificPlayers(Player1, Player2, Opponent1, Opponent2)
+            .WithSpecificPlayers(_player1, _player2, Opponent1, Opponent2)
             .Build();
 
         MatchFlow.CreateCampaignMatch(matchSettings);
+    }
+    public void MoveCharacterToLevel(int levelIndex) 
+    {
+
+    }
+    public void ScrollToLevel(int levelIndex)
+    {
+
     }
 }

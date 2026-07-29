@@ -66,7 +66,7 @@ namespace Gameplay.CharacterComponents
 
         void ChangeValuesForRightSide()
         {
-            gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            gameObject.transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 1);
         }
         
         void SetCharacterClothes(bool isRightSide)
