@@ -481,9 +481,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -47, y: 326}
+  m_AnchoredPosition: {x: -309, y: 342}
   m_SizeDelta: {x: 150, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.41367644}
 --- !u!1 &440170256
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchBuilders:
+  - {fileID: 1324392073}
   - {fileID: 1324392073}
 --- !u!1 &1007675215
 GameObject:
@@ -1401,7 +1402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4339111864184791353, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.997818
+      value: -39.997803
       objectReference: {fileID: 0}
     - target: {fileID: 4643076347865597527, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1429,7 +1430,7 @@ PrefabInstance:
       objectReference: {fileID: 2124663409}
     - target: {fileID: 7877446427155987420, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7877446427155987420, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _scoreBoard
@@ -1439,6 +1440,10 @@ PrefabInstance:
       propertyPath: _challengeTimerView
       value: 
       objectReference: {fileID: 430213182}
+    - target: {fileID: 7877446427155987420, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _challengeScoreBoard
+      value: 
+      objectReference: {fileID: 1943090476}
     - target: {fileID: 8206125276192974698, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _preShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1469,7 +1474,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1617595364}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aef03cccd6b64f479343b882aad6e6a9, type: 3}
   m_Name: 
@@ -1855,6 +1860,7 @@ GameObject:
   - component: {fileID: 1943090473}
   - component: {fileID: 1943090475}
   - component: {fileID: 1943090474}
+  - component: {fileID: 1943090476}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -1878,8 +1884,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.3, y: 1}
-  m_AnchoredPosition: {x: 816.00006, y: 390.00003}
-  m_SizeDelta: {x: -469.6, y: -880}
+  m_AnchoredPosition: {x: 816.00006, y: 406.19}
+  m_SizeDelta: {x: 19.36, y: -912.38}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1943090474
 MonoBehaviour:
@@ -1981,6 +1987,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943090472}
   m_CullTransparentMesh: 1
+--- !u!114 &1943090476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943090472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07aa9b30403616a4a8285f62c9107936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 1943090474}
+  _format: '{0} / {1}'
 --- !u!1 &1950850749
 GameObject:
   m_ObjectHideFlags: 0

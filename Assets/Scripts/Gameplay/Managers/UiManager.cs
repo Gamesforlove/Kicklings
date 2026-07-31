@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CommonDataTypes;
 using EventBusSystem;
 using UI.Gameplay;
 using UI.UiSystem;
@@ -15,13 +16,14 @@ namespace Gameplay.Managers
         [SerializeField] GameplayNotifications _gameplayNotifications;
         [SerializeField] ScoreBoard _scoreBoard;
 
-       
-        [SerializeField] UIView _challengeResultView;     
+        [Header("Scoring Challenge")]
+        //[SerializeField] ChallengeResultView _challengeResultView;
         [SerializeField] ChallengeTimerView _challengeTimerView;
+        [SerializeField] ChallengeScoreBoard _challengeScoreBoard;
 
         void Start()
         {
-            _scoreBoard.ResetScore();
+            _scoreBoard?.ResetScore();
         }
 
         public void ChangeScore(int leftScore, int rightScore)
@@ -49,11 +51,17 @@ namespace Gameplay.Managers
         }
 
         #region Scoring Challenge
-        // Dedicated challenge-mode score display — distinct from ChangeScore(left, right),
-        // which is built for two-sided matches and would mislabel score/target.
+        // Routes through ChallengeScoreBoard, not ScoreBoard — ScoreBoard is built around
+        // two competing teams (left/right text, country flags, MatchFlow.Match.Settings)
+        // and doesn't map onto "single score vs. a target."
         public void ChangeChallengeScore(int score, int target)
         {
-            _scoreBoard.ChangeScore(score, target);
+            _challengeScoreBoard.ChangeScore(score, target);
+        }
+
+        public void ResetChallengeScore(int target)
+        {
+            _challengeScoreBoard.ResetScore(target);
         }
 
         public void InitializeChallengeTimer(float maxTime)
@@ -67,24 +75,10 @@ namespace Gameplay.Managers
             _challengeTimerView?.SetTime(timeRemaining);
         }
 
-        public void ShowChallengeResult(bool won, int score, int target)
-        {
-            _uiViewsManager.ShowView(_challengeResultView, new ChallengeResultData(won, score, target));
-        }
+        // public void ShowChallengeResult(bool won, int score, int target)
+        // {
+        //     _uiViewsManager.ShowView(_challengeResultView, new ChallengeResultData(won, score, target));
+        // }
         #endregion
-    }
-    
-    public readonly struct ChallengeResultData
-    {
-        public readonly bool Won;
-        public readonly int Score;
-        public readonly int Target;
-
-        public ChallengeResultData(bool won, int score, int target)
-        {
-            Won = won;
-            Score = score;
-            Target = target;
-        }
     }
 }

@@ -47,6 +47,7 @@ namespace Gameplay.Managers
 
         public void StartChallenge()
         {
+            Debug.Log("StartChallenge called");
             _score = 0;
             _timeRemaining = _challengeDuration;
             _challengeActive = true;
@@ -128,7 +129,7 @@ namespace Gameplay.Managers
             _goalsManager?.SetCollidersEnabled(false);
 
             TimeScaleManager.PauseGame();
-            _uiManager?.ShowChallengeResult(won, _score, _scoreTarget);
+            //_uiManager?.ShowChallengeResult(won, _score, _scoreTarget);
         }
 
         public void ExitToMenu()
