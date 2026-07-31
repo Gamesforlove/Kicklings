@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 6131862422525405321}
   - component: {fileID: 6349923945673932463}
   - component: {fileID: 9163972612684034757}
-  - component: {fileID: 8465931851953934700}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -332,7 +331,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8465931851953934700}
+      - m_Target: {fileID: 3261212315372333450}
         m_TargetAssemblyTypeName: CampaignLevel, Assembly-CSharp
         m_MethodName: StartMatch
         m_Mode: 1
@@ -344,21 +343,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8465931851953934700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6164080223777184820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b4593f0eda48a4987da73067e14edc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _opponent1: {fileID: 2905904335335114112, guid: c833403b21679a94b9194a3e50150934, type: 3}
-  _opponent2: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
-  _campaignController: {fileID: 0}
 --- !u!1 &6352115283926046166
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +354,7 @@ GameObject:
   - component: {fileID: 3697880239177365038}
   - component: {fileID: 6891915288737381687}
   - component: {fileID: 1205637323278903294}
+  - component: {fileID: 3261212315372333450}
   m_Layer: 5
   m_Name: LevelContainer
   m_TagString: Untagged
@@ -435,6 +420,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3261212315372333450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6352115283926046166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b4593f0eda48a4987da73067e14edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _opponent1: {fileID: 2905904335335114112, guid: c833403b21679a94b9194a3e50150934, type: 3}
+  _opponent2: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
+  _campaignController: {fileID: 0}
+  RectTransform: {fileID: 3697880239177365038}
+  CharacterPoint: {fileID: 5632229618529706500}
 --- !u!1 &6873597800498096033
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,13 +558,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CampaignLevel, Assembly-CSharp
-        m_MethodName: StartMatch
-        m_Mode: 1
+        m_TargetAssemblyTypeName: StageScrollController, Assembly-CSharp
+        m_MethodName: MoveCharacterAndScrollToLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
