@@ -133,7 +133,7 @@ namespace CommonDataTypes
                 _isCampaignMatch = isCampaignMatch;
                 return this;
             }
-                        public Builder WithSpecificPlayers(GameObject player1, GameObject player2, GameObject opponent1, GameObject opponent2)
+            public Builder WithSpecificPlayers(GameObject player1, GameObject player2, GameObject opponent1, GameObject opponent2)
             {
                 _specificPlayers[0] = player1;
                 _specificPlayers[1] = player2;

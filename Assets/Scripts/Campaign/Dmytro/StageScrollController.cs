@@ -1,16 +1,16 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(ScrollView))]
+[RequireComponent(typeof(ScrollRect))]
 public class StageScrollController : MonoBehaviour
 {
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private MapCharacterController _character;
     [SerializeField] private CampaignLevel[] _levels;
     [SerializeField] private float _xOffset = 960f;
+    [SerializeField] private float _defaultScrollTime = 1f;
     private float _xMaxOffset;
     private float _xMinOffset;
     private int _characterLevel;
@@ -35,33 +35,44 @@ public class StageScrollController : MonoBehaviour
     }
     public void ScrollToLevel(int levelIndex, float duration = 0.5f)
     {
+        if (_characterLevel == levelIndex) return;
         if (_busyScrolling) return;
-        StartCoroutine(ScrollToLevelRoutine(_levels[levelIndex].RectTransform, duration));
+
+        ForceUpdateCanvas();
+        StartCoroutine(ScrollToLevelRoutine(levelIndex, duration));
     }
     public void MoveCharacterToLevel(int levelIndex)
     {
+        if (_characterLevel == levelIndex) return;
         if (_busyMovingCharacter) return;
+
+        ForceUpdateCanvas();
         StartCoroutine(MoveCharacterToLevelRoutine(levelIndex));
     }
     public void MoveCharacterAndScrollToLevel(int levelIndex)
     {
+        if (_characterLevel == levelIndex) return;
+
+        ForceUpdateCanvas();
         if (!_busyMovingCharacter)
             StartCoroutine(MoveCharacterToLevelRoutine(levelIndex));
         if (!_busyScrolling)
-            StartCoroutine(ScrollToLevelRoutine(_levels[levelIndex].RectTransform, 1f));
+            StartCoroutine(ScrollToLevelRoutine(levelIndex, _defaultScrollTime));
     }
     public void ScrollToLevel_BUTTON(int levelIndex)
     {
         if (_busyScrolling) return;
-        StartCoroutine(ScrollToLevelRoutine(_levels[levelIndex].RectTransform, 1f));
+
+        ForceUpdateCanvas();
+        StartCoroutine(ScrollToLevelRoutine(levelIndex, _defaultScrollTime));
     }
-    public IEnumerator ScrollToLevelRoutine(RectTransform target, float duration)
+    public IEnumerator ScrollToLevelRoutine(int levelIndex, float duration)
     {
+        RectTransform target = _levels[levelIndex].RectTransform;
         if (_scrollRect == null || _scrollRect.content == null || target == null)
             yield break;
 
         _busyScrolling = true;
-        Canvas.ForceUpdateCanvases();// for actual positions
 
         Vector2 targetLocalPos = _scrollRect.content.InverseTransformPoint(target.position);
 
@@ -87,9 +98,16 @@ public class StageScrollController : MonoBehaviour
         _scrollRect.content.anchoredPosition = targetContentPos;
         _busyScrolling = false;
     }
+
+    private static void ForceUpdateCanvas()
+    {
+        Canvas.ForceUpdateCanvases();// for actual positions
+    }
+
     public IEnumerator MoveCharacterToLevelRoutine(int levelIndex, float duration = .3f)
     {
         _busyMovingCharacter = true;
+        _levels[_characterLevel].DisableLevel();
         //_character.StepDuration = duration;
         int step = _characterLevel < levelIndex ? 1 : -1;
         int i = _characterLevel;
@@ -100,5 +118,7 @@ public class StageScrollController : MonoBehaviour
         }
         _characterLevel = levelIndex;
         _busyMovingCharacter = false;
+        _levels[levelIndex].EnableLevel();
+        _levels[levelIndex].EnableStartButton();
     }
 }

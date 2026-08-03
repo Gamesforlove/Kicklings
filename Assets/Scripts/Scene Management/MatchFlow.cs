@@ -25,7 +25,7 @@ namespace Scene_Management
         {
             DisposeMatch();
             Match = new CampaignMatch(matchSettings);
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignGameplay));
         }
 
         public static Match GetCampaignMatch(MatchSettings matchSettings)

@@ -14,6 +14,26 @@ public class CampaignMapController : MonoBehaviour
     [SerializeField] private StageScrollController _currentStage;
     [SerializeField] private int _currentLevelIndex;
 
+    private void Start()
+    {
+
+        //enable all unlocked levels
+
+        //move to last saved stage
+        //move to last saved level
+        //_currentLevelIndex = savedLevelIndex;
+
+        if (MatchFlow.Match == null || !MatchFlow.Match.Settings.IsCampaignMatch) return;
+
+        MoveCharacterToNextLevel();
+        //Invoke(nameof(MoveCharacterToNextLevel), .2f);
+    }
+
+    private void MoveCharacterToNextLevel()
+    {
+        _currentStage.MoveCharacterAndScrollToLevel(_currentLevelIndex + 1);
+    }
+
     public void StartMatch(int numberOfPlayers)
     {
         MatchSettings matchSettings = new MatchSettings.Builder()
