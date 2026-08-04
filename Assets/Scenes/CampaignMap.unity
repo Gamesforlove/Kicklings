@@ -4858,6 +4858,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
+      propertyPath: _opponent1
+      value: 
+      objectReference: {fileID: 182907735906488021, guid: 895f2dcd1f8d54441ad8d23f80b7c0a4, type: 3}
+    - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
       propertyPath: _campaignController
       value: 
       objectReference: {fileID: 885009024}
