@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -9,48 +10,62 @@ namespace SaveSystem
     {
         public void Save(string key, object data, Action<bool> callback = null)
         {
+            JsonSerializerSettings settings = MakeSerializerSettings();
+            string json = JsonConvert.SerializeObject(data, settings);
+            string timestamp = DateTime.UtcNow.ToString("o");
+
+            bool fileSaved = SaveToFile(key, json);
+            bool prefsSaved = SaveToPlayerPrefs(key, json, timestamp);
+
+            callback?.Invoke(fileSaved || prefsSaved);
+        }
+
+        #region save helpers
+        private bool SaveToFile(string key, string json)
+        {
             try
             {
                 string path = BuildPath(key);
-                JsonSerializerSettings settings = MakeSerializerSettings();
-                string json = JsonConvert.SerializeObject(data, settings);
-
                 using (var fileStream = new StreamWriter(path))
                 {
                     fileStream.Write(json);
                 }
 
-                callback?.Invoke(true);
 #if UNITY_EDITOR
                 Debug.Log($"Game saved successfuly to {path}");
 #endif
+                return true;
             }
             catch (Exception e)
             {
                 LogException(e);
-                callback?.Invoke(false);
+                return false;
             }
         }
+
+        private bool SaveToPlayerPrefs(string key, string json, string timestamp)
+        {
+            try
+            {
+                PlayerPrefs.SetString(key, json);
+                PlayerPrefs.SetString(BuildTimestampKey(key), timestamp);
+                PlayerPrefs.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogException(e);
+                return false;
+            }
+        }
+        #endregion
 
 
         public void Load<T>(string key, Action<T> callback)
         {
             try
             {
-                string path = BuildPath(key);
-
-                if (!File.Exists(path))
-                {
-#if UNITY_EDITOR
-                    Debug.LogWarning($"File not found: {path}");
-#endif
-                    callback?.Invoke(default);
-                    return;
-                }
-
-                JsonSerializerSettings settings = MakeSerializerSettings();
-
-                callback?.Invoke(ReadFile<T>(path, settings));
+                callback?.Invoke(Load<T>(key));
             }
             catch (Exception e)
             {
@@ -61,21 +76,91 @@ namespace SaveSystem
 
         public T Load<T>(string key)
         {
+            JsonSerializerSettings settings = MakeSerializerSettings();
+
+            DateTime? fileTimestamp = TryGetFileTimestamp(key);
+            DateTime? prefsTimestamp = TryGetPlayerPrefsTimestamp(key);
+
+            if (!fileTimestamp.HasValue && !prefsTimestamp.HasValue)
+            {
+#if UNITY_EDITOR
+                Debug.LogWarning($"No save data found for key: {key}");
+#endif
+                return default;
+            }
+
+            bool usePrefs = prefsTimestamp.HasValue && (!fileTimestamp.HasValue || prefsTimestamp.Value > fileTimestamp.Value);
+
+            if (usePrefs)
+            {
+                T prefsResult = TryLoadFromPlayerPrefs<T>(key, settings);
+                if (!EqualityComparer<T>.Default.Equals(prefsResult, default))
+                    return prefsResult;
+
+                // Fall back to file IO saving if PlayerPrefs deserialization failed.
+                return fileTimestamp.HasValue ? TryLoadFromFile<T>(key, settings) : default;
+            }
+
+            T fileResult = TryLoadFromFile<T>(key, settings);
+            if (!EqualityComparer<T>.Default.Equals(fileResult, default))
+                return fileResult;
+
+            // Fall back to PlayerPrefs if file IO deserialization failed.
+            return prefsTimestamp.HasValue ? TryLoadFromPlayerPrefs<T>(key, settings) : default;
+        }
+
+        #region helpers
+        private DateTime? TryGetFileTimestamp(string key)
+        {
             try
             {
                 string path = BuildPath(key);
+                return File.Exists(path) ? File.GetLastWriteTimeUtc(path) : (DateTime?)null;
+            }
+            catch (Exception e)
+            {
+                LogException(e);
+                return null;
+            }
+        }
 
-                if (!File.Exists(path))
-                {
-#if UNITY_EDITOR
-                    Debug.LogWarning($"File not found: {path}");
-#endif
-                    return default;
-                }
+        private DateTime? TryGetPlayerPrefsTimestamp(string key)
+        {
+            try
+            {
+                string timestampKey = BuildTimestampKey(key);
+                if (!PlayerPrefs.HasKey(key) || !PlayerPrefs.HasKey(timestampKey))
+                    return null;
 
-                JsonSerializerSettings settings = MakeSerializerSettings();
+                return ParseTimestamp(PlayerPrefs.GetString(timestampKey));
+            }
+            catch (Exception e)
+            {
+                LogException(e);
+                return null;
+            }
+        }
 
-                return ReadFile<T>(path, settings);
+        private T TryLoadFromFile<T>(string key, JsonSerializerSettings settings)
+        {
+            try
+            {
+                string path = BuildPath(key);
+                return File.Exists(path) ? ReadFile<T>(path, settings) : default;
+            }
+            catch (Exception e)
+            {
+                LogException(e);
+                return default;
+            }
+        }
+
+        private T TryLoadFromPlayerPrefs<T>(string key, JsonSerializerSettings settings)
+        {
+            try
+            {
+                string json = PlayerPrefs.GetString(key);
+                return JsonConvert.DeserializeObject<T>(json, settings);
             }
             catch (Exception e)
             {
@@ -111,6 +196,18 @@ namespace SaveSystem
         {
             return Path.Combine(Application.persistentDataPath, key);
         }
+        private string BuildTimestampKey(string key)
+        {
+            return key + "_timestamp";
+        }
+        private DateTime? ParseTimestamp(string timestamp)
+        {
+            if (DateTime.TryParse(timestamp, null, System.Globalization.DateTimeStyles.RoundtripKind, out DateTime result))
+            {
+                return result;
+            }
+            return null;
+        }
         private void LogException(Exception e)
         {
             #if UNITY_EDITOR
@@ -119,5 +216,6 @@ namespace SaveSystem
                 Debug.LogWarning($"Save error: {e.Message}");
             #endif
         }
+        #endregion
     }
 }
