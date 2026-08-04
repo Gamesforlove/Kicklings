@@ -25,6 +25,7 @@ namespace Gameplay.Managers
         
         Match _match;
         float _matchStartTime;
+        MatchEndedEvent _pendingMatchEndedEvent;
 
         int _leftScore, _rightScore;
         public void ResetGame()
@@ -39,8 +40,18 @@ namespace Gameplay.Managers
             TimeScaleManager.SetGameplayTimeScale();
         }
 
-        public void EndGame()
+        public void EndGame(bool retried = false)
         {
+#if UNITY_EDITOR == false
+            if (_pendingMatchEndedEvent != null)
+            {
+                _pendingMatchEndedEvent.Retried = retried;
+                AnalyticsService.Instance.RecordEvent(_pendingMatchEndedEvent); // sends to unity dashboard, ask Rishi
+                Debug.Log("sent match ended event to analytics");
+                _pendingMatchEndedEvent = null;
+            }
+#endif
+
             DOTween.KillAll();
 
             TimeScaleManager.SetDefaultTimeScale();
@@ -174,8 +185,17 @@ namespace Gameplay.Managers
                     MatchDuration = Mathf.RoundToInt(Time.time - _matchStartTime),
                     PlayerSkillRating = Mathf.RoundToInt(100f * (data != null ? data.T : 0.35f))
                 };
-                AnalyticsService.Instance.RecordEvent(analyticsEvent); // sends to unity dashboard, ask Rishi
-                Debug.Log("sent match ended event to analytics");
+
+                if (_match.IsPlayerWinner)
+                {
+                    AnalyticsService.Instance.RecordEvent(analyticsEvent);
+                    //Debug.Log("sent match ended event to analytics");
+                }
+                else
+                {
+                    // On loss, event only gets sent once we choose retry or quit.
+                    _pendingMatchEndedEvent = analyticsEvent;
+                }
             }
 #endif
 
