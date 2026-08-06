@@ -128,7 +128,10 @@ MonoBehaviour:
   PlayerTeamData:
     Id: 0
     Name: 
+    FullName: 
     Icon: {fileID: 0}
+    ShirtSprite: {fileID: 0}
+    CountryColor: {r: 0, g: 0, b: 0, a: 0}
   _countryImage: {fileID: 0}
   _countriesImages: {fileID: 0}
 --- !u!1 &428364333984614632
@@ -1222,6 +1225,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1534,11 +1538,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf8746d9c4458246a5836e416f83f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <SkinTone>k__BackingField:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  <SkinToneValue>k__BackingField: 0
   _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
   _fieldSideType: 0
   _shirtImage: {fileID: 950772459540085608}
+  _shirtPatternImage: {fileID: 0}
   _shoesLeftImage: {fileID: 6022426611511021127}
   _shoesRightImage: {fileID: 4640478004800134430}
+  _leftSleeveImage: {fileID: 0}
+  _rightSleeveImage: {fileID: 0}
+  _leftShortSockImage: {fileID: 0}
+  _rightShortSockImage: {fileID: 0}
+  _leftArmFleshImage: {fileID: 0}
+  _rightArmFleshImage: {fileID: 0}
+  _leftLegFleshImage: {fileID: 0}
+  _rightLegFleshImage: {fileID: 0}
+  _faceImage: {fileID: 0}
 --- !u!1 &4783992239030402351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,11 +1786,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf8746d9c4458246a5836e416f83f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <SkinTone>k__BackingField:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  <SkinToneValue>k__BackingField: 0
   _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
   _fieldSideType: 0
   _shirtImage: {fileID: 7842549228173110577}
+  _shirtPatternImage: {fileID: 0}
   _shoesLeftImage: {fileID: 4165651862585074221}
   _shoesRightImage: {fileID: 4251112920967252286}
+  _leftSleeveImage: {fileID: 0}
+  _rightSleeveImage: {fileID: 0}
+  _leftShortSockImage: {fileID: 0}
+  _rightShortSockImage: {fileID: 0}
+  _leftArmFleshImage: {fileID: 0}
+  _rightArmFleshImage: {fileID: 0}
+  _leftLegFleshImage: {fileID: 0}
+  _rightLegFleshImage: {fileID: 0}
+  _faceImage: {fileID: 0}
 --- !u!1 &5014225596507205477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,7 +1998,10 @@ MonoBehaviour:
   PlayerTeamData:
     Id: 0
     Name: 
+    FullName: 
     Icon: {fileID: 0}
+    ShirtSprite: {fileID: 0}
+    CountryColor: {r: 0, g: 0, b: 0, a: 0}
   _countryImage: {fileID: 4133117717928092752}
   _countriesImages: {fileID: 11400000, guid: 8c2ec60c7d0dd284a9fc470081db8ae6, type: 2}
 --- !u!1 &5499150178653042164
@@ -2032,6 +2121,9 @@ MonoBehaviour:
   _raysTransform: {fileID: 3779981619446091190}
   _character1Transform: {fileID: 5979474498698891175}
   _character2Transform: {fileID: 6498433134800806134}
+  _customization1: {fileID: 911957722045654691}
+  _customization2: {fileID: 1205806498642656516}
+  _teamsData: {fileID: 11400000, guid: 620a9c938d6c3f446b2f4c127158b372, type: 2}
 --- !u!1 &5710164520950504887
 GameObject:
   m_ObjectHideFlags: 0
@@ -9990,6 +10082,10 @@ PrefabInstance:
     - target: {fileID: 2597055343967420640, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_SizeDelta.y
       value: 119
+      objectReference: {fileID: 0}
+    - target: {fileID: 2597055343967420640, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 31.599976
       objectReference: {fileID: 0}
     - target: {fileID: 2597055343967420640, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_AnchoredPosition.y

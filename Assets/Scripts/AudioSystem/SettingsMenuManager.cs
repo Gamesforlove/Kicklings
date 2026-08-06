@@ -11,6 +11,13 @@ public class SettingsMenuManager : MonoBehaviour
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
 
+    private void Awake()
+    {
+        if (!_soundMixerManager)
+        {
+            _soundMixerManager = PersistentObjects.Instance.SoundMixerManager;
+        }
+    }
     private void OnEnable()
     {
         // Aplico los valores guardados al AudioMixer cada vez que se abre el panel

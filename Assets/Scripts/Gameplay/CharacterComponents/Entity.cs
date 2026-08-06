@@ -1,18 +1,23 @@
 ﻿using Gameplay.CharacterComponents.Player;
 using Scene_Management;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using static Gameplay.Spawners.PlayersSpawner;
 
 namespace Gameplay.CharacterComponents
 {
     public interface IEntity
     {
-        public void SetUp(EntityData entityData, bool campaign);
+        public void SetUp(EntityData entityData, PlayerType type, bool campaign);
         public void Reset();
     }
 
     public abstract class Entity : MonoBehaviour, IEntity
     {
+        public PlayerType PlayerType { get; private set; }
+        [SerializeField] protected Color _leftSideColor;
+        [SerializeField] protected Color _rightSideColor;
+        [SerializeField] protected Color _leftPatternColor;
+        [SerializeField] protected Color _rightPatternColor;
         protected EntityData EntityData;
         
         protected JointsController JointsController;
@@ -23,8 +28,10 @@ namespace Gameplay.CharacterComponents
         protected Rigidbody2D Rigidbody;
         protected bool campaign;
 
-        public virtual void SetUp(EntityData entityData, bool campaign)
+        //public virtual void SetUp(EntityData entityData, bool campaign)
+        public virtual void SetUp(EntityData entityData, PlayerType type, bool campaign)
         {
+            PlayerType = type;
             EntityData = entityData;
             this.campaign = campaign;
             CacheComponents();
@@ -71,18 +78,43 @@ namespace Gameplay.CharacterComponents
 
             if (isRightSide)
             {
+                if (!MatchFlow.Match.Settings.IsTournamentMatch)
+                    SetClothesFreeMode(isRightSide);
+                else
+                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.RightCountryImageIndex, MatchFlow.Match.Settings.RightSkinToneValue);
+            }
+            else
+            {
+                if (!MatchFlow.Match.Settings.IsTournamentMatch)
+                    SetClothesFreeMode(isRightSide);
+                else
+                    ClothesSetter.SetClothes(MatchFlow.Match.Settings.LeftCountryImageIndex, MatchFlow.Match.Settings.LeftSkinToneValue);
+            }
+        }
+
+        private void SetClothesFreeMode(bool isRightSide)
+        {
+            if (isRightSide)
+            {
                 ClothesSetter.SetClothes(
-                    MatchFlow.Match.Settings.RightSideShirtIndex,
-                    MatchFlow.Match.Settings.RightSideShoesIndex
+                MatchFlow.Match.Settings.RightSideShirtIndex,
+                MatchFlow.Match.Settings.RightSideShoesIndex,
+                MatchFlow.Match.Settings.RightSkinToneValue,
+                _rightSideColor,
+                _rightPatternColor
                 );
             }
             else
             {
                 ClothesSetter.SetClothes(
-                    MatchFlow.Match.Settings.LeftSideShirtIndex,
-                    MatchFlow.Match.Settings.LeftSideShoesIndex
+                MatchFlow.Match.Settings.LeftSideShirtIndex,
+                MatchFlow.Match.Settings.LeftSideShoesIndex,
+                MatchFlow.Match.Settings.LeftSkinToneValue,
+                _leftSideColor,
+                _leftPatternColor
                 );
             }
+
         }
     }
 }

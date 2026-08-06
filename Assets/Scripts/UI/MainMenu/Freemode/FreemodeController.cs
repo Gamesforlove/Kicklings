@@ -19,9 +19,11 @@ namespace UI.MainMenu.Freemode
                 .WithLeftShirtIndex(_leftCharacterCustomizationController.ShirtIndex)
                 .WithLeftShoesIndex(_leftCharacterCustomizationController.ShoesIndex)
                 .WithLeftCountryImageIndex(_leftCountryCustomizationController.TeamDataIndex)
+                .WithLeftSkinToneValue(_leftCharacterCustomizationController.SkinToneValue)
                 .WithRightShirtIndex(_rightCharacterCustomizationController.ShirtIndex)
                 .WithRightShoesIndex(_rightCharacterCustomizationController.ShoesIndex)
                 .WithRightCountryImageIndex(_rightCountryCustomizationController.TeamDataIndex)
+                .WithRightSkinToneValue(_rightCharacterCustomizationController.SkinToneValue)
                 .Build();
             
             MatchFlow.CreateMatch(matchSettings);

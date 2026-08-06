@@ -12,7 +12,10 @@ namespace CommonDataTypes
         {
             public int Id;
             public string Name;
+            public string FullName;
             public Sprite Icon;
+            public Sprite ShirtSprite;
+            public Color CountryColor;
         }
         
         public List<TeamData> Teams;
@@ -23,9 +26,14 @@ namespace CommonDataTypes
 
         void OnValidate()
         {
+            if (Teams == null) return;
+
             for (int i = 0; i < Teams.Count; i++)
             {
-                Teams[i].Name = Teams[i].Icon.name;
+                if (Teams[i] == null)
+                    continue;
+                if (Teams[i].Icon != null)
+                    Teams[i].Name = Teams[i].Icon.name;
                 Teams[i].Id = i;
             }
         }
