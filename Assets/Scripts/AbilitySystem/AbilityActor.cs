@@ -40,10 +40,13 @@ public class AbilityActor : MonoBehaviour
             abilities[config.AbilityName] = config.CreateAbility(this);
         }*/
         //ball = FindFirstObjectByType<BallManager>().Ball;
-        ball = BallManager.Instance.Ball;
-        context = new AbilityExecutionContext(this);
-        context.Ball = ball;
-        context.Players = players;
+        if (BallManager.Instance != null &&  BallManager.Instance.Ball != null)
+        {
+            ball = BallManager.Instance.Ball;
+            context = new AbilityExecutionContext(this);
+            context.Ball = ball;
+            context.Players = players;
+        }
     }
     private void OnEnable()
     {
