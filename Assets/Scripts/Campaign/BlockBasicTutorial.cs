@@ -24,14 +24,13 @@ public class BlockBasicTutorial : MonoBehaviour
     {
         playerActions = PlayersManager.Instance?.GetPlayerActions();
         ToggleKickAllowed(false);
-        ToggleForceKickToHold(true);
+        //ToggleForceKickToHold(true);
         GoalsManager.Instance.SetCollidersEnabled(false);
         TimeScaleManager.SlowMotion();
+        PlayersManager.Instance?.ResetMainPlayer();
 
-        yield return new WaitForSecondsRealtime(3f);
-
-        TimeScaleManager.SetGameplayTimeScale();
-        PlayersManager.Instance?.ResetPlayers();
+        yield return null;
+        //PlayersManager.Instance?.ResetPlayers();
 
         BallScript ball = BallManager.Instance.Ball;
         if (ball == null)
@@ -40,6 +39,12 @@ public class BlockBasicTutorial : MonoBehaviour
         ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         if (ballMoveScript == null)
             yield break;
+
+        ToggleKickAllowed(true);
+        GrandpaStage0.Instance?.DoScriptedKick();
+        yield return null;
+        ToggleKickAllowed(false);
+        TimeScaleManager.SetGameplayTimeScale();
 
         const float moveDuration = 3f;
         Vector2 startPoint = ball.transform.position;

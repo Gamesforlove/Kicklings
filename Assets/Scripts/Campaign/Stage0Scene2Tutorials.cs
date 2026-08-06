@@ -6,6 +6,13 @@ using Gameplay.Spawners;
 
 public class Stage0Scene2Tutorials : MonoBehaviour
 {
+    public static Stage0Scene2Tutorials Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         tutorial = TutorialState.KickTutorial;

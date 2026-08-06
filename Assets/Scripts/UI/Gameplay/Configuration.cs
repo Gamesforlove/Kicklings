@@ -3,6 +3,7 @@ using System.Reflection;
 using CommonDataTypes;
 using Gameplay.CharacterComponents;
 using Gameplay.CharacterComponents.Cpu;
+using Gameplay.Spawners;
 using UnityEngine;
 
 namespace UI.Gameplay
@@ -55,27 +56,36 @@ namespace UI.Gameplay
 
         private void SetUpDifficultySettings(CpuDifficultyPreset.DifficultySettings data)
         {
-            var fields = typeof(CpuDifficultyPreset.DifficultySettings).GetFields(BindingFlags.Public | BindingFlags.Instance);
-        
-            foreach (var field in fields)
+            var levels = Enum.GetNames(typeof(DifficultyLevel));
+            int currentIndex = (int)PlayersSpawner.Instance.CurrentDifficulty;
+
+            var option = Instantiate(_optionPrefab, _content);
+            option.SetUpDropdown("Difficulty Level", levels, currentIndex, index =>
             {
-                if (field.FieldType == typeof(CpuDifficultyPreset.FloatRange))
-                {
-                    var floatRange = (CpuDifficultyPreset.FloatRange)field.GetValue(data);
-                    
-                    // Create option for Min value
-                    var minOption = Instantiate(_optionPrefab, _content);
-                    minOption.SetUpContent($"{field.Name} Min", floatRange.Min, 
-                        new FieldWrapper(field, data, true));
-                    
-                    // Create option for Max value
-                    var maxOption = Instantiate(_optionPrefab, _content);
-                    maxOption.SetUpContent($"{field.Name} Max", floatRange.Max, 
-                        new FieldWrapper(field, data, false));
-                }
-            }
+                var selectedLevel = (DifficultyLevel)index;
+                PlayersSpawner.Instance.SetDifficulty(selectedLevel);
+            });
+
+            //var fields = typeof(CpuDifficultyPreset.DifficultySettings).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            //foreach (var field in fields)
+            //{
+            //    if (field.FieldType == typeof(CpuDifficultyPreset.FloatRange))
+            //    {
+            //        var floatRange = (CpuDifficultyPreset.FloatRange)field.GetValue(data);
+
+            //        // Create option for Min value
+            //        var minOption = Instantiate(_optionPrefab, _content);
+            //        minOption.SetUpContent($"{field.Name} Min", floatRange.Min,
+            //            new FieldWrapper(field, data, true));
+
+            //        // Create option for Max value
+            //        var maxOption = Instantiate(_optionPrefab, _content);
+            //        maxOption.SetUpContent($"{field.Name} Max", floatRange.Max,
+            //            new FieldWrapper(field, data, false));
+            //    }
+            //}
         }
-        
+
         private void SetUpMatchSettings(MatchSettings data)
         {
             var properties = typeof(MatchSettings).GetProperties(BindingFlags.Public | BindingFlags.Instance);

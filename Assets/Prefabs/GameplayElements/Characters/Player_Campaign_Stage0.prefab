@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 157510471759262837}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.155, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -232,7 +232,7 @@ Transform:
   m_GameObject: {fileID: 199014222959748612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _kickingLeg: {fileID: 4802601816614678037}
+  _kickingLegColliders: []
   _groundChecks:
   - {fileID: 5588305525187344252}
   - {fileID: 8374246201076789711}
@@ -563,10 +564,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c887670edafc8394bba8113512507a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skinToneGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
   _customizationImages: {fileID: 11400000, guid: 7da582797dfcc2c46854a3dfd4a5c92a, type: 2}
+  _teamsData: {fileID: 0}
   _shirtSpriteRenderer: {fileID: 0}
+  _shirtPatternSpriteRenderer: {fileID: 0}
   _shoesLeftSpriteRenderer: {fileID: 0}
   _shoesRightSpriteRenderer: {fileID: 0}
+  _leftSleeveSpriteRenderer: {fileID: 0}
+  _rightSleeveSpriteRenderer: {fileID: 0}
+  _leftShortSockSpriteRenderer: {fileID: 0}
+  _rightShortSockSpriteRenderer: {fileID: 0}
+  _leftArmFleshSpriteRenderer: {fileID: 0}
+  _rightArmFleshSpriteRenderer: {fileID: 0}
+  _leftLegFleshSpriteRenderer: {fileID: 0}
+  _rightLegFleshSpriteRenderer: {fileID: 0}
+  _faceSpriteRenderer: {fileID: 0}
 --- !u!114 &2210308138610060097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +670,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0690b0a4d16a2dd4e94c352d6df0013b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftSideColor: {r: 0, g: 0, b: 0, a: 0}
+  _rightSideColor: {r: 0, g: 0, b: 0, a: 0}
+  _leftPatternColor: {r: 0, g: 0, b: 0, a: 0}
+  _rightPatternColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &5158565507570098389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,6 +755,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3eecd853-7f8b-450a-a593-d390f5750c25
+    m_ActionName: 'Gameplay/Ability[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -1175,7 +1225,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3822dd9180ff9724fbdc40bd9faffc07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -1580,7 +1630,7 @@ Transform:
   m_GameObject: {fileID: 5573031328069378998}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.57, y: -1.67, z: 0}
+  m_LocalPosition: {x: 0.52, y: -1.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1630,7 +1680,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.04, y: 0.31}
+  m_Size: {x: 1.5, y: 0.45}
   m_EdgeRadius: 0
 --- !u!114 &8374246201076789711
 MonoBehaviour:
@@ -2075,7 +2125,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9988334c08decd14789893a811f3a988, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1

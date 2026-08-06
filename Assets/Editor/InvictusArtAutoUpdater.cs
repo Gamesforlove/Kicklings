@@ -97,7 +97,9 @@ public static class InvictusArtAutoUpdater
         {
             RevBefore[target.Name] = GetLockedRevisionSafe(target.Name);
             FilesBefore[target.Name] = SnapshotPackageFiles(target.Name);
+#if UNITY_EDITOR
             Debug.Log($"Invictus Art: Checking {target.Name}... (before rev: {Short(RevBefore[target.Name])})");
+#endif
         }
 
         _currentTargetIndex = -1;
@@ -110,7 +112,9 @@ public static class InvictusArtAutoUpdater
 
         if (_currentTargetIndex >= Targets.Length)
         {
+#if UNITY_EDITOR
             Debug.Log("Invictus Art: All package updates complete.");
+#endif
             return;
         }
 
@@ -152,7 +156,9 @@ public static class InvictusArtAutoUpdater
         string revAfter = GetLockedRevisionSafe(target.Name);
         var filesAfter = SnapshotPackageFiles(target.Name);
 
+#if UNITY_EDITOR
         Debug.Log($"{target.Name}: resolved rev {Short(revBefore)} → {Short(revAfter)}");
+#endif
 
         var added = new List<string>();
         var removed = new List<string>();
@@ -170,10 +176,13 @@ public static class InvictusArtAutoUpdater
 
         if (!changed)
         {
+#if UNITY_EDITOR
             Debug.Log($"{target.Name} already up to date.");
+#endif
             return;
         }
 
+#if UNITY_EDITOR
         Debug.Log($"{target.Name} updated. Added: {added.Count}, Removed: {removed.Count}");
 
         foreach (var a in Limit(added, 25)) Debug.Log($"  [{target.Name}] + " + a);
@@ -183,6 +192,7 @@ public static class InvictusArtAutoUpdater
             Debug.Log($"[{target.Name}] (Showing up to 25 of each. Total Added={added.Count}, Removed={removed.Count})");
 
         ShowNotification($"{target.Name} updated ({Short(revAfter)})");
+#endif
     }
 
     private static HashSet<string> SnapshotPackageFiles(string packageName)

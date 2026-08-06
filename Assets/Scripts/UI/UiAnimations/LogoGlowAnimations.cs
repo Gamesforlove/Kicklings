@@ -15,7 +15,9 @@ public class LogoGlowAnimations : MonoBehaviour
         
         if (glowRectTransform == null)
         {
+#if UNITY_EDITOR
             Debug.LogWarning("No hay RectTransform asignado para el brillo.");
+#endif
             return;
         }
 

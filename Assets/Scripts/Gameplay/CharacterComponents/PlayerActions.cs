@@ -8,6 +8,8 @@ namespace Gameplay.CharacterComponents
 {
     public class PlayerActions : MonoBehaviour
     {
+        public bool DisableInput { get; set; }
+
         EntityData _entityData;
         int _kickingDirectionMultiplier = 1;
 
@@ -16,6 +18,7 @@ namespace Gameplay.CharacterComponents
         CountdownTimer _jumpCdTimer;
         
         [SerializeField] GameObject _kickingLeg;
+        [SerializeField] Collider2D[] _kickingLegColliders;
         [SerializeField] GroundCheck[] _groundChecks;
     
         Rigidbody2D _rigidbody;
@@ -29,6 +32,12 @@ namespace Gameplay.CharacterComponents
             _kickingLegJointMotor = _kickingLegJoint.motor;
             _jumpCdTimer = new CountdownTimer(jumpCdTime);
             _jumpCdTimer.OnTimerStop += () => _jumpOnCd = false;
+            DisableInput = false;
+        }
+
+        private void Start()
+        {
+            DisableInput = false;
         }
 
         void Update()
@@ -56,6 +65,8 @@ namespace Gameplay.CharacterComponents
         {
             if (!CanKick)
                 return;
+            if (DisableInput)
+                return;
             Kick();
             if (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd)
                 Jump();
@@ -82,12 +93,21 @@ namespace Gameplay.CharacterComponents
             _jumpCdTimer.Start();
         }
 
-        void Kick()
+        public void Kick()
         {
             ApplyKickingPower(-1);
         }
-
-        void ReturnLeftLegToOriginalPosition()
+        public void DisableKickingLeg()
+        {
+            foreach (Collider2D collider in _kickingLegColliders)
+                collider.enabled = false;
+        }
+        public void EnableKickingLeg()
+        {
+            foreach (Collider2D collider in _kickingLegColliders)
+                collider.enabled = true;
+        }
+        public void ReturnLeftLegToOriginalPosition()
         {
             ApplyKickingPower(1);
         }
