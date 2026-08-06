@@ -13,17 +13,17 @@ namespace SaveSystem
         }
 
         // campaign progress tracking
+        public int currentPlayerLevel;
+        public int lastUnlockedLevel;
         public int stage;
         public int scene;
 
-        public int intData;
-        public string stringData;
         public Dictionary<int, string> abilities;
         /*
          * unlocked abilities
          * player's current level/stage
          * player's atributes
-         * unlocked customization item's
+         * unlocked customization items
          */
     }
 }

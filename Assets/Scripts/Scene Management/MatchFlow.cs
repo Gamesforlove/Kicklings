@@ -35,6 +35,6 @@ namespace Scene_Management
             return Match;
         }
 
-        static void DisposeMatch() => Match?.Dispose();
+        static public void DisposeMatch() => Match?.Dispose();
     }
 }

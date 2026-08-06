@@ -25,7 +25,7 @@ public class CampaignLevel : MonoBehaviour
     {
         _startMatch.gameObject.SetActive(true);
     }
-    public void DisableLevel()
+    public void DisableStartButton()
     {
         _startMatch.gameObject.SetActive(false);
     }

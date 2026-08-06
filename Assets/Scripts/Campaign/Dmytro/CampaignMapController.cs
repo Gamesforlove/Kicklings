@@ -1,4 +1,5 @@
 using CommonDataTypes;
+using SaveSystem;
 using Scene_Management;
 using UI.Customization.Clothing;
 using UI.Customization.Countries;
@@ -12,26 +13,42 @@ public class CampaignMapController : MonoBehaviour
     [SerializeField] private GameObject _player2;
     [SerializeField] private RectTransform _character;
     [SerializeField] private StageScrollController _currentStage;
-    [SerializeField] private int _currentLevelIndex;
 
     private void Start()
     {
-
-        //enable all unlocked levels
-
-        //move to last saved stage
-        //move to last saved level
-        //_currentLevelIndex = savedLevelIndex;
-
-        if (MatchFlow.Match == null || !MatchFlow.Match.Settings.IsCampaignMatch) return;
-
-        MoveCharacterToNextLevel();
-        //Invoke(nameof(MoveCharacterToNextLevel), .2f);
+        if (MatchFlow.Match == null || !MatchFlow.Match.Settings.IsCampaignMatch)
+        {
+            if (!SaveLoadGame.Load())
+            {
+                #if UNITY_EDITOR
+                    Debug.LogError("Can't load saved data");
+                #endif
+            }
+            else
+            {
+                int playerLevel = SaveLoadGame.LoadedData.currentPlayerLevel;
+                int lastLevel = SaveLoadGame.LoadedData.lastUnlockedLevel;
+                _currentStage.EnableLevels(lastLevel);
+                _currentStage.MoveCharacterAndScrollToLevel(playerLevel);
+                //_currentLevelIndex = playerLevel;
+            }
+        }
+        else
+        {
+            int playerLevel = SaveLoadGame.LoadedData.currentPlayerLevel;
+            int lastLevel = SaveLoadGame.LoadedData.lastUnlockedLevel;
+            _currentStage.EnableLevels(lastLevel);
+            if (MatchFlow.Match.IsPlayerWinner)
+            {
+                _currentStage.InstantMoveCharacterToLevel(playerLevel);
+                MoveCharacterToNextLevel(playerLevel);
+            }
+        }
     }
 
-    private void MoveCharacterToNextLevel()
+    private void MoveCharacterToNextLevel(int currentLevel)
     {
-        _currentStage.MoveCharacterAndScrollToLevel(_currentLevelIndex + 1);
+        _currentStage.MoveCharacterAndScrollToLevel(currentLevel + 1);
     }
 
     public void StartMatch(int numberOfPlayers)
@@ -53,6 +70,11 @@ public class CampaignMapController : MonoBehaviour
     }
     public void StartMatch(int numberOfPlayers, GameObject Opponent1, GameObject Opponent2)
     {
+        if (SaveLoadGame.DataIsLoaded)
+        {
+            SaveLoadGame.LoadedData.currentPlayerLevel = _currentStage.CharacterLevel;
+            SaveLoadGame.Save(SaveLoadGame.LoadedData);
+        }
         MatchSettings matchSettings = new MatchSettings.Builder()
             .WithNumberOfPlayers(numberOfPlayers)
             //.WithLeftShirtIndex(_leftCharacterCustomizationController.ShirtIndex)

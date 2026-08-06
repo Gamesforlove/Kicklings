@@ -21,4 +21,9 @@ public class MapCharacterController : MonoBehaviour
         }
         _rect.anchoredPosition = point;
     }
+    public void TeleportToPoint(Vector2 point)
+    {
+        point = _rect.parent.InverseTransformPoint(point);
+        _rect.anchoredPosition = point;
+    }
 }

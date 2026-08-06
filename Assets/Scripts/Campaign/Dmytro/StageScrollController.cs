@@ -1,3 +1,4 @@
+using SaveSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,8 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(ScrollRect))]
 public class StageScrollController : MonoBehaviour
 {
+    public int CharacterLevel { get; private set; }
+
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private MapCharacterController _character;
     [SerializeField] private CampaignLevel[] _levels;
@@ -13,7 +16,6 @@ public class StageScrollController : MonoBehaviour
     [SerializeField] private float _defaultScrollTime = 1f;
     private float _xMaxOffset;
     private float _xMinOffset;
-    private int _characterLevel;
     private bool _busyScrolling = false;
     private bool _busyMovingCharacter = false;
 
@@ -35,7 +37,7 @@ public class StageScrollController : MonoBehaviour
     }
     public void ScrollToLevel(int levelIndex, float duration = 0.5f)
     {
-        if (_characterLevel == levelIndex) return;
+        if (CharacterLevel == levelIndex) return;
         if (_busyScrolling) return;
 
         ForceUpdateCanvas();
@@ -43,7 +45,7 @@ public class StageScrollController : MonoBehaviour
     }
     public void MoveCharacterToLevel(int levelIndex)
     {
-        if (_characterLevel == levelIndex) return;
+        if (CharacterLevel == levelIndex) return;
         if (_busyMovingCharacter) return;
 
         ForceUpdateCanvas();
@@ -51,13 +53,21 @@ public class StageScrollController : MonoBehaviour
     }
     public void MoveCharacterAndScrollToLevel(int levelIndex)
     {
-        if (_characterLevel == levelIndex) return;
+        if (CharacterLevel == levelIndex) return;
 
         ForceUpdateCanvas();
         if (!_busyMovingCharacter)
             StartCoroutine(MoveCharacterToLevelRoutine(levelIndex));
         if (!_busyScrolling)
             StartCoroutine(ScrollToLevelRoutine(levelIndex, _defaultScrollTime));
+    }
+    public void InstantMoveCharacterAndScrollToLevel(int levelIndex)
+    {
+        if (CharacterLevel == levelIndex) return;
+
+        ForceUpdateCanvas();
+            StartCoroutine(MoveCharacterToLevelRoutine(levelIndex));
+            StartCoroutine(ScrollToLevelRoutine(levelIndex, 0f));
     }
     public void ScrollToLevel_BUTTON(int levelIndex)
     {
@@ -106,19 +116,54 @@ public class StageScrollController : MonoBehaviour
 
     public IEnumerator MoveCharacterToLevelRoutine(int levelIndex, float duration = .3f)
     {
+        ForceUpdateCanvas();
         _busyMovingCharacter = true;
-        _levels[_characterLevel].DisableLevel();
+        _levels[CharacterLevel].DisableStartButton();
         //_character.StepDuration = duration;
-        int step = _characterLevel < levelIndex ? 1 : -1;
-        int i = _characterLevel;
+        int step = CharacterLevel < levelIndex ? 1 : -1;
+        int i = CharacterLevel;
         while (i != levelIndex)
         {
             i += step;
             yield return StartCoroutine(_character.MoveToPoint(_levels[i].CharacterPoint.position));
         }
-        _characterLevel = levelIndex;
+        CharacterLevel = levelIndex;
+        if (SaveLoadGame.DataIsLoaded)
+        {
+            SaveLoadGame.LoadedData.currentPlayerLevel = CharacterLevel;
+            if (CharacterLevel > SaveLoadGame.LoadedData.lastUnlockedLevel)
+            {
+                SaveLoadGame.LoadedData.lastUnlockedLevel = CharacterLevel;
+            }
+        }
         _busyMovingCharacter = false;
         _levels[levelIndex].EnableLevel();
         _levels[levelIndex].EnableStartButton();
+    }
+    public void InstantMoveCharacterToLevel(int levelIndex)
+    {
+        ForceUpdateCanvas();
+        _levels[CharacterLevel].DisableStartButton();
+        
+        _character.TeleportToPoint(_levels[levelIndex].CharacterPoint.position);
+
+        CharacterLevel = levelIndex;
+        if (SaveLoadGame.DataIsLoaded)
+        {
+            SaveLoadGame.LoadedData.currentPlayerLevel = CharacterLevel;
+            if (CharacterLevel > SaveLoadGame.LoadedData.lastUnlockedLevel)
+            {
+                SaveLoadGame.LoadedData.lastUnlockedLevel = CharacterLevel;
+            }
+        }
+        _levels[levelIndex].EnableLevel();
+        _levels[levelIndex].EnableStartButton();
+    }
+    public void EnableLevels(int last)
+    {
+        for (int i = 0; i <= last; i++)
+        {
+            _levels[i].EnableLevel();
+        }
     }
 }
