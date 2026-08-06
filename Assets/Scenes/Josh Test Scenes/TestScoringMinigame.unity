@@ -423,7 +423,7 @@ MonoBehaviour:
   _useUrgencyColor: 1
   _normalColor: {r: 0.25, g: 0.75, b: 0.35, a: 1}
   _urgentColor: {r: 0.85, g: 0.2, b: 0.2, a: 1}
-  _urgentThreshold: 0.25
+  _urgentThreshold: 0.4
   _pulseWhenUrgent: 1
   _pulseSpeed: 6
   _pulseScale: 0.06
@@ -728,7 +728,7 @@ Transform:
   m_GameObject: {fileID: 1007675215}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0.18, y: 0.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -800,7 +800,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -100
-  m_Sprite: {fileID: 21300000, guid: 73be06af09dc19948b6e0d81fe5850fa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1342,7 +1342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2194100682125000529, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 151.5791
+      value: 151.57912
       objectReference: {fileID: 0}
     - target: {fileID: 2313976501645865382, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_LocalPosition.x
