@@ -61,9 +61,13 @@ namespace Gameplay.Managers
                     break;
             }
         }
+
+
         public void SpawnSinglePlayer()
         {
-            SpawnPlayer(PlayersSpawner.PlayerType.Normal, _spawnPoints[0], _controlSchemes[0]);
+            GameObject player = _playersSpawner.SpawnChallengePlayer(_spawnPoints[0], _controlSchemes[0]);
+            _players.Add(player);
+            _playersPositions.Add(player, player.transform.position);
         }
 
         void SpawnCpuMode()

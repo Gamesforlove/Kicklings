@@ -2145,6 +2145,8 @@ MonoBehaviour:
   <GoalkeeperData>k__BackingField: {fileID: 11400000, guid: 7e8d6b8dcb18b4840a336d836933fcbe, type: 2}
   <CpuDifficultyPreset>k__BackingField: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
   <CurrentDifficulty>k__BackingField: 3
+  _challengePlayerPrefab: {fileID: 511039046881491241, guid: 7aa1345f30dff6e43bd685db882c9a6b, type: 3}
+  <ChallengePlayerData>k__BackingField: {fileID: 11400000, guid: bec7f6fc26976154cb700ce21df73402, type: 2}
 --- !u!1 &2107275403
 GameObject:
   m_ObjectHideFlags: 0

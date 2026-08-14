@@ -20,6 +20,10 @@ namespace Gameplay.Spawners
         [field: SerializeField] public CpuDifficultyPreset CpuDifficultyPreset { get; private set; }
         [field: SerializeField] public DifficultyLevel CurrentDifficulty { get; private set; } = DifficultyLevel.Default;
 
+        [Header("Scoring Challenge")]
+        [SerializeField] GameObject _challengePlayerPrefab; // kid sprite, minigame-specific — never used by real matches
+        [field: SerializeField] public EntityData ChallengePlayerData { get; private set; }
+
         public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme, bool campaign)
         {
             GameObject go = PlayerInput.Instantiate(
@@ -38,6 +42,25 @@ namespace Gameplay.Spawners
 
             go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType, campaign);
             go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
+            return go;
+        }
+
+
+        public GameObject SpawnChallengePlayer(Transform spawnPosition, InputControlScheme scheme)
+        {
+            GameObject go = PlayerInput.Instantiate(
+                _challengePlayerPrefab,
+                controlScheme: scheme.name,
+                pairWithDevice: Keyboard.current
+                ).gameObject;
+
+            go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
+            bool isRightSide = go.transform.position.x > 0;
+            Team team = isRightSide ? Team.Right : Team.Left;
+
+            go.GetComponent<Player>()?.SetUp(ChallengePlayerData, PlayerType.Normal, campaign: true);
+            go.GetComponent<AbilityActor>()?.SetUp(team, PlayerType.Normal);
+
             return go;
         }
 
