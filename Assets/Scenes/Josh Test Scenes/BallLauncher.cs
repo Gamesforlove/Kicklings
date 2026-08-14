@@ -80,6 +80,11 @@ public class BallLauncher : MonoBehaviour
         onLaunch?.Invoke(velocity);
     }
 
+    public void DespawnBall()
+    {
+        go.SetActive(false);
+    }
+
     private Vector3 CalculateVelocity(Vector3 origin, Vector3 destination, float speed, float height)
     {
         Vector3 toTarget = destination - origin;

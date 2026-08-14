@@ -84,7 +84,7 @@ namespace Gameplay.Managers
         void OnGoalEvent(GoalEvent payload)
         {
             if (!_challengeActive) return;
-
+            
             _score++;
             _uiManager?.ChangeChallengeScore(_score, _scoreTarget);
 
@@ -102,6 +102,7 @@ namespace Gameplay.Managers
             TimeScaleManager.SlowMotion();
             yield return StartCoroutine(_uiManager.ShowGoalNotification(payload));
             TimeScaleManager.SetGameplayTimeScale();
+            _ballLauncher.DespawnBall();
         }
         #endregion
 
