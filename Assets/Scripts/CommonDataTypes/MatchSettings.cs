@@ -23,6 +23,8 @@ namespace CommonDataTypes
         
         //Campaign
         [field: SerializeField] public bool IsCampaignMatch {get; private set;}
+        [field: SerializeField] public SceneName PreMatchCutScene {get; private set;} = SceneName.None;
+        [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
         public GameObject[] SpecificPlayers { get; private set;} = new GameObject[4];
 
         public MatchSettings() { }
@@ -38,11 +40,15 @@ namespace CommonDataTypes
             RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
             IsTournamentMatch = false;
+
             IsCampaignMatch = false;
+            PreMatchCutScene = SceneName.None;
+            AfterMatchCutScene = SceneName.None;
             if (SpecificPlayers != null)
             {
                 System.Array.Clear(SpecificPlayers, 0, SpecificPlayers.Length);
             }
+
             SplitControls = false;
         }
 
@@ -61,6 +67,8 @@ namespace CommonDataTypes
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
             bool _isCampaignMatch = false;
+            private SceneName _preMatchCutScene  = SceneName.None;
+            private SceneName _afterMatchCutScene = SceneName.None;
             GameObject[] _specificPlayers = new GameObject[4];
             bool _splitControls = false;
 
@@ -133,6 +141,16 @@ namespace CommonDataTypes
                 _isCampaignMatch = isCampaignMatch;
                 return this;
             }
+            public Builder WithPreMatchCutScene(SceneName scene)
+            {
+                _preMatchCutScene = scene;
+                return this;
+            }
+            public Builder WithAfterMatchCutScene(SceneName scene)
+            {
+                _afterMatchCutScene = scene;
+                return this;
+            }
             public Builder WithSpecificPlayers(GameObject player1, GameObject player2, GameObject opponent1, GameObject opponent2)
             {
                 _specificPlayers[0] = player1;
@@ -166,7 +184,9 @@ namespace CommonDataTypes
                     IsTournamentMatch = _isTournamentMatch,
                     IsCampaignMatch = _isCampaignMatch,
                     SpecificPlayers = _specificPlayers,
-                    SplitControls = _splitControls
+                    SplitControls = _splitControls,
+                    PreMatchCutScene = _preMatchCutScene,
+                    AfterMatchCutScene = _afterMatchCutScene
                 };
             }
         }

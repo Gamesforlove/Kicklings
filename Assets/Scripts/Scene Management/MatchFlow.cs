@@ -25,7 +25,9 @@ namespace Scene_Management
         {
             DisposeMatch();
             Match = new CampaignMatch(matchSettings);
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignGameplay));
+            Match.GoAfterCutScene = SceneName.CampaignGameplay;
+            SceneName nextScene = matchSettings.PreMatchCutScene == SceneName.None ? SceneName.CampaignGameplay : matchSettings.PreMatchCutScene;
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(nextScene));
         }
 
         public static Match GetCampaignMatch(MatchSettings matchSettings)

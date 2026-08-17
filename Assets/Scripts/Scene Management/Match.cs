@@ -1,6 +1,7 @@
 ﻿using CommonDataTypes;
 using EventBusSystem;
 using Gameplay.Managers;
+using SaveSystem;
 using System.Collections.Generic;
 using UI.MainMenu.TournamentMode;
 
@@ -11,6 +12,9 @@ namespace Scene_Management
         public MatchSettings Settings { get; }
         public bool IsPlayerWinner { get; set; }
         public bool IsPlayAgain { get; set; }
+        public bool IsReplayMatch { get; set; }
+        public bool IsFinished { get; protected set; } = false;
+        public SceneName GoAfterCutScene { get; set; } = SceneName.CampaignGameplay;
 
         protected Match(MatchSettings settings)
         {
@@ -90,13 +94,25 @@ namespace Scene_Management
 
         public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
         {
+            IsFinished = true;
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
-            //ReturnToCampaignMap();
-            uiManager.ShowMatchWinnerView(goalEvent);
-        }
-        private void ReturnToCampaignMap()
-        {
-            SceneHandler.LoadScene(SceneName.CampaignMap);
+            if (!IsPlayerWinner)
+            {
+                uiManager.ShowMatchWinnerView(goalEvent);
+            }
+            else
+            {
+                CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
+                if (Settings.AfterMatchCutScene == SceneName.None)
+                {
+                    //uiManager.ShowMatchWinnerView(goalEvent);
+                    CampaignTracker.Instance.PlayNextlevel();
+                }
+                else
+                {
+                    EventBus<OnLoadScene>.Raise(new OnLoadScene(Settings.AfterMatchCutScene));
+                }
+            }
         }
     }
 }

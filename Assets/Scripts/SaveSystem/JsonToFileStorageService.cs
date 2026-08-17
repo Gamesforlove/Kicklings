@@ -31,9 +31,9 @@ namespace SaveSystem
                     fileStream.Write(json);
                 }
 
-#if UNITY_EDITOR
-                Debug.Log($"Game saved successfuly to {path}");
-#endif
+                #if UNITY_EDITOR
+                    Debug.Log($"Game saved successfuly to {path}");
+                #endif
                 return true;
             }
             catch (Exception e)
@@ -83,9 +83,9 @@ namespace SaveSystem
 
             if (!fileTimestamp.HasValue && !prefsTimestamp.HasValue)
             {
-#if UNITY_EDITOR
-                Debug.LogWarning($"No save data found for key: {key}");
-#endif
+                #if UNITY_EDITOR
+                    Debug.LogWarning($"No save data found for key: {key}");
+                #endif
                 return default;
             }
 

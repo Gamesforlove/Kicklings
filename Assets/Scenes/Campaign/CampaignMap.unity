@@ -677,6 +677,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &105041077
@@ -1956,6 +1958,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &215287410
@@ -2756,6 +2760,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2376744371114673242, guid: f970fc74da4754c4a8bbf43189ba2113, type: 3}
     - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
+      propertyPath: _afterMatchCutScene
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
       propertyPath: _campaignController
       value: 
       objectReference: {fileID: 885009024}
@@ -3203,6 +3211,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &603413852
@@ -4152,6 +4162,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &817658504
@@ -4393,7 +4405,6 @@ MonoBehaviour:
   _player2: {fileID: 511039046881491241, guid: 7aa1345f30dff6e43bd685db882c9a6b, type: 3}
   _character: {fileID: 2113128779}
   _currentStage: {fileID: 64317444}
-  _currentLevelIndex: 0
 --- !u!1 &930116527
 GameObject:
   m_ObjectHideFlags: 0
@@ -4526,6 +4537,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &954429747
@@ -5508,6 +5521,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &1117570880
@@ -7072,6 +7087,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 64317444}
+    - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
+      propertyPath: _preMatchCutScene
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
       propertyPath: _campaignController
       value: 
@@ -8816,6 +8835,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &1879049936
@@ -9371,6 +9392,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &2016219914
@@ -9675,6 +9698,8 @@ MonoBehaviour:
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 0}
   levelButton: {fileID: 0}
+  _preMatchCutScene: 6
+  _afterMatchCutScene: 6
   RectTransform: {fileID: 0}
   CharacterPoint: {fileID: 0}
 --- !u!114 &2089373503
@@ -15258,6 +15283,14 @@ PrefabInstance:
       propertyPath: levelButton
       value: 
       objectReference: {fileID: 6588438497766593679}
+    - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
+      propertyPath: _preMatchCutScene
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
+      propertyPath: _afterMatchCutScene
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3261212315372333450, guid: 6179bd7d8d62b2242a08b9004436bfee, type: 3}
       propertyPath: _campaignController
       value: 

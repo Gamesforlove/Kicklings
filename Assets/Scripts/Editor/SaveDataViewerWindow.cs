@@ -19,15 +19,27 @@ public class SaveDataViewerWindow : EditorWindow
     {
         GUILayout.Space(5);
 
-        // Button to trigger loading of the save data
+        EditorGUILayout.BeginHorizontal();
+
         if (GUILayout.Button("Load / Refresh Data", GUILayout.Height(30)))
         {
-            // Replace with your actual load method if it differs
-            if (SaveLoadGame.Load())
-            {
-                loadedData = SaveLoadGame.LoadedData;
-            }
+            loadedData = SaveLoadGame.GetLastSavedData();
         }
+
+        GUI.backgroundColor = new Color(1f, 0.4f, 0.4f);
+        if (GUILayout.Button("Clear Saved Data", GUILayout.Height(30)))
+        {
+            StorageData emptyData = new StorageData();
+            SaveLoadGame.Save(emptyData);
+
+            loadedData = emptyData;
+            Debug.Log("Saved data cleared successfully!");
+        }
+        GUI.backgroundColor = Color.white;
+
+        EditorGUILayout.EndHorizontal();
+
+        GUILayout.Space(10);
 
         if (loadedData == null)
         {
@@ -39,24 +51,12 @@ public class SaveDataViewerWindow : EditorWindow
 
         // Display basic fields
         EditorGUILayout.LabelField("Campaign Progress", EditorStyles.boldLabel);
-        EditorGUILayout.LabelField("Current Player Level", loadedData.currentPlayerLevel.ToString());
+        EditorGUILayout.LabelField("Current Player Level", loadedData.PlayerLevel.ToString());
         EditorGUILayout.LabelField("Last Unlocked Level", loadedData.lastUnlockedLevel.ToString());
         EditorGUILayout.LabelField("Stage", loadedData.stage.ToString());
         EditorGUILayout.LabelField("Scene", loadedData.scene.ToString());
 
         EditorGUILayout.Space(10);
-
-/*        // Display Dictionary entries
-        showAbilities = EditorGUILayout.Foldout(showAbilities, $"Abilities ({loadedData.abilities?.Count ?? 0})", true);
-        if (showAbilities && loadedData.abilities != null)
-        {
-            EditorGUI.indentLevel++;
-            foreach (var ability in loadedData.abilities)
-            {
-                EditorGUILayout.LabelField($"ID: {ability.Key}", ability.Value);
-            }
-            EditorGUI.indentLevel--;
-        }*/
 
         EditorGUILayout.EndScrollView();
     }

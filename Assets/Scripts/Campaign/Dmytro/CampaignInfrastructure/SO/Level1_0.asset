@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 891c89f1b99bfb9478281d5452908279, type: 3}
+  m_Name: Level1_0
+  m_EditorClassIdentifier: 
+  <Player1>k__BackingField: {fileID: 8146259862022084911, guid: 6ab28c16f9987da4d831efebb931d1d7, type: 3}
+  <Player2>k__BackingField: {fileID: 511039046881491241, guid: 7aa1345f30dff6e43bd685db882c9a6b, type: 3}
+  <Opponent1>k__BackingField: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
+  <Opponent2>k__BackingField: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
+  <PreMatchCutScene>k__BackingField: 7
+  <AfterMatchCutScene>k__BackingField: 7
+  <LevelGameplayScene>k__BackingField: 4

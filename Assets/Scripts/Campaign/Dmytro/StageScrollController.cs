@@ -128,14 +128,7 @@ public class StageScrollController : MonoBehaviour
             yield return StartCoroutine(_character.MoveToPoint(_levels[i].CharacterPoint.position));
         }
         CharacterLevel = levelIndex;
-        if (SaveLoadGame.DataIsLoaded)
-        {
-            SaveLoadGame.LoadedData.currentPlayerLevel = CharacterLevel;
-            if (CharacterLevel > SaveLoadGame.LoadedData.lastUnlockedLevel)
-            {
-                SaveLoadGame.LoadedData.lastUnlockedLevel = CharacterLevel;
-            }
-        }
+        UpdateSaveData();
         _busyMovingCharacter = false;
         _levels[levelIndex].EnableLevel();
         _levels[levelIndex].EnableStartButton();
@@ -144,21 +137,27 @@ public class StageScrollController : MonoBehaviour
     {
         ForceUpdateCanvas();
         _levels[CharacterLevel].DisableStartButton();
-        
+
         _character.TeleportToPoint(_levels[levelIndex].CharacterPoint.position);
 
         CharacterLevel = levelIndex;
+        UpdateSaveData();
+        _levels[levelIndex].EnableLevel();
+        _levels[levelIndex].EnableStartButton();
+    }
+
+    private void UpdateSaveData()
+    {
         if (SaveLoadGame.DataIsLoaded)
         {
-            SaveLoadGame.LoadedData.currentPlayerLevel = CharacterLevel;
+            SaveLoadGame.LoadedData.PlayerLevel = CharacterLevel;
             if (CharacterLevel > SaveLoadGame.LoadedData.lastUnlockedLevel)
             {
                 SaveLoadGame.LoadedData.lastUnlockedLevel = CharacterLevel;
             }
         }
-        _levels[levelIndex].EnableLevel();
-        _levels[levelIndex].EnableStartButton();
     }
+
     public void EnableLevels(int last)
     {
         for (int i = 0; i <= last; i++)

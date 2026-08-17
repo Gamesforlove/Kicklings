@@ -26,7 +26,7 @@ public class CampaignMapController : MonoBehaviour
             }
             else
             {
-                int playerLevel = SaveLoadGame.LoadedData.currentPlayerLevel;
+                int playerLevel = SaveLoadGame.LoadedData.PlayerLevel;
                 int lastLevel = SaveLoadGame.LoadedData.lastUnlockedLevel;
                 _currentStage.EnableLevels(lastLevel);
                 _currentStage.MoveCharacterAndScrollToLevel(playerLevel);
@@ -35,14 +35,17 @@ public class CampaignMapController : MonoBehaviour
         }
         else
         {
-            int playerLevel = SaveLoadGame.LoadedData.currentPlayerLevel;
+            int playerLevel = SaveLoadGame.LoadedData.PlayerLevel;
             int lastLevel = SaveLoadGame.LoadedData.lastUnlockedLevel;
+
             _currentStage.EnableLevels(lastLevel);
-            if (MatchFlow.Match.IsPlayerWinner)
+            _currentStage.InstantMoveCharacterToLevel(playerLevel - 1);
+            MoveCharacterToNextLevel(playerLevel - 1);
+
+/*            if (MatchFlow.Match.IsPlayerWinner)
             {
-                _currentStage.InstantMoveCharacterToLevel(playerLevel);
-                MoveCharacterToNextLevel(playerLevel);
-            }
+
+            }*/
         }
     }
 
@@ -68,11 +71,11 @@ public class CampaignMapController : MonoBehaviour
 
         MatchFlow.CreateCampaignMatch(matchSettings);
     }
-    public void StartMatch(int numberOfPlayers, GameObject Opponent1, GameObject Opponent2)
+    public void StartMatch(int numberOfPlayers, GameObject Opponent1, GameObject Opponent2, SceneName preMatchCutScene, SceneName afterMatchCutScene)
     {
         if (SaveLoadGame.DataIsLoaded)
         {
-            SaveLoadGame.LoadedData.currentPlayerLevel = _currentStage.CharacterLevel;
+            SaveLoadGame.LoadedData.PlayerLevel = _currentStage.CharacterLevel;
             SaveLoadGame.Save(SaveLoadGame.LoadedData);
         }
         MatchSettings matchSettings = new MatchSettings.Builder()
@@ -87,6 +90,8 @@ public class CampaignMapController : MonoBehaviour
             //.WithRightSkinToneValue(Random.Range(0f, 1f))
             .WithIsCampaignMatch(true)
             .WithSpecificPlayers(_player1, _player2, Opponent1, Opponent2)
+            .WithPreMatchCutScene(preMatchCutScene)
+            .WithAfterMatchCutScene(afterMatchCutScene)
             .Build();
 
         MatchFlow.CreateCampaignMatch(matchSettings);

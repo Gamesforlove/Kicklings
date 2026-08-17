@@ -17,5 +17,9 @@ namespace SaveSystem
             LoadedData = storageService.Load<StorageData>(key);
             return LoadedData != null;
         }
+        public static StorageData GetLastSavedData()
+        {
+            return storageService.Load<StorageData>(key);
+        }
     }
 }

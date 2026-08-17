@@ -13,7 +13,7 @@ namespace SaveSystem
         }
 
         // campaign progress tracking
-        public int currentPlayerLevel;
+        public int PlayerLevel;
         public int lastUnlockedLevel;
         public int stage;
         public int scene;
