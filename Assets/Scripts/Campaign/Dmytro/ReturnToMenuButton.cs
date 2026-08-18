@@ -14,4 +14,13 @@ public class ReturnToMenuButton : MonoBehaviour
         }
         SceneHandler.LoadScene(SceneName.MainMenu);
     }
+    public void ReturnToMap()
+    {
+        MatchFlow.DisposeMatch();
+        if (SaveLoadGame.DataIsLoaded)
+        {
+            SaveLoadGame.Save(SaveLoadGame.LoadedData);
+        }
+        SceneHandler.LoadScene(SceneName.CampaignMap);
+    }
 }

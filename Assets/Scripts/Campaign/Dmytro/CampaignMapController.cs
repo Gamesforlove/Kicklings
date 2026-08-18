@@ -16,36 +16,20 @@ public class CampaignMapController : MonoBehaviour
 
     private void Start()
     {
-        if (MatchFlow.Match == null || !MatchFlow.Match.Settings.IsCampaignMatch)
+        if (!SaveLoadGame.Load())
         {
-            if (!SaveLoadGame.Load())
-            {
-                #if UNITY_EDITOR
-                    Debug.LogError("Can't load saved data");
-                #endif
-            }
-            else
-            {
-                int playerLevel = SaveLoadGame.LoadedData.PlayerLevel;
-                int lastLevel = SaveLoadGame.LoadedData.lastUnlockedLevel;
-                _currentStage.EnableLevels(lastLevel);
-                _currentStage.MoveCharacterAndScrollToLevel(playerLevel);
-                //_currentLevelIndex = playerLevel;
-            }
+            #if UNITY_EDITOR
+                        Debug.LogError("Can't load saved data");
+            #endif
         }
         else
         {
             int playerLevel = SaveLoadGame.LoadedData.PlayerLevel;
             int lastLevel = SaveLoadGame.LoadedData.lastUnlockedLevel;
-
-            _currentStage.EnableLevels(lastLevel);
-            _currentStage.InstantMoveCharacterToLevel(playerLevel - 1);
-            MoveCharacterToNextLevel(playerLevel - 1);
-
-/*            if (MatchFlow.Match.IsPlayerWinner)
-            {
-
-            }*/
+            int stage = SaveLoadGame.LoadedData.stage;
+            _currentStage.EnableLevels(playerLevel, stage);
+            //_currentStage.MoveCharacterAndScrollToLevel(playerLevel);
+            //_currentLevelIndex = playerLevel;
         }
     }
 
@@ -69,15 +53,10 @@ public class CampaignMapController : MonoBehaviour
             .WithIsCampaignMatch(true)
             .Build();
 
-        MatchFlow.CreateCampaignMatch(matchSettings);
+        MatchFlow.CreateCampaignMatch(matchSettings, isReplayMatch: true);
     }
     public void StartMatch(int numberOfPlayers, GameObject Opponent1, GameObject Opponent2, SceneName preMatchCutScene, SceneName afterMatchCutScene)
     {
-        if (SaveLoadGame.DataIsLoaded)
-        {
-            SaveLoadGame.LoadedData.PlayerLevel = _currentStage.CharacterLevel;
-            SaveLoadGame.Save(SaveLoadGame.LoadedData);
-        }
         MatchSettings matchSettings = new MatchSettings.Builder()
             .WithNumberOfPlayers(numberOfPlayers)
             //.WithLeftShirtIndex(_leftCharacterCustomizationController.ShirtIndex)
@@ -94,7 +73,14 @@ public class CampaignMapController : MonoBehaviour
             .WithAfterMatchCutScene(afterMatchCutScene)
             .Build();
 
-        MatchFlow.CreateCampaignMatch(matchSettings);
+        MatchFlow.CreateCampaignMatch(matchSettings, isReplayMatch: true);
+    }
+    public void ResumeCampaign()
+    {
+        if (CampaignTracker.Instance)
+        {
+            CampaignTracker.Instance.PlayNextlevel();
+        }
     }
     public void MoveCharacterToLevel(int levelIndex) 
     {

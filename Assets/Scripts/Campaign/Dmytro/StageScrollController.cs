@@ -2,7 +2,6 @@ using SaveSystem;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(ScrollRect))]
 public class StageScrollController : MonoBehaviour
@@ -14,6 +13,7 @@ public class StageScrollController : MonoBehaviour
     [SerializeField] private CampaignLevel[] _levels;
     [SerializeField] private float _xOffset = 960f;
     [SerializeField] private float _defaultScrollTime = 1f;
+    [SerializeField] private CampaignStructure _campaign;
     private float _xMaxOffset;
     private float _xMinOffset;
     private bool _busyScrolling = false;
@@ -163,6 +163,28 @@ public class StageScrollController : MonoBehaviour
         for (int i = 0; i <= last; i++)
         {
             _levels[i].EnableLevel();
+            _levels[i].EnableStartButton();
+        }
+    }
+    public void EnableLevels(int level, int stage)
+    {
+        int levelIndex = 0;
+        int lastCompletedStage = (int)Mathf.Clamp01(stage - 1);
+        for (int i = 0; i < lastCompletedStage; i++)
+        {
+            int levelCount = _campaign.Stages[i].LevelCount;
+            for (int j = 0; j <= levelCount; j++, levelIndex++)
+            {
+                _levels[levelIndex].EnableLevel();
+                _levels[levelIndex].EnableStartButton();
+                //_levels[levelIndex].InitializeLevelData();
+            }
+        }
+        for (int j = 0; j <= level; j++, levelIndex++)
+        {
+            _levels[levelIndex].EnableLevel();
+            _levels[levelIndex].EnableStartButton();
+            //_levels[levelIndex].InitializeLevelData();
         }
     }
 }

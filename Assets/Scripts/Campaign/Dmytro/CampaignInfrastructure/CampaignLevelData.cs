@@ -13,4 +13,8 @@ public class CampaignLevelData : ScriptableObject
     [field: SerializeField] public SceneName PreMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName LevelGameplayScene { get; private set; } = SceneName.CampaignGameplay; // for minigames
+
+    [SerializeField] private bool customBehaviourAfterLevel = false;
+
+    [SerializeField] private Stage insertStage;
 }

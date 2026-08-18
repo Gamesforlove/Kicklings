@@ -102,4 +102,11 @@ public class CampaignTracker : MonoBehaviour
     {
         IncrementAndSaveData();
     }
+    private void OnApplicationQuit()
+    {
+        if (SaveLoadGame.DataIsLoaded)
+        {
+            SaveLoadGame.Save(SaveLoadGame.LoadedData);
+        }
+    }
 }

@@ -21,12 +21,16 @@ namespace Scene_Management
             Match = new TournamentMatch(matchSettings, tournament);
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Gameplay));
         }
-        public static void CreateCampaignMatch(MatchSettings matchSettings)
+        public static void CreateCampaignMatch(MatchSettings matchSettings, bool isReplayMatch = false, CampaignLevelData levelData = null)
         {
             DisposeMatch();
-            Match = new CampaignMatch(matchSettings);
-            Match.GoAfterCutScene = SceneName.CampaignGameplay;
-            SceneName nextScene = matchSettings.PreMatchCutScene == SceneName.None ? SceneName.CampaignGameplay : matchSettings.PreMatchCutScene;
+            SceneName levelScene = levelData == null ? SceneName.CampaignGameplay : levelData.LevelGameplayScene;
+            Match = new CampaignMatch(matchSettings)
+            {
+                GoAfterCutScene = levelScene,
+                IsReplayMatch = isReplayMatch
+            };
+            SceneName nextScene = matchSettings.PreMatchCutScene == SceneName.None ? levelScene : matchSettings.PreMatchCutScene;
             EventBus<OnLoadScene>.Raise(new OnLoadScene(nextScene));
         }
 

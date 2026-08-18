@@ -32,7 +32,7 @@ public class SceneHandler : MonoBehaviour
             yield return null;
         }
         
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         EventBus<OnSceneLoaded>.Raise(new OnSceneLoaded(evt.EnumValue));
 

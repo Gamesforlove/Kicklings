@@ -19,3 +19,5 @@ MonoBehaviour:
   <PreMatchCutScene>k__BackingField: 6
   <AfterMatchCutScene>k__BackingField: 7
   <LevelGameplayScene>k__BackingField: 4
+  customBehaviourAfterLevel: 0
+  insertStage: {fileID: 0}

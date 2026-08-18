@@ -96,6 +96,13 @@ namespace Scene_Management
         {
             IsFinished = true;
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
+
+            if (IsReplayMatch)
+            {
+                EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignMap));
+                return;
+            }
+
             if (!IsPlayerWinner)
             {
                 uiManager.ShowMatchWinnerView(goalEvent);
