@@ -6,7 +6,8 @@
         //rishi test ones for campaign
         Stage0Scene2TutorialMatch,
         // Dmytro test ones for campaign
-        TestCampaignCutScene,
+        TestCampaignCutSceneWin,
+        TestCampaignCutSceneLose,
         None
     }
 }

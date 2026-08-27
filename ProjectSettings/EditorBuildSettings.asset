@@ -18,8 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Campaign/CampaignGameplay.unity
     guid: 4338a065f9056a34b8a34a873d9d913e
   - enabled: 1
-    path: Assets/Scenes/Campaign/TestCampaignCutScene.unity
-    guid: b362e932cfae9af498e35641a937c305
+    path: Assets/Scenes/Campaign/TestCampaignCutSceneWin.unity
+    guid: 1c9239180298fdb4593a553d55a33778
+  - enabled: 1
+    path: Assets/Scenes/Campaign/TestCampaignCutSceneLose.unity
+    guid: 5235a3893a80dfa4bb38da9090bc0c48
   - enabled: 0
     path: Assets/Scenes/Rishi Test Scenes/TestCampaignStart.unity
     guid: 1bb927231a93cec4b8d37cb62561c287

@@ -12,9 +12,15 @@ public class CampaignLevelData : ScriptableObject
     [field: SerializeField] public GameObject Opponent2 { get; private set; }
     [field: SerializeField] public SceneName PreMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
+    [field: SerializeField] public SceneName AfterMatchDefeatCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName LevelGameplayScene { get; private set; } = SceneName.CampaignGameplay; // for minigames
 
-    [SerializeField] private bool customBehaviourAfterLevel = false;
+    [field: SerializeField] public bool CustomBehaviourAfterLevel { get; private set; } = false;
 
     [SerializeField] private Stage insertStage;
+
+    public void ExecuteCustomBehavior()
+    {
+
+    }
 }

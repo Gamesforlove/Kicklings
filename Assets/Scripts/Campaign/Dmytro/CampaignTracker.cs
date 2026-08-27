@@ -55,6 +55,7 @@ public class CampaignTracker : MonoBehaviour
             .WithSpecificPlayers(levelData.Player1, levelData.Player2, levelData.Opponent1, levelData.Opponent2)
             .WithPreMatchCutScene(levelData.PreMatchCutScene)
             .WithAfterMatchCutScene(levelData.AfterMatchCutScene)
+            .WithAfterMatchDefeatCutScene(levelData.AfterMatchDefeatCutScene)
             .Build();
 
             MatchFlow.CreateCampaignMatch(matchSettings);

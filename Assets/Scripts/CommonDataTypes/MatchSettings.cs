@@ -25,6 +25,7 @@ namespace CommonDataTypes
         [field: SerializeField] public bool IsCampaignMatch {get; private set;}
         [field: SerializeField] public SceneName PreMatchCutScene {get; private set;} = SceneName.None;
         [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
+        [field: SerializeField] public SceneName AfterMatchDefeatCutScene { get; private set; } = SceneName.None;
         public GameObject[] SpecificPlayers { get; private set;} = new GameObject[4];
 
         public MatchSettings() { }
@@ -44,6 +45,7 @@ namespace CommonDataTypes
             IsCampaignMatch = false;
             PreMatchCutScene = SceneName.None;
             AfterMatchCutScene = SceneName.None;
+            AfterMatchDefeatCutScene = SceneName.None;
             if (SpecificPlayers != null)
             {
                 System.Array.Clear(SpecificPlayers, 0, SpecificPlayers.Length);
@@ -69,6 +71,7 @@ namespace CommonDataTypes
             bool _isCampaignMatch = false;
             private SceneName _preMatchCutScene  = SceneName.None;
             private SceneName _afterMatchCutScene = SceneName.None;
+            private SceneName _afterMatchDefeatCutScene = SceneName.None;
             GameObject[] _specificPlayers = new GameObject[4];
             bool _splitControls = false;
 
@@ -151,6 +154,11 @@ namespace CommonDataTypes
                 _afterMatchCutScene = scene;
                 return this;
             }
+            public Builder WithAfterMatchDefeatCutScene(SceneName scene)
+            {
+                _afterMatchDefeatCutScene = scene;
+                return this;
+            }
             public Builder WithSpecificPlayers(GameObject player1, GameObject player2, GameObject opponent1, GameObject opponent2)
             {
                 _specificPlayers[0] = player1;
@@ -186,7 +194,8 @@ namespace CommonDataTypes
                     SpecificPlayers = _specificPlayers,
                     SplitControls = _splitControls,
                     PreMatchCutScene = _preMatchCutScene,
-                    AfterMatchCutScene = _afterMatchCutScene
+                    AfterMatchCutScene = _afterMatchCutScene,
+                    AfterMatchDefeatCutScene = _afterMatchDefeatCutScene
                 };
             }
         }

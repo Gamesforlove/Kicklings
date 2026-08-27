@@ -17,5 +17,7 @@ MonoBehaviour:
   <Opponent1>k__BackingField: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
   <Opponent2>k__BackingField: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
   <PreMatchCutScene>k__BackingField: 7
-  <AfterMatchCutScene>k__BackingField: 7
+  <AfterMatchCutScene>k__BackingField: 6
   <LevelGameplayScene>k__BackingField: 4
+  customBehaviourAfterLevel: 0
+  insertStage: {fileID: 0}
