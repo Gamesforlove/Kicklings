@@ -102,21 +102,22 @@ namespace Scene_Management
                 EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignMap));
                 return;
             }
-            // Show Win/Lose Screen?
-            // uiManager.ShowMatchWinnerView(goalEvent);
             else
             {
-                if (IsPlayerWinner) CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
-                if (Settings.AfterMatchCutScene == SceneName.None)
-                {
-                    
-                    CampaignTracker.Instance.PlayNextlevel();
-                }
-                else
-                {
-                    SceneName scene = IsPlayerWinner ? Settings.AfterMatchCutScene : Settings.AfterMatchDefeatCutScene;
-                    EventBus<OnLoadScene>.Raise(new OnLoadScene(scene));
-                }
+                uiManager.ShowMatchWinnerView(goalEvent);
+                CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
+            }
+        }
+        public void ContinueCampaign()
+        {
+            if (Settings.LevelData.AfterMatchCutScene == SceneName.None)
+            {
+                CampaignTracker.Instance.PlayNextlevel();
+            }
+            else
+            {
+                SceneName scene = IsPlayerWinner ? Settings.LevelData.AfterMatchCutScene : Settings.LevelData.AfterMatchDefeatCutScene;
+                EventBus<OnLoadScene>.Raise(new OnLoadScene(scene));
             }
         }
     }

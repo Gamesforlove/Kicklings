@@ -1685,17 +1685,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5281249915382875277, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
   m_PrefabInstance: {fileID: 420651842046928189}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2015224585 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3514549554286878908, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
-  m_PrefabInstance: {fileID: 420651842046928189}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3f9191bf9514c45941c190c0699c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2140054243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5159314747300564664, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
@@ -1933,27 +1922,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2015224585}
+      objectReference: {fileID: 5823204399021927606}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartOrContinueCampaign
+      value: LoadSceneByName
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: LoadCampaign, Assembly-CSharp
+      value: SceneHandler, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: CampaignMap
+      value: CampaignStartScreen
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3121,6 +3110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3249648231717645375, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
+    - {fileID: 3514549554286878908, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3130004083041396326, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
@@ -3315,6 +3305,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e304e1ceb0707e7459f74ce97f83011b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5823204399021927606 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5556310945278911353, guid: 01d59552f9783b242ae25f7d9afe88db, type: 3}
+  m_PrefabInstance: {fileID: 5823204399021927604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7a37687fe933547a33bfe5e9687144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5823204399021927607 stripped

@@ -8,6 +8,8 @@
         // Dmytro test ones for campaign
         TestCampaignCutSceneWin,
         TestCampaignCutSceneLose,
+        TestCampaignCutSceneBeforeMatch,
+        CampaignStartScreen,
         None
     }
 }

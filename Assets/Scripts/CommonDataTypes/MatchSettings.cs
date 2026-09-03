@@ -23,10 +23,7 @@ namespace CommonDataTypes
         
         //Campaign
         [field: SerializeField] public bool IsCampaignMatch {get; private set;}
-        [field: SerializeField] public SceneName PreMatchCutScene {get; private set;} = SceneName.None;
-        [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
-        [field: SerializeField] public SceneName AfterMatchDefeatCutScene { get; private set; } = SceneName.None;
-        public GameObject[] SpecificPlayers { get; private set;} = new GameObject[4];
+        [field: SerializeField] public CampaignLevelData LevelData {get; private set;}
 
         public MatchSettings() { }
 
@@ -43,13 +40,14 @@ namespace CommonDataTypes
             IsTournamentMatch = false;
 
             IsCampaignMatch = false;
-            PreMatchCutScene = SceneName.None;
+            LevelData = null;
+/*            PreMatchCutScene = SceneName.None;
             AfterMatchCutScene = SceneName.None;
             AfterMatchDefeatCutScene = SceneName.None;
             if (SpecificPlayers != null)
             {
                 System.Array.Clear(SpecificPlayers, 0, SpecificPlayers.Length);
-            }
+            }*/
 
             SplitControls = false;
         }
@@ -69,10 +67,7 @@ namespace CommonDataTypes
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
             bool _isCampaignMatch = false;
-            private SceneName _preMatchCutScene  = SceneName.None;
-            private SceneName _afterMatchCutScene = SceneName.None;
-            private SceneName _afterMatchDefeatCutScene = SceneName.None;
-            GameObject[] _specificPlayers = new GameObject[4];
+            CampaignLevelData _levelData;
             bool _splitControls = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
@@ -144,30 +139,11 @@ namespace CommonDataTypes
                 _isCampaignMatch = isCampaignMatch;
                 return this;
             }
-            public Builder WithPreMatchCutScene(SceneName scene)
+            public Builder WithLevelData(CampaignLevelData levelData)
             {
-                _preMatchCutScene = scene;
+                _levelData = levelData;
                 return this;
             }
-            public Builder WithAfterMatchCutScene(SceneName scene)
-            {
-                _afterMatchCutScene = scene;
-                return this;
-            }
-            public Builder WithAfterMatchDefeatCutScene(SceneName scene)
-            {
-                _afterMatchDefeatCutScene = scene;
-                return this;
-            }
-            public Builder WithSpecificPlayers(GameObject player1, GameObject player2, GameObject opponent1, GameObject opponent2)
-            {
-                _specificPlayers[0] = player1;
-                _specificPlayers[1] = player2;
-                _specificPlayers[2] = opponent1;
-                _specificPlayers[3] = opponent2;
-                return this;
-            }
-
             public Builder WithSplitControls(bool splitControls)
             {
                 _splitControls = splitControls;
@@ -191,11 +167,8 @@ namespace CommonDataTypes
                     GoalsToEndMatch = _goalsToEndMatch,
                     IsTournamentMatch = _isTournamentMatch,
                     IsCampaignMatch = _isCampaignMatch,
-                    SpecificPlayers = _specificPlayers,
-                    SplitControls = _splitControls,
-                    PreMatchCutScene = _preMatchCutScene,
-                    AfterMatchCutScene = _afterMatchCutScene,
-                    AfterMatchDefeatCutScene = _afterMatchDefeatCutScene
+                    LevelData = _levelData,
+                    SplitControls = _splitControls
                 };
             }
         }

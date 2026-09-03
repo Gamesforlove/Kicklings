@@ -1655,7 +1655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -1664,18 +1664,18 @@ PrefabInstance:
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1473653805}
+      objectReference: {fileID: 355411172}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: EndGame
+      value: NextLevel
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Gameplay.Managers.MatchManager, Assembly-CSharp
+      value: ContinueCampaignButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2652278116649040788, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -1799,7 +1799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7034701113846918223, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -250
+      value: -270
       objectReference: {fileID: 0}
     - target: {fileID: 7034701113846918223, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1816,13 +1816,33 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5674610700221578267, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 355411172}
   m_SourcePrefab: {fileID: 100100000, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
 --- !u!224 &355411170 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7034701113846918223, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
   m_PrefabInstance: {fileID: 355411169}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &355411171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5674610700221578267, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
+  m_PrefabInstance: {fileID: 355411169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &355411172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355411171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f17bf0737c9b3418c0bb7b1a0736b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &380435334
 GameObject:
   m_ObjectHideFlags: 0
@@ -11467,6 +11487,14 @@ PrefabInstance:
       objectReference: {fileID: 1475192709}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _blueWinText
+      value: 
+      objectReference: {fileID: 1895034964}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _leftWinText
+      value: 
+      objectReference: {fileID: 1475192709}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _rightWinText
       value: 
       objectReference: {fileID: 1895034964}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}

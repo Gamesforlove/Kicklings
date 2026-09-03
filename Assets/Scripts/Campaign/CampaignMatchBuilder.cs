@@ -36,4 +36,22 @@ public class CampaignMatchBuilder : MonoBehaviour
         Match match = MatchFlow.GetCampaignMatch(matchSettings);
         matchManager.SetNewMatch(match);
     }
+    public void BuildMatch(CampaignLevelData levelData)
+    {
+        MatchSettings matchSettings = new MatchSettings.Builder()
+            .WithNumberOfPlayers(matchDataSO.MatchSettings.NumberOfPlayers)
+            .WithLeftShirtIndex(matchDataSO.MatchSettings.LeftSideShirtIndex)
+            .WithLeftShoesIndex(matchDataSO.MatchSettings.LeftSideShoesIndex)
+            .WithLeftCountryImageIndex(matchDataSO.MatchSettings.LeftCountryImageIndex)
+            .WithRightShirtIndex(matchDataSO.MatchSettings.RightSideShirtIndex)
+            .WithRightShoesIndex(matchDataSO.MatchSettings.RightSideShoesIndex)
+            .WithRightCountryImageIndex(matchDataSO.MatchSettings.RightCountryImageIndex)
+            .WithLevelData(levelData)
+            .WithIsCampaignMatch(true)
+            .Build();
+
+        matchManager.enabled = true;
+        Match match = MatchFlow.GetCampaignMatch(matchSettings);
+        matchManager.SetNewMatch(match);
+    }
 }

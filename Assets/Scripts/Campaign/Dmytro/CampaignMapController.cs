@@ -13,6 +13,7 @@ public class CampaignMapController : MonoBehaviour
     [SerializeField] private GameObject _player2;
     [SerializeField] private RectTransform _character;
     [SerializeField] private StageScrollController _currentStage;
+    [SerializeField] private CampaignLevelData _levelData;
 
     private void Start()
     {
@@ -59,18 +60,10 @@ public class CampaignMapController : MonoBehaviour
     {
         MatchSettings matchSettings = new MatchSettings.Builder()
             .WithNumberOfPlayers(numberOfPlayers)
-            //.WithLeftShirtIndex(_leftCharacterCustomizationController.ShirtIndex)
-            //.WithLeftShoesIndex(_leftCharacterCustomizationController.ShoesIndex)
             .WithLeftCountryImageIndex(_leftCountryCustomizationController.TeamDataIndex)
-            //.WithLeftSkinToneValue(Random.Range(0f, 1f))
-            //.WithRightShirtIndex(_rightCharacterCustomizationController.ShirtIndex)
-            //.WithRightShoesIndex(_rightCharacterCustomizationController.ShoesIndex)
             .WithRightCountryImageIndex(_rightCountryCustomizationController.TeamDataIndex)
-            //.WithRightSkinToneValue(Random.Range(0f, 1f))
             .WithIsCampaignMatch(true)
-            .WithSpecificPlayers(_player1, _player2, Opponent1, Opponent2)
-            .WithPreMatchCutScene(preMatchCutScene)
-            .WithAfterMatchCutScene(afterMatchCutScene)
+            .WithLevelData(_levelData)
             .Build();
 
         MatchFlow.CreateCampaignMatch(matchSettings, isReplayMatch: true);

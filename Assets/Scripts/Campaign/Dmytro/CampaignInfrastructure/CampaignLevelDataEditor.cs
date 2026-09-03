@@ -12,11 +12,11 @@ public class CampaignLevelDataEditor : Editor
     private SerializedProperty preMatchCutSceneProp;
     private SerializedProperty afterMatchCutSceneProp;
     private SerializedProperty afterMatchDefeatCutSceneProp;
+    private SerializedProperty atutorialMatchProp;
     private SerializedProperty levelGameplaySceneProp;
 
     private void OnEnable()
     {
-        // English comment: Find standard and backing fields properties
         customBehaviourAfterLevelProp = serializedObject.FindProperty("<CustomBehaviourAfterLevel>k__BackingField");
         insertStageProp = serializedObject.FindProperty("insertStage");
 
@@ -27,6 +27,7 @@ public class CampaignLevelDataEditor : Editor
         preMatchCutSceneProp = serializedObject.FindProperty("<PreMatchCutScene>k__BackingField");
         afterMatchCutSceneProp = serializedObject.FindProperty("<AfterMatchCutScene>k__BackingField");
         afterMatchDefeatCutSceneProp = serializedObject.FindProperty("<AfterMatchDefeatCutScene>k__BackingField");
+        atutorialMatchProp = serializedObject.FindProperty("<TutorialMatch>k__BackingField");
         levelGameplaySceneProp = serializedObject.FindProperty("<LevelGameplayScene>k__BackingField");
     }
 
@@ -41,6 +42,7 @@ public class CampaignLevelDataEditor : Editor
         EditorGUILayout.PropertyField(preMatchCutSceneProp);
         EditorGUILayout.PropertyField(afterMatchCutSceneProp);
         EditorGUILayout.PropertyField(afterMatchDefeatCutSceneProp);
+        EditorGUILayout.PropertyField(atutorialMatchProp);
         EditorGUILayout.PropertyField(levelGameplaySceneProp);
 
         EditorGUILayout.Space();

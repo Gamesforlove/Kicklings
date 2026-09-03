@@ -13,6 +13,7 @@ public class CampaignLevelData : ScriptableObject
     [field: SerializeField] public SceneName PreMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName AfterMatchDefeatCutScene { get; private set; } = SceneName.None;
+    [field: SerializeField] public TutorialType TutorialMatch { get; private set; } = TutorialType.None;
     [field: SerializeField] public SceneName LevelGameplayScene { get; private set; } = SceneName.CampaignGameplay; // for minigames
 
     [field: SerializeField] public bool CustomBehaviourAfterLevel { get; private set; } = false;
@@ -23,4 +24,10 @@ public class CampaignLevelData : ScriptableObject
     {
 
     }
+}
+public enum TutorialType
+{
+    None,
+    BasicTutorial,
+    PassToturial
 }

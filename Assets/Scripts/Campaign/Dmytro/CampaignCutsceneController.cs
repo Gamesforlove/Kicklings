@@ -13,7 +13,7 @@ public class CampaignCutsceneController : MonoBehaviour
         }
         else
         {
-            EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignGameplay)); 
+            EventBus<OnLoadScene>.Raise(new OnLoadScene(MatchFlow.Match.Settings.LevelData.LevelGameplayScene)); 
         }
     }
 }

@@ -52,10 +52,7 @@ public class CampaignTracker : MonoBehaviour
             MatchSettings matchSettings = new MatchSettings.Builder()
             .WithNumberOfPlayers(numberOfPlayers)
             .WithIsCampaignMatch(true)
-            .WithSpecificPlayers(levelData.Player1, levelData.Player2, levelData.Opponent1, levelData.Opponent2)
-            .WithPreMatchCutScene(levelData.PreMatchCutScene)
-            .WithAfterMatchCutScene(levelData.AfterMatchCutScene)
-            .WithAfterMatchDefeatCutScene(levelData.AfterMatchDefeatCutScene)
+            .WithLevelData(levelData)
             .Build();
 
             MatchFlow.CreateCampaignMatch(matchSettings);
@@ -101,7 +98,7 @@ public class CampaignTracker : MonoBehaviour
     }
     public void HandleEndgame(bool IsWinner)
     {
-        IncrementAndSaveData();
+        if (IsWinner) IncrementAndSaveData();        
     }
     private void OnApplicationQuit()
     {

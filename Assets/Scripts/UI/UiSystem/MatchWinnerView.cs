@@ -8,8 +8,8 @@ namespace UI.UiSystem
     public class MatchWinnerView : UIViewWithData<FieldSideData>
     {
         [SerializeField] TextMeshProUGUI _text;
-        [SerializeField] GameObject _redWinText;
-        [SerializeField] GameObject _blueWinText;
+        [SerializeField] GameObject _leftWinText;
+        [SerializeField] GameObject _rightWinText;
         
         protected override void OnDataReceived(FieldSideData sideData)
         {
@@ -23,8 +23,8 @@ namespace UI.UiSystem
             */
             switch (sideData.SideType)
             {
-                case FieldSideType.Left: _redWinText.SetActive(true); break;
-                case FieldSideType.Right: _blueWinText.SetActive(true); break;
+                case FieldSideType.Left: _leftWinText.SetActive(true); break;
+                case FieldSideType.Right: _rightWinText.SetActive(true); break;
                 default: break;
             }
 

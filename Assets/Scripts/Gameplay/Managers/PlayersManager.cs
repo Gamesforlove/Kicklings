@@ -39,9 +39,23 @@ namespace Gameplay.Managers
             _matchSettings  = matchSettings;
             if (matchSettings.IsCampaignMatch)
             {
-                SpawnOnePlayerCampaignMode(matchSettings);
+                switch (matchSettings.LevelData.TutorialMatch)
+                {
+                    case TutorialType.None:
+                        SpawnOnePlayerCampaignMode(matchSettings);
+                        break;
+                    case TutorialType.BasicTutorial:
+                        SpawnCampaign();
+                        break;
+                    case TutorialType.PassToturial:
+                        break;
+                    default:
+                        break;
+                }
                 return;
             }
+
+
             switch (matchSettings.NumberOfPlayers)
             {
                 case 0:
@@ -90,17 +104,18 @@ namespace Gameplay.Managers
         }
         void SpawnOnePlayerCampaignMode(MatchSettings matchSettings)
         {
+            CampaignLevelData levelData = matchSettings.LevelData;
             int layer = LayerMask.NameToLayer(EntityLayer.Player1_GoalKeeper.ToString());
-            SpawnPlayer(matchSettings.SpecificPlayers[0], PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0], layer);
+            SpawnPlayer(levelData.Player1, PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0], layer);
 
             layer = LayerMask.NameToLayer(EntityLayer.Player1_Player.ToString());
-            SpawnPlayer(matchSettings.SpecificPlayers[1], PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0], layer);
+            SpawnPlayer(levelData.Player2, PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0], layer);
 
             layer = LayerMask.NameToLayer(EntityLayer.Player2_Player.ToString());
-            SpawnCpu(matchSettings.SpecificPlayers[2], PlayersSpawner.PlayerType.Normal, _spawnPoints[2], layer);
+            SpawnCpu(levelData.Opponent1, PlayersSpawner.PlayerType.Normal, _spawnPoints[2], layer);
 
             layer = LayerMask.NameToLayer(EntityLayer.Player2_GoalKeeper.ToString());
-            SpawnCpu(matchSettings.SpecificPlayers[3], PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], layer);
+            SpawnCpu(levelData.Opponent2, PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], layer);
         }
 
         void SpawnTwoPlayersMode()
