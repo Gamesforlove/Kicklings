@@ -176,12 +176,12 @@ MonoBehaviour:
   - {fileID: 310001}
   - {fileID: 320001}
   - {fileID: 330001}
-  checkpointHalfWidth: 1.3
+  checkpointHalfWidth: 1.4
   checkpointCrossingHalfWidth: 1.05
-  playerMoveSpeed: 18
+  playerMoveSpeed: 17
   ballSprite: {fileID: 21300000, guid: 1a5a4b749e026ee4897bdd0c6a71764a, type: 3}
-  ballMass: 1.35
-  ballLinearDamping: 2.15
+  ballMass: 1.4
+  ballLinearDamping: 2.2
   cameraOrthographicSize: 4.5
   cameraFollowSmoothTime: 0.28
   cameraCheckpointLookAhead: 0.35
