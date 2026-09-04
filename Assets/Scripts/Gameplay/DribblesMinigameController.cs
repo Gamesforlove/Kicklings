@@ -25,11 +25,11 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField, Min(0.25f)] private float checkpointCrossingHalfWidth = 1.05f;
 
     [Header("Player")]
-    [SerializeField, Min(1f)] private float playerMoveSpeed = 11f;
+    [SerializeField, Min(1f)] private float playerMoveSpeed = 18f;
 
     [Header("Ball")]
     [SerializeField] private Sprite ballSprite;
-    [SerializeField, Min(0.1f)] private float ballMass = 1.1f;
+    [SerializeField, Min(0.1f)] private float ballMass = 1.35f;
     [SerializeField, Min(0f)] private float ballLinearDamping = 2.15f;
 
     [Header("Camera")]
@@ -38,6 +38,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField, Range(0f, 0.5f)] private float cameraCheckpointLookAhead = 0.35f;
 
     private readonly List<CheckpointVisual> checkpointVisuals = new List<CheckpointVisual>();
+    private readonly List<GameObject> checkpointEffects = new List<GameObject>();
     private readonly List<Object> generatedAssets = new List<Object>();
 
     private Camera gameplayCamera;
@@ -82,6 +83,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RestartGame();
+            return;
+        }
+
         HandleMouseInput();
         PulseActiveCheckpoint();
     }
@@ -642,6 +649,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
             isFinalCheckpoint ? "Final Checkpoint Burst" : "Checkpoint Burst");
         effectObject.transform.SetParent(transform, false);
         effectObject.transform.position = position;
+        checkpointEffects.Add(effectObject);
 
         ParticleSystem particles = effectObject.AddComponent<ParticleSystem>();
         ParticleSystem.MainModule main = particles.main;
@@ -741,6 +749,44 @@ public sealed class DribblesMinigameController : MonoBehaviour
         ballBody.angularVelocity = 0f;
         ballBody.bodyType = RigidbodyType2D.Kinematic;
         RefreshCheckpointColors();
+    }
+
+    private void RestartGame()
+    {
+        isDragging = false;
+        isComplete = false;
+        nextCheckpointIndex = 0;
+        completionTime = 0f;
+
+        playerBody.position = playerStartPosition;
+        playerBody.rotation = 0f;
+        playerBody.linearVelocity = Vector2.zero;
+        playerBody.angularVelocity = 0f;
+
+        ballBody.bodyType = RigidbodyType2D.Dynamic;
+        ballBody.position = ballStartPosition;
+        ballBody.rotation = 0f;
+        ballBody.linearVelocity = Vector2.zero;
+        ballBody.angularVelocity = 0f;
+        ballBody.WakeUp();
+
+        dragTarget = playerStartPosition;
+        previousBallPosition = ballStartPosition;
+        previousPointerScreenPosition = Input.mousePosition;
+        startTime = Time.unscaledTime;
+
+        for (int i = 0; i < checkpointEffects.Count; i++)
+        {
+            if (checkpointEffects[i] != null)
+            {
+                checkpointEffects[i].SetActive(false);
+                Destroy(checkpointEffects[i]);
+            }
+        }
+
+        checkpointEffects.Clear();
+        RefreshCheckpointColors();
+        SnapCameraToPlayer();
     }
 
     private static string FormatTime(float totalSeconds)
