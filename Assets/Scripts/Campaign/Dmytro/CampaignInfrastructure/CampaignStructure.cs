@@ -1,3 +1,4 @@
+using SaveSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class CampaignStructure : ScriptableObject
 {
     [SerializeField] private List<Stage> stages = new List<Stage>();
     public IReadOnlyList<Stage> Stages => stages;
+    public Stage CurrentStage { get { return stages[SaveLoadGame.LoadedData.stage]; } }
     public void InsertStage(int insertAt, Stage stage) // for narrative branching
     {
         stages.Insert(insertAt, stage);

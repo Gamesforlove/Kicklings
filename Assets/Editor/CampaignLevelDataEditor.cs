@@ -1,7 +1,7 @@
 using UnityEditor;
 
 [CustomEditor(typeof(CampaignLevelData))]
-public class CampaignLevelDataEditor : Editor
+public class CampaignLevelDataEditor : UnityEditor.Editor
 {
     private SerializedProperty customBehaviourAfterLevelProp;
     private SerializedProperty insertStageProp;

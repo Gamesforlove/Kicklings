@@ -7,6 +7,8 @@ public class CampaignTracker : MonoBehaviour
 {
     public static CampaignTracker Instance;
     [SerializeField] private CampaignStructure campaign;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -65,40 +67,21 @@ public class CampaignTracker : MonoBehaviour
             return;
         }
     }
-    public void UpdateAndSaveData()
-    {
-        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch)
-        {
-            return;
-        }
-        if (SaveLoadGame.DataIsLoaded)
-        {
-
-        }
-    }
-    public void IncrementAndSaveData()
-    {
-        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch)
-        {
-            return;
-        }
-        if (SaveLoadGame.DataIsLoaded)
-        {
-            if (SaveLoadGame.LoadedData.PlayerLevel == campaign.Stages[SaveLoadGame.LoadedData.stage].LevelCount - 1)
-            {
-                SaveLoadGame.LoadedData.stage++;
-                SaveLoadGame.LoadedData.PlayerLevel = 0;
-            }
-            else
-            {
-                SaveLoadGame.LoadedData.PlayerLevel ++;
-            }
-            SaveLoadGame.Save(SaveLoadGame.LoadedData);
-        }
-    }
     public void HandleEndgame(bool IsWinner)
     {
-        if (IsWinner) IncrementAndSaveData();        
+        if (!SaveLoadGame.DataIsLoaded)
+        {
+            #if UNITY_EDITOR
+                        Debug.LogError("Data is not loaded");
+            #endif
+        }
+
+        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch)
+        {
+            return;
+        }
+
+        campaign.CurrentStage.EndgameBehavior.Invoke(campaign, IsWinner);        
     }
     private void OnApplicationQuit()
     {

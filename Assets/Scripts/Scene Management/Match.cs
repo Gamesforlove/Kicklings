@@ -97,6 +97,17 @@ namespace Scene_Management
             IsFinished = true;
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
 
+            //temp
+            if (SaveLoadGame.DataIsLoaded && IsPlayerWinner)
+            {
+                if (SaveLoadGame.LoadedData.stage == 0 && SaveLoadGame.LoadedData.PlayerLevel == 4)
+                {
+                    uiManager.ShowCampaignEndPlaceholder();
+                    return;
+                }
+            }
+            //temp
+
             if (IsReplayMatch)
             {
                 EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignMap));
