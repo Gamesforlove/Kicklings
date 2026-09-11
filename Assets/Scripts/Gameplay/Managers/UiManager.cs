@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using CommonDataTypes;
 using EventBusSystem;
 using UI.Gameplay;
 using UI.UiSystem;
@@ -15,9 +16,14 @@ namespace Gameplay.Managers
         [SerializeField] GameplayNotifications _gameplayNotifications;
         [SerializeField] ScoreBoard _scoreBoard;
 
+        [Header("Scoring Challenge")]
+        //[SerializeField] ChallengeResultView _challengeResultView;
+        [SerializeField] ChallengeTimerView _challengeTimerView;
+        [SerializeField] ChallengeScoreBoard _challengeScoreBoard;
+
         void Start()
         {
-            _scoreBoard.ResetScore();
+            _scoreBoard?.ResetScore();
         }
 
         public void ChangeScore(int leftScore, int rightScore)
@@ -45,5 +51,36 @@ namespace Gameplay.Managers
         {
             yield return StartCoroutine(_gameplayNotifications.ShowOutNotification(payload));
         }
+
+        #region Scoring Challenge
+        // Routes through ChallengeScoreBoard, not ScoreBoard — ScoreBoard is built around
+        // two competing teams (left/right text, country flags, MatchFlow.Match.Settings)
+        // and doesn't map onto "single score vs. a target."
+        public void ChangeChallengeScore(int score, int target)
+        {
+            _challengeScoreBoard.ChangeScore(score, target);
+        }
+
+        public void ResetChallengeScore(int target)
+        {
+            _challengeScoreBoard.ResetScore(target);
+        }
+
+        public void InitializeChallengeTimer(float maxTime)
+        {
+            _challengeTimerView?.SetMaxTime(maxTime);
+            _challengeTimerView?.ResetView();
+        }
+
+        public void UpdateTimer(float timeRemaining)
+        {
+            _challengeTimerView?.SetTime(timeRemaining);
+        }
+
+        // public void ShowChallengeResult(bool won, int score, int target)
+        // {
+        //     _uiViewsManager.ShowView(_challengeResultView, new ChallengeResultData(won, score, target));
+        // }
+        #endregion
     }
 }
