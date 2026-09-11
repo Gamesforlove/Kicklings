@@ -1,17 +1,33 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public sealed class DribblesMinigameController : MonoBehaviour
 {
     private const float PlayerRadius = 0.52f;
     private const float BallRadius = 0.42f;
+    private const float ATimeMaximum = 8f;
+    private const float BTimeMaximum = 22f;
+    private const string InterfaceStyleResourcePath = "DribblesUiStyle";
+    private const string AScoreColor = "#63E681";
+    private const string BScoreColor = "#55DDF2";
+    private const string CScoreColor = "#FF765F";
 
     private static readonly Color FieldColor = new Color32(25, 111, 62, 255);
     private static readonly Color FieldLineColor = new Color32(223, 239, 217, 255);
     private static readonly Color PlayerColor = new Color32(45, 126, 214, 255);
     private static readonly Color ActiveCheckpointColor = new Color32(255, 210, 58, 255);
     private static readonly Color InactiveCheckpointColor = new Color32(218, 233, 240, 235);
+    private static readonly Color MainMenuCyan = new Color(0.28773582f, 0.9251927f, 1f, 1f);
+    private static readonly Color GameplayStatusCyan = new Color(0.20f, 0.72f, 0.80f, 1f);
+    private static readonly Color MainMenuPurple = new Color(0.9057876f, 0.5990566f, 1f, 1f);
+    private static readonly Color MainMenuOrange = new Color(1f, 0.66393745f, 0.28627455f, 1f);
+    private static readonly Color MainMenuCyanText = new Color(0f, 0.32959345f, 0.3773585f, 1f);
+    private static readonly Color MainMenuPurpleText = new Color(0.29848632f, 0f, 0.3764706f, 1f);
+    private static readonly Color MainMenuOrangeText = new Color(0.3764706f, 0.19857384f, 0f, 1f);
 
     [Header("Course Layout")]
     [Tooltip("Bottom-left corner of the playable field.")]
@@ -26,8 +42,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField, Min(1)] private int requiredCourseCount = 2;
     [Tooltip("Invoked when the player chooses Finish Minigame after completing every required course.")]
     [SerializeField] private UnityEvent onMinigameCompleted;
-    [Tooltip("Per-course time limits in seconds. Times at or below A earn A; times at or below B earn B.")]
-    [SerializeField] private CourseRatingThresholds[] courseRatingThresholds;
     [SerializeField, Min(0.5f)] private float checkpointHalfWidth = 1.3f;
     [SerializeField, Min(0.25f)] private float checkpointCrossingHalfWidth = 1.05f;
 
@@ -59,6 +73,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private Vector2 dragPointerOffset;
     private Vector2 previousBallPosition;
     private bool isPointerControlActive;
+    private bool isTimerRunning;
     private bool isCourseComplete;
     private bool isMinigameFinished;
     private int currentCourseIndex;
@@ -66,9 +81,35 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private float startTime;
     private float completionTime;
     private Vector3 cameraFollowVelocity;
-    private GUIStyle timerStyle;
-    private GUIStyle completionStyle;
-    private GUIStyle buttonStyle;
+    private DribblesUiStyle interfaceStyle;
+    private TMP_FontAsset mainMenuFont;
+    private TMP_FontAsset mainMenuOutlineFont;
+    private Sprite mainMenuButtonSprite;
+    private Sprite mainMenuButtonOutlineSprite;
+    private Sprite mainMenuPopupSprite;
+    private TextMeshProUGUI timerText;
+    private GameObject startPrompt;
+    private GameObject completionPanel;
+    private RectTransform completionPraiseRect;
+    private RectTransform completionMessageRect;
+    private TextMeshProUGUI completionTitleText;
+    private TextMeshProUGUI completionGradeText;
+    private TextMeshProUGUI completionTimeText;
+    private TextMeshProUGUI completionPraiseText;
+    private TextMeshProUGUI completionMessageText;
+    private GameObject finalScoreboard;
+    private TextMeshProUGUI finalCourseColumn;
+    private TextMeshProUGUI finalScoreColumn;
+    private TextMeshProUGUI finalTimeColumn;
+    private Button retryButton;
+    private Button continueButton;
+    private Button optionalButton;
+    private RectTransform retryButtonRect;
+    private RectTransform continueButtonRect;
+    private RectTransform optionalButtonRect;
+    private TextMeshProUGUI retryButtonText;
+    private TextMeshProUGUI continueButtonText;
+    private TextMeshProUGUI optionalButtonText;
 
     private enum CourseRating
     {
@@ -76,13 +117,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
         C,
         B,
         A
-    }
-
-    [System.Serializable]
-    private sealed class CourseRatingThresholds
-    {
-        [Min(1f)] public float aTime = 45f;
-        [Min(1f)] public float bTime = 75f;
     }
 
     private sealed class CourseRuntime
@@ -111,6 +145,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         CreateCourses();
         CreatePlayer();
         CreateBall();
+        CreateInterface();
         StartCourse(0);
     }
 
@@ -124,6 +159,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         HandleMouseInput();
         PulseActiveCheckpoint();
+        RefreshInterface();
     }
 
     private void LateUpdate()
@@ -140,10 +176,17 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         if (isPointerControlActive)
         {
+            Vector2 currentPosition = playerBody.position;
             Vector2 nextPosition = Vector2.MoveTowards(
-                playerBody.position,
+                currentPosition,
                 dragTarget,
                 playerMoveSpeed * Time.fixedDeltaTime);
+
+            if (!isTimerRunning && (nextPosition - currentPosition).sqrMagnitude > 0.000001f)
+            {
+                isTimerRunning = true;
+                startTime = Time.unscaledTime;
+            }
 
             playerBody.MovePosition(nextPosition);
         }
@@ -160,177 +203,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         ballBody.linearVelocity = ballBody.linearVelocity.normalized * ballMaximumSpeed;
-    }
-
-    private void OnGUI()
-    {
-        if (timerStyle == null)
-        {
-            timerStyle = new GUIStyle(GUI.skin.box)
-            {
-                alignment = TextAnchor.MiddleCenter,
-                fontStyle = FontStyle.Bold
-            };
-            timerStyle.normal.textColor = Color.white;
-
-            completionStyle = new GUIStyle(GUI.skin.label)
-            {
-                alignment = TextAnchor.MiddleCenter,
-                fontStyle = FontStyle.Bold,
-                wordWrap = true
-            };
-            completionStyle.normal.textColor = Color.white;
-
-            buttonStyle = new GUIStyle(GUI.skin.button)
-            {
-                fontStyle = FontStyle.Bold
-            };
-        }
-
-        timerStyle.fontSize = Mathf.Clamp(Screen.height / 30, 22, 36);
-        completionStyle.fontSize = Mathf.Clamp(Screen.height / 38, 18, 28);
-        buttonStyle.fontSize = Mathf.Clamp(Screen.height / 50, 16, 24);
-
-        float elapsed = isCourseComplete ? completionTime : Time.unscaledTime - startTime;
-        string courseLabel = courses.Count > 0
-            ? $"Course {currentCourseIndex + 1} / {courses.Count}"
-            : "No Courses Configured";
-        string prefix = isCourseComplete ? "Complete!  " : "Time  ";
-        string text = isMinigameFinished
-            ? "Minigame Complete!"
-            : courseLabel + "    " + prefix + FormatTime(elapsed);
-        float timerWidth = Mathf.Min(680f, Screen.width - 32f);
-        Rect timerRect = new Rect((Screen.width - timerWidth) * 0.5f, 16f, timerWidth, 84f);
-        GUI.Label(timerRect, text, timerStyle);
-
-        if (isMinigameFinished)
-        {
-            DrawFinishedPanel();
-            return;
-        }
-
-        if (!isCourseComplete || courses.Count == 0)
-        {
-            return;
-        }
-
-        float panelWidth = Mathf.Min(680f, Screen.width - 40f);
-        bool hasNextRequiredCourse = currentCourseIndex + 1 < GetRequiredCourseCount();
-        bool completedLastRequiredCourse = currentCourseIndex == GetRequiredCourseCount() - 1;
-        bool isOptionalCourse = currentCourseIndex >= GetRequiredCourseCount();
-        bool hasNextOptionalCourse = isOptionalCourse && currentCourseIndex < courses.Count - 1;
-        bool canPlayOptionalCourse = completedLastRequiredCourse && currentCourseIndex < courses.Count - 1;
-        float panelHeight = canPlayOptionalCourse || hasNextOptionalCourse ? 330f : 250f;
-        Rect panelRect = new Rect(
-            (Screen.width - panelWidth) * 0.5f,
-            (Screen.height - panelHeight) * 0.5f,
-            panelWidth,
-            panelHeight);
-        GUI.Box(panelRect, GUIContent.none);
-
-        CourseRuntime completedCourse = GetCurrentCourse();
-        string ratingText = completedCourse != null
-            ? GetRatingText(completedCourse.Rating)
-            : string.Empty;
-        string completionMessage;
-        if (canPlayOptionalCourse)
-        {
-            completionMessage =
-                $"Course {currentCourseIndex + 1}: {FormatTime(completionTime)}\n" +
-                ratingText + "\n" +
-                "All required courses are complete.\n" +
-                $"Finish now or play optional Course {currentCourseIndex + 2}.";
-        }
-        else if (isOptionalCourse)
-        {
-            completionMessage =
-                $"Optional Course {currentCourseIndex + 1}: {FormatTime(completionTime)}\n{ratingText}";
-        }
-        else
-        {
-            completionMessage =
-                $"Course {currentCourseIndex + 1}: {FormatTime(completionTime)}\n{ratingText}";
-        }
-
-        GUI.Label(
-            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 140f),
-            completionMessage,
-            completionStyle);
-
-        float buttonWidth = (panelRect.width - 63f) * 0.5f;
-        bool showOptionalButton = canPlayOptionalCourse || hasNextOptionalCourse;
-        float primaryButtonY = panelRect.yMax - (showOptionalButton ? 142f : 76f);
-        Rect retryRect = new Rect(panelRect.x + 24f, primaryButtonY, buttonWidth, 54f);
-        Rect continueRect = new Rect(retryRect.xMax + 15f, retryRect.y, buttonWidth, 54f);
-
-        if (GUI.Button(retryRect, "Retry Course", buttonStyle))
-        {
-            RestartCurrentCourse();
-        }
-
-        if (hasNextRequiredCourse)
-        {
-            if (GUI.Button(continueRect, "Next Course", buttonStyle))
-            {
-                StartCourse(currentCourseIndex + 1);
-            }
-        }
-        else if (completedLastRequiredCourse || isOptionalCourse)
-        {
-            if (GUI.Button(continueRect, "Finish Minigame", buttonStyle))
-            {
-                FinishMinigame();
-            }
-        }
-
-        if (showOptionalButton)
-        {
-            Rect optionalRect = new Rect(
-                panelRect.x + 24f,
-                panelRect.yMax - 76f,
-                panelRect.width - 48f,
-                54f);
-            if (GUI.Button(optionalRect, "Play Optional Course", buttonStyle))
-            {
-                StartCourse(currentCourseIndex + 1);
-            }
-        }
-    }
-
-    private void DrawFinishedPanel()
-    {
-        float panelWidth = Mathf.Min(680f, Screen.width - 40f);
-        const float panelHeight = 250f;
-        Rect panelRect = new Rect(
-            (Screen.width - panelWidth) * 0.5f,
-            (Screen.height - panelHeight) * 0.5f,
-            panelWidth,
-            panelHeight);
-        GUI.Box(panelRect, GUIContent.none);
-
-        GUI.Label(
-            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 140f),
-            BuildRatingSummary(),
-            completionStyle);
-
-        bool hasOptionalCourse = courses.Count > GetRequiredCourseCount();
-        float buttonWidth = hasOptionalCourse
-            ? (panelRect.width - 63f) * 0.5f
-            : panelRect.width - 48f;
-        Rect replayRect = new Rect(panelRect.x + 24f, panelRect.yMax - 76f, buttonWidth, 54f);
-        if (GUI.Button(replayRect, "Replay Required Courses", buttonStyle))
-        {
-            StartCourse(0);
-        }
-
-        if (hasOptionalCourse)
-        {
-            Rect optionalRect = new Rect(replayRect.xMax + 15f, replayRect.y, buttonWidth, 54f);
-            if (GUI.Button(optionalRect, "Play Optional Course", buttonStyle))
-            {
-                StartCourse(GetRequiredCourseCount());
-            }
-        }
     }
 
     private void OnDestroy()
@@ -381,6 +253,632 @@ public sealed class DribblesMinigameController : MonoBehaviour
         Gizmos.DrawWireSphere(playerStartPosition, PlayerRadius);
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(ballStartPosition, BallRadius);
+    }
+
+    private void CreateInterface()
+    {
+        ResolveInterfaceStyle();
+
+        GameObject canvasObject = new GameObject(
+            "Dribbles UI",
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler),
+            typeof(GraphicRaycaster));
+        canvasObject.transform.SetParent(transform, false);
+
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 100;
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        scaler.referencePixelsPerUnit = 100f;
+
+        if (FindFirstObjectByType<EventSystem>() == null)
+        {
+            GameObject eventSystemObject = new GameObject(
+                "Dribbles EventSystem",
+                typeof(EventSystem),
+                typeof(StandaloneInputModule));
+            eventSystemObject.transform.SetParent(transform, false);
+        }
+
+        RectTransform statusRect = CreateUiRect(
+            "Status Banner",
+            canvasObject.transform,
+            new Vector2(0.5f, 1f),
+            new Vector2(0.5f, 1f),
+            new Vector2(0.5f, 1f),
+            new Vector2(0f, -24f),
+            new Vector2(820f, 104f));
+        Image statusImage = statusRect.gameObject.AddComponent<Image>();
+        statusImage.sprite = mainMenuButtonSprite;
+        statusImage.type = mainMenuButtonSprite != null ? Image.Type.Sliced : Image.Type.Simple;
+        statusImage.color = GameplayStatusCyan;
+        statusImage.raycastTarget = false;
+
+        RectTransform statusOutlineRect = CreateUiRect(
+            "Outline",
+            statusRect,
+            Vector2.zero,
+            Vector2.one,
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            new Vector2(-12f, 12f));
+        Image statusOutline = statusOutlineRect.gameObject.AddComponent<Image>();
+        statusOutline.sprite = mainMenuButtonOutlineSprite;
+        statusOutline.type = mainMenuButtonOutlineSprite != null ? Image.Type.Sliced : Image.Type.Simple;
+        statusOutline.color = Color.white;
+        statusOutline.raycastTarget = false;
+
+        timerText = CreateUiText(
+            "Timer",
+            statusRect,
+            Vector2.zero,
+            Vector2.one,
+            Vector2.zero,
+            new Vector2(-56f, -18f),
+            mainMenuFont,
+            MainMenuCyanText,
+            24f,
+            44f,
+            false);
+
+        RectTransform startPromptRect = CreateUiRect(
+            "Start Prompt",
+            canvasObject.transform,
+            new Vector2(0.5f, 0f),
+            new Vector2(0.5f, 0f),
+            new Vector2(0.5f, 0f),
+            new Vector2(0f, 200f),
+            new Vector2(700f, 106f));
+        Image startPromptImage = startPromptRect.gameObject.AddComponent<Image>();
+        startPromptImage.sprite = mainMenuButtonSprite;
+        startPromptImage.type = mainMenuButtonSprite != null ? Image.Type.Sliced : Image.Type.Simple;
+        startPromptImage.color = GameplayStatusCyan;
+        startPromptImage.raycastTarget = false;
+
+        RectTransform startPromptOutlineRect = CreateUiRect(
+            "Outline",
+            startPromptRect,
+            Vector2.zero,
+            Vector2.one,
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            new Vector2(-12f, 12f));
+        Image startPromptOutline = startPromptOutlineRect.gameObject.AddComponent<Image>();
+        startPromptOutline.sprite = mainMenuButtonOutlineSprite;
+        startPromptOutline.type = mainMenuButtonOutlineSprite != null ? Image.Type.Sliced : Image.Type.Simple;
+        startPromptOutline.color = Color.white;
+        startPromptOutline.raycastTarget = false;
+
+        TextMeshProUGUI startPromptText = CreateUiText(
+            "Instructions",
+            startPromptRect,
+            Vector2.zero,
+            Vector2.one,
+            Vector2.zero,
+            new Vector2(-44f, -18f),
+            mainMenuFont,
+            Color.white,
+            20f,
+            32f,
+            true);
+        startPromptText.text =
+            "<color=#FFFFFF>MOVE CURSOR TO PLAYER</color>\n" +
+            "<color=#FFD23A>THEN CLICK TO START</color>";
+        startPrompt = startPromptRect.gameObject;
+        startPrompt.SetActive(false);
+
+        RectTransform backdropRect = CreateUiRect(
+            "Completion Backdrop",
+            canvasObject.transform,
+            Vector2.zero,
+            Vector2.one,
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            Vector2.zero);
+        Image backdropImage = backdropRect.gameObject.AddComponent<Image>();
+        backdropImage.color = new Color(0f, 0f, 0f, 0.72f);
+        backdropImage.raycastTarget = true;
+        completionPanel = backdropRect.gameObject;
+
+        Vector2 popupSize = new Vector2(900f, 1100f);
+        if (mainMenuPopupSprite != null && mainMenuPopupSprite.rect.width > 0f)
+        {
+            popupSize.y = popupSize.x * mainMenuPopupSprite.rect.height / mainMenuPopupSprite.rect.width;
+        }
+
+        RectTransform panelRect = CreateUiRect(
+            "Football Popup",
+            backdropRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            popupSize);
+        Image panelImage = panelRect.gameObject.AddComponent<Image>();
+        panelImage.sprite = mainMenuPopupSprite;
+        panelImage.type = Image.Type.Simple;
+        panelImage.preserveAspect = mainMenuPopupSprite != null;
+        panelImage.color = mainMenuPopupSprite != null
+            ? Color.white
+            : new Color(0.18f, 0.25f, 0.28f, 0.98f);
+        panelImage.raycastTarget = true;
+
+        completionTitleText = CreateUiText(
+            "Title",
+            panelRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 390f),
+            new Vector2(720f, 112f),
+            mainMenuOutlineFont != null ? mainMenuOutlineFont : mainMenuFont,
+            Color.white,
+            30f,
+            50f,
+            false);
+
+        completionGradeText = CreateUiText(
+            "Grade",
+            panelRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 160f),
+            new Vector2(640f, 300f),
+            mainMenuFont,
+            Color.white,
+            180f,
+            250f,
+            false);
+        completionGradeText.fontStyle = FontStyles.Normal;
+        completionGradeText.fontWeight = FontWeight.Regular;
+        Material gradeMaterial = CreateGradeFontMaterial();
+        if (gradeMaterial != null)
+        {
+            completionGradeText.fontSharedMaterial = gradeMaterial;
+        }
+
+        completionTimeText = CreateUiText(
+            "Course Time",
+            panelRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, -40f),
+            new Vector2(680f, 76f),
+            mainMenuFont,
+            Color.white,
+            34f,
+            48f,
+            false);
+
+        completionPraiseText = CreateUiText(
+            "Praise",
+            panelRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 80f),
+            new Vector2(780f, 64f),
+            mainMenuFont,
+            Color.white,
+            36f,
+            50f,
+            false);
+        completionPraiseRect = completionPraiseText.rectTransform;
+
+        completionMessageText = CreateUiText(
+            "Bonus Message",
+            panelRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 0f),
+            new Vector2(720f, 72f),
+            mainMenuFont,
+            ActiveCheckpointColor,
+            18f,
+            28f,
+            true);
+        completionMessageRect = completionMessageText.rectTransform;
+        completionPraiseText.gameObject.SetActive(false);
+        completionMessageText.gameObject.SetActive(false);
+
+        RectTransform finalScoreboardRect = CreateUiRect(
+            "Final Scoreboard",
+            panelRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0f, 35f),
+            new Vector2(810f, 360f));
+        finalScoreboard = finalScoreboardRect.gameObject;
+
+        finalCourseColumn = CreateUiText(
+            "Course Column",
+            finalScoreboardRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(-270f, 0f),
+            new Vector2(250f, 360f),
+            mainMenuFont,
+            Color.white,
+            34f,
+            34f,
+            false);
+        finalScoreColumn = CreateUiText(
+            "Score Column",
+            finalScoreboardRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            new Vector2(220f, 360f),
+            mainMenuFont,
+            Color.white,
+            34f,
+            34f,
+            false);
+        finalTimeColumn = CreateUiText(
+            "Time Column",
+            finalScoreboardRect,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(270f, 0f),
+            new Vector2(270f, 360f),
+            mainMenuFont,
+            Color.white,
+            34f,
+            34f,
+            false);
+        finalScoreboard.SetActive(false);
+
+        retryButton = CreateMenuButton(
+            "Retry Button",
+            panelRect,
+            MainMenuPurple,
+            MainMenuPurpleText,
+            out retryButtonRect,
+            out retryButtonText);
+        continueButton = CreateMenuButton(
+            "Continue Button",
+            panelRect,
+            MainMenuCyan,
+            MainMenuCyanText,
+            out continueButtonRect,
+            out continueButtonText);
+        optionalButton = CreateMenuButton(
+            "Optional Course Button",
+            panelRect,
+            MainMenuOrange,
+            MainMenuOrangeText,
+            out optionalButtonRect,
+            out optionalButtonText);
+
+        retryButton.onClick.AddListener(HandleRetryButton);
+        continueButton.onClick.AddListener(HandleContinueButton);
+        optionalButton.onClick.AddListener(HandleOptionalButton);
+        completionPanel.SetActive(false);
+    }
+
+    private void ResolveInterfaceStyle()
+    {
+        interfaceStyle = Resources.Load<DribblesUiStyle>(InterfaceStyleResourcePath);
+        if (interfaceStyle == null)
+        {
+            return;
+        }
+
+        mainMenuFont = interfaceStyle.MainMenuFont;
+        mainMenuOutlineFont = interfaceStyle.MainMenuOutlineFont;
+        mainMenuButtonSprite = interfaceStyle.MainMenuButtonSprite;
+        mainMenuButtonOutlineSprite = interfaceStyle.MainMenuButtonOutlineSprite;
+        mainMenuPopupSprite = interfaceStyle.MainMenuPopupSprite;
+    }
+
+    private Material CreateGradeFontMaterial()
+    {
+        if (mainMenuFont == null || mainMenuFont.material == null)
+        {
+            return null;
+        }
+
+        Material gradeMaterial = new Material(mainMenuFont.material)
+        {
+            name = "Dribbles Grade Font Material"
+        };
+        if (gradeMaterial.HasProperty("_FaceDilate"))
+        {
+            gradeMaterial.SetFloat("_FaceDilate", -0.1f);
+        }
+
+        if (gradeMaterial.HasProperty("_OutlineWidth"))
+        {
+            gradeMaterial.SetFloat("_OutlineWidth", 0.12f);
+        }
+
+        if (gradeMaterial.HasProperty("_OutlineColor"))
+        {
+            gradeMaterial.SetColor("_OutlineColor", Color.black);
+        }
+
+        gradeMaterial.EnableKeyword("OUTLINE_ON");
+        gradeMaterial.DisableKeyword("UNDERLAY_ON");
+
+        generatedAssets.Add(gradeMaterial);
+        return gradeMaterial;
+    }
+
+    private Button CreateMenuButton(
+        string objectName,
+        Transform parent,
+        Color fillColor,
+        Color textColor,
+        out RectTransform buttonRect,
+        out TextMeshProUGUI label)
+    {
+        buttonRect = CreateUiRect(
+            objectName,
+            parent,
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            new Vector2(390f, 94f));
+
+        Image fillImage = buttonRect.gameObject.AddComponent<Image>();
+        fillImage.sprite = mainMenuButtonSprite;
+        fillImage.type = mainMenuButtonSprite != null ? Image.Type.Sliced : Image.Type.Simple;
+        fillImage.color = fillColor;
+
+        Button button = buttonRect.gameObject.AddComponent<Button>();
+        button.targetGraphic = fillImage;
+        button.transition = Selectable.Transition.ColorTint;
+        ColorBlock colors = button.colors;
+        colors.normalColor = Color.white;
+        colors.highlightedColor = new Color(0.82f, 0.82f, 0.82f, 1f);
+        colors.pressedColor = new Color(0.62f, 0.62f, 0.62f, 1f);
+        colors.selectedColor = Color.white;
+        colors.disabledColor = new Color(0.78f, 0.78f, 0.78f, 0.5f);
+        colors.fadeDuration = 0.1f;
+        button.colors = colors;
+
+        RectTransform outlineRect = CreateUiRect(
+            "Outline",
+            buttonRect,
+            Vector2.zero,
+            Vector2.one,
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero,
+            new Vector2(-12f, 12f));
+        Image outlineImage = outlineRect.gameObject.AddComponent<Image>();
+        outlineImage.sprite = mainMenuButtonOutlineSprite;
+        outlineImage.type = mainMenuButtonOutlineSprite != null ? Image.Type.Sliced : Image.Type.Simple;
+        outlineImage.color = Color.white;
+        outlineImage.raycastTarget = false;
+
+        label = CreateUiText(
+            "Text (TMP)",
+            buttonRect,
+            Vector2.zero,
+            Vector2.one,
+            Vector2.zero,
+            new Vector2(-48f, -22f),
+            mainMenuFont,
+            textColor,
+            22f,
+            42f,
+            false);
+        return button;
+    }
+
+    private static RectTransform CreateUiRect(
+        string objectName,
+        Transform parent,
+        Vector2 anchorMin,
+        Vector2 anchorMax,
+        Vector2 pivot,
+        Vector2 anchoredPosition,
+        Vector2 sizeDelta)
+    {
+        GameObject gameObject = new GameObject(objectName, typeof(RectTransform));
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+        rectTransform.SetParent(parent, false);
+        rectTransform.anchorMin = anchorMin;
+        rectTransform.anchorMax = anchorMax;
+        rectTransform.pivot = pivot;
+        rectTransform.anchoredPosition = anchoredPosition;
+        rectTransform.sizeDelta = sizeDelta;
+        rectTransform.localScale = Vector3.one;
+        return rectTransform;
+    }
+
+    private static TextMeshProUGUI CreateUiText(
+        string objectName,
+        Transform parent,
+        Vector2 anchorMin,
+        Vector2 anchorMax,
+        Vector2 anchoredPosition,
+        Vector2 sizeDelta,
+        TMP_FontAsset font,
+        Color color,
+        float minimumFontSize,
+        float maximumFontSize,
+        bool wrap)
+    {
+        RectTransform rectTransform = CreateUiRect(
+            objectName,
+            parent,
+            anchorMin,
+            anchorMax,
+            new Vector2(0.5f, 0.5f),
+            anchoredPosition,
+            sizeDelta);
+        TextMeshProUGUI text = rectTransform.gameObject.AddComponent<TextMeshProUGUI>();
+        if (font != null)
+        {
+            text.font = font;
+        }
+
+        text.color = color;
+        text.alignment = TextAlignmentOptions.Center;
+        text.enableAutoSizing = true;
+        text.fontSize = maximumFontSize;
+        text.fontSizeMin = minimumFontSize;
+        text.fontSizeMax = maximumFontSize;
+        text.textWrappingMode = wrap ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
+        text.overflowMode = TextOverflowModes.Truncate;
+        text.richText = true;
+        text.raycastTarget = false;
+        return text;
+    }
+
+    private void RefreshInterface()
+    {
+        if (timerText == null || completionPanel == null)
+        {
+            return;
+        }
+
+        float elapsed = isCourseComplete
+            ? completionTime
+            : isTimerRunning ? Time.unscaledTime - startTime : 0f;
+        string courseValue = courses.Count > 0
+            ? $"{currentCourseIndex + 1} / {courses.Count}"
+            : "NONE";
+        timerText.text = isMinigameFinished
+            ? "<color=#FFFFFF>MINIGAME COMPLETE!</color>"
+            : FormatScoreboardValue("COURSE", courseValue) +
+              "    " + FormatScoreboardValue("TIME", FormatTime(elapsed));
+
+        bool showCompletionPanel = isCourseComplete && courses.Count > 0;
+        completionPanel.SetActive(showCompletionPanel);
+        if (!showCompletionPanel)
+        {
+            return;
+        }
+
+        if (isMinigameFinished)
+        {
+            ConfigureFinishedPanel();
+        }
+        else
+        {
+            ConfigureCourseCompletionPanel();
+        }
+    }
+
+    private void ConfigureCourseCompletionPanel()
+    {
+        bool hasNextRequiredCourse = currentCourseIndex + 1 < GetRequiredCourseCount();
+        bool completedLastRequiredCourse = currentCourseIndex == GetRequiredCourseCount() - 1;
+        bool isOptionalCourse = currentCourseIndex >= GetRequiredCourseCount();
+        bool hasNextOptionalCourse = isOptionalCourse && currentCourseIndex < courses.Count - 1;
+        bool canPlayOptionalCourse = completedLastRequiredCourse && currentCourseIndex < courses.Count - 1;
+        bool showOptionalButton = canPlayOptionalCourse || hasNextOptionalCourse;
+
+        completionTitleText.text = $"COURSE {currentCourseIndex + 1} COMPLETE!";
+        completionGradeText.gameObject.SetActive(true);
+        completionTimeText.gameObject.SetActive(true);
+        finalScoreboard.SetActive(false);
+        CourseRuntime completedCourse = GetCurrentCourse();
+        completionGradeText.text = completedCourse != null
+            ? GetScoreGrade(completedCourse.Rating)
+            : "-";
+        completionTimeText.text =
+            $"<color=#FFFFFF>{FormatTime(completionTime)}</color> " +
+            "<color=#FFD23A>seconds</color>";
+        completionPraiseText.gameObject.SetActive(canPlayOptionalCourse);
+        completionMessageText.gameObject.SetActive(canPlayOptionalCourse);
+
+        if (canPlayOptionalCourse)
+        {
+            SetRectLayout(completionPraiseRect, new Vector2(780f, 64f), new Vector2(0f, -160f));
+            SetRectLayout(completionMessageRect, new Vector2(720f, 72f), new Vector2(0f, -225f));
+            completionPraiseText.text = "Good job!";
+            completionMessageText.text = "There's one BONUS course for more points!";
+        }
+
+        retryButton.gameObject.SetActive(true);
+        continueButton.gameObject.SetActive(true);
+        optionalButton.gameObject.SetActive(showOptionalButton);
+        retryButtonText.text = "Retry Course";
+        continueButtonText.text = hasNextRequiredCourse ? "Next Course" : "Finish Minigame";
+        optionalButtonText.text = "Play Bonus Course";
+
+        float primaryRowY = showOptionalButton ? -350f : -475f;
+        SetRectLayout(retryButtonRect, new Vector2(390f, 94f), new Vector2(-210f, primaryRowY));
+        SetRectLayout(continueButtonRect, new Vector2(390f, 94f), new Vector2(210f, primaryRowY));
+        if (showOptionalButton)
+        {
+            SetRectLayout(optionalButtonRect, new Vector2(810f, 94f), new Vector2(0f, -475f));
+        }
+    }
+
+    private void ConfigureFinishedPanel()
+    {
+        bool hasOptionalCourse = courses.Count > GetRequiredCourseCount();
+        completionTitleText.text = "DRIBBLES COMPLETE!";
+        completionGradeText.gameObject.SetActive(false);
+        completionTimeText.gameObject.SetActive(false);
+        finalScoreboard.SetActive(true);
+        PopulateFinalScoreboard();
+        completionPraiseText.gameObject.SetActive(true);
+        completionMessageText.gameObject.SetActive(false);
+        completionPraiseText.text = "Good job!";
+        SetRectLayout(completionPraiseRect, new Vector2(780f, 70f), new Vector2(0f, 300f));
+
+        retryButton.gameObject.SetActive(true);
+        continueButton.gameObject.SetActive(false);
+        optionalButton.gameObject.SetActive(hasOptionalCourse);
+        retryButtonText.text = "Replay Main Courses";
+        optionalButtonText.text = "Play Bonus Course";
+
+        if (hasOptionalCourse)
+        {
+            SetRectLayout(retryButtonRect, new Vector2(390f, 94f), new Vector2(-210f, -475f));
+            SetRectLayout(optionalButtonRect, new Vector2(390f, 94f), new Vector2(210f, -475f));
+        }
+        else
+        {
+            SetRectLayout(retryButtonRect, new Vector2(810f, 94f), new Vector2(0f, -475f));
+        }
+    }
+
+    private static void SetRectLayout(RectTransform rectTransform, Vector2 size, Vector2 position)
+    {
+        rectTransform.sizeDelta = size;
+        rectTransform.anchoredPosition = position;
+    }
+
+    private void HandleRetryButton()
+    {
+        if (isMinigameFinished)
+        {
+            StartCourse(0);
+            return;
+        }
+
+        RestartCurrentCourse();
+    }
+
+    private void HandleContinueButton()
+    {
+        if (currentCourseIndex + 1 < GetRequiredCourseCount())
+        {
+            StartCourse(currentCourseIndex + 1);
+            return;
+        }
+
+        FinishMinigame();
+    }
+
+    private void HandleOptionalButton()
+    {
+        int optionalCourseIndex = isMinigameFinished
+            ? GetRequiredCourseCount()
+            : currentCourseIndex + 1;
+        StartCourse(optionalCourseIndex);
     }
 
     private void SetupCamera()
@@ -445,7 +943,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         float halfHeight = gameplayCamera.orthographicSize;
         float halfWidth = halfHeight * gameplayCamera.aspect;
         float cameraX = ClampCameraAxis(followTarget.x, fieldMinimum.x, fieldMaximum.x, halfWidth);
-        float cameraY = ClampCameraAxis(followTarget.y, fieldMinimum.y, fieldMaximum.y, halfHeight);
+        float cameraY = playerPosition.y;
         return new Vector3(cameraX, cameraY, -10f);
     }
 
@@ -800,6 +1298,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
                 isPointerControlActive = true;
                 dragTarget = playerBody.position;
                 dragPointerOffset = playerBody.position - pointerWorldPosition;
+                startPrompt?.SetActive(false);
             }
         }
 
@@ -960,14 +1459,15 @@ public sealed class DribblesMinigameController : MonoBehaviour
     {
         isCourseComplete = true;
         isPointerControlActive = false;
-        completionTime = Time.unscaledTime - startTime;
+        startPrompt?.SetActive(false);
+        completionTime = isTimerRunning ? Time.unscaledTime - startTime : 0f;
 
         CourseRuntime completedCourse = GetCurrentCourse();
         if (completedCourse != null)
         {
             completedCourse.HasCompletion = true;
             completedCourse.CompletionTime = completionTime;
-            completedCourse.Rating = CalculateCourseRating(currentCourseIndex, completionTime);
+            completedCourse.Rating = CalculateCourseRating(completionTime);
         }
 
         playerBody.linearVelocity = Vector2.zero;
@@ -1004,6 +1504,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         currentCourseIndex = Mathf.Clamp(courseIndex, 0, courses.Count - 1);
         ClearCourseResultsFrom(currentCourseIndex);
         isPointerControlActive = false;
+        isTimerRunning = false;
         isCourseComplete = false;
         isMinigameFinished = false;
         nextCheckpointIndex = 0;
@@ -1024,7 +1525,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
         dragTarget = playerStartPosition;
         previousBallPosition = ballStartPosition;
         dragPointerOffset = Vector2.zero;
-        startTime = Time.unscaledTime;
+        startTime = 0f;
+        startPrompt?.SetActive(true);
 
         ClearCheckpointEffects();
         RefreshCourseState();
@@ -1072,44 +1574,21 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
     }
 
-    private CourseRating CalculateCourseRating(int courseIndex, float courseTime)
+    private static CourseRating CalculateCourseRating(float courseTime)
     {
-        float aTime = 45f;
-        float bTime = 75f;
-        if (courseRatingThresholds != null && courseIndex >= 0 &&
-            courseIndex < courseRatingThresholds.Length && courseRatingThresholds[courseIndex] != null)
-        {
-            CourseRatingThresholds thresholds = courseRatingThresholds[courseIndex];
-            aTime = Mathf.Max(1f, thresholds.aTime);
-            bTime = Mathf.Max(aTime, thresholds.bTime);
-        }
-
-        if (courseTime <= aTime)
+        if (courseTime <= ATimeMaximum)
         {
             return CourseRating.A;
         }
 
-        return courseTime <= bTime ? CourseRating.B : CourseRating.C;
+        return courseTime <= BTimeMaximum ? CourseRating.B : CourseRating.C;
     }
 
-    private static string GetRatingText(CourseRating rating)
+    private void PopulateFinalScoreboard()
     {
-        switch (rating)
-        {
-            case CourseRating.A:
-                return "Rating A - Great!";
-            case CourseRating.B:
-                return "Rating B - Good!";
-            case CourseRating.C:
-                return "Rating C - Complete";
-            default:
-                return "Not completed";
-        }
-    }
-
-    private string BuildRatingSummary()
-    {
-        string summary = $"All {GetRequiredCourseCount()} required courses are complete.";
+        string courseColumn = "<color=#FFD23A>COURSE:</color>";
+        string scoreColumn = "<color=#FFD23A>SCORE:</color>";
+        string timeColumn = "<color=#FFD23A>TIME:</color>";
         for (int courseIndex = 0; courseIndex < courses.Count; courseIndex++)
         {
             CourseRuntime course = courses[courseIndex];
@@ -1118,13 +1597,34 @@ public sealed class DribblesMinigameController : MonoBehaviour
                 continue;
             }
 
-            string optionalLabel = courseIndex >= GetRequiredCourseCount() ? " (Optional)" : string.Empty;
-            summary +=
-                $"\nCourse {courseIndex + 1}{optionalLabel}: {GetRatingText(course.Rating)} " +
-                $"- {FormatTime(course.CompletionTime)}";
+            courseColumn += "\n" + (courseIndex + 1);
+            scoreColumn += "\n" + GetScoreGrade(course.Rating);
+            timeColumn += "\n" + FormatTime(course.CompletionTime);
         }
 
-        return summary;
+        finalCourseColumn.text = courseColumn;
+        finalScoreColumn.text = scoreColumn;
+        finalTimeColumn.text = timeColumn;
+    }
+
+    private static string GetScoreGrade(CourseRating rating)
+    {
+        switch (rating)
+        {
+            case CourseRating.A:
+                return $"<color={AScoreColor}>A</color>";
+            case CourseRating.B:
+                return $"<color={BScoreColor}>B</color>";
+            case CourseRating.C:
+                return $"<color={CScoreColor}>C</color>";
+            default:
+                return "-";
+        }
+    }
+
+    private static string FormatScoreboardValue(string label, string value)
+    {
+        return $"<color=#FFD23A>{label}:</color> <color=#FFFFFF>{value}</color>";
     }
 
     private int GetRequiredCourseCount()
@@ -1136,8 +1636,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private static string FormatTime(float totalSeconds)
     {
-        int minutes = Mathf.FloorToInt(totalSeconds / 60f);
-        float seconds = totalSeconds - (minutes * 60f);
-        return $"{minutes:00}:{seconds:00.0}";
+        return $"{Mathf.Max(0f, totalSeconds):00.0}";
     }
 }
