@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public sealed class DribblesMinigameController : MonoBehaviour
 {
@@ -19,8 +20,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField] private Vector2 fieldMaximum = new Vector2(9.6f, 6.35f);
     [SerializeField] private Vector2 playerStartPosition = new Vector2(0f, -5.65f);
     [SerializeField] private Vector2 ballStartPosition = new Vector2(0f, -4.85f);
-    [Tooltip("Scene transforms crossed by the ball in array order. Keep them as children of this object.")]
-    [SerializeField] private Transform[] checkpoints;
+    [Tooltip("Course parents in play order. Each direct child is a checkpoint, crossed in hierarchy order.")]
+    [SerializeField] private Transform[] courseRoots;
+    [Tooltip("Courses at the start of the list that must be completed before the minigame can finish.")]
+    [SerializeField, Min(1)] private int requiredCourseCount = 2;
+    [Tooltip("Invoked when the player chooses Finish Minigame after completing every required course.")]
+    [SerializeField] private UnityEvent onMinigameCompleted;
     [SerializeField, Min(0.5f)] private float checkpointHalfWidth = 1.3f;
     [SerializeField, Min(0.25f)] private float checkpointCrossingHalfWidth = 1.05f;
 
@@ -31,13 +36,14 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField] private Sprite ballSprite;
     [SerializeField, Min(0.1f)] private float ballMass = 1.35f;
     [SerializeField, Min(0f)] private float ballLinearDamping = 2.15f;
+    [SerializeField, Min(0.1f)] private float ballMaximumSpeed = 7f;
 
     [Header("Camera")]
     [SerializeField, Min(1f)] private float cameraOrthographicSize = 6f;
     [SerializeField, Min(0.01f)] private float cameraFollowSmoothTime = 0.28f;
     [SerializeField, Range(0f, 0.5f)] private float cameraCheckpointLookAhead = 0.35f;
 
-    private readonly List<CheckpointVisual> checkpointVisuals = new List<CheckpointVisual>();
+    private readonly List<CourseRuntime> courses = new List<CourseRuntime>();
     private readonly List<GameObject> checkpointEffects = new List<GameObject>();
     private readonly List<Object> generatedAssets = new List<Object>();
 
@@ -48,15 +54,26 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private Rigidbody2D playerBody;
     private Rigidbody2D ballBody;
     private Vector2 dragTarget;
-    private Vector3 previousPointerScreenPosition;
+    private Vector2 dragPointerOffset;
     private Vector2 previousBallPosition;
-    private bool isDragging;
-    private bool isComplete;
+    private bool isPointerControlActive;
+    private bool isCourseComplete;
+    private bool isMinigameFinished;
+    private int currentCourseIndex;
     private int nextCheckpointIndex;
     private float startTime;
     private float completionTime;
     private Vector3 cameraFollowVelocity;
     private GUIStyle timerStyle;
+    private GUIStyle completionStyle;
+    private GUIStyle buttonStyle;
+
+    private sealed class CourseRuntime
+    {
+        public Transform Root;
+        public readonly List<Transform> Checkpoints = new List<Transform>();
+        public readonly List<CheckpointVisual> Visuals = new List<CheckpointVisual>();
+    }
 
     private sealed class CheckpointVisual
     {
@@ -71,21 +88,17 @@ public sealed class DribblesMinigameController : MonoBehaviour
         CreateShapeSprites();
         CreateParticleMaterial();
         CreateBoundaries();
-        CreateCheckpoints();
+        CreateCourses();
         CreatePlayer();
         CreateBall();
-        SnapCameraToPlayer();
-
-        previousBallPosition = ballBody.position;
-        startTime = Time.unscaledTime;
-        RefreshCheckpointColors();
+        StartCourse(0);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RestartGame();
+            RestartCurrentCourse();
             return;
         }
 
@@ -100,12 +113,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isComplete)
+        if (isCourseComplete)
         {
             return;
         }
 
-        if (isDragging)
+        if (isPointerControlActive)
         {
             Vector2 nextPosition = Vector2.MoveTowards(
                 playerBody.position,
@@ -115,7 +128,18 @@ public sealed class DribblesMinigameController : MonoBehaviour
             playerBody.MovePosition(nextPosition);
         }
 
+        LimitBallSpeed();
         CheckForCheckpointCrossing();
+    }
+
+    private void LimitBallSpeed()
+    {
+        if (ballBody.linearVelocity.sqrMagnitude <= ballMaximumSpeed * ballMaximumSpeed)
+        {
+            return;
+        }
+
+        ballBody.linearVelocity = ballBody.linearVelocity.normalized * ballMaximumSpeed;
     }
 
     private void OnGUI()
@@ -128,15 +152,159 @@ public sealed class DribblesMinigameController : MonoBehaviour
                 fontStyle = FontStyle.Bold
             };
             timerStyle.normal.textColor = Color.white;
+
+            completionStyle = new GUIStyle(GUI.skin.label)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold,
+                wordWrap = true
+            };
+            completionStyle.normal.textColor = Color.white;
+
+            buttonStyle = new GUIStyle(GUI.skin.button)
+            {
+                fontStyle = FontStyle.Bold
+            };
         }
 
         timerStyle.fontSize = Mathf.Clamp(Screen.height / 30, 22, 36);
+        completionStyle.fontSize = Mathf.Clamp(Screen.height / 38, 18, 28);
+        buttonStyle.fontSize = Mathf.Clamp(Screen.height / 50, 16, 24);
 
-        float elapsed = isComplete ? completionTime : Time.unscaledTime - startTime;
-        string prefix = isComplete ? "Complete!  " : "Time  ";
-        string text = prefix + FormatTime(elapsed);
-        Rect timerRect = new Rect((Screen.width - 480f) * 0.5f, 16f, 480f, 72f);
+        float elapsed = isCourseComplete ? completionTime : Time.unscaledTime - startTime;
+        string courseLabel = courses.Count > 0
+            ? $"Course {currentCourseIndex + 1} / {courses.Count}"
+            : "No Courses Configured";
+        string prefix = isCourseComplete ? "Complete!  " : "Time  ";
+        string text = isMinigameFinished
+            ? "Minigame Complete!"
+            : courseLabel + "    " + prefix + FormatTime(elapsed);
+        float timerWidth = Mathf.Min(680f, Screen.width - 32f);
+        Rect timerRect = new Rect((Screen.width - timerWidth) * 0.5f, 16f, timerWidth, 84f);
         GUI.Label(timerRect, text, timerStyle);
+
+        if (isMinigameFinished)
+        {
+            DrawFinishedPanel();
+            return;
+        }
+
+        if (!isCourseComplete || courses.Count == 0)
+        {
+            return;
+        }
+
+        float panelWidth = Mathf.Min(680f, Screen.width - 40f);
+        bool hasNextRequiredCourse = currentCourseIndex + 1 < GetRequiredCourseCount();
+        bool completedLastRequiredCourse = currentCourseIndex == GetRequiredCourseCount() - 1;
+        bool isOptionalCourse = currentCourseIndex >= GetRequiredCourseCount();
+        bool hasNextOptionalCourse = isOptionalCourse && currentCourseIndex < courses.Count - 1;
+        bool canPlayOptionalCourse = completedLastRequiredCourse && currentCourseIndex < courses.Count - 1;
+        float panelHeight = canPlayOptionalCourse || hasNextOptionalCourse ? 290f : 220f;
+        Rect panelRect = new Rect(
+            (Screen.width - panelWidth) * 0.5f,
+            (Screen.height - panelHeight) * 0.5f,
+            panelWidth,
+            panelHeight);
+        GUI.Box(panelRect, GUIContent.none);
+
+        string completionMessage;
+        if (canPlayOptionalCourse)
+        {
+            completionMessage =
+                $"Course {currentCourseIndex + 1} complete in {FormatTime(completionTime)}. " +
+                "All required courses are complete.\n" +
+                $"Finish now or continue to optional Course {currentCourseIndex + 2}.";
+        }
+        else if (isOptionalCourse)
+        {
+            completionMessage =
+                $"Optional Course {currentCourseIndex + 1} complete in {FormatTime(completionTime)}.";
+        }
+        else
+        {
+            completionMessage = $"Course {currentCourseIndex + 1} complete in {FormatTime(completionTime)}";
+        }
+
+        GUI.Label(
+            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 110f),
+            completionMessage,
+            completionStyle);
+
+        float buttonWidth = (panelRect.width - 63f) * 0.5f;
+        bool showOptionalButton = canPlayOptionalCourse || hasNextOptionalCourse;
+        float primaryButtonY = panelRect.yMax - (showOptionalButton ? 142f : 76f);
+        Rect retryRect = new Rect(panelRect.x + 24f, primaryButtonY, buttonWidth, 54f);
+        Rect continueRect = new Rect(retryRect.xMax + 15f, retryRect.y, buttonWidth, 54f);
+
+        if (GUI.Button(retryRect, "Retry Course", buttonStyle))
+        {
+            RestartCurrentCourse();
+        }
+
+        if (hasNextRequiredCourse)
+        {
+            if (GUI.Button(continueRect, "Next Course", buttonStyle))
+            {
+                StartCourse(currentCourseIndex + 1);
+            }
+        }
+        else if (completedLastRequiredCourse || isOptionalCourse)
+        {
+            if (GUI.Button(continueRect, "Finish Minigame", buttonStyle))
+            {
+                FinishMinigame();
+            }
+        }
+
+        if (showOptionalButton)
+        {
+            Rect optionalRect = new Rect(
+                panelRect.x + 24f,
+                panelRect.yMax - 76f,
+                panelRect.width - 48f,
+                54f);
+            if (GUI.Button(optionalRect, "Play Optional Course", buttonStyle))
+            {
+                StartCourse(currentCourseIndex + 1);
+            }
+        }
+    }
+
+    private void DrawFinishedPanel()
+    {
+        float panelWidth = Mathf.Min(680f, Screen.width - 40f);
+        const float panelHeight = 220f;
+        Rect panelRect = new Rect(
+            (Screen.width - panelWidth) * 0.5f,
+            (Screen.height - panelHeight) * 0.5f,
+            panelWidth,
+            panelHeight);
+        GUI.Box(panelRect, GUIContent.none);
+
+        GUI.Label(
+            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 110f),
+            $"All {GetRequiredCourseCount()} required courses are complete.",
+            completionStyle);
+
+        bool hasOptionalCourse = courses.Count > GetRequiredCourseCount();
+        float buttonWidth = hasOptionalCourse
+            ? (panelRect.width - 63f) * 0.5f
+            : panelRect.width - 48f;
+        Rect replayRect = new Rect(panelRect.x + 24f, panelRect.yMax - 76f, buttonWidth, 54f);
+        if (GUI.Button(replayRect, "Replay Required Courses", buttonStyle))
+        {
+            StartCourse(0);
+        }
+
+        if (hasOptionalCourse)
+        {
+            Rect optionalRect = new Rect(replayRect.xMax + 15f, replayRect.y, buttonWidth, 54f);
+            if (GUI.Button(optionalRect, "Play Optional Course", buttonStyle))
+            {
+                StartCourse(GetRequiredCourseCount());
+            }
+        }
     }
 
     private void OnDestroy()
@@ -161,21 +329,25 @@ public sealed class DribblesMinigameController : MonoBehaviour
         Gizmos.DrawLine(topLeft, bottomLeft);
 
         Gizmos.color = ActiveCheckpointColor;
-        if (checkpoints != null)
+        if (courseRoots != null)
         {
-            for (int i = 0; i < checkpoints.Length; i++)
+            for (int courseIndex = 0; courseIndex < courseRoots.Length; courseIndex++)
             {
-                if (checkpoints[i] == null)
+                Transform courseRoot = courseRoots[courseIndex];
+                if (courseRoot == null)
                 {
                     continue;
                 }
 
-                Transform checkpoint = checkpoints[i];
-                Vector3 leftPost = checkpoint.TransformPoint(Vector3.left * checkpointHalfWidth);
-                Vector3 rightPost = checkpoint.TransformPoint(Vector3.right * checkpointHalfWidth);
-                Gizmos.DrawWireSphere(leftPost, 0.23f);
-                Gizmos.DrawWireSphere(rightPost, 0.23f);
-                Gizmos.DrawLine(leftPost, rightPost);
+                for (int checkpointIndex = 0; checkpointIndex < courseRoot.childCount; checkpointIndex++)
+                {
+                    Transform checkpoint = courseRoot.GetChild(checkpointIndex);
+                    Vector3 leftPost = checkpoint.TransformPoint(Vector3.left * checkpointHalfWidth);
+                    Vector3 rightPost = checkpoint.TransformPoint(Vector3.right * checkpointHalfWidth);
+                    Gizmos.DrawWireSphere(leftPost, 0.23f);
+                    Gizmos.DrawWireSphere(rightPost, 0.23f);
+                    Gizmos.DrawLine(leftPost, rightPost);
+                }
             }
         }
 
@@ -234,12 +406,13 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private Vector3 GetClampedCameraPosition(Vector2 playerPosition)
     {
         Vector2 followTarget = playerPosition;
-        if (!isComplete && checkpoints != null && nextCheckpointIndex < checkpoints.Length &&
-            checkpoints[nextCheckpointIndex] != null)
+        CourseRuntime currentCourse = GetCurrentCourse();
+        if (!isCourseComplete && currentCourse != null &&
+            nextCheckpointIndex < currentCourse.Checkpoints.Count)
         {
             followTarget = Vector2.Lerp(
                 playerPosition,
-                checkpoints[nextCheckpointIndex].position,
+                currentCourse.Checkpoints[nextCheckpointIndex].position,
                 cameraCheckpointLookAhead);
         }
 
@@ -378,46 +551,64 @@ public sealed class DribblesMinigameController : MonoBehaviour
         collider.size = Vector2.one;
     }
 
-    private void CreateCheckpoints()
+    private void CreateCourses()
     {
-        if (checkpoints == null)
+        if (courseRoots == null)
         {
             return;
         }
 
-        for (int i = 0; i < checkpoints.Length; i++)
+        for (int courseIndex = 0; courseIndex < courseRoots.Length; courseIndex++)
         {
-            CheckpointVisual visual = new CheckpointVisual();
-            checkpointVisuals.Add(visual);
-
-            if (checkpoints[i] == null)
+            Transform courseRoot = courseRoots[courseIndex];
+            if (courseRoot == null)
             {
                 continue;
             }
 
-            Transform gateRoot = new GameObject("Runtime Marker").transform;
-            gateRoot.SetParent(checkpoints[i], false);
-            visual.Root = gateRoot.gameObject;
-
-            CreateCheckpointPost(gateRoot, new Vector2(-checkpointHalfWidth, 0f), visual);
-            CreateCheckpointPost(gateRoot, new Vector2(checkpointHalfWidth, 0f), visual);
-
-            for (int dash = -2; dash <= 2; dash++)
+            CourseRuntime course = new CourseRuntime
             {
-                SpriteRenderer renderer = CreateSpriteObject(
-                    "Gate Dash",
-                    new Vector2(dash * 0.38f, 0f),
-                    new Vector2(0.22f, 0.07f),
-                    ActiveCheckpointColor,
-                    squareSprite,
-                    2,
-                    gateRoot,
-                    true);
-                visual.Renderers.Add(renderer);
-            }
+                Root = courseRoot
+            };
+            courses.Add(course);
 
-            CreateCheckpointArrow(gateRoot, visual);
+            int checkpointCount = courseRoot.childCount;
+            for (int checkpointIndex = 0; checkpointIndex < checkpointCount; checkpointIndex++)
+            {
+                Transform checkpoint = courseRoot.GetChild(checkpointIndex);
+                course.Checkpoints.Add(checkpoint);
+
+                CheckpointVisual visual = new CheckpointVisual();
+                course.Visuals.Add(visual);
+                CreateCheckpointVisual(checkpoint, visual);
+            }
         }
+    }
+
+    private void CreateCheckpointVisual(Transform checkpoint, CheckpointVisual visual)
+    {
+        Transform gateRoot = new GameObject("Runtime Marker").transform;
+        gateRoot.SetParent(checkpoint, false);
+        visual.Root = gateRoot.gameObject;
+
+        CreateCheckpointPost(gateRoot, new Vector2(-checkpointHalfWidth, 0f), visual);
+        CreateCheckpointPost(gateRoot, new Vector2(checkpointHalfWidth, 0f), visual);
+
+        for (int dash = -2; dash <= 2; dash++)
+        {
+            SpriteRenderer renderer = CreateSpriteObject(
+                "Gate Dash",
+                new Vector2(dash * 0.38f, 0f),
+                new Vector2(0.22f, 0.07f),
+                ActiveCheckpointColor,
+                squareSprite,
+                2,
+                gateRoot,
+                true);
+            visual.Renderers.Add(renderer);
+        }
+
+        CreateCheckpointArrow(gateRoot, visual);
     }
 
     private void CreateCheckpointPost(Transform parent, Vector2 localPosition, CheckpointVisual visual)
@@ -519,8 +710,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         PhysicsMaterial2D material = new PhysicsMaterial2D("Dribbles Ball Material")
         {
-            bounciness = 0.05f,
-            friction = 0.42f
+            bounciness = 0f,
+            friction = 0.32f
         };
         generatedAssets.Add(material);
         collider.sharedMaterial = material;
@@ -529,7 +720,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         ballBody.mass = ballMass;
         ballBody.gravityScale = 0f;
         ballBody.linearDamping = ballLinearDamping;
-        ballBody.angularDamping = 1.1f;
+        ballBody.angularDamping = 1.6f;
         ballBody.interpolation = RigidbodyInterpolation2D.Interpolate;
         ballBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
@@ -566,7 +757,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void HandleMouseInput()
     {
-        if (isComplete || gameplayCamera == null)
+        if (isCourseComplete || gameplayCamera == null)
         {
             return;
         }
@@ -580,41 +771,32 @@ public sealed class DribblesMinigameController : MonoBehaviour
             float selectionRadius = PlayerRadius * 1.25f;
             if ((pointerWorldPosition - playerBody.position).sqrMagnitude <= selectionRadius * selectionRadius)
             {
-                isDragging = true;
+                isPointerControlActive = true;
                 dragTarget = playerBody.position;
-                previousPointerScreenPosition = Input.mousePosition;
+                dragPointerOffset = playerBody.position - pointerWorldPosition;
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (isPointerControlActive)
         {
-            isDragging = false;
-        }
-
-        if (isDragging)
-        {
-            Vector3 currentPointerScreenPosition = Input.mousePosition;
-            Vector3 pointerDelta = currentPointerScreenPosition - previousPointerScreenPosition;
-            float worldUnitsPerPixelX = (gameplayCamera.orthographicSize * 2f * gameplayCamera.aspect) / Screen.width;
-            float worldUnitsPerPixelY = (gameplayCamera.orthographicSize * 2f) / Screen.height;
-            Vector2 desiredPosition = dragTarget + new Vector2(
-                pointerDelta.x * worldUnitsPerPixelX,
-                pointerDelta.y * worldUnitsPerPixelY);
+            pointerScreenPosition = Input.mousePosition;
+            pointerScreenPosition.z = -gameplayCamera.transform.position.z;
+            pointerWorldPosition = gameplayCamera.ScreenToWorldPoint(pointerScreenPosition);
+            Vector2 desiredPosition = pointerWorldPosition + dragPointerOffset;
 
             dragTarget = new Vector2(
                 Mathf.Clamp(desiredPosition.x, fieldMinimum.x + PlayerRadius, fieldMaximum.x - PlayerRadius),
                 Mathf.Clamp(desiredPosition.y, fieldMinimum.y + PlayerRadius, fieldMaximum.y - PlayerRadius));
-            previousPointerScreenPosition = currentPointerScreenPosition;
         }
     }
 
     private void CheckForCheckpointCrossing()
     {
         Vector2 currentBallPosition = ballBody.position;
-        if (checkpoints != null && nextCheckpointIndex < checkpoints.Length &&
-            checkpoints[nextCheckpointIndex] != null)
+        CourseRuntime currentCourse = GetCurrentCourse();
+        if (currentCourse != null && nextCheckpointIndex < currentCourse.Checkpoints.Count)
         {
-            Transform checkpoint = checkpoints[nextCheckpointIndex];
+            Transform checkpoint = currentCourse.Checkpoints[nextCheckpointIndex];
             Vector2 previousLocalPosition = checkpoint.InverseTransformPoint(previousBallPosition);
             Vector2 currentLocalPosition = checkpoint.InverseTransformPoint(currentBallPosition);
             bool crossedUpward = previousLocalPosition.y <= 0f && currentLocalPosition.y > 0f;
@@ -627,12 +809,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
                 if (Mathf.Abs(crossingX) <= checkpointCrossingHalfWidth)
                 {
-                    bool isFinalCheckpoint = nextCheckpointIndex == checkpoints.Length - 1;
+                    bool isFinalCheckpoint = nextCheckpointIndex == currentCourse.Checkpoints.Count - 1;
                     PlayCheckpointBurst(checkpoint.position, isFinalCheckpoint);
                     nextCheckpointIndex++;
-                    RefreshCheckpointColors();
+                    RefreshCourseState();
 
-                    if (nextCheckpointIndex >= checkpoints.Length)
+                    if (nextCheckpointIndex >= currentCourse.Checkpoints.Count)
                     {
                         CompleteCourse();
                     }
@@ -695,39 +877,49 @@ public sealed class DribblesMinigameController : MonoBehaviour
         particles.Play();
     }
 
-    private void RefreshCheckpointColors()
+    private void RefreshCourseState()
     {
-        for (int i = 0; i < checkpointVisuals.Count; i++)
+        for (int courseIndex = 0; courseIndex < courses.Count; courseIndex++)
         {
-            CheckpointVisual visual = checkpointVisuals[i];
-            bool isActiveCheckpoint = !isComplete && i == nextCheckpointIndex;
-            if (visual.Root != null)
-            {
-                visual.Root.SetActive(true);
-            }
+            CourseRuntime course = courses[courseIndex];
+            bool isCurrentCourse = courseIndex == currentCourseIndex;
+            course.Root.gameObject.SetActive(isCurrentCourse);
 
-            Color color = isActiveCheckpoint
-                ? ActiveCheckpointColor
-                : InactiveCheckpointColor;
-            SetCheckpointColor(visual, color);
-
-            for (int colliderIndex = 0; colliderIndex < visual.Colliders.Count; colliderIndex++)
+            for (int checkpointIndex = 0; checkpointIndex < course.Visuals.Count; checkpointIndex++)
             {
-                visual.Colliders[colliderIndex].enabled = isActiveCheckpoint;
+                CheckpointVisual visual = course.Visuals[checkpointIndex];
+                bool isActiveCheckpoint = isCurrentCourse &&
+                    !isCourseComplete && checkpointIndex == nextCheckpointIndex;
+                if (visual.Root != null)
+                {
+                    visual.Root.SetActive(true);
+                }
+
+                Color color = isActiveCheckpoint
+                    ? ActiveCheckpointColor
+                    : InactiveCheckpointColor;
+                SetCheckpointColor(visual, color);
+
+                for (int colliderIndex = 0; colliderIndex < visual.Colliders.Count; colliderIndex++)
+                {
+                    visual.Colliders[colliderIndex].enabled = isActiveCheckpoint;
+                }
             }
         }
     }
 
     private void PulseActiveCheckpoint()
     {
-        if (isComplete || nextCheckpointIndex >= checkpointVisuals.Count)
+        CourseRuntime currentCourse = GetCurrentCourse();
+        if (isCourseComplete || currentCourse == null ||
+            nextCheckpointIndex >= currentCourse.Visuals.Count)
         {
             return;
         }
 
         float pulse = (Mathf.Sin(Time.unscaledTime * 5f) + 1f) * 0.08f;
         Color pulseColor = Color.Lerp(ActiveCheckpointColor, Color.white, pulse);
-        SetCheckpointColor(checkpointVisuals[nextCheckpointIndex], pulseColor);
+        SetCheckpointColor(currentCourse.Visuals[nextCheckpointIndex], pulseColor);
     }
 
     private static void SetCheckpointColor(CheckpointVisual checkpoint, Color color)
@@ -740,21 +932,45 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void CompleteCourse()
     {
-        isComplete = true;
-        isDragging = false;
+        isCourseComplete = true;
+        isPointerControlActive = false;
         completionTime = Time.unscaledTime - startTime;
 
         playerBody.linearVelocity = Vector2.zero;
         ballBody.linearVelocity = Vector2.zero;
         ballBody.angularVelocity = 0f;
         ballBody.bodyType = RigidbodyType2D.Kinematic;
-        RefreshCheckpointColors();
+        RefreshCourseState();
     }
 
-    private void RestartGame()
+    private void FinishMinigame()
     {
-        isDragging = false;
-        isComplete = false;
+        if (currentCourseIndex + 1 < GetRequiredCourseCount())
+        {
+            return;
+        }
+
+        isMinigameFinished = true;
+        onMinigameCompleted?.Invoke();
+    }
+
+    private void RestartCurrentCourse()
+    {
+        StartCourse(currentCourseIndex);
+    }
+
+    private void StartCourse(int courseIndex)
+    {
+        if (courses.Count == 0)
+        {
+            isCourseComplete = true;
+            return;
+        }
+
+        currentCourseIndex = Mathf.Clamp(courseIndex, 0, courses.Count - 1);
+        isPointerControlActive = false;
+        isCourseComplete = false;
+        isMinigameFinished = false;
         nextCheckpointIndex = 0;
         completionTime = 0f;
 
@@ -772,9 +988,22 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         dragTarget = playerStartPosition;
         previousBallPosition = ballStartPosition;
-        previousPointerScreenPosition = Input.mousePosition;
+        dragPointerOffset = Vector2.zero;
         startTime = Time.unscaledTime;
 
+        ClearCheckpointEffects();
+        RefreshCourseState();
+        SnapCameraToPlayer();
+
+        CourseRuntime currentCourse = GetCurrentCourse();
+        if (currentCourse == null || currentCourse.Checkpoints.Count == 0)
+        {
+            CompleteCourse();
+        }
+    }
+
+    private void ClearCheckpointEffects()
+    {
         for (int i = 0; i < checkpointEffects.Count; i++)
         {
             if (checkpointEffects[i] != null)
@@ -785,8 +1014,23 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         checkpointEffects.Clear();
-        RefreshCheckpointColors();
-        SnapCameraToPlayer();
+    }
+
+    private CourseRuntime GetCurrentCourse()
+    {
+        if (currentCourseIndex < 0 || currentCourseIndex >= courses.Count)
+        {
+            return null;
+        }
+
+        return courses[currentCourseIndex];
+    }
+
+    private int GetRequiredCourseCount()
+    {
+        return courses.Count == 0
+            ? 0
+            : Mathf.Clamp(requiredCourseCount, 1, courses.Count);
     }
 
     private static string FormatTime(float totalSeconds)
