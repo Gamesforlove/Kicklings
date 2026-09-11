@@ -178,8 +178,15 @@ MonoBehaviour:
   onMinigameCompleted:
     m_PersistentCalls:
       m_Calls: []
-  checkpointHalfWidth: 1.4
-  checkpointCrossingHalfWidth: 1.15
+  courseRatingThresholds:
+  - aTime: 15
+    bTime: 25
+  - aTime: 18
+    bTime: 25
+  - aTime: 18
+    bTime: 25
+  checkpointHalfWidth: 1.8
+  checkpointCrossingHalfWidth: 1.2
   playerMoveSpeed: 12.5
   ballSprite: {fileID: 21300000, guid: 1a5a4b749e026ee4897bdd0c6a71764a, type: 3}
   ballMass: 1.65

@@ -26,6 +26,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField, Min(1)] private int requiredCourseCount = 2;
     [Tooltip("Invoked when the player chooses Finish Minigame after completing every required course.")]
     [SerializeField] private UnityEvent onMinigameCompleted;
+    [Tooltip("Per-course time limits in seconds. Times at or below A earn A; times at or below B earn B.")]
+    [SerializeField] private CourseRatingThresholds[] courseRatingThresholds;
     [SerializeField, Min(0.5f)] private float checkpointHalfWidth = 1.3f;
     [SerializeField, Min(0.25f)] private float checkpointCrossingHalfWidth = 1.05f;
 
@@ -68,11 +70,29 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private GUIStyle completionStyle;
     private GUIStyle buttonStyle;
 
+    private enum CourseRating
+    {
+        None,
+        C,
+        B,
+        A
+    }
+
+    [System.Serializable]
+    private sealed class CourseRatingThresholds
+    {
+        [Min(1f)] public float aTime = 45f;
+        [Min(1f)] public float bTime = 75f;
+    }
+
     private sealed class CourseRuntime
     {
         public Transform Root;
         public readonly List<Transform> Checkpoints = new List<Transform>();
         public readonly List<CheckpointVisual> Visuals = new List<CheckpointVisual>();
+        public bool HasCompletion;
+        public float CompletionTime;
+        public CourseRating Rating;
     }
 
     private sealed class CheckpointVisual
@@ -200,7 +220,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         bool isOptionalCourse = currentCourseIndex >= GetRequiredCourseCount();
         bool hasNextOptionalCourse = isOptionalCourse && currentCourseIndex < courses.Count - 1;
         bool canPlayOptionalCourse = completedLastRequiredCourse && currentCourseIndex < courses.Count - 1;
-        float panelHeight = canPlayOptionalCourse || hasNextOptionalCourse ? 290f : 220f;
+        float panelHeight = canPlayOptionalCourse || hasNextOptionalCourse ? 330f : 250f;
         Rect panelRect = new Rect(
             (Screen.width - panelWidth) * 0.5f,
             (Screen.height - panelHeight) * 0.5f,
@@ -208,26 +228,32 @@ public sealed class DribblesMinigameController : MonoBehaviour
             panelHeight);
         GUI.Box(panelRect, GUIContent.none);
 
+        CourseRuntime completedCourse = GetCurrentCourse();
+        string ratingText = completedCourse != null
+            ? GetRatingText(completedCourse.Rating)
+            : string.Empty;
         string completionMessage;
         if (canPlayOptionalCourse)
         {
             completionMessage =
-                $"Course {currentCourseIndex + 1} complete in {FormatTime(completionTime)}. " +
+                $"Course {currentCourseIndex + 1}: {FormatTime(completionTime)}\n" +
+                ratingText + "\n" +
                 "All required courses are complete.\n" +
-                $"Finish now or continue to optional Course {currentCourseIndex + 2}.";
+                $"Finish now or play optional Course {currentCourseIndex + 2}.";
         }
         else if (isOptionalCourse)
         {
             completionMessage =
-                $"Optional Course {currentCourseIndex + 1} complete in {FormatTime(completionTime)}.";
+                $"Optional Course {currentCourseIndex + 1}: {FormatTime(completionTime)}\n{ratingText}";
         }
         else
         {
-            completionMessage = $"Course {currentCourseIndex + 1} complete in {FormatTime(completionTime)}";
+            completionMessage =
+                $"Course {currentCourseIndex + 1}: {FormatTime(completionTime)}\n{ratingText}";
         }
 
         GUI.Label(
-            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 110f),
+            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 140f),
             completionMessage,
             completionStyle);
 
@@ -274,7 +300,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void DrawFinishedPanel()
     {
         float panelWidth = Mathf.Min(680f, Screen.width - 40f);
-        const float panelHeight = 220f;
+        const float panelHeight = 250f;
         Rect panelRect = new Rect(
             (Screen.width - panelWidth) * 0.5f,
             (Screen.height - panelHeight) * 0.5f,
@@ -283,8 +309,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
         GUI.Box(panelRect, GUIContent.none);
 
         GUI.Label(
-            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 110f),
-            $"All {GetRequiredCourseCount()} required courses are complete.",
+            new Rect(panelRect.x + 24f, panelRect.y + 18f, panelRect.width - 48f, 140f),
+            BuildRatingSummary(),
             completionStyle);
 
         bool hasOptionalCourse = courses.Count > GetRequiredCourseCount();
@@ -936,6 +962,14 @@ public sealed class DribblesMinigameController : MonoBehaviour
         isPointerControlActive = false;
         completionTime = Time.unscaledTime - startTime;
 
+        CourseRuntime completedCourse = GetCurrentCourse();
+        if (completedCourse != null)
+        {
+            completedCourse.HasCompletion = true;
+            completedCourse.CompletionTime = completionTime;
+            completedCourse.Rating = CalculateCourseRating(currentCourseIndex, completionTime);
+        }
+
         playerBody.linearVelocity = Vector2.zero;
         ballBody.linearVelocity = Vector2.zero;
         ballBody.angularVelocity = 0f;
@@ -968,6 +1002,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         currentCourseIndex = Mathf.Clamp(courseIndex, 0, courses.Count - 1);
+        ClearCourseResultsFrom(currentCourseIndex);
         isPointerControlActive = false;
         isCourseComplete = false;
         isMinigameFinished = false;
@@ -1024,6 +1059,72 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         return courses[currentCourseIndex];
+    }
+
+    private void ClearCourseResultsFrom(int firstCourseIndex)
+    {
+        for (int courseIndex = firstCourseIndex; courseIndex < courses.Count; courseIndex++)
+        {
+            CourseRuntime course = courses[courseIndex];
+            course.HasCompletion = false;
+            course.CompletionTime = 0f;
+            course.Rating = CourseRating.None;
+        }
+    }
+
+    private CourseRating CalculateCourseRating(int courseIndex, float courseTime)
+    {
+        float aTime = 45f;
+        float bTime = 75f;
+        if (courseRatingThresholds != null && courseIndex >= 0 &&
+            courseIndex < courseRatingThresholds.Length && courseRatingThresholds[courseIndex] != null)
+        {
+            CourseRatingThresholds thresholds = courseRatingThresholds[courseIndex];
+            aTime = Mathf.Max(1f, thresholds.aTime);
+            bTime = Mathf.Max(aTime, thresholds.bTime);
+        }
+
+        if (courseTime <= aTime)
+        {
+            return CourseRating.A;
+        }
+
+        return courseTime <= bTime ? CourseRating.B : CourseRating.C;
+    }
+
+    private static string GetRatingText(CourseRating rating)
+    {
+        switch (rating)
+        {
+            case CourseRating.A:
+                return "Rating A - Great!";
+            case CourseRating.B:
+                return "Rating B - Good!";
+            case CourseRating.C:
+                return "Rating C - Complete";
+            default:
+                return "Not completed";
+        }
+    }
+
+    private string BuildRatingSummary()
+    {
+        string summary = $"All {GetRequiredCourseCount()} required courses are complete.";
+        for (int courseIndex = 0; courseIndex < courses.Count; courseIndex++)
+        {
+            CourseRuntime course = courses[courseIndex];
+            if (!course.HasCompletion)
+            {
+                continue;
+            }
+
+            string optionalLabel = courseIndex >= GetRequiredCourseCount() ? " (Optional)" : string.Empty;
+            summary +=
+                $"\nCourse {courseIndex + 1}{optionalLabel}: {GetRatingText(course.Rating)} " +
+                $"- {FormatTime(course.CompletionTime)}";
+        }
+
+        return summary;
     }
 
     private int GetRequiredCourseCount()
