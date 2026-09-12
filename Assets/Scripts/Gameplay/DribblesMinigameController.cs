@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -11,7 +10,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private const float BallRadius = 0.42f;
     private const float ATimeMaximum = 8f;
     private const float BTimeMaximum = 22f;
-    private const string InterfaceStyleResourcePath = "DribblesUiStyle";
     private const string AScoreColor = "#63E681";
     private const string BScoreColor = "#55DDF2";
     private const string CScoreColor = "#FF765F";
@@ -21,13 +19,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private static readonly Color PlayerColor = new Color32(45, 126, 214, 255);
     private static readonly Color ActiveCheckpointColor = new Color32(255, 210, 58, 255);
     private static readonly Color InactiveCheckpointColor = new Color32(218, 233, 240, 235);
-    private static readonly Color MainMenuCyan = new Color(0.28773582f, 0.9251927f, 1f, 1f);
-    private static readonly Color GameplayStatusCyan = new Color(0.20f, 0.72f, 0.80f, 1f);
-    private static readonly Color MainMenuPurple = new Color(0.9057876f, 0.5990566f, 1f, 1f);
-    private static readonly Color MainMenuOrange = new Color(1f, 0.66393745f, 0.28627455f, 1f);
-    private static readonly Color MainMenuCyanText = new Color(0f, 0.32959345f, 0.3773585f, 1f);
-    private static readonly Color MainMenuPurpleText = new Color(0.29848632f, 0f, 0.3764706f, 1f);
-    private static readonly Color MainMenuOrangeText = new Color(0.3764706f, 0.19857384f, 0f, 1f);
 
     [Header("Course Layout")]
     [Tooltip("Bottom-left corner of the playable field.")]
@@ -40,7 +31,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField] private Transform[] courseRoots;
     [Tooltip("Courses at the start of the list that must be completed before the minigame can finish.")]
     [SerializeField, Min(1)] private int requiredCourseCount = 2;
-    [Tooltip("Invoked when the player chooses Finish Minigame after completing every required course.")]
+    [Tooltip("Invoked when the player chooses Continue from the final results screen.")]
     [SerializeField] private UnityEvent onMinigameCompleted;
     [SerializeField, Min(0.5f)] private float checkpointHalfWidth = 1.3f;
     [SerializeField, Min(0.25f)] private float checkpointCrossingHalfWidth = 1.05f;
@@ -58,6 +49,9 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField, Min(1f)] private float cameraOrthographicSize = 6f;
     [SerializeField, Min(0.01f)] private float cameraFollowSmoothTime = 0.28f;
     [SerializeField, Range(0f, 0.5f)] private float cameraCheckpointLookAhead = 0.35f;
+
+    [Header("Interface")]
+    [SerializeField] private DribblesMinigameView interfaceView;
 
     private readonly List<CourseRuntime> courses = new List<CourseRuntime>();
     private readonly List<GameObject> checkpointEffects = new List<GameObject>();
@@ -81,14 +75,9 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private float startTime;
     private float completionTime;
     private Vector3 cameraFollowVelocity;
-    private DribblesUiStyle interfaceStyle;
-    private TMP_FontAsset mainMenuFont;
-    private TMP_FontAsset mainMenuOutlineFont;
-    private Sprite mainMenuButtonSprite;
-    private Sprite mainMenuButtonOutlineSprite;
-    private Sprite mainMenuPopupSprite;
     private TextMeshProUGUI timerText;
     private GameObject startPrompt;
+    private GameObject restartHint;
     private GameObject completionPanel;
     private RectTransform completionPraiseRect;
     private RectTransform completionMessageRect;
@@ -145,7 +134,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         CreateCourses();
         CreatePlayer();
         CreateBall();
-        CreateInterface();
+        BindInterface();
         StartCourse(0);
     }
 
@@ -207,6 +196,10 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void OnDestroy()
     {
+        retryButton?.onClick.RemoveListener(HandleRetryButton);
+        continueButton?.onClick.RemoveListener(HandleContinueButton);
+        optionalButton?.onClick.RemoveListener(HandleOptionalButton);
+
         for (int i = 0; i < generatedAssets.Count; i++)
         {
             Destroy(generatedAssets[i]);
@@ -255,335 +248,67 @@ public sealed class DribblesMinigameController : MonoBehaviour
         Gizmos.DrawWireSphere(ballStartPosition, BallRadius);
     }
 
-    private void CreateInterface()
+    private void BindInterface()
     {
-        ResolveInterfaceStyle();
-
-        GameObject canvasObject = new GameObject(
-            "Dribbles UI",
-            typeof(RectTransform),
-            typeof(Canvas),
-            typeof(CanvasScaler),
-            typeof(GraphicRaycaster));
-        canvasObject.transform.SetParent(transform, false);
-
-        Canvas canvas = canvasObject.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
-
-        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-        scaler.referencePixelsPerUnit = 100f;
-
-        if (FindFirstObjectByType<EventSystem>() == null)
+        if (interfaceView == null)
         {
-            GameObject eventSystemObject = new GameObject(
-                "Dribbles EventSystem",
-                typeof(EventSystem),
-                typeof(StandaloneInputModule));
-            eventSystemObject.transform.SetParent(transform, false);
+            interfaceView = FindFirstObjectByType<DribblesMinigameView>(FindObjectsInactive.Include);
         }
 
-        RectTransform statusRect = CreateUiRect(
-            "Status Banner",
-            canvasObject.transform,
-            new Vector2(0.5f, 1f),
-            new Vector2(0.5f, 1f),
-            new Vector2(0.5f, 1f),
-            new Vector2(0f, -24f),
-            new Vector2(820f, 104f));
-        Image statusImage = statusRect.gameObject.AddComponent<Image>();
-        statusImage.sprite = mainMenuButtonSprite;
-        statusImage.type = mainMenuButtonSprite != null ? Image.Type.Sliced : Image.Type.Simple;
-        statusImage.color = GameplayStatusCyan;
-        statusImage.raycastTarget = false;
-
-        RectTransform statusOutlineRect = CreateUiRect(
-            "Outline",
-            statusRect,
-            Vector2.zero,
-            Vector2.one,
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            new Vector2(-12f, 12f));
-        Image statusOutline = statusOutlineRect.gameObject.AddComponent<Image>();
-        statusOutline.sprite = mainMenuButtonOutlineSprite;
-        statusOutline.type = mainMenuButtonOutlineSprite != null ? Image.Type.Sliced : Image.Type.Simple;
-        statusOutline.color = Color.white;
-        statusOutline.raycastTarget = false;
-
-        timerText = CreateUiText(
-            "Timer",
-            statusRect,
-            Vector2.zero,
-            Vector2.one,
-            Vector2.zero,
-            new Vector2(-56f, -18f),
-            mainMenuFont,
-            MainMenuCyanText,
-            24f,
-            44f,
-            false);
-
-        RectTransform startPromptRect = CreateUiRect(
-            "Start Prompt",
-            canvasObject.transform,
-            new Vector2(0.5f, 0f),
-            new Vector2(0.5f, 0f),
-            new Vector2(0.5f, 0f),
-            new Vector2(0f, 200f),
-            new Vector2(700f, 106f));
-        Image startPromptImage = startPromptRect.gameObject.AddComponent<Image>();
-        startPromptImage.sprite = mainMenuButtonSprite;
-        startPromptImage.type = mainMenuButtonSprite != null ? Image.Type.Sliced : Image.Type.Simple;
-        startPromptImage.color = GameplayStatusCyan;
-        startPromptImage.raycastTarget = false;
-
-        RectTransform startPromptOutlineRect = CreateUiRect(
-            "Outline",
-            startPromptRect,
-            Vector2.zero,
-            Vector2.one,
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            new Vector2(-12f, 12f));
-        Image startPromptOutline = startPromptOutlineRect.gameObject.AddComponent<Image>();
-        startPromptOutline.sprite = mainMenuButtonOutlineSprite;
-        startPromptOutline.type = mainMenuButtonOutlineSprite != null ? Image.Type.Sliced : Image.Type.Simple;
-        startPromptOutline.color = Color.white;
-        startPromptOutline.raycastTarget = false;
-
-        TextMeshProUGUI startPromptText = CreateUiText(
-            "Instructions",
-            startPromptRect,
-            Vector2.zero,
-            Vector2.one,
-            Vector2.zero,
-            new Vector2(-44f, -18f),
-            mainMenuFont,
-            Color.white,
-            20f,
-            32f,
-            true);
-        startPromptText.text =
-            "<color=#FFFFFF>MOVE CURSOR TO PLAYER</color>\n" +
-            "<color=#FFD23A>THEN CLICK TO START</color>";
-        startPrompt = startPromptRect.gameObject;
-        startPrompt.SetActive(false);
-
-        RectTransform backdropRect = CreateUiRect(
-            "Completion Backdrop",
-            canvasObject.transform,
-            Vector2.zero,
-            Vector2.one,
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            Vector2.zero);
-        Image backdropImage = backdropRect.gameObject.AddComponent<Image>();
-        backdropImage.color = new Color(0f, 0f, 0f, 0.72f);
-        backdropImage.raycastTarget = true;
-        completionPanel = backdropRect.gameObject;
-
-        Vector2 popupSize = new Vector2(900f, 1100f);
-        if (mainMenuPopupSprite != null && mainMenuPopupSprite.rect.width > 0f)
+        if (interfaceView == null)
         {
-            popupSize.y = popupSize.x * mainMenuPopupSprite.rect.height / mainMenuPopupSprite.rect.width;
+            Debug.LogError("Dribbles UI prefab is missing from the scene.", this);
+            return;
         }
 
-        RectTransform panelRect = CreateUiRect(
-            "Football Popup",
-            backdropRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            popupSize);
-        Image panelImage = panelRect.gameObject.AddComponent<Image>();
-        panelImage.sprite = mainMenuPopupSprite;
-        panelImage.type = Image.Type.Simple;
-        panelImage.preserveAspect = mainMenuPopupSprite != null;
-        panelImage.color = mainMenuPopupSprite != null
-            ? Color.white
-            : new Color(0.18f, 0.25f, 0.28f, 0.98f);
-        panelImage.raycastTarget = true;
+        timerText = interfaceView.TimerText;
+        startPrompt = interfaceView.StartPrompt;
+        restartHint = interfaceView.RestartHint;
+        completionPanel = interfaceView.CompletionPanel;
+        completionPraiseRect = interfaceView.CompletionPraiseRect;
+        completionMessageRect = interfaceView.CompletionMessageRect;
+        completionTitleText = interfaceView.CompletionTitleText;
+        completionGradeText = interfaceView.CompletionGradeText;
+        completionTimeText = interfaceView.CompletionTimeText;
+        completionPraiseText = interfaceView.CompletionPraiseText;
+        completionMessageText = interfaceView.CompletionMessageText;
+        finalScoreboard = interfaceView.FinalScoreboard;
+        finalCourseColumn = interfaceView.FinalCourseColumn;
+        finalScoreColumn = interfaceView.FinalScoreColumn;
+        finalTimeColumn = interfaceView.FinalTimeColumn;
+        retryButton = interfaceView.RetryButton;
+        continueButton = interfaceView.ContinueButton;
+        optionalButton = interfaceView.OptionalButton;
+        retryButtonRect = interfaceView.RetryButtonRect;
+        continueButtonRect = interfaceView.ContinueButtonRect;
+        optionalButtonRect = interfaceView.OptionalButtonRect;
+        retryButtonText = interfaceView.RetryButtonText;
+        continueButtonText = interfaceView.ContinueButtonText;
+        optionalButtonText = interfaceView.OptionalButtonText;
 
-        completionTitleText = CreateUiText(
-            "Title",
-            panelRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0f, 390f),
-            new Vector2(720f, 112f),
-            mainMenuOutlineFont != null ? mainMenuOutlineFont : mainMenuFont,
-            Color.white,
-            30f,
-            50f,
-            false);
-
-        completionGradeText = CreateUiText(
-            "Grade",
-            panelRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0f, 160f),
-            new Vector2(640f, 300f),
-            mainMenuFont,
-            Color.white,
-            180f,
-            250f,
-            false);
-        completionGradeText.fontStyle = FontStyles.Normal;
-        completionGradeText.fontWeight = FontWeight.Regular;
         Material gradeMaterial = CreateGradeFontMaterial();
-        if (gradeMaterial != null)
+        if (completionGradeText != null && gradeMaterial != null)
         {
             completionGradeText.fontSharedMaterial = gradeMaterial;
         }
 
-        completionTimeText = CreateUiText(
-            "Course Time",
-            panelRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0f, -40f),
-            new Vector2(680f, 76f),
-            mainMenuFont,
-            Color.white,
-            34f,
-            48f,
-            false);
-
-        completionPraiseText = CreateUiText(
-            "Praise",
-            panelRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0f, 80f),
-            new Vector2(780f, 64f),
-            mainMenuFont,
-            Color.white,
-            36f,
-            50f,
-            false);
-        completionPraiseRect = completionPraiseText.rectTransform;
-
-        completionMessageText = CreateUiText(
-            "Bonus Message",
-            panelRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0f, 0f),
-            new Vector2(720f, 72f),
-            mainMenuFont,
-            ActiveCheckpointColor,
-            18f,
-            28f,
-            true);
-        completionMessageRect = completionMessageText.rectTransform;
-        completionPraiseText.gameObject.SetActive(false);
-        completionMessageText.gameObject.SetActive(false);
-
-        RectTransform finalScoreboardRect = CreateUiRect(
-            "Final Scoreboard",
-            panelRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0f, 35f),
-            new Vector2(810f, 360f));
-        finalScoreboard = finalScoreboardRect.gameObject;
-
-        finalCourseColumn = CreateUiText(
-            "Course Column",
-            finalScoreboardRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(-270f, 0f),
-            new Vector2(250f, 360f),
-            mainMenuFont,
-            Color.white,
-            34f,
-            34f,
-            false);
-        finalScoreColumn = CreateUiText(
-            "Score Column",
-            finalScoreboardRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            new Vector2(220f, 360f),
-            mainMenuFont,
-            Color.white,
-            34f,
-            34f,
-            false);
-        finalTimeColumn = CreateUiText(
-            "Time Column",
-            finalScoreboardRect,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(270f, 0f),
-            new Vector2(270f, 360f),
-            mainMenuFont,
-            Color.white,
-            34f,
-            34f,
-            false);
-        finalScoreboard.SetActive(false);
-
-        retryButton = CreateMenuButton(
-            "Retry Button",
-            panelRect,
-            MainMenuPurple,
-            MainMenuPurpleText,
-            out retryButtonRect,
-            out retryButtonText);
-        continueButton = CreateMenuButton(
-            "Continue Button",
-            panelRect,
-            MainMenuCyan,
-            MainMenuCyanText,
-            out continueButtonRect,
-            out continueButtonText);
-        optionalButton = CreateMenuButton(
-            "Optional Course Button",
-            panelRect,
-            MainMenuOrange,
-            MainMenuOrangeText,
-            out optionalButtonRect,
-            out optionalButtonText);
-
         retryButton.onClick.AddListener(HandleRetryButton);
         continueButton.onClick.AddListener(HandleContinueButton);
         optionalButton.onClick.AddListener(HandleOptionalButton);
+        startPrompt.SetActive(false);
+        restartHint.SetActive(false);
         completionPanel.SetActive(false);
-    }
-
-    private void ResolveInterfaceStyle()
-    {
-        interfaceStyle = Resources.Load<DribblesUiStyle>(InterfaceStyleResourcePath);
-        if (interfaceStyle == null)
-        {
-            return;
-        }
-
-        mainMenuFont = interfaceStyle.MainMenuFont;
-        mainMenuOutlineFont = interfaceStyle.MainMenuOutlineFont;
-        mainMenuButtonSprite = interfaceStyle.MainMenuButtonSprite;
-        mainMenuButtonOutlineSprite = interfaceStyle.MainMenuButtonOutlineSprite;
-        mainMenuPopupSprite = interfaceStyle.MainMenuPopupSprite;
     }
 
     private Material CreateGradeFontMaterial()
     {
-        if (mainMenuFont == null || mainMenuFont.material == null)
+        TMP_FontAsset gradeFont = completionGradeText != null ? completionGradeText.font : null;
+        if (gradeFont == null || gradeFont.material == null)
         {
             return null;
         }
 
-        Material gradeMaterial = new Material(mainMenuFont.material)
+        Material gradeMaterial = new Material(gradeFont.material)
         {
             name = "Dribbles Grade Font Material"
         };
@@ -607,130 +332,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         generatedAssets.Add(gradeMaterial);
         return gradeMaterial;
-    }
-
-    private Button CreateMenuButton(
-        string objectName,
-        Transform parent,
-        Color fillColor,
-        Color textColor,
-        out RectTransform buttonRect,
-        out TextMeshProUGUI label)
-    {
-        buttonRect = CreateUiRect(
-            objectName,
-            parent,
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            new Vector2(390f, 94f));
-
-        Image fillImage = buttonRect.gameObject.AddComponent<Image>();
-        fillImage.sprite = mainMenuButtonSprite;
-        fillImage.type = mainMenuButtonSprite != null ? Image.Type.Sliced : Image.Type.Simple;
-        fillImage.color = fillColor;
-
-        Button button = buttonRect.gameObject.AddComponent<Button>();
-        button.targetGraphic = fillImage;
-        button.transition = Selectable.Transition.ColorTint;
-        ColorBlock colors = button.colors;
-        colors.normalColor = Color.white;
-        colors.highlightedColor = new Color(0.82f, 0.82f, 0.82f, 1f);
-        colors.pressedColor = new Color(0.62f, 0.62f, 0.62f, 1f);
-        colors.selectedColor = Color.white;
-        colors.disabledColor = new Color(0.78f, 0.78f, 0.78f, 0.5f);
-        colors.fadeDuration = 0.1f;
-        button.colors = colors;
-
-        RectTransform outlineRect = CreateUiRect(
-            "Outline",
-            buttonRect,
-            Vector2.zero,
-            Vector2.one,
-            new Vector2(0.5f, 0.5f),
-            Vector2.zero,
-            new Vector2(-12f, 12f));
-        Image outlineImage = outlineRect.gameObject.AddComponent<Image>();
-        outlineImage.sprite = mainMenuButtonOutlineSprite;
-        outlineImage.type = mainMenuButtonOutlineSprite != null ? Image.Type.Sliced : Image.Type.Simple;
-        outlineImage.color = Color.white;
-        outlineImage.raycastTarget = false;
-
-        label = CreateUiText(
-            "Text (TMP)",
-            buttonRect,
-            Vector2.zero,
-            Vector2.one,
-            Vector2.zero,
-            new Vector2(-48f, -22f),
-            mainMenuFont,
-            textColor,
-            22f,
-            42f,
-            false);
-        return button;
-    }
-
-    private static RectTransform CreateUiRect(
-        string objectName,
-        Transform parent,
-        Vector2 anchorMin,
-        Vector2 anchorMax,
-        Vector2 pivot,
-        Vector2 anchoredPosition,
-        Vector2 sizeDelta)
-    {
-        GameObject gameObject = new GameObject(objectName, typeof(RectTransform));
-        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
-        rectTransform.SetParent(parent, false);
-        rectTransform.anchorMin = anchorMin;
-        rectTransform.anchorMax = anchorMax;
-        rectTransform.pivot = pivot;
-        rectTransform.anchoredPosition = anchoredPosition;
-        rectTransform.sizeDelta = sizeDelta;
-        rectTransform.localScale = Vector3.one;
-        return rectTransform;
-    }
-
-    private static TextMeshProUGUI CreateUiText(
-        string objectName,
-        Transform parent,
-        Vector2 anchorMin,
-        Vector2 anchorMax,
-        Vector2 anchoredPosition,
-        Vector2 sizeDelta,
-        TMP_FontAsset font,
-        Color color,
-        float minimumFontSize,
-        float maximumFontSize,
-        bool wrap)
-    {
-        RectTransform rectTransform = CreateUiRect(
-            objectName,
-            parent,
-            anchorMin,
-            anchorMax,
-            new Vector2(0.5f, 0.5f),
-            anchoredPosition,
-            sizeDelta);
-        TextMeshProUGUI text = rectTransform.gameObject.AddComponent<TextMeshProUGUI>();
-        if (font != null)
-        {
-            text.font = font;
-        }
-
-        text.color = color;
-        text.alignment = TextAlignmentOptions.Center;
-        text.enableAutoSizing = true;
-        text.fontSize = maximumFontSize;
-        text.fontSizeMin = minimumFontSize;
-        text.fontSizeMax = maximumFontSize;
-        text.textWrappingMode = wrap ? TextWrappingModes.Normal : TextWrappingModes.NoWrap;
-        text.overflowMode = TextOverflowModes.Truncate;
-        text.richText = true;
-        text.raycastTarget = false;
-        return text;
     }
 
     private void RefreshInterface()
@@ -817,7 +418,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void ConfigureFinishedPanel()
     {
-        bool hasOptionalCourse = courses.Count > GetRequiredCourseCount();
         completionTitleText.text = "DRIBBLES COMPLETE!";
         completionGradeText.gameObject.SetActive(false);
         completionTimeText.gameObject.SetActive(false);
@@ -829,20 +429,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
         SetRectLayout(completionPraiseRect, new Vector2(780f, 70f), new Vector2(0f, 300f));
 
         retryButton.gameObject.SetActive(true);
-        continueButton.gameObject.SetActive(false);
-        optionalButton.gameObject.SetActive(hasOptionalCourse);
-        retryButtonText.text = "Replay Main Courses";
-        optionalButtonText.text = "Play Bonus Course";
-
-        if (hasOptionalCourse)
-        {
-            SetRectLayout(retryButtonRect, new Vector2(390f, 94f), new Vector2(-210f, -475f));
-            SetRectLayout(optionalButtonRect, new Vector2(390f, 94f), new Vector2(210f, -475f));
-        }
-        else
-        {
-            SetRectLayout(retryButtonRect, new Vector2(810f, 94f), new Vector2(0f, -475f));
-        }
+        continueButton.gameObject.SetActive(true);
+        optionalButton.gameObject.SetActive(false);
+        retryButtonText.text = "Replay Courses";
+        continueButtonText.text = "Continue";
+        SetRectLayout(retryButtonRect, new Vector2(390f, 94f), new Vector2(-210f, -475f));
+        SetRectLayout(continueButtonRect, new Vector2(390f, 94f), new Vector2(210f, -475f));
     }
 
     private static void SetRectLayout(RectTransform rectTransform, Vector2 size, Vector2 position)
@@ -864,6 +456,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void HandleContinueButton()
     {
+        if (isMinigameFinished)
+        {
+            onMinigameCompleted?.Invoke();
+            return;
+        }
+
         if (currentCourseIndex + 1 < GetRequiredCourseCount())
         {
             StartCourse(currentCourseIndex + 1);
@@ -1299,6 +897,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
                 dragTarget = playerBody.position;
                 dragPointerOffset = playerBody.position - pointerWorldPosition;
                 startPrompt?.SetActive(false);
+                restartHint?.SetActive(true);
             }
         }
 
@@ -1460,6 +1059,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         isCourseComplete = true;
         isPointerControlActive = false;
         startPrompt?.SetActive(false);
+        restartHint?.SetActive(false);
         completionTime = isTimerRunning ? Time.unscaledTime - startTime : 0f;
 
         CourseRuntime completedCourse = GetCurrentCourse();
@@ -1485,7 +1085,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         isMinigameFinished = true;
-        onMinigameCompleted?.Invoke();
     }
 
     private void RestartCurrentCourse()
@@ -1527,6 +1126,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         dragPointerOffset = Vector2.zero;
         startTime = 0f;
         startPrompt?.SetActive(true);
+        restartHint?.SetActive(false);
 
         ClearCheckpointEffects();
         RefreshCourseState();
