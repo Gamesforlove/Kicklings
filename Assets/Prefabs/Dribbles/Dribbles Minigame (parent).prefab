@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6337930302361386778}
   - component: {fileID: 1921760303697647193}
+  - component: {fileID: 3000000000000000001}
   m_Layer: 0
   m_Name: Dribbles Minigame (parent)
   m_TagString: Untagged
@@ -42,8 +43,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dfd818f4f8e4cb79be3177f907b959d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   fieldMinimum: {x: -9.6, y: -6.35}
   fieldMaximum: {x: 9.6, y: 48}
   playerStartPosition: {x: 4, y: -5.65}
@@ -54,11 +55,11 @@ MonoBehaviour:
   - {fileID: 0}
   courseRatingThresholds:
   - aTimeMaximum: 8
-    bTimeMaximum: 24
+    bTimeMaximum: 20
   - aTimeMaximum: 9
-    bTimeMaximum: 24
-  - aTimeMaximum: 13
-    bTimeMaximum: 28.5
+    bTimeMaximum: 20
+  - aTimeMaximum: 14.5
+    bTimeMaximum: 20
   requiredCourseCount: 2
   onMinigameCompleted:
     m_PersistentCalls:
@@ -66,12 +67,40 @@ MonoBehaviour:
   checkpointHalfWidth: 1.9
   checkpointCrossingHalfWidth: 1.3
   playerMoveSpeed: 12.5
-  ballSprite: {fileID: 21300000, guid: 1a5a4b749e026ee4897bdd0c6a71764a, type: 3}
-  ballMass: 1.65
-  ballLinearDamping: 3
   ballMaximumSpeed: 7
   ballDirectionDeadZone: 5
-  cameraOrthographicSize: 6.5
-  cameraFollowSmoothTime: 0.55
-  cameraCheckpointLookAhead: 0.2
+  minigameWorld: {fileID: 3000000000000000001}
+  cameraController: {fileID: 0}
   interfaceView: {fileID: 0}
+--- !u!114 &3000000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5421589706311972851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 862d66171e564d0094c2d527db297ebf, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  playerPrefab: {fileID: 5000000, guid: 969023eff76d48578cfdbfe72fac87b4, type: 3}
+  ballPrefab: {fileID: 5000000, guid: ad285b0c15a44e29a2a74e725bd09a31, type: 3}
+  checkpointMarkerPrefab: {fileID: 100000, guid: 4c3fee9d9bbb49908c49acf86e7cc58d, type: 3}
+  boundaryPrefab: {fileID: 21200000, guid: 251b0ec640fb42aeaff7d354deced75d, type: 3}
+  useSpriteCheckpointBurst: 0
+  checkpointBurstPrefab: {fileID: 100000, guid: 4aecb50a140c4eef8bddbad5788001ce, type: 3}
+  checkpointParticleBurstPrefab: {fileID: 1199795961276245844, guid: 01fb6665fc2541b48df06bfe0382031e, type: 3}
+  finalCheckpointParticleBurstPrefab: {fileID: 1199795961276245844, guid: e11c3779640b44adadb4c54a2d218a57, type: 3}
+  boundaryThickness: 0.12
+  activeCheckpointColor: {r: 1, g: 0.8235294, b: 0.22745098, a: 1}
+  inactiveCheckpointColor: {r: 0.85490197, g: 0.9137255, b: 0.9411765, a: 0.92156863}
+  secondaryBurstColor: {r: 1, g: 0.5176471, b: 0.1254902, a: 1}
+  checkpointArrowDirectionInfluence: 0.65
+  maximumCheckpointArrowAngle: 32
+  checkpointBurstDuration: 0.65
+  finalCheckpointBurstDuration: 1.1
+  checkpointBurstDistance: 1.25
+  finalCheckpointBurstDistance: 2.4
+  checkpointBurstScale: 1.25
+  finalCheckpointBurstScale: 1.7

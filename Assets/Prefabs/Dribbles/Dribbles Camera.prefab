@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3820501195403136540}
   - component: {fileID: 2277250855235921491}
   - component: {fileID: 9151145632175588058}
+  - component: {fileID: 3000000000000000003}
   m_Layer: 0
   m_Name: Dribbles Camera
   m_TagString: MainCamera
@@ -69,7 +70,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 6.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -137,3 +138,19 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &3000000000000000003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590674740216026923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61063d006fe249aa85ce148f8f63ae42, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  gameplayCamera: {fileID: 3820501195403136540}
+  orthographicSize: 6.5
+  followSmoothTime: 0.55
+  checkpointLookAhead: 0.2
