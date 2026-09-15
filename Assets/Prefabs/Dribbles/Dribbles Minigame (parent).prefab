@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5421589706311972851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6337930302361386778}
+  - component: {fileID: 1921760303697647193}
+  m_Layer: 0
+  m_Name: Dribbles Minigame (parent)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6337930302361386778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5421589706311972851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1921760303697647193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5421589706311972851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dfd818f4f8e4cb79be3177f907b959d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldMinimum: {x: -9.6, y: -6.35}
+  fieldMaximum: {x: 9.6, y: 48}
+  playerStartPosition: {x: 4, y: -5.65}
+  ballStartPosition: {x: 4, y: -4.85}
+  courseRoots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  courseRatingThresholds:
+  - aTimeMaximum: 8
+    bTimeMaximum: 24
+  - aTimeMaximum: 9
+    bTimeMaximum: 24
+  - aTimeMaximum: 13
+    bTimeMaximum: 28.5
+  requiredCourseCount: 2
+  onMinigameCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  checkpointHalfWidth: 1.9
+  checkpointCrossingHalfWidth: 1.3
+  playerMoveSpeed: 12.5
+  ballSprite: {fileID: 21300000, guid: 1a5a4b749e026ee4897bdd0c6a71764a, type: 3}
+  ballMass: 1.65
+  ballLinearDamping: 3
+  ballMaximumSpeed: 7
+  ballDirectionDeadZone: 5
+  cameraOrthographicSize: 6.5
+  cameraFollowSmoothTime: 0.55
+  cameraCheckpointLookAhead: 0.2
+  interfaceView: {fileID: 0}
