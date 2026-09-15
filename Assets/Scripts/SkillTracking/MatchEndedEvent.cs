@@ -30,4 +30,9 @@ public sealed class MatchEndedEvent : Event
     {
         set => SetParameter("player_skill_rating", value);
     }
+
+    public bool Retried
+    {
+        set => SetParameter("tournament_retried", value);
+    }
 }
