@@ -183,9 +183,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void FixedUpdate()
     {
         if (isCourseComplete)
-        {
             return;
-        }
 
         if (isPointerControlActive)
         {
@@ -200,7 +198,6 @@ public sealed class DribblesMinigameController : MonoBehaviour
                 isTimerRunning = true;
                 startTime = Time.unscaledTime;
             }
-
             playerBody.MovePosition(nextPosition);
         }
 
@@ -212,10 +209,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void LimitBallSpeed()
     {
         if (ballBody.linearVelocity.sqrMagnitude <= ballMaximumSpeed * ballMaximumSpeed)
-        {
             return;
-        }
-
         ballBody.linearVelocity = ballBody.linearVelocity.normalized * ballMaximumSpeed;
     }
 
@@ -224,16 +218,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
         Vector2 velocity = ballBody.linearVelocity;
         float speed = velocity.magnitude;
         if (speed <= Mathf.Epsilon)
-        {
             return;
-        }
 
         float directionAngle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
         float snappedAngle = Mathf.Round(directionAngle / BallDirectionStep) * BallDirectionStep;
         if (Mathf.Abs(Mathf.DeltaAngle(directionAngle, snappedAngle)) > ballDirectionDeadZone)
-        {
             return;
-        }
 
         float snappedRadians = snappedAngle * Mathf.Deg2Rad;
         ballBody.linearVelocity = new Vector2(
@@ -249,7 +239,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         for (int i = 0; i < generatedAssets.Count; i++)
         {
-            Destroy(generatedAssets[i]);
+            if (generatedAssets[i] != null)
+                Destroy(generatedAssets[i]);
         }
     }
 
@@ -273,9 +264,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
             {
                 Transform courseRoot = courseRoots[courseIndex];
                 if (courseRoot == null)
-                {
                     continue;
-                }
 
                 for (int checkpointIndex = 0; checkpointIndex < courseRoot.childCount; checkpointIndex++)
                 {
@@ -298,9 +287,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void BindInterface()
     {
         if (interfaceView == null)
-        {
             interfaceView = FindFirstObjectByType<DribblesMinigameView>(FindObjectsInactive.Include);
-        }
 
         if (interfaceView == null)
         {
@@ -335,9 +322,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         Material gradeMaterial = CreateGradeFontMaterial();
         if (completionGradeText != null && gradeMaterial != null)
-        {
             completionGradeText.fontSharedMaterial = gradeMaterial;
-        }
 
         retryButton.onClick.AddListener(HandleRetryButton);
         continueButton.onClick.AddListener(HandleContinueButton);
@@ -351,28 +336,20 @@ public sealed class DribblesMinigameController : MonoBehaviour
     {
         TMP_FontAsset gradeFont = completionGradeText != null ? completionGradeText.font : null;
         if (gradeFont == null || gradeFont.material == null)
-        {
             return null;
-        }
 
         Material gradeMaterial = new Material(gradeFont.material)
         {
             name = "Dribbles Grade Font Material"
         };
         if (gradeMaterial.HasProperty("_FaceDilate"))
-        {
             gradeMaterial.SetFloat("_FaceDilate", -0.1f);
-        }
 
         if (gradeMaterial.HasProperty("_OutlineWidth"))
-        {
             gradeMaterial.SetFloat("_OutlineWidth", 0.12f);
-        }
 
         if (gradeMaterial.HasProperty("_OutlineColor"))
-        {
             gradeMaterial.SetColor("_OutlineColor", Color.black);
-        }
 
         gradeMaterial.EnableKeyword("OUTLINE_ON");
         gradeMaterial.DisableKeyword("UNDERLAY_ON");
@@ -384,9 +361,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void RefreshInterface()
     {
         if (timerText == null || completionPanel == null)
-        {
             return;
-        }
 
         float elapsed = isCourseComplete
             ? completionTime
@@ -402,18 +377,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
         bool showCompletionPanel = isCourseComplete && courses.Count > 0;
         completionPanel.SetActive(showCompletionPanel);
         if (!showCompletionPanel)
-        {
             return;
-        }
 
         if (isMinigameFinished)
-        {
             ConfigureFinishedPanel();
-        }
         else
-        {
             ConfigureCourseCompletionPanel();
-        }
     }
 
     private void ConfigureCourseCompletionPanel()
@@ -547,9 +516,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void SnapCameraToPlayer()
     {
         if (gameplayCamera == null || playerBody == null)
-        {
             return;
-        }
 
         Vector2 playerPosition = playerBody.position;
         playerBody.transform.position = playerPosition;
@@ -561,15 +528,11 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void FollowPlayerWithCamera()
     {
         if (gameplayCamera == null || playerBody == null)
-        {
             return;
-        }
 
         float deltaTime = Time.unscaledDeltaTime;
         if (deltaTime <= 0f)
-        {
             return;
-        }
 
         Vector2 playerPosition = playerBody.transform.position;
         Vector2 playerTravel = playerPosition - previousCameraPlayerPosition;
@@ -684,11 +647,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
     {
         float clampedMinimum = minimum + cameraExtent;
         float clampedMaximum = maximum - cameraExtent;
-
         if (clampedMinimum >= clampedMaximum)
-        {
             return Mathf.Clamp(target, clampedMaximum, clampedMinimum);
-        }
 
         return Mathf.Clamp(target, clampedMinimum, clampedMaximum);
     }
@@ -703,19 +663,11 @@ public sealed class DribblesMinigameController : MonoBehaviour
     {
         Shader shader = Shader.Find("Universal Render Pipeline/Particles/Unlit");
         if (shader == null)
-        {
             shader = Shader.Find("Particles/Standard Unlit");
-        }
-
         if (shader == null)
-        {
             shader = Shader.Find("Sprites/Default");
-        }
-
         if (shader == null)
-        {
             return;
-        }
 
         particleMaterial = new Material(shader)
         {
@@ -811,17 +763,13 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void CreateCourses()
     {
         if (courseRoots == null)
-        {
             return;
-        }
 
         for (int courseIndex = 0; courseIndex < courseRoots.Length; courseIndex++)
         {
             Transform courseRoot = courseRoots[courseIndex];
             if (courseRoot == null)
-            {
                 continue;
-            }
 
             CourseRuntime course = new CourseRuntime
             {
@@ -1026,13 +974,9 @@ public sealed class DribblesMinigameController : MonoBehaviour
         gameObject.transform.SetParent(parent, false);
 
         if (useLocalPosition)
-        {
             gameObject.transform.localPosition = position;
-        }
         else
-        {
             gameObject.transform.position = position;
-        }
 
         gameObject.transform.localScale = new Vector3(size.x, size.y, 1f);
         SpriteRenderer renderer = gameObject.AddComponent<SpriteRenderer>();
@@ -1045,9 +989,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void HandleMouseInput()
     {
         if (isCourseComplete || gameplayCamera == null)
-        {
             return;
-        }
 
         Vector3 pointerScreenPosition = Input.mousePosition;
         pointerScreenPosition.z = -gameplayCamera.transform.position.z;
@@ -1200,11 +1142,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void PulseActiveCheckpoint()
     {
         CourseRuntime currentCourse = GetCurrentCourse();
-        if (isCourseComplete || currentCourse == null ||
-            nextCheckpointIndex >= currentCourse.Visuals.Count)
-        {
+        if (isCourseComplete || currentCourse == null || nextCheckpointIndex >= currentCourse.Visuals.Count)
             return;
-        }
 
         float pulse = (Mathf.Sin(Time.unscaledTime * 5f) + 1f) * 0.08f;
         Color pulseColor = Color.Lerp(ActiveCheckpointColor, Color.white, pulse);
@@ -1245,9 +1184,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private void FinishMinigame()
     {
         if (currentCourseIndex + 1 < GetRequiredCourseCount())
-        {
             return;
-        }
 
         isMinigameFinished = true;
     }
@@ -1299,9 +1236,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         CourseRuntime currentCourse = GetCurrentCourse();
         if (currentCourse == null || currentCourse.Checkpoints.Count == 0)
-        {
             CompleteCourse();
-        }
     }
 
     private void ClearCheckpointEffects()
@@ -1321,9 +1256,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private CourseRuntime GetCurrentCourse()
     {
         if (currentCourseIndex < 0 || currentCourseIndex >= courses.Count)
-        {
             return null;
-        }
 
         return courses[currentCourseIndex];
     }
@@ -1353,9 +1286,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         if (courseTime <= aTimeMaximum)
-        {
             return CourseRating.A;
-        }
 
         return courseTime <= bTimeMaximum ? CourseRating.B : CourseRating.C;
     }
@@ -1369,9 +1300,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         {
             CourseRuntime course = courses[courseIndex];
             if (!course.HasCompletion)
-            {
                 continue;
-            }
 
             courseColumn += "\n" + (courseIndex + 1);
             scoreColumn += "\n" + GetScoreGrade(course.Rating);
@@ -1398,10 +1327,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
     }
 
-    private static string FormatScoreboardValue(string label, string value)
-    {
-        return $"<color=#FFD23A>{label}:</color> <color=#FFFFFF>{value}</color>";
-    }
+    private static string FormatScoreboardValue(string label, string value) => $"<color=#FFD23A>{label}:</color> <color=#FFFFFF>{value}</color>";
 
     private int GetRequiredCourseCount()
     {
@@ -1410,8 +1336,5 @@ public sealed class DribblesMinigameController : MonoBehaviour
             : Mathf.Clamp(requiredCourseCount, 1, courses.Count);
     }
 
-    private static string FormatTime(float totalSeconds)
-    {
-        return $"{Mathf.Max(0f, totalSeconds):00.0}";
-    }
+    private static string FormatTime(float totalSeconds) => $"{Mathf.Max(0f, totalSeconds):00.0}";
 }
