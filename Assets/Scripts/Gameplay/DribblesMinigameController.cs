@@ -8,8 +8,19 @@ public sealed class DribblesMinigameController : MonoBehaviour
 {
     private const float PlayerRadius = 0.52f;
     private const float BallRadius = 0.42f;
-    private const float ATimeMaximum = 8f;
-    private const float BTimeMaximum = 22f;
+    private const int BallDirectionCount = 16;
+    private const float BallDirectionStep = 360f / BallDirectionCount;
+    private const float CheckpointArrowDirectionInfluence = 0.65f;
+    private const float MaximumCheckpointArrowAngle = 32f;
+    private const float MaximumCourseProgressLookAheadMultiplier = 1.1f;
+    private const float MinimumCameraLookAheadRatio = 0.75f;
+    private const float MinimumCameraFollowRatio = 0.25f;
+    private const float CameraForwardFollowRatio = 0.55f;
+    private const float MinimumCameraFollowSpeed = 0.75f;
+    private const float CameraEdgeFollowStart = 0.45f;
+    private const float CameraEdgeFollowEnd = 0.78f;
+    private const float DefaultATimeMaximum = 8f;
+    private const float DefaultBTimeMaximum = 22f;
     private const string AScoreColor = "#63E681";
     private const string BScoreColor = "#55DDF2";
     private const string CScoreColor = "#FF765F";
@@ -29,6 +40,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField] private Vector2 ballStartPosition = new Vector2(0f, -4.85f);
     [Tooltip("Course parents in play order. Each direct child is a checkpoint, crossed in hierarchy order.")]
     [SerializeField] private Transform[] courseRoots;
+    [Tooltip("Grade time limits in course order. Missing entries use the default 8-second A and 22-second B limits.")]
+    [SerializeField] private CourseRatingThresholds[] courseRatingThresholds;
     [Tooltip("Courses at the start of the list that must be completed before the minigame can finish.")]
     [SerializeField, Min(1)] private int requiredCourseCount = 2;
     [Tooltip("Invoked when the player chooses Continue from the final results screen.")]
@@ -44,6 +57,9 @@ public sealed class DribblesMinigameController : MonoBehaviour
     [SerializeField, Min(0.1f)] private float ballMass = 1.35f;
     [SerializeField, Min(0f)] private float ballLinearDamping = 2.15f;
     [SerializeField, Min(0.1f)] private float ballMaximumSpeed = 7f;
+    [Tooltip("Half-angle around each of 16 directions in which ball movement snaps to that direction.")]
+    [SerializeField, Range(0f, BallDirectionStep * 0.5f)]
+    private float ballDirectionDeadZone = 5f;
 
     [Header("Camera")]
     [SerializeField, Min(1f)] private float cameraOrthographicSize = 6f;
@@ -75,6 +91,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private float startTime;
     private float completionTime;
     private Vector3 cameraFollowVelocity;
+    private Vector2 previousCameraPlayerPosition;
     private TextMeshProUGUI timerText;
     private GameObject startPrompt;
     private GameObject restartHint;
@@ -106,6 +123,13 @@ public sealed class DribblesMinigameController : MonoBehaviour
         C,
         B,
         A
+    }
+
+    [System.Serializable]
+    private sealed class CourseRatingThresholds
+    {
+        [Min(0f)] public float aTimeMaximum = DefaultATimeMaximum;
+        [Min(0f)] public float bTimeMaximum = DefaultBTimeMaximum;
     }
 
     private sealed class CourseRuntime
@@ -181,6 +205,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         LimitBallSpeed();
+        SnapBallDirectionWithinDeadZone();
         CheckForCheckpointCrossing();
     }
 
@@ -192,6 +217,28 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         ballBody.linearVelocity = ballBody.linearVelocity.normalized * ballMaximumSpeed;
+    }
+
+    private void SnapBallDirectionWithinDeadZone()
+    {
+        Vector2 velocity = ballBody.linearVelocity;
+        float speed = velocity.magnitude;
+        if (speed <= Mathf.Epsilon)
+        {
+            return;
+        }
+
+        float directionAngle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+        float snappedAngle = Mathf.Round(directionAngle / BallDirectionStep) * BallDirectionStep;
+        if (Mathf.Abs(Mathf.DeltaAngle(directionAngle, snappedAngle)) > ballDirectionDeadZone)
+        {
+            return;
+        }
+
+        float snappedRadians = snappedAngle * Mathf.Deg2Rad;
+        ballBody.linearVelocity = new Vector2(
+            Mathf.Cos(snappedRadians),
+            Mathf.Sin(snappedRadians)) * speed;
     }
 
     private void OnDestroy()
@@ -504,8 +551,11 @@ public sealed class DribblesMinigameController : MonoBehaviour
             return;
         }
 
-        gameplayCamera.transform.position = GetClampedCameraPosition(playerBody.position);
+        Vector2 playerPosition = playerBody.position;
+        playerBody.transform.position = playerPosition;
+        gameplayCamera.transform.position = GetClampedCameraPosition(playerPosition, 0f);
         cameraFollowVelocity = Vector3.zero;
+        previousCameraPlayerPosition = playerPosition;
     }
 
     private void FollowPlayerWithCamera()
@@ -515,33 +565,118 @@ public sealed class DribblesMinigameController : MonoBehaviour
             return;
         }
 
-        Vector3 targetPosition = GetClampedCameraPosition(playerBody.position);
-        gameplayCamera.transform.position = Vector3.SmoothDamp(
-            gameplayCamera.transform.position,
-            targetPosition,
-            ref cameraFollowVelocity,
-            cameraFollowSmoothTime,
-            Mathf.Infinity,
-            Time.unscaledDeltaTime);
-    }
+        float deltaTime = Time.unscaledDeltaTime;
+        if (deltaTime <= 0f)
+        {
+            return;
+        }
 
-    private Vector3 GetClampedCameraPosition(Vector2 playerPosition)
-    {
-        Vector2 followTarget = playerPosition;
+        Vector2 playerPosition = playerBody.transform.position;
+        Vector2 playerTravel = playerPosition - previousCameraPlayerPosition;
+        float playerTravelDistance = playerTravel.magnitude;
+        previousCameraPlayerPosition = playerPosition;
+
+        float forwardTravelDistance = 0f;
         CourseRuntime currentCourse = GetCurrentCourse();
         if (!isCourseComplete && currentCourse != null &&
             nextCheckpointIndex < currentCourse.Checkpoints.Count)
         {
-            followTarget = Vector2.Lerp(
-                playerPosition,
-                currentCourse.Checkpoints[nextCheckpointIndex].position,
-                cameraCheckpointLookAhead);
+            Vector2 checkpointDirection =
+                (Vector2)currentCourse.Checkpoints[nextCheckpointIndex].position - playerPosition;
+            if (checkpointDirection.sqrMagnitude > Mathf.Epsilon)
+            {
+                forwardTravelDistance = Mathf.Max(
+                    0f,
+                    Vector2.Dot(playerTravel, checkpointDirection.normalized));
+            }
+        }
+
+        float maximumPlayerTravel = playerMoveSpeed * deltaTime;
+        float movementAmount = Mathf.Clamp01(
+            playerTravelDistance / Mathf.Max(maximumPlayerTravel, Mathf.Epsilon));
+        Vector3 targetPosition = GetClampedCameraPosition(playerPosition, movementAmount);
+        Vector3 currentCameraPosition = gameplayCamera.transform.position;
+        Vector3 smoothedPosition = Vector3.SmoothDamp(
+            currentCameraPosition,
+            targetPosition,
+            ref cameraFollowVelocity,
+            cameraFollowSmoothTime,
+            Mathf.Infinity,
+            deltaTime);
+
+        float halfHeight = gameplayCamera.orthographicSize;
+        float halfWidth = halfHeight * gameplayCamera.aspect;
+        Vector2 playerOffset = playerPosition - (Vector2)currentCameraPosition;
+        float normalizedScreenOffset = Mathf.Max(
+            Mathf.Abs(playerOffset.x) / Mathf.Max(halfWidth, Mathf.Epsilon),
+            Mathf.Abs(playerOffset.y) / Mathf.Max(halfHeight, Mathf.Epsilon));
+        float edgeFollowAmount = Mathf.SmoothStep(
+            0f,
+            1f,
+            Mathf.InverseLerp(
+                CameraEdgeFollowStart,
+                CameraEdgeFollowEnd,
+                normalizedScreenOffset));
+        float cameraFollowRatio = Mathf.Lerp(
+            MinimumCameraFollowRatio,
+            1f,
+            edgeFollowAmount);
+        float forwardFollowRatio = CameraForwardFollowRatio * (1f - edgeFollowAmount);
+        float maximumCameraTravel =
+            (MinimumCameraFollowSpeed * deltaTime) +
+            (playerTravelDistance * cameraFollowRatio) +
+            (forwardTravelDistance * forwardFollowRatio);
+        Vector3 cameraTravel = Vector3.ClampMagnitude(
+            smoothedPosition - currentCameraPosition,
+            maximumCameraTravel);
+        gameplayCamera.transform.position = currentCameraPosition + cameraTravel;
+    }
+
+    private Vector3 GetClampedCameraPosition(Vector2 playerPosition, float movementAmount)
+    {
+        Vector2 followTarget = playerPosition;
+        Vector2 lookAheadOffset = Vector2.zero;
+        CourseRuntime currentCourse = GetCurrentCourse();
+        if (!isCourseComplete && currentCourse != null &&
+            nextCheckpointIndex < currentCourse.Checkpoints.Count)
+        {
+            Vector2 checkpointOffset =
+                (Vector2)currentCourse.Checkpoints[nextCheckpointIndex].position - playerPosition;
+            float verticalCheckpointDistance = Mathf.Abs(checkpointOffset.y);
+            if (verticalCheckpointDistance > Mathf.Epsilon)
+            {
+                float courseProgress = currentCourse.Checkpoints.Count > 1
+                    ? (float)nextCheckpointIndex / (currentCourse.Checkpoints.Count - 1)
+                    : 0f;
+                float progressLookAheadMultiplier = Mathf.Lerp(
+                    1f,
+                    MaximumCourseProgressLookAheadMultiplier,
+                    courseProgress);
+                float lookAheadSourceDistance = Mathf.Min(
+                    verticalCheckpointDistance,
+                    gameplayCamera.orthographicSize);
+                lookAheadOffset = Vector2.up * Mathf.Sign(checkpointOffset.y) *
+                    lookAheadSourceDistance *
+                    cameraCheckpointLookAhead *
+                    progressLookAheadMultiplier *
+                    Mathf.Lerp(
+                        MinimumCameraLookAheadRatio,
+                        1f,
+                        Mathf.Clamp01(movementAmount));
+                followTarget += lookAheadOffset;
+            }
         }
 
         float halfHeight = gameplayCamera.orthographicSize;
         float halfWidth = halfHeight * gameplayCamera.aspect;
+        float fieldWidth = fieldMaximum.x - fieldMinimum.x;
+        if (halfWidth * 2f >= fieldWidth)
+        {
+            followTarget.x = ((fieldMinimum.x + fieldMaximum.x) * 0.5f) + lookAheadOffset.x;
+        }
+
         float cameraX = ClampCameraAxis(followTarget.x, fieldMinimum.x, fieldMaximum.x, halfWidth);
-        float cameraY = playerPosition.y;
+        float cameraY = ClampCameraAxis(followTarget.y, fieldMinimum.y, fieldMaximum.y, halfHeight);
         return new Vector3(cameraX, cameraY, -10f);
     }
 
@@ -552,7 +687,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
         if (clampedMinimum >= clampedMaximum)
         {
-            return (minimum + maximum) * 0.5f;
+            return Mathf.Clamp(target, clampedMaximum, clampedMinimum);
         }
 
         return Mathf.Clamp(target, clampedMinimum, clampedMaximum);
@@ -702,12 +837,18 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
                 CheckpointVisual visual = new CheckpointVisual();
                 course.Visuals.Add(visual);
-                CreateCheckpointVisual(checkpoint, visual);
+                Transform nextCheckpoint = checkpointIndex + 1 < checkpointCount
+                    ? courseRoot.GetChild(checkpointIndex + 1)
+                    : null;
+                CreateCheckpointVisual(checkpoint, nextCheckpoint, visual);
             }
         }
     }
 
-    private void CreateCheckpointVisual(Transform checkpoint, CheckpointVisual visual)
+    private void CreateCheckpointVisual(
+        Transform checkpoint,
+        Transform nextCheckpoint,
+        CheckpointVisual visual)
     {
         Transform gateRoot = new GameObject("Runtime Marker").transform;
         gateRoot.SetParent(checkpoint, false);
@@ -730,7 +871,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
             visual.Renderers.Add(renderer);
         }
 
-        CreateCheckpointArrow(gateRoot, visual);
+        CreateCheckpointArrow(gateRoot, nextCheckpoint, visual);
     }
 
     private void CreateCheckpointPost(Transform parent, Vector2 localPosition, CheckpointVisual visual)
@@ -751,8 +892,32 @@ public sealed class DribblesMinigameController : MonoBehaviour
         visual.Colliders.Add(collider);
     }
 
-    private void CreateCheckpointArrow(Transform parent, CheckpointVisual visual)
+    private void CreateCheckpointArrow(
+        Transform parent,
+        Transform nextCheckpoint,
+        CheckpointVisual visual)
     {
+        Transform arrowRoot = new GameObject("Direction Arrow").transform;
+        arrowRoot.SetParent(parent, false);
+
+        if (nextCheckpoint != null)
+        {
+            Vector2 localCheckpointDirection = parent.InverseTransformDirection(
+                nextCheckpoint.position - parent.position);
+            if (localCheckpointDirection.sqrMagnitude > Mathf.Epsilon)
+            {
+                Vector2 arrowDirection = Vector2.Lerp(
+                    Vector2.up,
+                    localCheckpointDirection.normalized,
+                    CheckpointArrowDirectionInfluence).normalized;
+                float arrowAngle = Mathf.Clamp(
+                    Vector2.SignedAngle(Vector2.up, arrowDirection),
+                    -MaximumCheckpointArrowAngle,
+                    MaximumCheckpointArrowAngle);
+                arrowRoot.localRotation = Quaternion.Euler(0f, 0f, arrowAngle);
+            }
+        }
+
         SpriteRenderer stem = CreateSpriteObject(
             "Direction Arrow Stem",
             new Vector2(0f, 0.43f),
@@ -760,7 +925,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
             ActiveCheckpointColor,
             squareSprite,
             2,
-            parent,
+            arrowRoot,
             true);
         visual.Renderers.Add(stem);
 
@@ -771,7 +936,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
             ActiveCheckpointColor,
             squareSprite,
             2,
-            parent,
+            arrowRoot,
             true);
         leftHead.transform.localRotation = Quaternion.Euler(0f, 0f, -45f);
         visual.Renderers.Add(leftHead);
@@ -783,7 +948,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
             ActiveCheckpointColor,
             squareSprite,
             2,
-            parent,
+            arrowRoot,
             true);
         rightHead.transform.localRotation = Quaternion.Euler(0f, 0f, 45f);
         visual.Renderers.Add(rightHead);
@@ -1067,7 +1232,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         {
             completedCourse.HasCompletion = true;
             completedCourse.CompletionTime = completionTime;
-            completedCourse.Rating = CalculateCourseRating(completionTime);
+            completedCourse.Rating = CalculateCourseRating(completionTime, currentCourseIndex);
         }
 
         playerBody.linearVelocity = Vector2.zero;
@@ -1174,14 +1339,25 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
     }
 
-    private static CourseRating CalculateCourseRating(float courseTime)
+    private CourseRating CalculateCourseRating(float courseTime, int courseIndex)
     {
-        if (courseTime <= ATimeMaximum)
+        float aTimeMaximum = DefaultATimeMaximum;
+        float bTimeMaximum = DefaultBTimeMaximum;
+        if (courseRatingThresholds != null &&
+            courseIndex >= 0 && courseIndex < courseRatingThresholds.Length &&
+            courseRatingThresholds[courseIndex] != null)
+        {
+            CourseRatingThresholds thresholds = courseRatingThresholds[courseIndex];
+            aTimeMaximum = Mathf.Max(0f, thresholds.aTimeMaximum);
+            bTimeMaximum = Mathf.Max(aTimeMaximum, thresholds.bTimeMaximum);
+        }
+
+        if (courseTime <= aTimeMaximum)
         {
             return CourseRating.A;
         }
 
-        return courseTime <= BTimeMaximum ? CourseRating.B : CourseRating.C;
+        return courseTime <= bTimeMaximum ? CourseRating.B : CourseRating.C;
     }
 
     private void PopulateFinalScoreboard()
