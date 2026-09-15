@@ -8,7 +8,6 @@ public class CampaignTracker : MonoBehaviour
     public static CampaignTracker Instance;
     [SerializeField] private CampaignStructure campaign;
 
-
     private void Awake()
     {
         if (Instance == null)
@@ -34,6 +33,10 @@ public class CampaignTracker : MonoBehaviour
             #endif
             return;
         }
+    }
+    public void ContinueCampaign()
+    {
+        MatchFlow.ContinueCampaign();
     }
     public void PlayNextlevel()
     {
@@ -82,6 +85,22 @@ public class CampaignTracker : MonoBehaviour
         }
 
         campaign.CurrentStage.EndgameBehavior.Invoke(campaign, IsWinner);        
+    }
+    public void HandleEndgame(/*param 1,2,3*/)//for minigames
+    {
+        if (!SaveLoadGame.DataIsLoaded)
+        {
+            #if UNITY_EDITOR
+                        Debug.LogError("Data is not loaded");
+            #endif
+        }
+
+        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch)
+        {
+            return;
+        }
+
+        EndgameBehaviour.IncrementAndSaveData(campaign);        
     }
     private void OnApplicationQuit()
     {

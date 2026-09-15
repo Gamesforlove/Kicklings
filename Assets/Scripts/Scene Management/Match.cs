@@ -13,7 +13,7 @@ namespace Scene_Management
         public bool IsPlayerWinner { get; set; }
         public bool IsPlayAgain { get; set; }
         public bool IsReplayMatch { get; set; }
-        public bool IsFinished { get; protected set; } = false;
+        public bool IsFinished { get; set; } = false;
         public SceneName GoAfterCutScene { get; set; } = SceneName.CampaignGameplay;
 
         protected Match(MatchSettings settings)
@@ -100,7 +100,7 @@ namespace Scene_Management
             //temp
             if (SaveLoadGame.DataIsLoaded && IsPlayerWinner)
             {
-                if (SaveLoadGame.LoadedData.stage == 0 && SaveLoadGame.LoadedData.PlayerLevel == 4)
+                if (SaveLoadGame.LoadedData.stage == 0 && SaveLoadGame.LoadedData.PlayerLevel == 5)
                 {
                     uiManager.ShowCampaignEndPlaceholder();
                     return;

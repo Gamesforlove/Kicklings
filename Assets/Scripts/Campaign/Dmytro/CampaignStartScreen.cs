@@ -11,7 +11,7 @@ public class CampaignStartScreen : MonoBehaviour
             //temp
             if (SaveLoadGame.Load())
             {
-                if (SaveLoadGame.LoadedData.PlayerLevel == 4)
+                if (SaveLoadGame.LoadedData.PlayerLevel == 5)
                 {
                     _clearSaveDataText.SetActive(true);
                     return;
