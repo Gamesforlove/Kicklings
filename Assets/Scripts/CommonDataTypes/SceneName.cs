@@ -2,9 +2,15 @@
 {
     public enum SceneName
     {
-        MainMenu, Gameplay,
-        
+        MainMenu, Gameplay, TournamentIntroCutscene, CampaignMap, CampaignGameplay,
         //rishi test ones for campaign
         Stage0Scene2TutorialMatch,
+        DribblesMinigame,
+        // Dmytro test ones for campaign
+        TestCampaignCutSceneWin,
+        TestCampaignCutSceneLose,
+        TestCampaignCutSceneBeforeMatch,
+        CampaignStartScreen,
+        None
     }
 }

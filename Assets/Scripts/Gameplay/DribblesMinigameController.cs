@@ -1,3 +1,4 @@
+using Scene_Management;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -432,6 +433,10 @@ public sealed class DribblesMinigameController : MonoBehaviour
         if (isMinigameFinished)
         {
             onMinigameCompleted?.Invoke();
+            MatchFlow.Match.IsFinished = true;
+            MatchFlow.Match.IsPlayerWinner = true;//Depends on score?
+            CampaignTracker.Instance.HandleEndgame();
+            CampaignTracker.Instance.ContinueCampaign();
             return;
         }
 

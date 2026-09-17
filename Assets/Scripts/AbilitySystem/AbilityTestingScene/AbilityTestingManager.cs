@@ -44,10 +44,10 @@ public class AbilityTestingManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        #if !UNITY_EDITOR
+/*        #if !UNITY_EDITOR
             gameObject.SetActive(false);
             return;
-        #endif
+        #endif*/
 
         LeftGoalkeeper.onValueChanged.AddListener(delegate { OnLeftGoalkeeperDropdown(LeftGoalkeeper); });
         LeftPlayer.onValueChanged.AddListener(delegate { OnLeftPlayerDropdown(LeftPlayer); });
