@@ -11,6 +11,7 @@
         TestCampaignCutSceneLose,
         TestCampaignCutSceneBeforeMatch,
         CampaignStartScreen,
+        FreeKickMinigame,
         None
     }
 }
