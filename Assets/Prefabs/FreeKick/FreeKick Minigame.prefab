@@ -45,15 +45,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interfaceView: {fileID: 0}
-  startingSpeed: 0.58
-  speedIncreasePerGoal: 0.16
-  speedAccelerationPerGoal: 0.02
-  maximumSpeed: 1.8
-  startingTargetWidth: 0.1
-  minimumTargetWidth: 0.04
-  targetWidthDecreasePerGoal: 0.012
+  goalSpeeds:
+  - 0.58
+  - 0.76
+  - 0.98
+  - 1.24
+  - 1.42
+  - 1.58
+  - 1.68
+  goalTargetWidths:
+  - 0.1
+  - 0.088
+  - 0.076
+  - 0.064
+  - 0.058
+  - 0.052
+  - 0.048
   targetEdgePadding: 0.11
-  requiredGoals: 6
+  requiredGoals: 5
+  bonusGoalCount: 2
   resultHoldDuration: 1.05
   baseGoalScore: 1000
   streakBonus: 150

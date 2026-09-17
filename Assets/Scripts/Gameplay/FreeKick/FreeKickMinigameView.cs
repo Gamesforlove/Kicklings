@@ -20,7 +20,6 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goalsText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI streakText;
-    [SerializeField] private TextMeshProUGUI speedText;
 
     [Header("Feedback")]
     [SerializeField] private TextMeshProUGUI resultText;
@@ -28,14 +27,48 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     [SerializeField] private Image resultFlash;
     [SerializeField] private RectTransform ballIcon;
 
+    [Header("Completion Popup")]
+    [SerializeField] private GameObject completionPopup;
+    [SerializeField] private TextMeshProUGUI completionTitleText;
+    [SerializeField] private TextMeshProUGUI completionSummaryText;
+    [SerializeField] private TextMeshProUGUI completionMessageText;
+    [SerializeField] private Button finishButton;
+    [SerializeField] private Button bonusButton;
+    [SerializeField] private TextMeshProUGUI finishButtonText;
+    [SerializeField] private TextMeshProUGUI bonusButtonText;
+
     public TextMeshProUGUI GoalsText => goalsText;
     public TextMeshProUGUI ScoreText => scoreText;
     public TextMeshProUGUI StreakText => streakText;
-    public TextMeshProUGUI SpeedText => speedText;
     public TextMeshProUGUI ResultText => resultText;
     public TextMeshProUGUI ResultDetailText => resultDetailText;
     public Image ResultFlash => resultFlash;
     public RectTransform BallIcon => ballIcon;
+    public GameObject CompletionPopup { get { EnsurePopupReferences(); return completionPopup; } }
+    public TextMeshProUGUI CompletionTitleText { get { EnsurePopupReferences(); return completionTitleText; } }
+    public TextMeshProUGUI CompletionSummaryText { get { EnsurePopupReferences(); return completionSummaryText; } }
+    public TextMeshProUGUI CompletionMessageText { get { EnsurePopupReferences(); return completionMessageText; } }
+    public Button FinishButton { get { EnsurePopupReferences(); return finishButton; } }
+    public Button BonusButton { get { EnsurePopupReferences(); return bonusButton; } }
+    public RectTransform FinishButtonRect { get { EnsurePopupReferences(); return finishButton.GetComponent<RectTransform>(); } }
+    public RectTransform BonusButtonRect { get { EnsurePopupReferences(); return bonusButton.GetComponent<RectTransform>(); } }
+    public TextMeshProUGUI FinishButtonText { get { EnsurePopupReferences(); return finishButtonText; } }
+    public TextMeshProUGUI BonusButtonText { get { EnsurePopupReferences(); return bonusButtonText; } }
+
+    public void PrepareCompletionPopup()
+    {
+        EnsurePopupReferences();
+        SetChildActive("Retry Button", false);
+        SetChildActive("Grade", false);
+        SetChildActive("Praise", false);
+        SetChildActive("Final Scoreboard", false);
+        completionTitleText.gameObject.SetActive(true);
+        completionSummaryText.gameObject.SetActive(true);
+        completionMessageText.gameObject.SetActive(true);
+        finishButton.gameObject.SetActive(true);
+        bonusButton.gameObject.SetActive(true);
+        completionPopup.SetActive(false);
+    }
 
     public void SetMarkerPosition(float normalizedPosition)
     {
@@ -67,5 +100,44 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     {
         if (element != null)
             element.sizeDelta = new Vector2(Mathf.Max(24f, width), height);
+    }
+
+    private void EnsurePopupReferences()
+    {
+        if (completionPopup == null)
+        {
+            Transform popup = FindDescendant(transform, "Free Kick Completion Popup");
+            if (popup == null)
+                popup = FindDescendant(transform, "Completion Backdrop");
+            completionPopup = popup != null ? popup.gameObject : null;
+        }
+
+        if (completionPopup == null)
+            return;
+
+        completionTitleText ??= FindDescendant(completionPopup.transform, "Title")?.GetComponent<TextMeshProUGUI>();
+        completionSummaryText ??= FindDescendant(completionPopup.transform, "Course Time")?.GetComponent<TextMeshProUGUI>();
+        completionMessageText ??= FindDescendant(completionPopup.transform, "Bonus Message")?.GetComponent<TextMeshProUGUI>();
+        finishButton ??= FindDescendant(completionPopup.transform, "Continue Button")?.GetComponent<Button>();
+        bonusButton ??= FindDescendant(completionPopup.transform, "Optional Button")?.GetComponent<Button>();
+        finishButtonText ??= finishButton != null ? finishButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+        bonusButtonText ??= bonusButton != null ? bonusButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+    }
+
+    private void SetChildActive(string childName, bool isActive)
+    {
+        Transform child = FindDescendant(completionPopup.transform, childName);
+        if (child != null)
+            child.gameObject.SetActive(isActive);
+    }
+
+    private static Transform FindDescendant(Transform root, string childName)
+    {
+        foreach (Transform child in root.GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == childName)
+                return child;
+        }
+        return null;
     }
 }
