@@ -28,7 +28,7 @@ public class CampaignGameplayExecution : MonoBehaviour
                         yield return action.Execute();
             }
 
-            builder.BuildMatch(MatchFlow.Match.Settings.LevelData);
+            builder.BuildMatch();
             yield return null;
             yield return new WaitUntil(() => mm == null || !mm.enabled || mm.MatchDone);
 

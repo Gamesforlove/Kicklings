@@ -10,11 +10,4 @@ public class LoadCampaign : MonoBehaviour
         MusicManager.Instance.StopMusic();
         EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.Stage0Scene2TutorialMatch));
     }
-    public void StartOrContinueCampaign() 
-    {
-        if (CampaignTracker.Instance)
-        {
-            CampaignTracker.Instance.StartCampaign();
-        }
-    }
 }

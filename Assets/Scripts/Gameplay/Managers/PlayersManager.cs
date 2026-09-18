@@ -1,9 +1,8 @@
+using System.Collections.Generic;
 using CommonDataTypes;
 using Gameplay.CharacterComponents;
 using Gameplay.CharacterComponents.Cpu;
 using Gameplay.Spawners;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +20,7 @@ namespace Gameplay.Managers
         List<InputControlScheme> _controlSchemes = new();
         List<AbilityActor> abilityActors = new();
         MatchSettings _matchSettings;
+        bool campaign;
 
         public static PlayersManager Instance { get; private set; }
         void Awake()
@@ -37,24 +37,13 @@ namespace Gameplay.Managers
         public void SpawnEntities(MatchSettings matchSettings)
         {
             _matchSettings  = matchSettings;
+
             if (matchSettings.IsCampaignMatch)
             {
-                switch (matchSettings.LevelData.TutorialMatch)
-                {
-                    case TutorialType.None:
-                        SpawnOnePlayerCampaignMode(matchSettings);
-                        break;
-                    case TutorialType.BasicTutorial:
-                        SpawnCampaign();
-                        break;
-                    case TutorialType.PassToturial:
-                        break;
-                    default:
-                        break;
-                }
+                campaign = true;
+                SpawnCampaign();
                 return;
             }
-
 
             switch (matchSettings.NumberOfPlayers)
             {
@@ -110,21 +99,6 @@ namespace Gameplay.Managers
             layer = LayerMask.NameToLayer(EntityLayer.Player2_GoalKeeper.ToString());
             SpawnCpu(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], layer);
         }
-        void SpawnOnePlayerCampaignMode(MatchSettings matchSettings)
-        {
-            CampaignLevelData levelData = matchSettings.LevelData;
-            int layer = LayerMask.NameToLayer(EntityLayer.Player1_GoalKeeper.ToString());
-            SpawnPlayer(levelData.Player1, PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0], layer);
-
-            layer = LayerMask.NameToLayer(EntityLayer.Player1_Player.ToString());
-            SpawnPlayer(levelData.Player2, PlayersSpawner.PlayerType.Normal, _spawnPoints[1], _controlSchemes[0], layer);
-
-            layer = LayerMask.NameToLayer(EntityLayer.Player2_Player.ToString());
-            SpawnCpu(levelData.Opponent1, PlayersSpawner.PlayerType.Normal, _spawnPoints[2], layer);
-
-            layer = LayerMask.NameToLayer(EntityLayer.Player2_GoalKeeper.ToString());
-            SpawnCpu(levelData.Opponent2, PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[3], layer);
-        }
 
         void SpawnTwoPlayersMode()
         {
@@ -167,20 +141,13 @@ namespace Gameplay.Managers
 
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
-        }
-        void SpawnPlayer(GameObject prefab, PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme, int layer)
-        {
-            GameObject player = _playersSpawner.SpawnPlayer(prefab ,type, position, scheme);
-            _players.Add(player);
-            _playersPositions.Add(player, player.transform.position);
-            SetLayerAllChildren(player.transform, layer);
         }
         void SpawnPlayer(PlayersSpawner.PlayerType type, Transform position, InputControlScheme scheme, int layer)
         {
-            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme, campaign);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
             SetLayerAllChildren(player.transform, layer);
@@ -188,21 +155,14 @@ namespace Gameplay.Managers
 
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
         }
 
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position, int layer)
         {
-            GameObject cpu = _playersSpawner.SpawnCpu(type, position);
-            _players.Add(cpu);
-            _playersPositions.Add(cpu, cpu.transform.position);
-            SetLayerAllChildren(cpu.transform, layer);
-        }
-        void SpawnCpu(GameObject prefab, PlayersSpawner.PlayerType type, Transform position, int layer)
-        {
-            GameObject cpu = _playersSpawner.SpawnCpu(prefab, type, position);
+            GameObject cpu = _playersSpawner.SpawnCpu(type, position, campaign);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
             SetLayerAllChildren(cpu.transform, layer);

@@ -25,7 +25,6 @@ namespace Gameplay.Spawners
         [field: SerializeField] public EntityData ChallengePlayerData { get; private set; }
 
         public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme, bool campaign)
-        public GameObject SpawnPlayer(PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
         {
             GameObject go = PlayerInput.Instantiate(
                 playerType == PlayerType.Normal ? _playerFielderPrefab : _playerGoalkeeperPrefab,
@@ -41,7 +40,7 @@ namespace Gameplay.Spawners
             else
                 team = Team.Left;
 
-            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
+            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType, campaign);
             go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
             return go;
         }
@@ -61,31 +60,11 @@ namespace Gameplay.Spawners
 
             go.GetComponent<Player>()?.SetUp(ChallengePlayerData, PlayerType.Normal, campaign: true);
             go.GetComponent<AbilityActor>()?.SetUp(team, PlayerType.Normal);
-        public GameObject SpawnPlayer(GameObject prefab, PlayerType playerType, Transform spawnPosition, InputControlScheme scheme)
-        {
-            GameObject go = PlayerInput.Instantiate(
-                prefab,
-                controlScheme: scheme.name,
-                pairWithDevice: Keyboard.current
-                ).gameObject;
-            
-            go.transform.SetPositionAndRotation(spawnPosition.position, Quaternion.identity);
-
-            bool isRightSide = go.transform.position.x > 0;
-            Team team;
-            if (isRightSide)
-                team = Team.Right;
-            else
-                team = Team.Left;
-
-            go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
-            go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
 
             return go;
         }
 
         public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition, bool campaign)
-        public GameObject SpawnCpu(PlayerType playerType, Transform spawnPosition)
         {
             GameObject go = Instantiate(
                 playerType == PlayerType.Normal ? _cpuFielderPrefab : _cpuGoalkeeperPrefab,
@@ -94,27 +73,10 @@ namespace Gameplay.Spawners
                 );
  
             CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
-            go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, settings), playerType);
+            go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, settings), playerType, campaign);
             return go;
         }
-        public GameObject SpawnCpu(GameObject prefab, PlayerType playerType, Transform spawnPosition)
-        {
-            GameObject go = Instantiate(
-                prefab,
-                spawnPosition.position, 
-                Quaternion.identity
-                );
- 
-            CpuDifficultyPreset.DifficultySettings settings = CpuDifficultyPreset.GetSettingsForDifficulty(CurrentDifficulty);
-            go.GetComponent<Cpu>()?.SetUp(new CpuConfiguration(
-                playerType == PlayerType.Normal ? FielderData : GoalkeeperData,
-                settings),
-                playerType
-                );
-            
-            return go;
-        }
-        
+
         public void SetDifficulty(DifficultyLevel newDifficulty)
         {
             CurrentDifficulty = newDifficulty;

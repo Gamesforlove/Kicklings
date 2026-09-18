@@ -6,7 +6,6 @@ using Gameplay.Spawners;
 using Scene_Management;
 using System;
 using System.Collections;
-using System.Xml.Linq;
 using UI.MainMenu.TournamentMode;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
@@ -50,22 +49,6 @@ namespace Gameplay.Managers
 
             TimeScaleManager.SetDefaultTimeScale();
             EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.MainMenu));
-        }
-        public void EndGame(string transferTo)
-        {
-            if (Enum.TryParse(transferTo, out SceneName name))
-            {
-                DOTween.KillAll();
-
-                TimeScaleManager.SetDefaultTimeScale();
-                EventBus<OnLoadScene>.Raise(new OnLoadScene(name));
-            }
-            else
-            {
-            #if UNITY_EDITOR
-                            Debug.LogError("Invalid scene name");
-            #endif
-            }
         }
 
         public static MatchManager Instance { get; private set; }

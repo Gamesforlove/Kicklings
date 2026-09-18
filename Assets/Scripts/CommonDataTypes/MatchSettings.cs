@@ -17,13 +17,10 @@ namespace CommonDataTypes
         [field: SerializeField] public int RightCountryImageIndex { get; set; }
         [field: SerializeField] public int GoalsToEndMatch { get; set; } = 5;
         [field: SerializeField] public bool IsTournamentMatch {get; private set;}
+        [field: SerializeField] public bool IsCampaignMatch {get; private set;}
         [field: SerializeField] public bool SplitControls { get; private set; }
         [field: SerializeField] public float LeftSkinToneValue { get; private set; }
         [field: SerializeField] public float RightSkinToneValue { get; private set; }
-        
-        //Campaign
-        [field: SerializeField] public bool IsCampaignMatch {get; private set;}
-        [field: SerializeField] public CampaignLevelData LevelData {get; private set;}
 
         public MatchSettings() { }
 
@@ -38,17 +35,7 @@ namespace CommonDataTypes
             RightCountryImageIndex = 0;
             GoalsToEndMatch = 0;
             IsTournamentMatch = false;
-
             IsCampaignMatch = false;
-            LevelData = null;
-/*            PreMatchCutScene = SceneName.None;
-            AfterMatchCutScene = SceneName.None;
-            AfterMatchDefeatCutScene = SceneName.None;
-            if (SpecificPlayers != null)
-            {
-                System.Array.Clear(SpecificPlayers, 0, SpecificPlayers.Length);
-            }*/
-
             SplitControls = false;
         }
 
@@ -67,7 +54,6 @@ namespace CommonDataTypes
             int _goalsToEndMatch = 5;
             bool _isTournamentMatch = false;
             bool _isCampaignMatch = false;
-            CampaignLevelData _levelData;
             bool _splitControls = false;
 
             public Builder WithNumberOfPlayers(int numberOfPlayers)
@@ -139,11 +125,7 @@ namespace CommonDataTypes
                 _isCampaignMatch = isCampaignMatch;
                 return this;
             }
-            public Builder WithLevelData(CampaignLevelData levelData)
-            {
-                _levelData = levelData;
-                return this;
-            }
+
             public Builder WithSplitControls(bool splitControls)
             {
                 _splitControls = splitControls;
@@ -167,7 +149,6 @@ namespace CommonDataTypes
                     GoalsToEndMatch = _goalsToEndMatch,
                     IsTournamentMatch = _isTournamentMatch,
                     IsCampaignMatch = _isCampaignMatch,
-                    LevelData = _levelData,
                     SplitControls = _splitControls
                 };
             }

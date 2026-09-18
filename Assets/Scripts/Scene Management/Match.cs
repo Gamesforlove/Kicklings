@@ -1,7 +1,6 @@
 ﻿using CommonDataTypes;
 using EventBusSystem;
 using Gameplay.Managers;
-using SaveSystem;
 using System.Collections.Generic;
 using UI.MainMenu.TournamentMode;
 
@@ -12,9 +11,6 @@ namespace Scene_Management
         public MatchSettings Settings { get; }
         public bool IsPlayerWinner { get; set; }
         public bool IsPlayAgain { get; set; }
-        public bool IsReplayMatch { get; set; }
-        public bool IsFinished { get; protected set; } = false;
-        public SceneName GoAfterCutScene { get; set; } = SceneName.CampaignGameplay;
 
         protected Match(MatchSettings settings)
         {
@@ -42,6 +38,7 @@ namespace Scene_Management
         }
 
     }
+
     public class TournamentMatch : Match
     {
         readonly Tournament _tournament;
@@ -90,46 +87,15 @@ namespace Scene_Management
     
     public class CampaignMatch : Match
     {
-        public CampaignMatch(MatchSettings settings) : base(settings) { }
+        public CampaignMatch(MatchSettings settings) : base(settings)
+        {
+            // more tbd through iteration
+        }
 
         public override void HandleEndgameUI(MatchManager matchManager, UiManager uiManager, GoalEvent goalEvent)
         {
-            IsFinished = true;
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
-
-            //temp
-            if (SaveLoadGame.DataIsLoaded && IsPlayerWinner)
-            {
-                if (SaveLoadGame.LoadedData.stage == 0 && SaveLoadGame.LoadedData.PlayerLevel == 4)
-                {
-                    uiManager.ShowCampaignEndPlaceholder();
-                    return;
-                }
-            }
-            //temp
-
-            if (IsReplayMatch)
-            {
-                EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignMap));
-                return;
-            }
-            else
-            {
-                uiManager.ShowMatchWinnerView(goalEvent);
-                CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
-            }
-        }
-        public void ContinueCampaign()
-        {
-            if (Settings.LevelData.AfterMatchCutScene == SceneName.None)
-            {
-                CampaignTracker.Instance.PlayNextlevel();
-            }
-            else
-            {
-                SceneName scene = IsPlayerWinner ? Settings.LevelData.AfterMatchCutScene : Settings.LevelData.AfterMatchDefeatCutScene;
-                EventBus<OnLoadScene>.Raise(new OnLoadScene(scene));
-            }
+            uiManager.ShowMatchWinnerView(goalEvent);
         }
     }
 }

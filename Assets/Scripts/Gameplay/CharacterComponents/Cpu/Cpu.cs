@@ -30,11 +30,11 @@ namespace Gameplay.CharacterComponents.Cpu
         
         BallProximityChecker _ballProximityChecker;
 
-        public void SetUp(CpuConfiguration config, PlayerType type)
+        public void SetUp(CpuConfiguration config, PlayerType type, bool campaign)
         {
             if (config == null) return;
 
-            base.SetUp(config.EntityData, type);
+            base.SetUp(config.EntityData, type, campaign);
             _difficultySettings = config.DifficultySettings;
             
             if (_difficultySettings != null)
