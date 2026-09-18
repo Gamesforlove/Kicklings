@@ -396,8 +396,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.89}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 9.8854065}
+  m_SizeDelta: {x: 0, y: -19.7708}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8826915577214448020
 CanvasRenderer:
@@ -473,7 +473,7 @@ RectTransform:
   m_Father: {fileID: 1209046989370343991}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.31, y: 1}
+  m_AnchorMax: {x: 0.46, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1411,7 +1411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &692427877868187290
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1904,7 +1904,6 @@ MonoBehaviour:
   arcStartAngle: 30
   arcEndAngle: -30
   goalsText: {fileID: 9115732376272488194}
-  scoreText: {fileID: 3619134007823751776}
   streakText: {fileID: 2271579739796425743}
   resultText: {fileID: 3839585742600060115}
   resultDetailText: {fileID: 7587713976517708669}
@@ -1914,8 +1913,10 @@ MonoBehaviour:
   completionTitleText: {fileID: 37387881930026915}
   completionSummaryText: {fileID: 9153708132877877667}
   completionMessageText: {fileID: 1795756972423079799}
+  retryButton: {fileID: 0}
   finishButton: {fileID: 2932625925489404655}
   bonusButton: {fileID: 8625443746524687958}
+  retryButtonText: {fileID: 0}
   finishButtonText: {fileID: 7293718957922807477}
   bonusButtonText: {fileID: 7682866709846727942}
 --- !u!1 &4074997886717870065
@@ -3039,7 +3040,7 @@ RectTransform:
   - {fileID: 3913648346427776039}
   m_Father: {fileID: 1209046989370343991}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.69, y: 0}
+  m_AnchorMin: {x: 0.54, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}

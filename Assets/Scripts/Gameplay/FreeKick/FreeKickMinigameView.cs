@@ -18,7 +18,6 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     [Header("Scoreboard")]
     [FormerlySerializedAs("roundText")]
     [SerializeField] private TextMeshProUGUI goalsText;
-    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI streakText;
 
     [Header("Feedback")]
@@ -32,13 +31,14 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI completionTitleText;
     [SerializeField] private TextMeshProUGUI completionSummaryText;
     [SerializeField] private TextMeshProUGUI completionMessageText;
+    [SerializeField] private Button retryButton;
     [SerializeField] private Button finishButton;
     [SerializeField] private Button bonusButton;
+    [SerializeField] private TextMeshProUGUI retryButtonText;
     [SerializeField] private TextMeshProUGUI finishButtonText;
     [SerializeField] private TextMeshProUGUI bonusButtonText;
 
     public TextMeshProUGUI GoalsText => goalsText;
-    public TextMeshProUGUI ScoreText => scoreText;
     public TextMeshProUGUI StreakText => streakText;
     public TextMeshProUGUI ResultText => resultText;
     public TextMeshProUGUI ResultDetailText => resultDetailText;
@@ -48,23 +48,26 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     public TextMeshProUGUI CompletionTitleText { get { EnsurePopupReferences(); return completionTitleText; } }
     public TextMeshProUGUI CompletionSummaryText { get { EnsurePopupReferences(); return completionSummaryText; } }
     public TextMeshProUGUI CompletionMessageText { get { EnsurePopupReferences(); return completionMessageText; } }
+    public Button RetryButton { get { EnsurePopupReferences(); return retryButton; } }
     public Button FinishButton { get { EnsurePopupReferences(); return finishButton; } }
     public Button BonusButton { get { EnsurePopupReferences(); return bonusButton; } }
+    public RectTransform RetryButtonRect { get { EnsurePopupReferences(); return retryButton.GetComponent<RectTransform>(); } }
     public RectTransform FinishButtonRect { get { EnsurePopupReferences(); return finishButton.GetComponent<RectTransform>(); } }
     public RectTransform BonusButtonRect { get { EnsurePopupReferences(); return bonusButton.GetComponent<RectTransform>(); } }
+    public TextMeshProUGUI RetryButtonText { get { EnsurePopupReferences(); return retryButtonText; } }
     public TextMeshProUGUI FinishButtonText { get { EnsurePopupReferences(); return finishButtonText; } }
     public TextMeshProUGUI BonusButtonText { get { EnsurePopupReferences(); return bonusButtonText; } }
 
     public void PrepareCompletionPopup()
     {
         EnsurePopupReferences();
-        SetChildActive("Retry Button", false);
         SetChildActive("Grade", false);
         SetChildActive("Praise", false);
         SetChildActive("Final Scoreboard", false);
         completionTitleText.gameObject.SetActive(true);
         completionSummaryText.gameObject.SetActive(true);
         completionMessageText.gameObject.SetActive(true);
+        retryButton.gameObject.SetActive(true);
         finishButton.gameObject.SetActive(true);
         bonusButton.gameObject.SetActive(true);
         completionPopup.SetActive(false);
@@ -118,8 +121,10 @@ public sealed class FreeKickMinigameView : MonoBehaviour
         completionTitleText ??= FindDescendant(completionPopup.transform, "Title")?.GetComponent<TextMeshProUGUI>();
         completionSummaryText ??= FindDescendant(completionPopup.transform, "Course Time")?.GetComponent<TextMeshProUGUI>();
         completionMessageText ??= FindDescendant(completionPopup.transform, "Bonus Message")?.GetComponent<TextMeshProUGUI>();
+        retryButton ??= FindDescendant(completionPopup.transform, "Retry Button")?.GetComponent<Button>();
         finishButton ??= FindDescendant(completionPopup.transform, "Continue Button")?.GetComponent<Button>();
         bonusButton ??= FindDescendant(completionPopup.transform, "Optional Button")?.GetComponent<Button>();
+        retryButtonText ??= retryButton != null ? retryButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
         finishButtonText ??= finishButton != null ? finishButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
         bonusButtonText ??= bonusButton != null ? bonusButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
     }

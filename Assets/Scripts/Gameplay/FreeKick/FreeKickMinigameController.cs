@@ -7,29 +7,34 @@ public sealed class FreeKickMinigameController : MonoBehaviour
     private static readonly Color GoalColor = new Color32(83, 232, 130, 255);
     private static readonly Color NearMissColor = new Color32(255, 210, 58, 255);
     private static readonly Color MissColor = new Color32(255, 105, 105, 255);
+    private const string AGradeColor = "#63E681";
+    private const string BGradeColor = "#55DDF2";
+    private const string CGradeColor = "#FF765F";
 
     [Header("Interface")]
     [SerializeField] private FreeKickMinigameView interfaceView;
 
     [Header("Difficulty")]
     [Tooltip("Marker speeds for goals one onward. The final entry repeats if more goals are required.")]
-    [SerializeField] private float[] goalSpeeds = { 0.58f, 0.76f, 0.98f, 1.24f, 1.42f, 1.58f, 1.68f };
+    [SerializeField] private float[] goalSpeeds = { 0.49f, 0.76f, 1.11f, 1.42f, 1.59f };
     [Tooltip("Normalized green-window widths for goals one onward. The final entry repeats if more goals are required.")]
-    [SerializeField] private float[] goalTargetWidths = { 0.1f, 0.088f, 0.076f, 0.064f, 0.058f, 0.052f, 0.048f };
+    [SerializeField] private float[] goalTargetWidths = { 0.106f, 0.088f, 0.07f, 0.058f, 0.058f };
     [SerializeField, Range(0f, 0.3f)] private float targetEdgePadding = 0.11f;
 
     [Header("Goal Flow")]
-    [SerializeField, Min(1)] private int requiredGoals = 5;
-    [SerializeField, Min(1)] private int bonusGoalCount = 2;
+    [SerializeField, Min(1)] private int requiredGoals = 4;
+    [SerializeField, Min(1)] private int bonusGoalCount = 1;
+    [SerializeField, Min(1)] private int requiredAGradeMaximumAttempts = 6;
+    [SerializeField, Min(1)] private int requiredBGradeMaximumAttempts = 12;
+    [SerializeField, Min(1)] private int bonusAGradeMaximumAttempts = 4;
+    [SerializeField, Min(1)] private int bonusBGradeMaximumAttempts = 6;
     [SerializeField, Min(0.1f)] private float resultHoldDuration = 1.05f;
-    [SerializeField, Min(1)] private int baseGoalScore = 1000;
-    [SerializeField, Min(0)] private int streakBonus = 150;
-    [Tooltip("Invoked after the required goal count's final feedback finishes.")]
+    [Tooltip("Invoked when the player chooses Finish from either performance summary.")]
     [SerializeField] private UnityEvent onMinigameCompleted;
 
     private int goalsMade;
-    private int attemptCount;
-    private int score;
+    private int requiredAttemptCount;
+    private int bonusAttemptCount;
     private int streak;
     private int bestStreak;
     private float markerPosition;
@@ -42,10 +47,16 @@ public sealed class FreeKickMinigameController : MonoBehaviour
     private bool isAwaitingChoice;
     private bool isBonusRound;
     private bool isComplete;
+    private bool hasRequiredResult;
+    private bool hasBonusResult;
+    private PerformanceGrade bestRequiredGrade;
+    private PerformanceGrade bestBonusGrade;
+    private int bestRequiredAttemptCount;
+    private int bestBonusAttemptCount;
 
     public int GoalsMade => goalsMade;
-    public int AttemptCount => attemptCount;
-    public int Score => score;
+    public int RequiredAttemptCount => requiredAttemptCount;
+    public int BonusAttemptCount => bonusAttemptCount;
     public int Streak => streak;
     public int BestStreak => bestStreak;
     public float MarkerPosition => markerPosition;
@@ -66,6 +77,7 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         }
 
         interfaceView.PrepareCompletionPopup();
+        interfaceView.RetryButton.onClick.AddListener(HandleRetryButton);
         interfaceView.FinishButton.onClick.AddListener(HandleFinishButton);
         interfaceView.BonusButton.onClick.AddListener(HandleBonusButton);
         interfaceView.CompletionPopup.SetActive(false);
@@ -77,6 +89,7 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         if (interfaceView == null)
             return;
 
+        interfaceView.RetryButton?.onClick.RemoveListener(HandleRetryButton);
         interfaceView.FinishButton?.onClick.RemoveListener(HandleFinishButton);
         interfaceView.BonusButton?.onClick.RemoveListener(HandleBonusButton);
     }
@@ -137,7 +150,7 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         targetWidth = GetDifficultyValue(goalTargetWidths, goalsMade, 0.1f);
         targetCenter = ChooseTargetCenter(targetWidth);
 
-        bool beginsOnRight = attemptCount % 2 == 1;
+        bool beginsOnRight = GetTotalAttemptCount() % 2 == 1;
         markerPosition = beginsOnRight ? 1f : 0f;
         markerDirection = beginsOnRight ? -1f : 1f;
 
@@ -161,7 +174,7 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         float candidate = Random.Range(minimum, maximum);
 
         // Keep consecutive targets visually distinct without making either side predictable.
-        if (attemptCount > 0 && Mathf.Abs(candidate - targetCenter) < 0.16f)
+        if (GetTotalAttemptCount() > 0 && Mathf.Abs(candidate - targetCenter) < 0.16f)
         {
             candidate += candidate < 0.5f ? 0.22f : -0.22f;
             candidate = Mathf.Clamp(candidate, minimum, maximum);
@@ -172,7 +185,10 @@ public sealed class FreeKickMinigameController : MonoBehaviour
 
     private void ResolveKick()
     {
-        attemptCount++;
+        if (isBonusRound)
+            bonusAttemptCount++;
+        else
+            requiredAttemptCount++;
         isShowingResult = true;
         resultTimer = resultHoldDuration;
 
@@ -180,23 +196,23 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         float halfWidth = targetWidth * 0.5f;
         bool isGoal = distance <= halfWidth;
         bool isNearMiss = !isGoal && distance <= halfWidth * 2.2f;
+        int accuracyPercent = GetAccuracyPercent(distance, halfWidth, targetCenter);
 
         if (isGoal)
         {
             goalsMade++;
             streak++;
             bestStreak = Mathf.Max(bestStreak, streak);
-            int speedBonus = Mathf.RoundToInt(currentSpeed * 200f);
-            int points = baseGoalScore + speedBonus + Mathf.Max(0, streak - 1) * streakBonus;
-            score += points;
-            ShowResult("GOAL!", $"+{points:N0}  •  {GetAccuracyPercent(distance, halfWidth)}% accuracy", GoalColor);
+            ShowResult("GOAL!", $"{accuracyPercent}% accuracy", GoalColor);
         }
         else
         {
             streak = 0;
             ShowResult(
                 isNearMiss ? "SO CLOSE!" : "MISSED!",
-                isNearMiss ? "Just outside the stripe — try again" : "Same difficulty — try again",
+                isNearMiss
+                    ? $"{accuracyPercent}% accuracy — just outside the stripe"
+                    : $"{accuracyPercent}% accuracy — try again",
                 isNearMiss ? NearMissColor : MissColor);
         }
 
@@ -226,53 +242,75 @@ public sealed class FreeKickMinigameController : MonoBehaviour
     private void RefreshScoreboard()
     {
         interfaceView.GoalsText.text = goalsMade.ToString();
-        interfaceView.ScoreText.text = score.ToString("N0");
         interfaceView.StreakText.text = $"{streak}  <color=#7D91A8>BEST {bestStreak}</color>";
     }
 
     private static bool WasKickPressed()
     {
         return Input.GetKeyDown(KeyCode.Z) ||
-               Input.GetKeyDown(KeyCode.Space) ||
-               Input.GetMouseButtonDown(0);
+               Input.GetKeyDown(KeyCode.Space);
     }
 
     private void ShowRequiredCompletionPopup()
     {
+        RecordRequiredPerformance();
         isShowingResult = false;
         isAwaitingChoice = true;
         interfaceView.CompletionPopup.SetActive(true);
         interfaceView.CompletionTitleText.text = "FREE KICK COMPLETE!";
-        interfaceView.CompletionSummaryText.text = FormatCompletionSummary();
-        interfaceView.CompletionMessageText.text = "Play two bonus goals for more points?";
+        interfaceView.CompletionSummaryText.text =
+            $"<size=130>{FormatGrade(bestRequiredGrade)}</size>\n" +
+            "<size=32><color=#FFD23A>BEST</color></size>";
+        interfaceView.CompletionMessageText.text =
+            $"Good job!\n\n<size=22>4 GOALS  •  {bestRequiredAttemptCount} ATTEMPTS</size>";
+        interfaceView.RetryButtonText.text = "Retry Goals";
         interfaceView.FinishButtonText.text = "Finish Minigame";
         interfaceView.BonusButtonText.text = "Play Bonus Round";
+        interfaceView.RetryButton.gameObject.SetActive(true);
         interfaceView.BonusButton.gameObject.SetActive(true);
-        SetPopupButtonPositions(true);
+        SetPopupButtonPositions();
     }
 
     private void ShowBonusCompletionPopup()
     {
+        RecordBonusPerformance();
         isShowingResult = false;
         isAwaitingChoice = true;
         interfaceView.CompletionPopup.SetActive(true);
         interfaceView.CompletionTitleText.text = "BONUS COMPLETE!";
-        interfaceView.CompletionSummaryText.text = FormatCompletionSummary();
-        interfaceView.CompletionMessageText.text = "Two extra goals scored!";
-        interfaceView.FinishButtonText.text = "Continue";
-        interfaceView.BonusButton.gameObject.SetActive(false);
-        SetPopupButtonPositions(false);
+        interfaceView.CompletionSummaryText.text =
+            "<align=left>" +
+            $"<size=120><pos=20%>{FormatGrade(bestRequiredGrade)}</pos>" +
+            $"<pos=70%>{FormatGrade(bestBonusGrade)}</pos></size>\n" +
+            "<size=30><color=#FFD23A><pos=20%>BEST</pos>" +
+            "<pos=68%>BONUS</pos></color></size>";
+        string bonusAttemptLabel = bestBonusAttemptCount == 1 ? "ATTEMPT" : "ATTEMPTS";
+        interfaceView.CompletionMessageText.text =
+            "Good job!\n\n" +
+            $"<size=22>1 BONUS  •  {bestBonusAttemptCount} {bonusAttemptLabel}</size>";
+        interfaceView.RetryButtonText.text = "Retry Goals";
+        interfaceView.FinishButtonText.text = "Finish Minigame";
+        interfaceView.BonusButtonText.text = "Retry Bonus";
+        interfaceView.RetryButton.gameObject.SetActive(true);
+        interfaceView.BonusButton.gameObject.SetActive(true);
+        SetPopupButtonPositions();
     }
 
     private void HandleBonusButton()
     {
-        if (!isAwaitingChoice || isBonusRound || isComplete)
+        if (!isAwaitingChoice || isComplete)
             return;
+        if (isBonusRound)
+            RetryBonusGoals();
+        else
+            StartBonusRound();
+    }
 
-        isBonusRound = true;
-        isAwaitingChoice = false;
-        interfaceView.CompletionPopup.SetActive(false);
-        BeginNextAttempt();
+    private void HandleRetryButton()
+    {
+        if (!isAwaitingChoice || isComplete)
+            return;
+        ResetFullRun();
     }
 
     private void HandleFinishButton()
@@ -282,31 +320,152 @@ public sealed class FreeKickMinigameController : MonoBehaviour
 
         isAwaitingChoice = false;
         isComplete = true;
+        interfaceView.RetryButton.interactable = false;
         interfaceView.FinishButton.interactable = false;
         interfaceView.BonusButton.interactable = false;
         onMinigameCompleted?.Invoke();
     }
 
-    private string FormatCompletionSummary()
+    private void RecordRequiredPerformance()
     {
-        string attemptLabel = attemptCount == 1 ? "ATTEMPT" : "ATTEMPTS";
-        return $"{goalsMade} GOALS  •  {attemptCount} {attemptLabel}";
+        PerformanceGrade grade = CalculateRequiredGrade();
+        if (!hasRequiredResult || IsBetterResult(
+                grade,
+                requiredAttemptCount,
+                bestRequiredGrade,
+                bestRequiredAttemptCount))
+        {
+            hasRequiredResult = true;
+            bestRequiredGrade = grade;
+            bestRequiredAttemptCount = requiredAttemptCount;
+        }
     }
 
-    private void SetPopupButtonPositions(bool showBonusButton)
+    private void RecordBonusPerformance()
     {
+        PerformanceGrade grade = CalculateBonusGrade();
+        if (!hasBonusResult || IsBetterResult(
+                grade,
+                bonusAttemptCount,
+                bestBonusGrade,
+                bestBonusAttemptCount))
+        {
+            hasBonusResult = true;
+            bestBonusGrade = grade;
+            bestBonusAttemptCount = bonusAttemptCount;
+        }
+    }
+
+    private static bool IsBetterResult(
+        PerformanceGrade candidateGrade,
+        int candidateAttempts,
+        PerformanceGrade bestGrade,
+        int bestAttempts)
+    {
+        return candidateGrade < bestGrade ||
+               candidateGrade == bestGrade && candidateAttempts < bestAttempts;
+    }
+
+    private void StartBonusRound()
+    {
+        isBonusRound = true;
+        isAwaitingChoice = false;
+        bonusAttemptCount = 0;
+        interfaceView.CompletionPopup.SetActive(false);
+        BeginNextAttempt();
+    }
+
+    private void ResetFullRun()
+    {
+        goalsMade = 0;
+        requiredAttemptCount = 0;
+        bonusAttemptCount = 0;
+        streak = 0;
+        bestStreak = 0;
+        isBonusRound = false;
+        isAwaitingChoice = false;
+        isComplete = false;
+        interfaceView.CompletionPopup.SetActive(false);
+        BeginNextAttempt();
+    }
+
+    private void RetryBonusGoals()
+    {
+        goalsMade = requiredGoals;
+        bonusAttemptCount = 0;
+        streak = 0;
+        isBonusRound = true;
+        isAwaitingChoice = false;
+        interfaceView.CompletionPopup.SetActive(false);
+        BeginNextAttempt();
+    }
+
+    private void SetPopupButtonPositions()
+    {
+        RectTransform retryRect = interfaceView.RetryButtonRect;
+        retryRect.anchoredPosition = new Vector2(-185f, -280f);
+        retryRect.sizeDelta = new Vector2(350f, 86f);
         RectTransform finishRect = interfaceView.FinishButtonRect;
-        finishRect.anchoredPosition = new Vector2(showBonusButton ? -210f : 0f, -350f);
+        finishRect.anchoredPosition = new Vector2(185f, -280f);
+        finishRect.sizeDelta = new Vector2(350f, 86f);
         RectTransform bonusRect = interfaceView.BonusButtonRect;
-        bonusRect.anchoredPosition = new Vector2(210f, -350f);
+        bonusRect.anchoredPosition = new Vector2(0f, -390f);
     }
 
-    private static int GetAccuracyPercent(float distance, float halfWidth)
+    private PerformanceGrade CalculateRequiredGrade()
+    {
+        if (requiredAttemptCount <= requiredAGradeMaximumAttempts)
+            return PerformanceGrade.A;
+        return requiredAttemptCount <= requiredBGradeMaximumAttempts
+            ? PerformanceGrade.B
+            : PerformanceGrade.C;
+    }
+
+    private PerformanceGrade CalculateBonusGrade()
+    {
+        if (bonusAttemptCount <= bonusAGradeMaximumAttempts)
+            return PerformanceGrade.A;
+        return bonusAttemptCount <= bonusBGradeMaximumAttempts
+            ? PerformanceGrade.B
+            : PerformanceGrade.C;
+    }
+
+    private static string FormatGrade(PerformanceGrade grade)
+    {
+        switch (grade)
+        {
+            case PerformanceGrade.A:
+                return $"<color={AGradeColor}>A</color>";
+            case PerformanceGrade.B:
+                return $"<color={BGradeColor}>B</color>";
+            default:
+                return $"<color={CGradeColor}>C</color>";
+        }
+    }
+
+    private int GetTotalAttemptCount() => requiredAttemptCount + bonusAttemptCount;
+
+    private static int GetAccuracyPercent(float distance, float halfWidth, float targetCenter)
     {
         if (halfWidth <= Mathf.Epsilon)
             return 100;
 
-        return Mathf.RoundToInt(Mathf.Lerp(100f, 80f, Mathf.Clamp01(distance / halfWidth)));
+        float perfectRadius = halfWidth * 0.5f;
+        if (distance <= perfectRadius)
+            return 100;
+
+        if (distance <= halfWidth)
+        {
+            float goalEdgeProgress = Mathf.InverseLerp(perfectRadius, halfWidth, distance);
+            return Mathf.RoundToInt(Mathf.Lerp(100f, 95f, goalEdgeProgress));
+        }
+
+        float farthestBarDistance = Mathf.Max(targetCenter, 1f - targetCenter);
+        if (farthestBarDistance <= halfWidth)
+            return 95;
+
+        float outsideProgress = Mathf.InverseLerp(halfWidth, farthestBarDistance, distance);
+        return Mathf.RoundToInt(Mathf.Lerp(95f, 0f, outsideProgress));
     }
 
     private static float GetDifficultyValue(float[] values, int completedGoals, float fallback)
@@ -317,4 +476,5 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         return values[Mathf.Clamp(completedGoals, 0, values.Length - 1)];
     }
 
+    private enum PerformanceGrade { A, B, C }
 }
