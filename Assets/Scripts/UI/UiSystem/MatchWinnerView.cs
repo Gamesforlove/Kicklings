@@ -8,6 +8,7 @@ namespace UI.UiSystem
     public class MatchWinnerView : UIViewWithData<FieldSideData>
     {
         [SerializeField] TextMeshProUGUI _text;
+        [SerializeField] TextMeshProUGUI _nextLevelText;
         [SerializeField] GameObject _leftWinText;
         [SerializeField] GameObject _rightWinText;
         
@@ -23,8 +24,14 @@ namespace UI.UiSystem
             */
             switch (sideData.SideType)
             {
-                case FieldSideType.Left: _leftWinText.SetActive(true); break;
-                case FieldSideType.Right: _rightWinText.SetActive(true); break;
+                case FieldSideType.Left: 
+                    _leftWinText.SetActive(true);
+                    if (_nextLevelText) _nextLevelText.text = "Next Level";
+                    break;
+                case FieldSideType.Right:
+                    _rightWinText.SetActive(true);
+                    if (_nextLevelText) _nextLevelText.text = "Restart";
+                    break;
                 default: break;
             }
 
