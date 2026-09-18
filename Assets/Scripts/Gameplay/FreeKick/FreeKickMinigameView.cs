@@ -25,6 +25,14 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultDetailText;
     [SerializeField] private Image resultFlash;
     [SerializeField] private RectTransform ballIcon;
+    [SerializeField] private string readyTitle = "TIME YOUR KICK";
+    [SerializeField] private Color readyTitleColor = Color.white;
+    [SerializeField] private Vector2 ballRestPosition = new Vector2(0f, -12f);
+    [SerializeField, Min(0f)] private float ballKickHeight = 62f;
+    [SerializeField, Min(0f)] private float ballScalePunch = 0.16f;
+    [SerializeField, Range(0f, 1f)] private float resultFlashAlpha = 0.04f;
+    [Tooltip("Fraction of the result pause used by the screen-flash fade.")]
+    [SerializeField, Range(0.1f, 1f)] private float resultFlashFadePortion = 0.75f;
 
     [Header("Completion Popup")]
     [SerializeField] private GameObject completionPopup;
@@ -40,10 +48,6 @@ public sealed class FreeKickMinigameView : MonoBehaviour
 
     public TextMeshProUGUI GoalsText => goalsText;
     public TextMeshProUGUI StreakText => streakText;
-    public TextMeshProUGUI ResultText => resultText;
-    public TextMeshProUGUI ResultDetailText => resultDetailText;
-    public Image ResultFlash => resultFlash;
-    public RectTransform BallIcon => ballIcon;
     public GameObject CompletionPopup { get { EnsurePopupReferences(); return completionPopup; } }
     public TextMeshProUGUI CompletionTitleText { get { EnsurePopupReferences(); return completionTitleText; } }
     public TextMeshProUGUI CompletionSummaryText { get { EnsurePopupReferences(); return completionSummaryText; } }
@@ -51,9 +55,6 @@ public sealed class FreeKickMinigameView : MonoBehaviour
     public Button RetryButton { get { EnsurePopupReferences(); return retryButton; } }
     public Button FinishButton { get { EnsurePopupReferences(); return finishButton; } }
     public Button BonusButton { get { EnsurePopupReferences(); return bonusButton; } }
-    public RectTransform RetryButtonRect { get { EnsurePopupReferences(); return retryButton.GetComponent<RectTransform>(); } }
-    public RectTransform FinishButtonRect { get { EnsurePopupReferences(); return finishButton.GetComponent<RectTransform>(); } }
-    public RectTransform BonusButtonRect { get { EnsurePopupReferences(); return bonusButton.GetComponent<RectTransform>(); } }
     public TextMeshProUGUI RetryButtonText { get { EnsurePopupReferences(); return retryButtonText; } }
     public TextMeshProUGUI FinishButtonText { get { EnsurePopupReferences(); return finishButtonText; } }
     public TextMeshProUGUI BonusButtonText { get { EnsurePopupReferences(); return bonusButtonText; } }
@@ -71,6 +72,39 @@ public sealed class FreeKickMinigameView : MonoBehaviour
         finishButton.gameObject.SetActive(true);
         bonusButton.gameObject.SetActive(true);
         completionPopup.SetActive(false);
+    }
+
+    public void PrepareAttemptVisuals()
+    {
+        resultText.text = readyTitle;
+        resultText.color = readyTitleColor;
+        resultDetailText.text = string.Empty;
+        resultFlash.color = new Color(1f, 1f, 1f, 0f);
+        ballIcon.anchoredPosition = ballRestPosition;
+        ballIcon.localScale = Vector3.one;
+    }
+
+    public void ShowKickResult(string title, string detail, Color color)
+    {
+        resultText.text = title;
+        resultText.color = color;
+        resultDetailText.text = detail;
+        resultFlash.color = new Color(color.r, color.g, color.b, resultFlashAlpha);
+    }
+
+    public void AnimateKickResult(float normalizedProgress)
+    {
+        float kickArc = Mathf.Sin(Mathf.Clamp01(normalizedProgress) * Mathf.PI);
+        ballIcon.anchoredPosition = ballRestPosition + Vector2.up * (kickArc * ballKickHeight);
+        ballIcon.localScale = Vector3.one * (1f + kickArc * ballScalePunch);
+
+        float flashProgress = Mathf.InverseLerp(
+            0f,
+            Mathf.Max(0.1f, resultFlashFadePortion),
+            Mathf.Clamp01(normalizedProgress));
+        Color flash = resultFlash.color;
+        flash.a = Mathf.Lerp(resultFlashAlpha, 0f, flashProgress);
+        resultFlash.color = flash;
     }
 
     public void SetMarkerPosition(float normalizedPosition)

@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interfaceView: {fileID: 0}
+  goalColor: {r: 0.3254902, g: 0.9098039, b: 0.50980395, a: 1}
+  nearMissColor: {r: 1, g: 0.8235294, b: 0.22745098, a: 1}
+  missColor: {r: 1, g: 0.4117647, b: 0.4117647, a: 1}
+  streakBestColor: {r: 0.49019608, g: 0.5686275, b: 0.65882355, a: 1}
+  gradeLabelColor: {r: 1, g: 0.8235294, b: 0.22745098, a: 1}
+  aGradeColor: {r: 0.3882353, g: 0.9019608, b: 0.5058824, a: 1}
+  bGradeColor: {r: 0.33333334, g: 0.8666667, b: 0.9490196, a: 1}
+  cGradeColor: {r: 1, g: 0.4627451, b: 0.37254903, a: 1}
   goalSpeeds:
   - 0.49
   - 0.76
@@ -58,6 +66,11 @@ MonoBehaviour:
   - 0.058
   - 0.058
   targetEdgePadding: 0.11
+  minimumTargetShift: 0.16
+  targetShiftAmount: 0.22
+  nearMissDistanceMultiplier: 2.2
+  perfectWindowFraction: 0.5
+  goalEdgeAccuracy: 95
   requiredGoals: 4
   bonusGoalCount: 1
   requiredAGradeMaximumAttempts: 6

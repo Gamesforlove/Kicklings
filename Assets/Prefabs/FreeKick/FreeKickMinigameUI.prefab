@@ -1909,6 +1909,13 @@ MonoBehaviour:
   resultDetailText: {fileID: 7587713976517708669}
   resultFlash: {fileID: 4609684274607913957}
   ballIcon: {fileID: 3550818880986580832}
+  readyTitle: TIME YOUR KICK
+  readyTitleColor: {r: 1, g: 1, b: 1, a: 1}
+  ballRestPosition: {x: 0, y: -12}
+  ballKickHeight: 62
+  ballScalePunch: 0.16
+  resultFlashAlpha: 0.04
+  resultFlashFadePortion: 0.75
   completionPopup: {fileID: 1062772320419119997}
   completionTitleText: {fileID: 37387881930026915}
   completionSummaryText: {fileID: 9153708132877877667}
