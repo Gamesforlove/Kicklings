@@ -12,7 +12,8 @@ public class ReturnToMenuButton : MonoBehaviour
         {
             SaveLoadGame.Save(SaveLoadGame.LoadedData);
         }
-        SceneHandler.LoadScene(SceneName.MainMenu);
+        CampaignTracker.Instance.TransitionToScene(SceneName.MainMenu);
+        //SceneHandler.LoadScene(SceneName.MainMenu);
     }
     public void ReturnToMap()
     {
@@ -21,6 +22,7 @@ public class ReturnToMenuButton : MonoBehaviour
         {
             SaveLoadGame.Save(SaveLoadGame.LoadedData);
         }
-        SceneHandler.LoadScene(SceneName.CampaignMap);
+        CampaignTracker.Instance.TransitionToScene(SceneName.CampaignMap);
+        //SceneHandler.LoadScene(SceneName.CampaignMap);
     }
 }

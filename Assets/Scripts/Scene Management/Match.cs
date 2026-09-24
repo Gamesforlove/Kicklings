@@ -128,7 +128,7 @@ namespace Scene_Management
             else
             {
                 SceneName scene = IsPlayerWinner ? Settings.LevelData.AfterMatchCutScene : Settings.LevelData.AfterMatchDefeatCutScene;
-                EventBus<OnLoadScene>.Raise(new OnLoadScene(scene));
+                CampaignTracker.Instance.TransitionToScene(scene);
             }
         }
     }

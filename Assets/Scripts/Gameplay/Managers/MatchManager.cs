@@ -253,5 +253,7 @@ namespace Gameplay.Managers
             
             _uiManager.ChangeScore(_leftScore, _rightScore);
         }
+
+        public void UnPauseGame() => TimeScaleManager.SetDefaultTimeScale();
     }
 }
