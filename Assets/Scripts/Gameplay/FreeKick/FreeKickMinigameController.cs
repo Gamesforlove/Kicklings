@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [DisallowMultipleComponent]
-public sealed class FreeKickMinigameController : MonoBehaviour
+public sealed class FreeKickMinigameController : MonoBehaviour, IMinigameSkipTarget
 {
     [Header("Interface")]
     [SerializeField] private FreeKickMinigameView interfaceView;
@@ -73,6 +73,7 @@ public sealed class FreeKickMinigameController : MonoBehaviour
     public float TargetCenter => targetCenter;
     public float TargetWidth => targetWidth;
     public float CurrentSpeed => currentSpeed;
+    public bool CanSkipToSummary => enabled && !isAwaitingChoice && !isComplete;
 
     private void Awake()
     {
@@ -284,6 +285,23 @@ public sealed class FreeKickMinigameController : MonoBehaviour
         interfaceView.BonusButtonText.text = "Retry Bonus";
         interfaceView.RetryButton.gameObject.SetActive(true);
         interfaceView.BonusButton.gameObject.SetActive(true);
+    }
+
+    public void SkipToFinalSummary()
+    {
+        if (!CanSkipToSummary)
+            return;
+
+        isShowingResult = false;
+        isAwaitingChoice = true;
+        interfaceView.CompletionPopup.SetActive(true);
+        interfaceView.CompletionTitleText.text = "FREE KICK SKIPPED";
+        interfaceView.CompletionSummaryText.text = "<size=80>SKIPPED</size>";
+        interfaceView.CompletionMessageText.text = "You can retry or finish the minigame.";
+        interfaceView.RetryButtonText.text = "Retry Goals";
+        interfaceView.FinishButtonText.text = "Finish Minigame";
+        interfaceView.RetryButton.gameObject.SetActive(true);
+        interfaceView.BonusButton.gameObject.SetActive(false);
     }
 
     private void HandleBonusButton()
