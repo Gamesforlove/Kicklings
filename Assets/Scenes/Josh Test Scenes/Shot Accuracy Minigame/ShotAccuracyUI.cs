@@ -1,6 +1,5 @@
 using TMPro;
 using UI.Gameplay;
-using UI.UiSystem;
 using UnityEngine;
 
 namespace Gameplay.ShotAccuracy
@@ -8,10 +7,9 @@ namespace Gameplay.ShotAccuracy
 
     public class ShotAccuracyUi : MonoBehaviour
     {
-        // [SerializeField] UIViewsManager _uiViewsManager;
         [SerializeField] ChallengeScoreBoard _scoreBoard;
         [SerializeField] ChallengeTimerView _timerView;
-        // [SerializeField] ChallengeResultView _resultView;
+        [SerializeField] ResultsPanel _resultPanel;
 
         [Header("Shot Accuracy")]
         [SerializeField] TextMeshProUGUI _shotsText;
@@ -24,6 +22,7 @@ namespace Gameplay.ShotAccuracy
 
         public void InitializeRound(int scoreTarget, float duration, int totalShots)
         {
+            _resultPanel?.Hide();
             _scoreBoard?.ResetScore(scoreTarget);
             _timerView?.SetMaxTime(duration);
             _timerView?.ResetView();
@@ -56,9 +55,9 @@ namespace Gameplay.ShotAccuracy
             if (_feedbackText != null) _feedbackText.text = string.Empty;
         }
 
-        // public void ShowResult(bool won, int score, int target)
-        // {
-        //     _uiViewsManager.ShowView(_resultView, new ChallengeResultData(won, score, target));
-        // }
+        public void ShowResult(bool won, int score, int target)
+        {
+            _resultPanel?.Show(won, score, target);
+        }
     }
 }

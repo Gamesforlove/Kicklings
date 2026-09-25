@@ -20,7 +20,7 @@ namespace UI.Gameplay
         [SerializeField] float _pulseSpeed = 6f;
         [SerializeField] float _pulseScale = 0.06f;
 
-        float _maxTime = 60f;
+        [SerializeField] float _maxTime = 60f;
         bool _isUrgent;
 
         void Awake()
