@@ -1210,6 +1210,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d22c1f90310ad42991da849ebd038c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1233104394 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7361916344276669657, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
+  m_PrefabInstance: {fileID: 420651842046928189}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1246129039 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9196478477552007141, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
@@ -2078,6 +2083,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5281249915382875277, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
   m_PrefabInstance: {fileID: 420651842046928189}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015224588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233104394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed63709000cde44e85bd74eede852d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2140054243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5159314747300564664, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
@@ -2291,7 +2308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 586215141070998628, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -45.699993
+      value: -45.69998
       objectReference: {fileID: 0}
     - target: {fileID: 727402113340167365, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_Color.b
@@ -2324,7 +2341,7 @@ PrefabInstance:
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 784777266}
+      objectReference: {fileID: 2015224588}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -2347,7 +2364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CampaignTracker, Assembly-CSharp
+      value: ReturnToMenuButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 874907035324306262, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -3550,6 +3567,9 @@ PrefabInstance:
       insertIndex: 4
       addedObject: {fileID: 1996432813}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7361916344276669657, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015224588}
     - targetCorrespondingSourceObject: {fileID: 3506352938287618700, guid: afe47df70bf8bf540b49012e992bcb7e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 653965218}

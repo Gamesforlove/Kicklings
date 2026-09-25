@@ -25,4 +25,14 @@ public class ReturnToMenuButton : MonoBehaviour
         CampaignTracker.Instance.TransitionToScene(SceneName.CampaignMap);
         //SceneHandler.LoadScene(SceneName.CampaignMap);
     }
+    public void TransitionToScene(string SceneName)
+    {
+        MatchFlow.DisposeMatch();
+        if (SaveLoadGame.DataIsLoaded)
+        {
+            SaveLoadGame.Save(SaveLoadGame.LoadedData);
+        }
+        CampaignTracker.Instance.TransitionToScene(SceneName);
+        //SceneHandler.LoadScene(SceneName.CampaignMap);
+    }
 }

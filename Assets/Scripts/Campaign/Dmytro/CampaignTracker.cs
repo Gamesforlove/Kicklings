@@ -4,7 +4,6 @@ using SaveSystem;
 using Scene_Management;
 using System;
 using System.Collections;
-using System.Xml.Linq;
 using UnityEngine;
 
 public class CampaignTracker : MonoBehaviour
@@ -16,6 +15,8 @@ public class CampaignTracker : MonoBehaviour
     [SerializeField] private Animator _transition;
     [SerializeField] private float _waitAfterSlideIn;
     [SerializeField] private float _waitBeforeSlideOut;
+    
+    private TransitionState _transitionState = TransitionState.BehindTheScreen;
 
     private void Awake()
     {
@@ -53,6 +54,7 @@ public class CampaignTracker : MonoBehaviour
                 Debug.LogError("Can't load saved data, created a fresh save");
             #endif
             SaveLoadGame.Save(new StorageData());
+            SaveLoadGame.Load();
             StartCoroutine(NextlevelRoutine());
             return;
         }
@@ -146,35 +148,49 @@ public class CampaignTracker : MonoBehaviour
 
         EndgameBehaviour.IncrementAndSaveData(_campaign);        
     }
+
+
     public IEnumerator NextlevelRoutine()
     {
         _transitionCanvas.SetActive(true);
-        _transition.SetTrigger("SlideIn");
+        TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
         StartMatch(1);
     }
     private IEnumerator OnSceneLoadedRoutine()
     {
+        if (_transitionState == TransitionState.SlidedOut) yield break;
+
         _transitionCanvas.SetActive(true);
         yield return new WaitForSeconds(_waitBeforeSlideOut);
-        _transition.SetTrigger("SlideOut");
+        TransitionSlideOut();
     }
     private IEnumerator LevelAfterCutSceneRoutine()
     {
         _transitionCanvas.SetActive(true);
-        _transition.SetTrigger("SlideIn");
+        TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
         EventBus<OnLoadScene>.Raise(new OnLoadScene(MatchFlow.Match.Settings.LevelData.LevelGameplayScene));
     }
     private IEnumerator TransitionToSceneRoutine(SceneName name)
     {
         _transitionCanvas.SetActive(true);
-        _transition.SetTrigger("SlideIn");
+        TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
         EventBus<OnLoadScene>.Raise(new OnLoadScene(name));
     }
 
 
+    private void TransitionSlideIn()
+    {
+        _transitionState = TransitionState.SlidedIn;
+        _transition.SetTrigger("SlideIn");
+    }
+    private void TransitionSlideOut()
+    {
+        _transitionState = TransitionState.SlidedOut;
+        _transition.SetTrigger("SlideOut");
+    }
     private void OnApplicationQuit()
     {
         if (SaveLoadGame.DataIsLoaded)
@@ -184,13 +200,14 @@ public class CampaignTracker : MonoBehaviour
     }
     private void OnSceneLoaded(OnSceneLoaded onSceneLoaded)
     {
-/*        string name = onSceneLoaded.SceneName;
-        if (name == SceneName.CampaignStartScreen.ToString() ||
-            name == SceneName.MainMenu.ToString() ||
+        string name = onSceneLoaded.SceneName;
+        if (
+            //name == SceneName.CampaignStartScreen.ToString() ||
+            //name == SceneName.MainMenu.ToString() ||
             name == SceneName.Gameplay.ToString())
         {
             return;
-        }*/
+        }
         StartCoroutine(OnSceneLoadedRoutine());
     }
 }
