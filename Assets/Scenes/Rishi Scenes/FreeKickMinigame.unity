@@ -127,25 +127,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 709741113290955755, guid: fc2e72fa44a951e489035919aaaae9b3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1192288448955163825, guid: fc2e72fa44a951e489035919aaaae9b3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2831314775332942079, guid: fc2e72fa44a951e489035919aaaae9b3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3972762287568332563, guid: fc2e72fa44a951e489035919aaaae9b3, type: 3}
       propertyPath: m_Name
       value: FreeKickMinigameUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4645076918595948371, guid: fc2e72fa44a951e489035919aaaae9b3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8886431551427627801, guid: fc2e72fa44a951e489035919aaaae9b3, type: 3}
       propertyPath: m_Pivot.x
