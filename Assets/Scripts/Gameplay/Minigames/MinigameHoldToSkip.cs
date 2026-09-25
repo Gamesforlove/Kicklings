@@ -10,19 +10,26 @@ public interface IMinigameSkipTarget
 [DisallowMultipleComponent]
 public sealed class MinigameHoldToSkip : MonoBehaviour
 {
-    [SerializeField] private GameObject visualRoot;
+    [Header("References")]
+    [SerializeField] private CanvasGroup visualCanvasGroup;
     [SerializeField] private Image radialFill;
+
+    [Header("Timing")]
     [SerializeField, Min(0.1f)] private float holdDuration = 2f;
+    [SerializeField, Min(0f)] private float fadeInDuration = 0.15f;
+    [SerializeField, Min(0f)] private float fadeOutDelay = 0.5f;
+    [SerializeField, Min(0f)] private float fadeOutDuration = 0.45f;
 
     private IMinigameSkipTarget skipTarget;
     private float heldTime;
+    private float timeSinceHoldReleased;
     private bool skipTriggered;
 
     private void Start()
     {
         FindSkipTarget();
         ResetProgress();
-        RefreshVisibility();
+        HideImmediately();
     }
 
     private void Update()
@@ -34,37 +41,41 @@ public sealed class MinigameHoldToSkip : MonoBehaviour
         if (!targetCanSkip)
             skipTriggered = false;
 
-        bool canSkip = targetCanSkip && !skipTriggered;
-        if (visualRoot != null && visualRoot.activeSelf != canSkip)
-            visualRoot.SetActive(canSkip);
-
-        if (!canSkip)
+        if (!targetCanSkip || skipTriggered)
         {
             ResetProgress();
+            HideImmediately();
             return;
         }
 
-        if (!Input.GetKey(KeyCode.T))
+        if (Input.GetKey(KeyCode.T))
         {
-            ResetProgress();
+            timeSinceHoldReleased = 0f;
+            FadeTowards(1f, fadeInDuration);
+
+            heldTime += Time.unscaledDeltaTime;
+            if (radialFill != null)
+                radialFill.fillAmount = Mathf.Clamp01(heldTime / holdDuration);
+
+            if (heldTime < holdDuration)
+                return;
+
+            skipTriggered = true;
+            skipTarget.SkipToFinalSummary();
+            HideImmediately();
             return;
         }
 
-        heldTime += Time.unscaledDeltaTime;
-        if (radialFill != null)
-            radialFill.fillAmount = Mathf.Clamp01(heldTime / holdDuration);
-
-        if (heldTime < holdDuration)
-            return;
-
-        skipTriggered = true;
-        skipTarget.SkipToFinalSummary();
-        RefreshVisibility();
+        ResetProgress();
+        timeSinceHoldReleased += Time.unscaledDeltaTime;
+        if (timeSinceHoldReleased >= fadeOutDelay)
+            FadeTowards(0f, fadeOutDuration);
     }
 
     private void OnDisable()
     {
         ResetProgress();
+        HideImmediately();
     }
 
     private void FindSkipTarget()
@@ -80,15 +91,28 @@ public sealed class MinigameHoldToSkip : MonoBehaviour
         }
     }
 
-    private void RefreshVisibility()
+    private void FadeTowards(float targetAlpha, float duration)
     {
-        bool targetCanSkip = skipTarget != null && skipTarget.CanSkipToSummary;
-        if (!targetCanSkip)
-            skipTriggered = false;
+        if (visualCanvasGroup == null)
+            return;
 
-        bool visible = targetCanSkip && !skipTriggered;
-        if (visualRoot != null)
-            visualRoot.SetActive(visible);
+        if (duration <= Mathf.Epsilon)
+        {
+            visualCanvasGroup.alpha = targetAlpha;
+            return;
+        }
+
+        visualCanvasGroup.alpha = Mathf.MoveTowards(
+            visualCanvasGroup.alpha,
+            targetAlpha,
+            Time.unscaledDeltaTime / duration);
+    }
+
+    private void HideImmediately()
+    {
+        timeSinceHoldReleased = 0f;
+        if (visualCanvasGroup != null)
+            visualCanvasGroup.alpha = 0f;
     }
 
     private void ResetProgress()
