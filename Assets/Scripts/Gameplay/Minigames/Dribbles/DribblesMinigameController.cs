@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(DribblesMinigameWorld))]
-public sealed class DribblesMinigameController : MonoBehaviour
+public sealed class DribblesMinigameController : MonoBehaviour, IMinigameSkipTarget
 {
     private const float PlayerRadius = 0.52f;
     private const float BallRadius = 0.42f;
@@ -68,6 +68,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
     private bool isTimerRunning;
     private bool isCourseComplete;
     private bool isMinigameFinished;
+    private bool wasMinigameSkipped;
     private int currentCourseIndex;
     private int nextCheckpointIndex;
     private float startTime;
@@ -119,9 +120,12 @@ public sealed class DribblesMinigameController : MonoBehaviour
         public readonly List<DribblesMinigameWorld.CheckpointInstance> Visuals =
             new List<DribblesMinigameWorld.CheckpointInstance>();
         public bool HasCompletion;
+        public bool WasSkipped;
         public float CompletionTime;
         public CourseRating Rating;
     }
+
+    public bool CanSkipToSummary => enabled && !isMinigameFinished;
 
     private void Awake()
     {
@@ -392,14 +396,16 @@ public sealed class DribblesMinigameController : MonoBehaviour
 
     private void ConfigureFinishedPanel()
     {
-        completionTitleText.text = "DRIBBLES COMPLETE!";
+        completionTitleText.text = wasMinigameSkipped
+            ? "DRIBBLES SKIPPED"
+            : "DRIBBLES COMPLETE!";
         completionGradeText.gameObject.SetActive(false);
         completionTimeText.gameObject.SetActive(false);
         finalScoreboard.SetActive(true);
         PopulateFinalScoreboard();
         completionPraiseText.gameObject.SetActive(true);
         completionMessageText.gameObject.SetActive(false);
-        completionPraiseText.text = "Good job!";
+        completionPraiseText.text = wasMinigameSkipped ? "Minigame skipped." : "Good job!";
         SetRectLayout(completionPraiseRect, new Vector2(780f, 70f), new Vector2(0f, 300f));
 
         retryButton.gameObject.SetActive(true);
@@ -621,6 +627,46 @@ public sealed class DribblesMinigameController : MonoBehaviour
         isMinigameFinished = true;
     }
 
+    public void SkipToFinalSummary()
+    {
+        if (!CanSkipToSummary || courses.Count == 0)
+            return;
+
+        int lastCourseToList = Mathf.Max(GetRequiredCourseCount() - 1, currentCourseIndex);
+        lastCourseToList = Mathf.Clamp(lastCourseToList, 0, courses.Count - 1);
+        for (int courseIndex = 0; courseIndex <= lastCourseToList; courseIndex++)
+        {
+            CourseRuntime course = courses[courseIndex];
+            if (course.HasCompletion)
+                continue;
+
+            course.HasCompletion = true;
+            course.WasSkipped = true;
+            course.CompletionTime = 0f;
+            course.Rating = CourseRating.None;
+        }
+
+        wasMinigameSkipped = true;
+        isPointerControlActive = false;
+        isTimerRunning = false;
+        isCourseComplete = true;
+        isMinigameFinished = true;
+        startPrompt?.SetActive(false);
+        restartHint?.SetActive(false);
+
+        if (playerBody != null)
+            playerBody.linearVelocity = Vector2.zero;
+        if (ballBody != null)
+        {
+            ballBody.linearVelocity = Vector2.zero;
+            ballBody.angularVelocity = 0f;
+            ballBody.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        RefreshCourseState();
+        RefreshInterface();
+    }
+
     private void RestartCurrentCourse()
     {
         StartCourse(currentCourseIndex);
@@ -635,6 +681,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
         }
 
         currentCourseIndex = Mathf.Clamp(courseIndex, 0, courses.Count - 1);
+        if (currentCourseIndex == 0)
+            wasMinigameSkipped = false;
         ClearCourseResultsFrom(currentCourseIndex);
         isPointerControlActive = false;
         isTimerRunning = false;
@@ -697,6 +745,7 @@ public sealed class DribblesMinigameController : MonoBehaviour
         {
             CourseRuntime course = courses[courseIndex];
             course.HasCompletion = false;
+            course.WasSkipped = false;
             course.CompletionTime = 0f;
             course.Rating = CourseRating.None;
         }
@@ -733,8 +782,8 @@ public sealed class DribblesMinigameController : MonoBehaviour
                 continue;
 
             courseColumn += "\n" + (courseIndex + 1);
-            scoreColumn += "\n" + GetScoreGrade(course.Rating);
-            timeColumn += "\n" + FormatTime(course.CompletionTime);
+            scoreColumn += "\n" + (course.WasSkipped ? "-" : GetScoreGrade(course.Rating));
+            timeColumn += "\n" + (course.WasSkipped ? "SKIPPED" : FormatTime(course.CompletionTime));
         }
 
         finalCourseColumn.text = courseColumn;
