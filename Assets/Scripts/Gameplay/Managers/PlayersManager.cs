@@ -15,6 +15,7 @@ namespace Gameplay.Managers
         [SerializeField] Transform[] _spawnPoints;
         [SerializeField] bool oneOnOneForCampaign;
         [SerializeField] bool justPlayerForCampaign;
+        [SerializeField, Range(0.8f, 1.2f)] float _entityScaleMultiplier = 1f;
 
         readonly List<GameObject> _players = new();
         readonly Dictionary<GameObject, Vector2> _playersPositions = new();
@@ -168,6 +169,7 @@ namespace Gameplay.Managers
         void SpawnPlayer(PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme)
         {
             GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            ApplyEntityScale(player);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
             ConfigurePlayerActions(player);
@@ -175,6 +177,7 @@ namespace Gameplay.Managers
         void SpawnPlayer(GameObject prefab, PlayersSpawner.PlayerType type,Transform position, InputControlScheme scheme, int layer)
         {
             GameObject player = _playersSpawner.SpawnPlayer(prefab ,type, position, scheme);
+            ApplyEntityScale(player);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
             ConfigurePlayerActions(player);
@@ -183,6 +186,7 @@ namespace Gameplay.Managers
         void SpawnPlayer(PlayersSpawner.PlayerType type, Transform position, InputControlScheme scheme, int layer)
         {
             GameObject player = _playersSpawner.SpawnPlayer(type, position, scheme);
+            ApplyEntityScale(player);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
             ConfigurePlayerActions(player);
@@ -192,6 +196,7 @@ namespace Gameplay.Managers
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position)
         {
             GameObject cpu = _playersSpawner.SpawnCpu(type, position);
+            ApplyEntityScale(cpu);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
         }
@@ -199,6 +204,7 @@ namespace Gameplay.Managers
         void SpawnCpu(PlayersSpawner.PlayerType type, Transform position, int layer)
         {
             GameObject cpu = _playersSpawner.SpawnCpu(type, position);
+            ApplyEntityScale(cpu);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
             SetLayerAllChildren(cpu.transform, layer);
@@ -206,6 +212,7 @@ namespace Gameplay.Managers
         void SpawnCpu(GameObject prefab, PlayersSpawner.PlayerType type, Transform position, int layer)
         {
             GameObject cpu = _playersSpawner.SpawnCpu(prefab, type, position);
+            ApplyEntityScale(cpu);
             _players.Add(cpu);
             _playersPositions.Add(cpu, cpu.transform.position);
             SetLayerAllChildren(cpu.transform, layer);
@@ -308,6 +315,20 @@ namespace Gameplay.Managers
                 _matchSettings.IsCampaignMatch &&
                 _matchSettings.LevelData != null &&
                 _matchSettings.LevelData.TutorialMatch == TutorialType.BasicTutorial;
+        }
+
+        void ApplyEntityScale(GameObject entity)
+        {
+            if (entity == null)
+                return;
+
+            float multiplier = _entityScaleMultiplier > 0f ? _entityScaleMultiplier : 1f;
+            Vector3 scale = entity.transform.localScale;
+            entity.transform.localScale = new Vector3(
+                scale.x * multiplier,
+                scale.y * multiplier,
+                scale.z
+            );
         }
 
         public bool TryBeginPlayerAction(PlayerActions requester, string controlScheme)

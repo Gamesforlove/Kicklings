@@ -3317,6 +3317,7 @@ MonoBehaviour:
   - {fileID: 550765043}
   oneOnOneForCampaign: 1
   justPlayerForCampaign: 0
+  _entityScaleMultiplier: 1
 --- !u!1001 &1617595364
 PrefabInstance:
   m_ObjectHideFlags: 0
