@@ -4,6 +4,7 @@ using EventBusSystem;
 using Gameplay.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Gameplay.Spawners.PlayersSpawner;
 
 namespace Gameplay.CharacterComponents
 {
@@ -30,6 +31,7 @@ namespace Gameplay.CharacterComponents
         HingeJoint2D _kickingLegJoint;
         JointMotor2D _kickingLegJointMotor;
         PlayerInput _playerInput;
+        Entity _entity;
         Collider2D[] _bodyColliders;
         Coroutine _stopKickingLegMotorCoroutine;
     
@@ -37,6 +39,7 @@ namespace Gameplay.CharacterComponents
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _playerInput = GetComponent<PlayerInput>();
+            _entity = GetComponent<Entity>();
             _bodyColliders = GetComponentsInChildren<Collider2D>(includeInactive: true);
             _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
             _kickingLegJointMotor = _kickingLegJoint.motor;
@@ -102,6 +105,7 @@ namespace Gameplay.CharacterComponents
         public void ScriptedKick() => OnActionPerformed();
         public bool CanReceivePlayerAction => isActiveAndEnabled && CanKick && !DisableInput;
         public string CurrentControlScheme => _playerInput != null ? _playerInput.currentControlScheme : string.Empty;
+        public int AttackingDirection => _kickingDirectionMultiplier;
 
         public void OnActionPerformed() => PerformAction(applyMovementAssist: false);
 
@@ -152,14 +156,58 @@ namespace Gameplay.CharacterComponents
             Vector2 predictedBallPosition = (Vector2)ball.transform.position +
                                             ball.Rigidbody.linearVelocity * settings.BallPredictionTime;
             Vector2 toBall = predictedBallPosition - _rigidbody.position;
-            if (toBall.sqrMagnitude > settings.MovementAssistRange * settings.MovementAssistRange)
+            float nearRange = Mathf.Max(Mathf.Epsilon, settings.MovementAssistRange);
+
+            if (Mathf.Abs(toBall.x) <= nearRange)
+            {
+                float horizontalOffset = Mathf.Clamp(toBall.x / nearRange, -1f, 1f);
+                float requestedAssist = Mathf.Abs(horizontalOffset) *
+                                        _entityData.JumpPower *
+                                        settings.MovementAssistStrength;
+                ApplyLeanRespectingHorizontalAssist(
+                    ref jumpForce,
+                    toBall.x,
+                    requestedAssist,
+                    settings
+                );
+                ApplyVerticalReachAssist(ref jumpForce, toBall.y, settings);
                 return;
+            }
 
-            float horizontalOffset = Mathf.Clamp(toBall.x / settings.MovementAssistRange, -1f, 1f);
-            jumpForce.x += horizontalOffset * _entityData.JumpPower * settings.MovementAssistStrength;
+            float targetX = GetFarTravelTargetX(ball.Rigidbody, settings);
+            float horizontalDistance = targetX - _rigidbody.position.x;
+            float fullAssistDistance = Mathf.Max(
+                nearRange + Mathf.Epsilon,
+                settings.FarMovementFullAssistDistance
+            );
+            float distanceWeight = Mathf.InverseLerp(
+                nearRange,
+                fullAssistDistance,
+                Mathf.Abs(horizontalDistance)
+            );
+            float assistStrength = Mathf.Lerp(
+                settings.MovementAssistStrength,
+                settings.FarMovementAssistStrength,
+                distanceWeight
+            );
 
+            jumpForce.y *= settings.FarMovementVerticalMultiplier;
+            ApplyLeanRespectingHorizontalAssist(
+                ref jumpForce,
+                horizontalDistance,
+                _entityData.JumpPower * assistStrength,
+                settings
+            );
+        }
+
+        void ApplyVerticalReachAssist(
+            ref Vector2 jumpForce,
+            float ballHeight,
+            EntityData.KickAssistSettings settings
+        )
+        {
             if (settings.VerticalMovementAssistStrength <= 0f ||
-                toBall.y <= settings.VerticalAssistMinimumBallHeight)
+                ballHeight <= settings.VerticalAssistMinimumBallHeight)
                 return;
 
             float fullAssistHeight = Mathf.Max(
@@ -169,11 +217,123 @@ namespace Gameplay.CharacterComponents
             float verticalAssistWeight = Mathf.InverseLerp(
                 settings.VerticalAssistMinimumBallHeight,
                 fullAssistHeight,
-                toBall.y
+                ballHeight
             );
             jumpForce.y += _entityData.JumpPower *
                            settings.VerticalMovementAssistStrength *
                            verticalAssistWeight;
+        }
+
+        void ApplyLeanRespectingHorizontalAssist(
+            ref Vector2 jumpForce,
+            float targetOffset,
+            float requestedAssist,
+            EntityData.KickAssistSettings settings
+        )
+        {
+            if (Mathf.Abs(targetOffset) <= Mathf.Epsilon || requestedAssist <= Mathf.Epsilon)
+                return;
+
+            float targetDirection = Mathf.Sign(targetOffset);
+            float naturalHorizontalForce = jumpForce.x;
+            float uprightThreshold = _entityData.JumpPower * settings.NaturalLeanUprightThreshold;
+
+            if (Mathf.Abs(naturalHorizontalForce) <= uprightThreshold)
+            {
+                jumpForce.x += targetDirection * requestedAssist *
+                               settings.UprightMovementAssistMultiplier;
+                return;
+            }
+
+            if (Mathf.Sign(naturalHorizontalForce) == targetDirection)
+            {
+                jumpForce.x += targetDirection * requestedAssist;
+                return;
+            }
+
+            // Preserve the timing skill in the rocking body: assistance may soften a wrong-way
+            // lean, but can never turn that lean into movement in the opposite direction.
+            float maximumCorrection = Mathf.Abs(naturalHorizontalForce) *
+                                      settings.WrongWayMovementDamping;
+            jumpForce.x += targetDirection * Mathf.Min(requestedAssist, maximumCorrection);
+        }
+
+        float GetFarTravelTargetX(
+            Rigidbody2D ballRigidbody,
+            EntityData.KickAssistSettings settings
+        )
+        {
+            float predictionTime = GetBallLandingPredictionTime(ballRigidbody, settings);
+            float targetX = ballRigidbody.position.x +
+                            ballRigidbody.linearVelocity.x * predictionTime;
+            bool isGoalkeeper = _entity != null && _entity.PlayerType == PlayerType.Goalkeeper;
+
+            if (isGoalkeeper && settings.GoalkeeperSupportOffset > 0f)
+            {
+                targetX -= _kickingDirectionMultiplier * settings.GoalkeeperSupportOffset;
+                if (settings.GoalkeeperStayInOwnHalf)
+                {
+                    targetX = _kickingDirectionMultiplier > 0
+                        ? Mathf.Min(targetX, 0f)
+                        : Mathf.Max(targetX, 0f);
+                }
+            }
+
+            PlayerActions teammate = PlayersManager.Instance?.GetTeammate(this);
+            if (teammate != null && settings.TeammateSeparationDistance > 0f)
+            {
+                float teammateOffset = _rigidbody.position.x - teammate._rigidbody.position.x;
+                float teammateDistance = Mathf.Abs(teammateOffset);
+                if (teammateDistance < settings.TeammateSeparationDistance)
+                {
+                    float separationDirection = teammateDistance > Mathf.Epsilon
+                        ? Mathf.Sign(teammateOffset)
+                        : (isGoalkeeper ? -_kickingDirectionMultiplier : _kickingDirectionMultiplier);
+                    float separationWeight = 1f - teammateDistance / settings.TeammateSeparationDistance;
+                    targetX += separationDirection *
+                               settings.TeammateSeparationTargetOffset *
+                               separationWeight;
+                }
+            }
+
+            return Mathf.Clamp(
+                targetX,
+                -settings.PlayableHorizontalLimit,
+                settings.PlayableHorizontalLimit
+            );
+        }
+
+        float GetBallLandingPredictionTime(
+            Rigidbody2D ballRigidbody,
+            EntityData.KickAssistSettings settings
+        )
+        {
+            float minimumTime = settings.BallPredictionTime;
+            float maximumTime = Mathf.Max(minimumTime, settings.MaximumTravelPredictionTime);
+            if (ballRigidbody.position.y <= _rigidbody.position.y + 1f)
+                return minimumTime;
+
+            float gravity = Physics2D.gravity.y * ballRigidbody.gravityScale;
+            float a = 0.5f * gravity;
+            float b = ballRigidbody.linearVelocity.y;
+            float c = ballRigidbody.position.y - _rigidbody.position.y;
+            float discriminant = b * b - 4f * a * c;
+            if (Mathf.Abs(a) <= Mathf.Epsilon || discriminant < 0f)
+                return minimumTime;
+
+            float squareRoot = Mathf.Sqrt(discriminant);
+            float firstRoot = (-b + squareRoot) / (2f * a);
+            float secondRoot = (-b - squareRoot) / (2f * a);
+            float landingTime = float.PositiveInfinity;
+            if (firstRoot > 0f)
+                landingTime = firstRoot;
+            if (secondRoot > 0f)
+                landingTime = Mathf.Min(landingTime, secondRoot);
+
+            if (float.IsPositiveInfinity(landingTime))
+                return minimumTime;
+
+            return Mathf.Clamp(landingTime, minimumTime, maximumTime);
         }
 
         public void Kick()

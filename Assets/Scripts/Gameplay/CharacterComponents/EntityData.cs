@@ -11,10 +11,34 @@ namespace Gameplay.CharacterComponents
         {
             [Tooltip("How far ahead, in seconds, the ball position is predicted for player selection and movement assist.")]
             [Min(0f)] public float BallPredictionTime = 0.35f;
-            [Tooltip("Maximum distance at which a player action receives a horizontal nudge toward the predicted ball position.")]
+            [Tooltip("Maximum horizontal distance treated as near-ball play before the action becomes a lower travel hop.")]
             [Min(0f)] public float MovementAssistRange = 3f;
             [Tooltip("Maximum horizontal movement correction as a proportion of jump power.")]
             [Range(0f, 0.5f)] public float MovementAssistStrength = 0.12f;
+            [Tooltip("Maximum horizontal assistance used by lower travel hops when the target is outside the near-ball range.")]
+            [Range(0f, 0.6f)] public float FarMovementAssistStrength = 0.26f;
+            [Tooltip("Horizontal distance at which far travel assistance reaches full strength.")]
+            [Min(0f)] public float FarMovementFullAssistDistance = 6f;
+            [Tooltip("Multiplier applied to the natural vertical jump force during a far travel hop.")]
+            [Range(0.5f, 1f)] public float FarMovementVerticalMultiplier = 0.85f;
+            [Tooltip("Maximum time used to estimate the ball's horizontal landing position for far travel.")]
+            [Min(0f)] public float MaximumTravelPredictionTime = 1.25f;
+            [Tooltip("Natural horizontal jump force below this proportion of jump power is treated as nearly upright.")]
+            [Range(0f, 0.5f)] public float NaturalLeanUprightThreshold = 0.1f;
+            [Tooltip("Proportion of requested assistance supplied when the character is nearly upright.")]
+            [Range(0f, 1f)] public float UprightMovementAssistMultiplier = 0.7f;
+            [Tooltip("Maximum proportion of wrong-way natural movement that assistance may cancel. It never reverses the lean.")]
+            [Range(0f, 1f)] public float WrongWayMovementDamping = 0.5f;
+            [Tooltip("Distance a goalkeeper's far-travel target stays behind the predicted ball position.")]
+            [Min(0f)] public float GoalkeeperSupportOffset = 0f;
+            [Tooltip("When enabled, far travel keeps a goalkeeper on its own half of the field.")]
+            public bool GoalkeeperStayInOwnHalf = false;
+            [Tooltip("Horizontal field limit used to keep assisted travel targets out of goal and boundary geometry.")]
+            [Min(0f)] public float PlayableHorizontalLimit = 8.5f;
+            [Tooltip("Teammates closer than this distance receive a press-time target offset away from one another during far travel.")]
+            [Min(0f)] public float TeammateSeparationDistance = 1.5f;
+            [Tooltip("Maximum target offset used to separate clumped teammates during an input-driven travel hop.")]
+            [Min(0f)] public float TeammateSeparationTargetOffset = 1.25f;
             [Tooltip("Additional world-up jump force, as a proportion of jump power, when the predicted ball is above the character. Zero disables it.")]
             [Range(0f, 0.5f)] public float VerticalMovementAssistStrength = 0f;
             [Tooltip("Ball height above the character at which vertical reach assistance begins.")]

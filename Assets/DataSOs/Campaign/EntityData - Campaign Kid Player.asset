@@ -21,8 +21,20 @@ MonoBehaviour:
   GroundedAngularVelocityDeadZone: 5
   KickAssist:
     BallPredictionTime: 0.35
-    MovementAssistRange: 7.5
+    MovementAssistRange: 3.5
     MovementAssistStrength: 0.32
+    FarMovementAssistStrength: 0.38
+    FarMovementFullAssistDistance: 6.5
+    FarMovementVerticalMultiplier: 0.86
+    MaximumTravelPredictionTime: 1.25
+    NaturalLeanUprightThreshold: 0.1
+    UprightMovementAssistMultiplier: 0.75
+    WrongWayMovementDamping: 0.6
+    GoalkeeperSupportOffset: 0
+    GoalkeeperStayInOwnHalf: 0
+    PlayableHorizontalLimit: 8.5
+    TeammateSeparationDistance: 1.5
+    TeammateSeparationTargetOffset: 1.25
     VerticalMovementAssistStrength: 0.22
     VerticalAssistMinimumBallHeight: 0.8
     VerticalAssistFullBallHeight: 2.5

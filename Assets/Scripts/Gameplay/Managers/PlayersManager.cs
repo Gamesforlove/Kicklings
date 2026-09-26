@@ -293,6 +293,24 @@ namespace Gameplay.Managers
             return allPlayerActions;
         }
 
+        public PlayerActions GetTeammate(PlayerActions requester)
+        {
+            if (requester == null)
+                return null;
+
+            foreach (GameObject player in _players)
+            {
+                if (player == null || !player.TryGetComponent(out PlayerActions candidate) ||
+                    candidate == requester ||
+                    candidate.AttackingDirection != requester.AttackingDirection)
+                    continue;
+
+                return candidate;
+            }
+
+            return null;
+        }
+
         public void EnablePlayers()
         {
             foreach (GameObject player in _players)

@@ -19,6 +19,18 @@ MonoBehaviour:
     BallPredictionTime: 0.35
     MovementAssistRange: 3
     MovementAssistStrength: 0.12
+    FarMovementAssistStrength: 0.28
+    FarMovementFullAssistDistance: 6
+    FarMovementVerticalMultiplier: 0.84
+    MaximumTravelPredictionTime: 1.25
+    NaturalLeanUprightThreshold: 0.1
+    UprightMovementAssistMultiplier: 0.7
+    WrongWayMovementDamping: 0.5
+    GoalkeeperSupportOffset: 0
+    GoalkeeperStayInOwnHalf: 0
+    PlayableHorizontalLimit: 8.5
+    TeammateSeparationDistance: 1.5
+    TeammateSeparationTargetOffset: 1.25
     ContactAssistWindow: 0.45
     ForwardVelocityDeadZone: 0.35
     MinimumForwardVelocity: 2.4
