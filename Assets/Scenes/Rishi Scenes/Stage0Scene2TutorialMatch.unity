@@ -2601,7 +2601,7 @@ Transform:
   m_GameObject: {fileID: 1423391566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8, y: 3.5, z: 0}
+  m_LocalPosition: {x: 1.8, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3257,7 +3257,7 @@ Transform:
   m_GameObject: {fileID: 1554996726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8, y: 3.5, z: 0}
+  m_LocalPosition: {x: -1.8, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3807,7 +3807,7 @@ MonoBehaviour:
   _leftSidePosition: {fileID: 1554996727}
   _rightSidePosition: {fileID: 1423391567}
   _centerPosition: {fileID: 1554996727}
-  _ballPrefab: {fileID: 100004, guid: f847417e53b4a824abb1e6990987c385, type: 3}
+  _ballPrefab: {fileID: 100004, guid: b4f2c9d1e7a84653a0d8c1f5b9e2746a, type: 3}
   OnlyPutOnLeft: 1
 --- !u!1 &1801568202
 GameObject:

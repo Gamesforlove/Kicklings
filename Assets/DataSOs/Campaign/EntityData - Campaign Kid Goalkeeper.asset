@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60537cea90538a4d91ffd6b1f120d4c, type: 3}
+  m_Name: EntityData - Campaign Kid Goalkeeper
+  m_EditorClassIdentifier: 
+  JumpPower: 2350
+  JumpCooldown: 0.75
+  KickingPower: 1000
+  StabilizationFactor: 26
+  StabilizationDeadZoneDegrees: 2
+  GroundedLinearVelocityDeadZone: 0.25
+  GroundedAngularVelocityDeadZone: 5
+  KickAssist:
+    BallPredictionTime: 0.35
+    MovementAssistRange: 7.5
+    MovementAssistStrength: 0.32
+    VerticalMovementAssistStrength: 0.22
+    VerticalAssistMinimumBallHeight: 0.8
+    VerticalAssistFullBallHeight: 2.5
+    ContactAssistWindow: 0.55
+    ForwardVelocityDeadZone: 0.45
+    MinimumForwardVelocity: 3
+    ForwardVelocityCorrectionStrength: 0.8
+    MaximumForwardVelocityAdded: 3.2
+    HeadContactAssistMultiplier: 1.5
+    TorsoContactAssistMultiplier: 1.35
+    KickingLegReturnMotorDuration: 0.4
+    KickingLegRestAngleTolerance: 4
+    HeadColliderScale: 1.18
+    LegColliderScale: 1.25
+    FootColliderScale: 1.2

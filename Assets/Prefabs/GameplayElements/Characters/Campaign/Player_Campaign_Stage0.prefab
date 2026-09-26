@@ -408,7 +408,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.3
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -536,7 +536,7 @@ MonoBehaviour:
   _groundChecks:
   - {fileID: 5588305525187344252}
   - {fileID: 8374246201076789711}
-  <LockMovementToFacingDirection>k__BackingField: 1
+  <LockMovementToFacingDirection>k__BackingField: 0
 --- !u!114 &2906329488930597588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,6 +674,7 @@ MonoBehaviour:
   _rightSideColor: {r: 0, g: 0, b: 0, a: 0}
   _leftPatternColor: {r: 0, g: 0, b: 0, a: 0}
   _rightPatternColor: {r: 0, g: 0, b: 0, a: 0}
+  _entityDataOverride: {fileID: 11400000, guid: d3a4c7e91b6f4a8f9c2d5e7a1b3c6d8e, type: 2}
 --- !u!114 &5158565507570098389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,7 +872,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.5
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.15
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1384,7 +1385,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1.5
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.2
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1518,7 +1519,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1.5
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.2
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1680,7 +1681,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.5, y: 0.45}
+  m_Size: {x: 1.6, y: 0.7}
   m_EdgeRadius: 0
 --- !u!114 &8374246201076789711
 MonoBehaviour:

@@ -18,6 +18,8 @@ namespace Gameplay.CharacterComponents
         [SerializeField] protected Color _rightSideColor;
         [SerializeField] protected Color _leftPatternColor;
         [SerializeField] protected Color _rightPatternColor;
+        [Tooltip("Optional per-prefab gameplay data. When unset, the normal fielder/goalkeeper data supplied by the spawner is used.")]
+        [SerializeField] EntityData _entityDataOverride;
         protected EntityData EntityData;
         
         protected JointsController JointsController;
@@ -31,7 +33,7 @@ namespace Gameplay.CharacterComponents
         public virtual void SetUp(EntityData entityData, PlayerType type)
         {
             PlayerType = type;
-            EntityData = entityData;
+            EntityData = _entityDataOverride != null ? _entityDataOverride : entityData;
             CacheComponents();
             
             bool isRightSide = gameObject.transform.position.x > 0;

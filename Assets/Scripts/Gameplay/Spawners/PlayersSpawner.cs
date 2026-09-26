@@ -38,6 +38,7 @@ namespace Gameplay.Spawners
 
             go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
             go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
+            EnsurePlayerIndicator(go);
             return go;
         }
 
@@ -60,6 +61,7 @@ namespace Gameplay.Spawners
 
             go.GetComponent<Player>()?.SetUp(playerType == PlayerType.Normal ? FielderData : GoalkeeperData, playerType);
             go.GetComponent<AbilityActor>()?.SetUp(team, playerType);
+            EnsurePlayerIndicator(go);
 
             return go;
         }
@@ -97,6 +99,30 @@ namespace Gameplay.Spawners
         public void SetDifficulty(DifficultyLevel newDifficulty)
         {
             CurrentDifficulty = newDifficulty;
+        }
+
+        void EnsurePlayerIndicator(GameObject player)
+        {
+            PlayerInput playerInput = player.GetComponent<PlayerInput>();
+            PlayerIndicator indicator = player.GetComponentInChildren<PlayerIndicator>(true);
+            if (playerInput == null)
+                return;
+
+            if (indicator == null)
+            {
+                PlayerIndicator template = _playerFielderPrefab
+                    .GetComponentInChildren<PlayerIndicator>(true);
+                if (template == null)
+                    return;
+
+                indicator = Instantiate(template, player.transform);
+                indicator.name = template.name;
+                indicator.transform.localPosition = template.transform.localPosition;
+                indicator.transform.localRotation = template.transform.localRotation;
+                indicator.transform.localScale = template.transform.localScale;
+            }
+
+            indicator.SetUp(playerInput);
         }
     }
 }
