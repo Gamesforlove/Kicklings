@@ -13,11 +13,7 @@ namespace Gameplay.Managers
 
         public BallScript Ball { get; private set; }
     
-        public void SpawnBall()
-        {
-            Ball = _ballSpawner?.SpawnBall();
-            ResetBallWithSpin(FieldSideType.Left);
-        }
+        public void SpawnBall() => Ball = _ballSpawner?.SpawnBall();
     
         public void ResetBall()
         {
@@ -29,12 +25,6 @@ namespace Gameplay.Managers
         {
             _ballSpawner?.ResetBallOnSide(sideType);
             Ball?.Reset();
-        }
-
-        public void ResetBallWithSpin(FieldSideType sideType)
-        {
-            _ballSpawner?.ResetBall();
-            Ball?.ResetWithSpin(sideType);
         }
     }
 }
