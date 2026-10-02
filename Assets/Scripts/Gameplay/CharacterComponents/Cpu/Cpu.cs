@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Gameplay.Managers;
 using UnityEngine;
+using static Gameplay.Spawners.PlayersSpawner;
 
 namespace Gameplay.CharacterComponents.Cpu
 {
@@ -29,11 +30,11 @@ namespace Gameplay.CharacterComponents.Cpu
         
         BallProximityChecker _ballProximityChecker;
 
-        public void SetUp(CpuConfiguration config)
+        public void SetUp(CpuConfiguration config, PlayerType type, bool campaign)
         {
             if (config == null) return;
 
-            base.SetUp(config.EntityData);
+            base.SetUp(config.EntityData, type, campaign);
             _difficultySettings = config.DifficultySettings;
             
             if (_difficultySettings != null)
@@ -88,7 +89,7 @@ namespace Gameplay.CharacterComponents.Cpu
         {
             yield return new WaitForSeconds(time);
             PlayerActions.OnActionPerformed();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.3f); // TODO: Maybe randomize this too, or make it a setting in the difficulty preset
             PlayerActions.OnActionCancelled();
         }
     }
