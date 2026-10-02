@@ -35,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rishi Scenes/DribblesMinigame.unity
     guid: ec715a858b493c5468e6aad2a7da83db
+  - enabled: 1
+    path: Assets/Scenes/Rishi Scenes/FreeKickMinigame.unity
+    guid: cc426c58a60720d429947af2125cf030
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
