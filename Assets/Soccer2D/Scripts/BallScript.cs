@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using CommonDataTypes;
+using Gameplay.CharacterComponents;
 
 public class BallScript : MonoBehaviour {
 
@@ -77,6 +78,21 @@ public class BallScript : MonoBehaviour {
         if (((1 << collision.gameObject.layer) & PlayersLayers) != 0)
         {
             TouchedPlayer?.Invoke();
+
+            Collider2D contactedBodyCollider = collision.collider;
+            PlayerActions playerActions = contactedBodyCollider != null
+                ? contactedBodyCollider.GetComponentInParent<PlayerActions>()
+                : null;
+
+            if (playerActions == null && collision.otherCollider != null)
+            {
+                contactedBodyCollider = collision.otherCollider;
+                playerActions = collision.otherCollider.GetComponentInParent<PlayerActions>();
+            }
+
+            // The normal collision has already supplied the contact's vertical motion and spin.
+            // Rescue, when eligible, is applied in this same physics callback before rendering.
+            playerActions?.TryApplyBadKickRescue(Rigidbody, contactedBodyCollider);
         }
     }
 }
