@@ -121,15 +121,30 @@ namespace Scene_Management
         }
         public void ContinueCampaign()
         {
-            if (Settings.LevelData.AfterMatchCutScene == SceneName.None)
+            if (IsPlayerWinner)
             {
-                CampaignTracker.Instance.PlayNextlevel();
+                if (Settings.LevelData.AfterMatchCutScene == SceneName.None)
+                {
+                    CampaignTracker.Instance.PlayNextlevel();
+                }
+                else
+                {
+                    CampaignTracker.Instance.TransitionToScene(Settings.LevelData.AfterMatchCutScene);
+                }
             }
             else
             {
-                SceneName scene = IsPlayerWinner ? Settings.LevelData.AfterMatchCutScene : Settings.LevelData.AfterMatchDefeatCutScene;
-                CampaignTracker.Instance.TransitionToScene(scene);
+                if (Settings.LevelData.AfterMatchDefeatCutScene == SceneName.None)
+                {
+                    CampaignTracker.Instance.PlayNextlevel();
+                }
+                else
+                {
+                    CampaignTracker.Instance.TransitionToScene(Settings.LevelData.AfterMatchDefeatCutScene);
+                }
             }
+
+
         }
     }
 }
