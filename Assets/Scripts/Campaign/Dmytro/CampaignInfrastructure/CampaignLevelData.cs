@@ -10,6 +10,8 @@ public class CampaignLevelData : ScriptableObject
     [field: SerializeField] public GameObject Player2 { get; private set; } 
     [field: SerializeField] public GameObject Opponent1 { get; private set; }
     [field: SerializeField] public GameObject Opponent2 { get; private set; }
+    [field: SerializeField] public int GoalsToWin { get; private set; } = 3;
+    [field: SerializeField] public Sprite Background { get; private set; }
     [field: SerializeField] public SceneName PreMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName AfterMatchCutScene { get; private set; } = SceneName.None;
     [field: SerializeField] public SceneName AfterMatchDefeatCutScene { get; private set; } = SceneName.None;

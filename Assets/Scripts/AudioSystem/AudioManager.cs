@@ -27,9 +27,6 @@ namespace AudioSystem
             {
                 case SceneName.MainMenu:
                 case SceneName.CampaignMap:
-                case SceneName.TestCampaignCutSceneBeforeMatch:
-                case SceneName.TestCampaignCutSceneLose:
-                case SceneName.TestCampaignCutSceneWin:
                     _musicManager.ChangeMusic(MusicType.MainMenu);
                     break;
                 case SceneName.Gameplay:

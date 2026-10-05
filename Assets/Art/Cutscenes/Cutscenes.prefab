@@ -1,0 +1,2270 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1987515450435057165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9201059785572504481}
+  m_Layer: 0
+  m_Name: Cutscenes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9201059785572504481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987515450435057165}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4372010247057932104}
+  - {fileID: 8297204519213937591}
+  - {fileID: 207442438085703058}
+  - {fileID: 5581886624492420559}
+  - {fileID: 2437417394935097345}
+  - {fileID: 8189013123853459909}
+  - {fileID: 5926448218759249895}
+  - {fileID: 4775555181255660027}
+  - {fileID: 1621259168508799689}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2278381449063127675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4372010247057932104}
+  - component: {fileID: 1066566326066957132}
+  - component: {fileID: 7703504469458862506}
+  m_Layer: 0
+  m_Name: grandpa
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4372010247057932104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278381449063127675}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3, y: -3.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1488572001597148407}
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1066566326066957132
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278381449063127675}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4, y: 4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &7703504469458862506
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2278381449063127675}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f426a2b6c2de3f4190ae1f0daa3ffb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2327485370275261301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4775555181255660027}
+  - component: {fileID: 8039584375363956384}
+  m_Layer: 0
+  m_Name: Cutscene_2.5_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4775555181255660027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2327485370275261301}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8039584375363956384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2327485370275261301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd04d298104e9f740941a387c9c58106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - {fileID: 5535021599889525635}
+  - {fileID: 3587387289433979521}
+  - {fileID: 7954483739895624616}
+  - {fileID: 2278381449063127675}
+  dialogBox: {fileID: 6385292978113132791}
+  doneIcon: {fileID: 1011600928687279327}
+  arrowUI: {fileID: 8099317359625886913}
+  arrowIsUI: 0
+  arrowYOffset: 80
+  arrowWorldY: -1.48
+  tmpText: {fileID: 5020982886362821058}
+  charsPerSecond: 20
+  sequence:
+  - type: 4
+    characterIndex: 0
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: 221d5233fc8c5974cab9a6413c9da2ce, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 3
+    characterIndex: 3
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -15, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Nice playing with you again.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: "We didn\u2019t really get to be on the field together much when
+      we were younger. You did great in junior high."
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: Thanks! You were good too. I guess the coach just thought I worked
+      better with my buddy.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: Thanks! You were good too. I guess the coach just thought I worked
+      better with my buddy.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4223633054461446407, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: "Yeah, that\u2019s just how it goes sometimes."
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: 'Still wish I got more play time, though. But whatever, you made
+      your plays count. '
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: What was that at the end?...
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: What was that at the end?...
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 582226495460360136, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: "I SAID YOU\u2019RE GOOD, OKAY?!"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "I SAID YOU\u2019RE GOOD, OKAY?!"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: "Don\u2019t make me repeat it!"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: "Heh, thanks! Well, now that we\u2019re both here\u2014wanna get
+      some extra practice in?"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: "Heh, I know I\u2019m confident in my skills. The question is\u2014are
+      you?"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+--- !u!1 &2548323850601912780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4011580871809618450}
+  - component: {fileID: 4313074335456704207}
+  m_Layer: 0
+  m_Name: goal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4011580871809618450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548323850601912780}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.5, y: -2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1621259168508799689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &4313074335456704207
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548323850601912780}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 7eb566170abad174ebfc290b09cf2b19, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 8, y: 8}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &3587387289433979521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8297204519213937591}
+  - component: {fileID: 5336885067470173632}
+  - component: {fileID: 171998870196749695}
+  m_Layer: 0
+  m_Name: Rival
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8297204519213937591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3587387289433979521}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3, y: -3.86, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5336885067470173632
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3587387289433979521}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4, y: 4}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &171998870196749695
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3587387289433979521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 21da3cfe7c3d34644b0c15d5f8427c06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4131828671499751685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9007476281238997648}
+  - component: {fileID: 4788535754703185623}
+  m_Layer: 3
+  m_Name: Ground
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &9007476281238997648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4131828671499751685}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1621259168508799689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &4788535754703185623
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4131828671499751685}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 35, y: 1}
+  m_EdgeRadius: 0
+--- !u!1 &4506764130023023297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2437417394935097345}
+  - component: {fileID: 966717699835538278}
+  m_Layer: 0
+  m_Name: Cutscene_0_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2437417394935097345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4506764130023023297}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966717699835538278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4506764130023023297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd04d298104e9f740941a387c9c58106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - {fileID: 2278381449063127675}
+  - {fileID: 7954483739895624616}
+  - {fileID: 3587387289433979521}
+  dialogBox: {fileID: 6385292978113132791}
+  doneIcon: {fileID: 1011600928687279327}
+  arrowUI: {fileID: 8099317359625886913}
+  arrowIsUI: 0
+  arrowYOffset: 80
+  arrowWorldY: -1.48
+  tmpText: {fileID: 5020982886362821058}
+  charsPerSecond: 20
+  sequence:
+  - type: 3
+    characterIndex: 3
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 2, y: 0.5, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 0
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Thanks, Grandpa! Thank you so much for teaching me!
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 0
+    dialogueText: You did great out there. I can't wait to see what you'll achieve.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: I'm so excited!
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 0
+    dialogueText: Maybe you'll even be almost as good as me someday.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Almost? I'm gonna beat you one day!
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 0
+    dialogueText: Ha! Big words! I'll be right here when you're ready to back 'em
+      up. Or, y'know, when you need a few more tips and tricks.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 6
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: Walk
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: -2, y: -4, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 3
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 0
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: ccff19b4a2d722945beef71d13d710b1, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: I love you.
+    moveTarget: {x: 0, y: -4, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 0
+    dialogueText: I love you.
+    moveTarget: {x: 0, y: -4, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 8
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 2
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: -4, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: -4, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 7
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 8
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: New dialogue line
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1712669904, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 2, y: 0.5, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 0
+    dialogueText: I love you too, kiddo. Always and forever.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 0}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+--- !u!1 &4795014442220958574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1621259168508799689}
+  m_Layer: 0
+  m_Name: Environment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1621259168508799689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4795014442220958574}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4011580871809618450}
+  - {fileID: 7536467999969496100}
+  - {fileID: 750259463294425657}
+  - {fileID: 9007476281238997648}
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5535021599889525635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 750259463294425657}
+  - component: {fileID: 8165813209124085219}
+  - component: {fileID: 3533126264904495188}
+  m_Layer: 0
+  m_Name: Stadium Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &750259463294425657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535021599889525635}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1621259168508799689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8165813209124085219
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535021599889525635}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -5
+  m_Sprite: {fileID: 21300000, guid: 523827ae587a5ed4a819348e4efc6d84, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 19.2, y: 10.8}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &3533126264904495188
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535021599889525635}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4cf40601cae0224a9eced8741e93869, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &5656496962247903131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7536467999969496100}
+  - component: {fileID: 9140372114158960733}
+  m_Layer: 0
+  m_Name: goal (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7536467999969496100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656496962247903131}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.5, y: -2.5, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1621259168508799689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &9140372114158960733
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656496962247903131}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 7eb566170abad174ebfc290b09cf2b19, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 8, y: 8}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &6871608782342560736
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5926448218759249895}
+  - component: {fileID: 7196564873191224991}
+  m_Layer: 0
+  m_Name: Cutscene_1_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5926448218759249895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871608782342560736}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7196564873191224991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6871608782342560736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd04d298104e9f740941a387c9c58106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - {fileID: 5535021599889525635}
+  - {fileID: 3587387289433979521}
+  - {fileID: 7954483739895624616}
+  - {fileID: 2278381449063127675}
+  dialogBox: {fileID: 6385292978113132791}
+  doneIcon: {fileID: 1011600928687279327}
+  arrowUI: {fileID: 8099317359625886913}
+  arrowIsUI: 0
+  arrowYOffset: 80
+  arrowWorldY: -1.48
+  tmpText: {fileID: 5020982886362821058}
+  charsPerSecond: 20
+  sequence:
+  - type: 4
+    characterIndex: 0
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 3
+    characterIndex: 3
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 2233841565049199551, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -15, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Ugh--no way! How did you get so good?
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "Ugh\u2014no way! How did you get so good?"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: ...I mean, y-you just got lucky, that's all.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: -736489114, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "\u2026I mean, y-you just got lucky, that\u2019s all."
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4223633054461446407, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Don't think this means anything! I'm still the best around.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: -246111377, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "Don\u2019t think this means anything! I\u2019m still the best
+      around."
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 156293389419706687, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 2
+    dialogueText: "Don\u2019t think this means anything! I\u2019m still the best
+      around."
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: -1669010786, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: Do you want to be friends?
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: -1669010786, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: Do you want to be friends?
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 813679827365891399, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 1
+    dialogueText: Do you want to be friends?
+    moveTarget: {x: -3.2, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -1045015865, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Wh-what? Friends? N-no way! Listen, this isn't over.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -1045015865, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "Wh-what? Friends? N-no way! Listen, this isn\u2019t over."
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: 4223633054461446407, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Next time we play - I'll crush you!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -246111377, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "Alright! You\u2019re on!"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 2
+    dialogueText: "Next time we play - I\u2019ll crush you!"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: Alright! You're on!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: 582226495460360136, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: And if you happen to beat me again, then maybe I'll think you'll
+      be cool.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 5
+    characterIndex: 1
+    dialogueText: You did great Kiddo.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 0.3
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: You did great Kiddo.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 6
+    characterIndex: 1
+    dialogueText: You did great Kiddo.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 0.5
+    animationName: Walk
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 1
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: 15, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 5
+    characterIndex: 3
+    dialogueText: You did great Kiddo.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 4
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 2
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -15, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 6
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: Walk
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 7
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 3
+    dialogueText: You did great Kiddo.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 2
+    newSprite: {fileID: 21300000, guid: b648217241ea7c340a22c2d41d544351, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+--- !u!1 &7220391589580638980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1488572001597148407}
+  - component: {fileID: 4205653933834970012}
+  m_Layer: 0
+  m_Name: openMouthAll
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1488572001597148407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220391589580638980}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.062999964, y: 0.93700004, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4372010247057932104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &4205653933834970012
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220391589580638980}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 5749bd6100a0e7d4ba587c9af4c96bba, type: 3}
+  m_Color: {r: 0.3019608, g: 0.22352943, b: 0.20000002, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.125, y: 0.125}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &7954483739895624616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 207442438085703058}
+  - component: {fileID: 3412765233625375125}
+  - component: {fileID: 8732650389990456594}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &207442438085703058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954483739895624616}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.21, y: -4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3412765233625375125
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954483739895624616}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3, y: 3}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!95 &8732650389990456594
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7954483739895624616}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea3fa8f882226544281d9c154d4b858c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &8268383070094420526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8189013123853459909}
+  - component: {fileID: 1147547257258767983}
+  m_Layer: 0
+  m_Name: Cutscene_1_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8189013123853459909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268383070094420526}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9201059785572504481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1147547257258767983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268383070094420526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd04d298104e9f740941a387c9c58106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - {fileID: 5535021599889525635}
+  - {fileID: 3587387289433979521}
+  - {fileID: 7954483739895624616}
+  - {fileID: 2278381449063127675}
+  dialogBox: {fileID: 6385292978113132791}
+  doneIcon: {fileID: 1011600928687279327}
+  arrowUI: {fileID: 8099317359625886913}
+  arrowIsUI: 0
+  arrowYOffset: 80
+  arrowWorldY: -1.48
+  tmpText: {fileID: 5020982886362821058}
+  charsPerSecond: 20
+  sequence:
+  - type: 4
+    characterIndex: 0
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 3
+    characterIndex: 3
+    dialogueText: You've got spirit. Let's see how far you go.
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 1
+    characterIndex: 3
+    dialogueText: "And if you happen to beat me again, then maybe I\u2019ll think
+      you\u2019ll be cool"
+    moveTarget: {x: -15, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -113773828, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: "Ugh\u2014no way! How did you get so good?"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Ugh, you're back here again? Really? Laammeee
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1641077559, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 8
+    characterIndex: 2
+    dialogueText: You're on!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 2
+    dialogueText: "Don\u2019t think this means anything! I\u2019m still the best
+      around."
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 1291047107, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: "That's right! I want to show you I\u2019m not a wimp!"
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: -1669010786, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 8
+    characterIndex: 2
+    dialogueText: You're on!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 2
+    dialogueText: You're on!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: Do you want to be friends?
+    moveTarget: {x: 0, y: 0, z: 0}
+    moveDuration: 0.6
+    newSprite: {fileID: 4223633054461446407, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: Whatever, this time if I win, you have to call me the super epic
+      winner and I'm the best ever.
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -1045015865, guid: 18d529a254eed8a44938d87989468275, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 2
+    dialogueText: And if I win, you have to stop being so mean
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 4
+    characterIndex: 1
+    dialogueText: You're on!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: 4966897614379924022, guid: 16b4361df5abc2a4abd0ec492f8d9d1a, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+  - type: 0
+    characterIndex: 1
+    dialogueText: You're on!
+    moveTarget: {x: -3, y: -4, z: 0}
+    moveDuration: 0.1
+    newSprite: {fileID: -697165553, guid: e02399208f09fc94fa2ddcfe1fdb7a63, type: 3}
+    waitSeconds: 0.5
+    animationName: 
+    flipX: 1
+    flipY: 0
+    targetScale: {x: 1, y: 1, z: 1}
+    scaleDuration: 0.3
+--- !u!1001 &2350172945622973174
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9201059785572504481}
+    m_Modifications:
+    - target: {fileID: 2931505465697572998, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_Name
+      value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+--- !u!1 &1011600928687279327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3356466471534032425, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+  m_PrefabInstance: {fileID: 2350172945622973174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5020982886362821058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7292278335595318068, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+  m_PrefabInstance: {fileID: 2350172945622973174}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &5581886624492420559 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7920606442817111865, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+  m_PrefabInstance: {fileID: 2350172945622973174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6385292978113132791 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8647021191215546881, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+  m_PrefabInstance: {fileID: 2350172945622973174}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8099317359625886913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5835525947313415735, guid: bc8ac5b5ca8ab8241be85a36fec0bf3d, type: 3}
+  m_PrefabInstance: {fileID: 2350172945622973174}
+  m_PrefabAsset: {fileID: 0}

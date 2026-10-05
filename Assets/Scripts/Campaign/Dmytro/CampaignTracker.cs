@@ -101,6 +101,7 @@ public class CampaignTracker : MonoBehaviour
             CampaignLevelData levelData = _campaign.GetLevelData(stage, playerLevel);
 
             MatchSettings matchSettings = new MatchSettings.Builder()
+            .WithGoalsToEndMatch(3) // replace with levelData.GoalsToWin
             .WithNumberOfPlayers(numberOfPlayers)
             .WithIsCampaignMatch(true)
             .WithLevelData(levelData)

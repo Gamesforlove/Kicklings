@@ -9,6 +9,8 @@ public class CampaignLevelDataEditor : UnityEditor.Editor
     private SerializedProperty player2Prop;
     private SerializedProperty opponent1Prop;
     private SerializedProperty opponent2Prop;
+    private SerializedProperty GoalsToWinProp;
+    private SerializedProperty BackgroundProp;
     private SerializedProperty preMatchCutSceneProp;
     private SerializedProperty afterMatchCutSceneProp;
     private SerializedProperty afterMatchDefeatCutSceneProp;
@@ -24,6 +26,8 @@ public class CampaignLevelDataEditor : UnityEditor.Editor
         player2Prop = serializedObject.FindProperty("<Player2>k__BackingField");
         opponent1Prop = serializedObject.FindProperty("<Opponent1>k__BackingField");
         opponent2Prop = serializedObject.FindProperty("<Opponent2>k__BackingField");
+        GoalsToWinProp = serializedObject.FindProperty("<GoalsToWin>k__BackingField");
+        BackgroundProp = serializedObject.FindProperty("<Background>k__BackingField");
         preMatchCutSceneProp = serializedObject.FindProperty("<PreMatchCutScene>k__BackingField");
         afterMatchCutSceneProp = serializedObject.FindProperty("<AfterMatchCutScene>k__BackingField");
         afterMatchDefeatCutSceneProp = serializedObject.FindProperty("<AfterMatchDefeatCutScene>k__BackingField");
@@ -39,6 +43,8 @@ public class CampaignLevelDataEditor : UnityEditor.Editor
         EditorGUILayout.PropertyField(player2Prop);
         EditorGUILayout.PropertyField(opponent1Prop);
         EditorGUILayout.PropertyField(opponent2Prop);
+        EditorGUILayout.PropertyField(GoalsToWinProp);
+        EditorGUILayout.PropertyField(BackgroundProp);
         EditorGUILayout.PropertyField(preMatchCutSceneProp);
         EditorGUILayout.PropertyField(afterMatchCutSceneProp);
         EditorGUILayout.PropertyField(afterMatchDefeatCutSceneProp);
