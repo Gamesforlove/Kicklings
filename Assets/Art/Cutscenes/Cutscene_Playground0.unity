@@ -273,6 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 147e499bac7a1bb428f09994a86f6d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nextSceneButton: {fileID: 1342892576}
+  _cutsceneManager: {fileID: 477053773}
 --- !u!1001 &477053772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -284,6 +286,10 @@ PrefabInstance:
     - target: {fileID: 1987515450435057165, guid: 5925e06645425764885fed844a3ef427, type: 3}
       propertyPath: m_Name
       value: Cutscenes
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587387289433979521, guid: 5925e06645425764885fed844a3ef427, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4795014442220958574, guid: 5925e06645425764885fed844a3ef427, type: 3}
       propertyPath: m_IsActive
@@ -343,6 +349,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 102629264}
   m_SourcePrefab: {fileID: 100100000, guid: 5925e06645425764885fed844a3ef427, type: 3}
+--- !u!114 &477053773 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 966717699835538278, guid: 5925e06645425764885fed844a3ef427, type: 3}
+  m_PrefabInstance: {fileID: 477053772}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd04d298104e9f740941a387c9c58106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1342892576
 GameObject:
   m_ObjectHideFlags: 0
