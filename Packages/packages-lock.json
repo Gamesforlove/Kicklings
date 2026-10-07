@@ -8,35 +8,21 @@
         "com.unity.ugui": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
-      "hash": "51a4708b7ba4daa8483a4936eae9bffe15d0bfd0"
-    },
-    "com.invictus.art.campaign": {
-      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Campaign#main",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "60050d19ca85a64097fec9aacd4f34199c1d0f01"
+      "hash": "eec288e2a5cfd43743b70e9a8c397d5e5300e80a"
     },
     "com.invictus.art.common": {
       "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "60050d19ca85a64097fec9aacd4f34199c1d0f01"
-    },
-    "com.invictus.art.common": {
-      "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "ebd3160ef3d62c47aa10fb70c023ed6e0a44dd1c"
+      "hash": "16e7623cd3f4e4bb316b211f3e52eb5e109cfdd2"
     },
     "com.unity.2d.animation": {
-      "version": "10.2.2",
+      "version": "10.2.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "9.1.1",
+        "com.unity.2d.common": "9.1.2",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.collections": "1.2.4",
         "com.unity.modules.animation": "1.0.0",
@@ -57,7 +43,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.common": {
-      "version": "9.1.1",
+      "version": "9.1.2",
       "depth": 2,
       "source": "registry",
       "dependencies": {
@@ -77,11 +63,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.psdimporter": {
-      "version": "9.1.1",
+      "version": "9.1.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "9.1.1",
+        "com.unity.2d.common": "9.1.2",
         "com.unity.2d.sprite": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -113,7 +99,7 @@
       }
     },
     "com.unity.2d.tilemap.extras": {
-      "version": "4.1.0",
+      "version": "4.1.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -164,13 +150,13 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.2d.animation": "10.2.2",
+        "com.unity.2d.animation": "10.2.4",
         "com.unity.2d.pixel-perfect": "5.0.3",
-        "com.unity.2d.psdimporter": "9.1.1",
+        "com.unity.2d.psdimporter": "9.1.3",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.2d.spriteshape": "10.0.7",
         "com.unity.2d.tilemap": "1.0.0",
-        "com.unity.2d.tilemap.extras": "4.1.0",
+        "com.unity.2d.tilemap.extras": "4.1.2",
         "com.unity.2d.aseprite": "1.1.11"
       }
     },
