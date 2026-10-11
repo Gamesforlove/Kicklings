@@ -22,6 +22,8 @@ namespace Gameplay.CharacterComponents
         bool _kickAssistAvailable;
         bool _assistCollidersExpanded;
         float _kickAssistTimeRemaining;
+        float _lastActionTime = float.NegativeInfinity;
+        bool _tutorialHeadBlockHopPending;
         
         [SerializeField] GameObject _kickingLeg;
         [SerializeField] Collider2D[] _kickingLegColliders;
@@ -34,6 +36,8 @@ namespace Gameplay.CharacterComponents
         Entity _entity;
         Collider2D[] _bodyColliders;
         Coroutine _stopKickingLegMotorCoroutine;
+        Coroutine _forceKickToHoldCoroutine;
+        Coroutine _tutorialKickFollowThroughCoroutine;
     
         void Awake()
         {
@@ -106,6 +110,18 @@ namespace Gameplay.CharacterComponents
         public bool CanReceivePlayerAction => isActiveAndEnabled && CanKick && !DisableInput;
         public string CurrentControlScheme => _playerInput != null ? _playerInput.currentControlScheme : string.Empty;
         public int AttackingDirection => _kickingDirectionMultiplier;
+        public bool IsWithinActionContactWindow => Time.time - _lastActionTime <=
+            (_entityData?.KickAssist?.ContactAssistWindow ?? 0.45f);
+        public Collider2D KickingContactCollider => _kickingLeg.GetComponentsInChildren<Collider2D>()
+            .FirstOrDefault(collider => collider.enabled && !collider.isTrigger);
+        public Collider2D HeadContactCollider => _bodyColliders
+            .FirstOrDefault(collider => collider.gameObject.name == "Head" && !collider.isTrigger);
+
+        public bool IsKickingContact(Collider2D collider) => collider != null &&
+            collider.transform.IsChildOf(_kickingLeg.transform);
+
+        // The paused introductory block can accept input before grounded physics refreshes.
+        public void PrepareTutorialHeadBlockHop() => _tutorialHeadBlockHopPending = true;
 
         public void OnActionPerformed() => PerformAction(applyMovementAssist: false);
 
@@ -116,10 +132,13 @@ namespace Gameplay.CharacterComponents
             if (DisableInput)
                 return;
 
+            bool tutorialHeadBlockHop = _tutorialHeadBlockHopPending;
+            _tutorialHeadBlockHopPending = false;
+            _lastActionTime = Time.time;
             BeginKickAssistWindow();
             Kick();
-            if (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd)
-                Jump(applyMovementAssist);
+            if (tutorialHeadBlockHop || (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd))
+                Jump(applyMovementAssist, tutorialHeadBlockHop);
         }
 
         public void OnActionCancelled()
@@ -127,16 +146,22 @@ namespace Gameplay.CharacterComponents
             if (!CanKick)
                 return;
             if (ForcedToHoldKick)
-                StartCoroutine(forceKickToHold());
+            {
+                if (!inforceKickToHoldRoutine)
+                    _forceKickToHoldCoroutine = StartCoroutine(forceKickToHold());
+            }
             else
                 ReturnLeftLegToOriginalPosition();
         }
     
-        void Jump(bool applyMovementAssist)
+        void Jump(bool applyMovementAssist, bool tutorialHeadBlockHop = false)
         {
             Vector2 jumpForce = transform.up * _entityData.JumpPower;
             if (applyMovementAssist)
                 ApplyMovementAssist(ref jumpForce);
+
+            if (tutorialHeadBlockHop)
+                jumpForce.y = Mathf.Max(jumpForce.y, _entityData.JumpPower * 1.25f);
 
             if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
                 jumpForce.x = 0f;
@@ -341,6 +366,36 @@ namespace Gameplay.CharacterComponents
             CancelKickingLegMotorStop();
             ApplyKickingPower(-1);
         }
+
+        public void CompleteTutorialKick()
+        {
+            CancelForcedKickHold();
+            if (_tutorialKickFollowThroughCoroutine != null)
+                StopCoroutine(_tutorialKickFollowThroughCoroutine);
+
+            ForcedToHoldKick = false;
+            CanKick = false;
+            _tutorialKickFollowThroughCoroutine = StartCoroutine(TutorialKickFollowThrough());
+        }
+
+        IEnumerator TutorialKickFollowThrough()
+        {
+            // Contact marks success, but the normal motor still needs to finish the forward swing.
+            Kick();
+            yield return new WaitForSeconds(0.25f);
+            ReturnLeftLegToOriginalPosition();
+            _tutorialKickFollowThroughCoroutine = null;
+        }
+
+        void CancelForcedKickHold()
+        {
+            if (_forceKickToHoldCoroutine == null)
+                return;
+
+            StopCoroutine(_forceKickToHoldCoroutine);
+            _forceKickToHoldCoroutine = null;
+            inforceKickToHoldRoutine = false;
+        }
         public void DisableKickingLeg()
         {
             foreach (Collider2D collider in _kickingLegColliders)
@@ -538,11 +593,21 @@ namespace Gameplay.CharacterComponents
         public void ResetActionState()
         {
             CancelKickingLegMotorStop();
+            CancelForcedKickHold();
+            if (_tutorialKickFollowThroughCoroutine != null)
+            {
+                StopCoroutine(_tutorialKickFollowThroughCoroutine);
+                _tutorialKickFollowThroughCoroutine = null;
+            }
             if (_entityData != null)
                 ApplyKickingPower(0f);
+            _jumpCdTimer?.Stop();
+            _jumpOnCd = false;
             _inputActionActive = false;
             _kickAssistAvailable = false;
             _kickAssistTimeRemaining = 0f;
+            _lastActionTime = float.NegativeInfinity;
+            _tutorialHeadBlockHopPending = false;
         }
 
         // used to scripted events, tutorials, in-game cutscenes, etc.
@@ -558,6 +623,7 @@ namespace Gameplay.CharacterComponents
             ReturnLeftLegToOriginalPosition();
             CanKick = prevCanKick;
             inforceKickToHoldRoutine = false;
+            _forceKickToHoldCoroutine = null;
         }
     }
 }

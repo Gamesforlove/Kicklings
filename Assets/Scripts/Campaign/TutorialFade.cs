@@ -11,7 +11,12 @@ public class TutorialFade : MonoBehaviour
     }
 
     const float fadeSpeed = 1.5f;
-    public void FadeIn() => StartCoroutine(fadeInRoutine());
+    public void FadeIn()
+    {
+        StopAllCoroutines();
+        fadingOut = false;
+        StartCoroutine(fadeInRoutine());
+    }
     IEnumerator fadeInRoutine()
     {
         while (canvasGroup != null && canvasGroup.alpha < 1f && !fadingOut)
@@ -21,7 +26,11 @@ public class TutorialFade : MonoBehaviour
         }
     }
 
-    public void FadeOut() => StartCoroutine(fadeOutRoutine());
+    public void FadeOut()
+    {
+        StopAllCoroutines();
+        StartCoroutine(fadeOutRoutine());
+    }
 
     bool fadingOut = false;
     IEnumerator fadeOutRoutine()

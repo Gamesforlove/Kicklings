@@ -515,14 +515,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialDelay: 1
   TutorialFade: {fileID: 373567314}
+  timingPractice: {fileID: 1928391807}
   onTutorialDone:
     m_PersistentCalls:
       m_Calls: []
   stopDistance: 0.15
   ballDropTarget: {fileID: 1344938872}
   ballMoveScript: {fileID: 373567317}
-  curveMidpointHeightOffset: 3
-  curveMoveDuration: 1.5
 --- !u!114 &373567314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,6 +1907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TutorialFade: {fileID: 1104483539}
+  timingPractice: {fileID: 1928391807}
   onTutorialDone:
     m_PersistentCalls:
       m_Calls:
@@ -3930,6 +3930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1928391806}
   - component: {fileID: 1928391805}
+  - component: {fileID: 1928391807}
   m_Layer: 0
   m_Name: Stage0Scene2 - Tutorials Setup
   m_TagString: Untagged
@@ -3965,7 +3966,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 373567313}
-        m_TargetAssemblyTypeName: KickBlockTutorial, Assembly-CSharp
+        m_TargetAssemblyTypeName: KickBasicTutorial, Assembly-CSharp
         m_MethodName: StartTutorial
         m_Mode: 1
         m_Arguments:
@@ -4006,6 +4007,24 @@ MonoBehaviour:
   GoalTutorial:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1928391807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84dafc412b634cbb98baf78e4979fb02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _promptText: {fileID: 290816184}
+  _flightDuration: 1.25
+  _attemptDuration: 4
+  _readyDelay: 0.5
+  _retryDelay: 1
+  _blockHeightAboveHead: 0.6
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0

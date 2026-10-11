@@ -27,6 +27,7 @@ namespace Gameplay.Managers
         bool _resetWarningRendererWasEnabled;
         
         public static BallManager Instance { get; private set; }
+        public bool SuppressAutomaticReset { get; set; }
         void Awake()
         {
             Instance = this;
@@ -42,7 +43,8 @@ namespace Gameplay.Managers
 
         void Update()
         {
-            if ((MatchManager.Instance != null && MatchManager.Instance.MatchDone) ||
+            if (SuppressAutomaticReset ||
+                (MatchManager.Instance != null && MatchManager.Instance.MatchDone) ||
                 Ball == null || Ball.Rigidbody == null ||
                 Ball.Rigidbody.bodyType != RigidbodyType2D.Dynamic ||
                 !Ball.Rigidbody.simulated)
