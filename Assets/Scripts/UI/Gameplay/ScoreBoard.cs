@@ -29,5 +29,7 @@ namespace UI.Gameplay
             _leftCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.Match.Settings.LeftCountryImageIndex);
             _rightCountryImage.sprite = _countriesImages.GetCountrySprite(MatchFlow.Match.Settings.RightCountryImageIndex);
         }
+        
+        
     }
 }

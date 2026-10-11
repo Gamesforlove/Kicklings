@@ -73,6 +73,14 @@ namespace Gameplay.Managers
             }
         }
 
+
+        public void SpawnSinglePlayer()
+        {
+            GameObject player = _playersSpawner.SpawnChallengePlayer(_spawnPoints[0], _controlSchemes[0]);
+            _players.Add(player);
+            _playersPositions.Add(player, player.transform.position);
+        }
+
         void SpawnCpuMode()
         {
             int layer = LayerMask.NameToLayer(EntityLayer.Player1_GoalKeeper.ToString());
