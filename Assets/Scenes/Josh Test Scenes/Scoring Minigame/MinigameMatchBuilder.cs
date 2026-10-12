@@ -32,7 +32,7 @@ public class MinigameMatchBuilder : MonoBehaviour
             .Build();
 
         ScoringChallengeManager.enabled = true;
-        Match match = MatchFlow.CreateCampaignMatch(matchSettings);
+        MatchFlow.CreateCampaignMatch(matchSettings);
         ScoringChallengeManager.StartChallenge();
     }
 }

@@ -80,7 +80,7 @@ namespace Gameplay.Spawners
             bool isRightSide = go.transform.position.x > 0;
             Team team = isRightSide ? Team.Right : Team.Left;
 
-            go.GetComponent<Player>()?.SetUp(ChallengePlayerData, PlayerType.Normal, campaign: true);
+            go.GetComponent<Player>()?.SetUp(ChallengePlayerData, PlayerType.Normal);
             go.GetComponent<AbilityActor>()?.SetUp(team, PlayerType.Normal);
 
             return go;
