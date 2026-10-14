@@ -15,6 +15,18 @@ public class CampaignCutsceneController : MonoBehaviour
             StartCutscene();
         }
     }
+    private void OnEnable()
+    {
+        if (!_cutsceneManager) return;
+
+        _cutsceneManager.CutsceneEnded += OnCutsceneEnded;
+    }
+    private void OnDisable()
+    {
+        if (!_cutsceneManager) return;
+
+        _cutsceneManager.CutsceneEnded -= OnCutsceneEnded;
+    }
     public void GoToNextScene()
     {
         if (MatchFlow.Match.IsFinished)
@@ -28,4 +40,8 @@ public class CampaignCutsceneController : MonoBehaviour
     }
     public void EnableNextSceneButton() => _nextSceneButton.SetActive(true);
     public void StartCutscene() => _cutsceneManager.PlayCutscene();
+    public void OnCutsceneEnded()
+    {
+        _nextSceneButton.SetActive(true);
+    }
 }

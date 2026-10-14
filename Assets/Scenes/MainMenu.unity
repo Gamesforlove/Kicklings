@@ -778,6 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _campaign: {fileID: 11400000, guid: 353e2289602c30a49baf39b31889d8c8, type: 2}
   _transitionCanvas: {fileID: 420851424}
+  _inTransition: 0
   _transition: {fileID: 1411469483}
   _waitAfterSlideIn: 0.7
   _waitBeforeSlideOut: 0.1

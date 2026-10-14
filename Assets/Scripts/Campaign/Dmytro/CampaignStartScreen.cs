@@ -20,7 +20,7 @@ public class CampaignStartScreen : MonoBehaviour
 #endif
         }
     }
-    public void StartOrContinueCampaign()
+    public void ContinueCampaign()
     {
         if (CampaignTracker.Instance)
         {

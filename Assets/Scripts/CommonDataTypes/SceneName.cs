@@ -12,6 +12,9 @@
         TestCampaignCutSceneBeforeMatch,
         CampaignStartScreen,
         FreeKickMinigame,
-        None
+
+        // Cutscenes for campaign
+        None,
+        Stage1_Cutscene3
     }
 }

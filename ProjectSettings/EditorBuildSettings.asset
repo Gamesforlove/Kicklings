@@ -38,6 +38,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rishi Scenes/FreeKickMinigame.unity
     guid: cc426c58a60720d429947af2125cf030
+  - enabled: 1
+    path: Assets/Scenes/Campaign/Cutscenes/Stage1_Cutscene3.unity
+    guid: 49b7fd71184bc0d4cb0e8f99e2643223
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
