@@ -23,7 +23,11 @@ public class BlockBasicTutorial : MonoBehaviour
 
         // Place the ball at Grandpa before the coroutine's first frame of waiting.
         if (timingPractice.PrepareBlockTransition())
+        {
+            if (Stage0Scene2Tutorials.Instance != null)
+                Stage0Scene2Tutorials.Instance.ShowBlockInstruction(TutorialFade);
             _tutorialCoroutine = StartCoroutine(tutorialRoutine());
+        }
     }
 
     public float stopDistance;

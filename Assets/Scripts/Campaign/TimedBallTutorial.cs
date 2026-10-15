@@ -28,6 +28,9 @@ public class TimedBallTutorial : MonoBehaviour
     [Tooltip("Grandpa's jump force during block feeds only; player jump strength is unchanged.")]
     [SerializeField, Range(0f, 1f)] float _blockGrandpaJumpMultiplier = 0.5f;
     [SerializeField, Min(0.1f)] float _blockLandingTimeout = 8f;
+    [Header("Block Dialogue Timing")]
+    [SerializeField, Min(0f)] float _blockIntroDialogueDelay = 1f;
+    [SerializeField, Min(0f)] float _blockFeedbackDialogueDuration = 1.5f;
 
     class ActionState
     {
@@ -283,6 +286,10 @@ public class TimedBallTutorial : MonoBehaviour
         TimeScaleManager.SetGameplayTimeScale();
         SetPrompt(false);
         prompt?.FadeIn();
+        Stage0Scene2Tutorials dialogue = _practiceType == PracticeType.Block
+            ? Stage0Scene2Tutorials.Instance
+            : null;
+        bool firstAttempt = true;
 
         try
         {
@@ -307,7 +314,18 @@ public class TimedBallTutorial : MonoBehaviour
                     _ball.Renderer.enabled = true;
                     _ball.Collider.enabled = true;
                 }
-                yield return new WaitForSeconds(_readyDelay);
+                if (dialogue != null && firstAttempt)
+                {
+                    dialogue.ShowBlockInstruction(prompt);
+                    yield return WaitForDialogue(_blockIntroDialogueDelay);
+                }
+                else
+                {
+                    if (dialogue != null)
+                        SetPrompt(false);
+                    yield return new WaitForSeconds(_readyDelay);
+                }
+                firstAttempt = false;
 
                 if (!_running || _ball == null || _player == null || _grandpa == null)
                     yield break;
@@ -345,14 +363,24 @@ public class TimedBallTutorial : MonoBehaviour
                         _player.OnActionCancelled();
                         _player.CanKick = false;
                     }
-                    SetPrompt(true);
-                    yield return new WaitForSeconds(_retryDelay);
+                    if (dialogue != null)
+                    {
+                        dialogue.ShowBlockFailure(prompt);
+                        yield return WaitForDialogue(_blockFeedbackDialogueDuration);
+                    }
+                    else
+                    {
+                        SetPrompt(true);
+                        yield return new WaitForSeconds(_retryDelay);
+                    }
                 }
             }
 
             if (Succeeded)
             {
-                if (_promptText != null)
+                if (dialogue != null)
+                    dialogue.ShowBlockSuccess(prompt);
+                else if (_promptText != null)
                     _promptText.text = "Good timing!";
 
                 if (_practiceType == PracticeType.Kick)
@@ -363,7 +391,10 @@ public class TimedBallTutorial : MonoBehaviour
                 {
                     _player.OnActionCancelled();
                     _player.CanKick = false;
-                    yield return new WaitForSeconds(0.5f);
+                    if (dialogue != null)
+                        yield return WaitForDialogue(_blockFeedbackDialogueDuration);
+                    else
+                        yield return new WaitForSeconds(0.5f);
                 }
                 prompt?.FadeOut();
             }
@@ -371,6 +402,17 @@ public class TimedBallTutorial : MonoBehaviour
         finally
         {
             RestorePracticeState();
+        }
+    }
+
+    static IEnumerator WaitForDialogue(float seconds)
+    {
+        float elapsed = 0f;
+        while (elapsed < seconds)
+        {
+            if (Time.timeScale > 0f)
+                elapsed += Time.unscaledDeltaTime;
+            yield return null;
         }
     }
 

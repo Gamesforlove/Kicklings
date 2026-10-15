@@ -85,6 +85,8 @@ public class KickBasicTutorial : MonoBehaviour
 
             ballMoveScript.StartCurveMove(ball.transform, startPoint, midPoint, endPoint, curveMoveDuration,
                 stopDistance: 0f, snapToEnd: true);
+            if (Stage0Scene2Tutorials.Instance != null)
+                Stage0Scene2Tutorials.Instance.ShowKickPraise(TutorialFade);
             yield return new WaitUntil(() => ballMoveScript.Moving);
             
             float totalDistance = Vector2.Distance(startPoint, endPoint);

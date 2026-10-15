@@ -232,7 +232,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 50}
+  m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290816184
 MonoBehaviour:
@@ -281,8 +281,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3952,6 +3952,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078f531c9f4f5534ca0fb351f3381b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DialogueText: {fileID: 290816184}
+  SpeakerName: Grandpa
+  SpeakerColor: {r: 1, g: 0.8, b: 0.4, a: 1}
+  KickPraise: Good job hitting the ball!
+  BlockInstruction: Try and block my shot with Z.
+  BlockSuccess: Very good!
+  BlockFailure: So close, try again!
   KickTutorial:
     m_PersistentCalls:
       m_Calls:
@@ -4030,6 +4037,8 @@ MonoBehaviour:
   _blockFlightDuration: 1.5
   _blockPassDistance: 2.5
   _blockGrandpaJumpMultiplier: 0.5
+  _blockIntroDialogueDelay: 1
+  _blockFeedbackDialogueDuration: 1.5
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0
@@ -4118,7 +4127,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 750, y: 125}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1956161389
 MonoBehaviour:
