@@ -22,7 +22,6 @@ public class KickBasicTutorial : MonoBehaviour
     public float stopDistance;
     public Transform ballDropTarget;
     public MoveToPointCurved ballMoveScript;
-    private const float headHeightOffset = 2.2f;
     public float curveMidpointHeightOffset = 3f;
     public float curveMoveDuration = 1.5f;
     IEnumerator tutorialRoutine()
@@ -80,10 +79,12 @@ public class KickBasicTutorial : MonoBehaviour
             ball.Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
 
             Vector2 startPoint = ball.transform.position;
-            Vector2 endPoint = (Vector2)GrandpaStage0.Instance.transform.position + Vector2.up * headHeightOffset;
+            float playerX = PlayersManager.Instance.Players[0].transform.position.x;
+            Vector2 endPoint = GrandpaStage0.Instance.GetTutorialFeedPosition(playerX);
             Vector2 midPoint = new Vector2((startPoint.x + endPoint.x) * 0.5f, Mathf.Max(startPoint.y, endPoint.y) + curveMidpointHeightOffset);
 
-            ballMoveScript.StartCurveMove(ball.transform, startPoint, midPoint, endPoint, curveMoveDuration, stopDistance);
+            ballMoveScript.StartCurveMove(ball.transform, startPoint, midPoint, endPoint, curveMoveDuration,
+                stopDistance: 0f, snapToEnd: true);
             yield return new WaitUntil(() => ballMoveScript.Moving);
             
             float totalDistance = Vector2.Distance(startPoint, endPoint);
@@ -96,6 +97,7 @@ public class KickBasicTutorial : MonoBehaviour
                     Time.timeScale = Mathf.Lerp(1f, 0.05f, (1f - t));
                 yield return null;
             }
+            GrandpaStage0.Instance.RecordTutorialKickArrival(endPoint);
             Time.timeScale = 0f;
         }
 

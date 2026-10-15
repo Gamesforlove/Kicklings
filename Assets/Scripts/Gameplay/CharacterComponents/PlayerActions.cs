@@ -107,6 +107,8 @@ namespace Gameplay.CharacterComponents
         public bool ForcedToHoldKick { get; set; } = false;
         [field: SerializeField] public bool LockMovementToFacingDirection { get; set; } = false;
         public void ScriptedKick() => OnActionPerformed();
+        public void ScriptedKick(float jumpForceMultiplier) =>
+            PerformAction(applyMovementAssist: false, jumpForceMultiplier: Mathf.Clamp01(jumpForceMultiplier));
         public bool CanReceivePlayerAction => isActiveAndEnabled && CanKick && !DisableInput;
         public string CurrentControlScheme => _playerInput != null ? _playerInput.currentControlScheme : string.Empty;
         public int AttackingDirection => _kickingDirectionMultiplier;
@@ -125,7 +127,7 @@ namespace Gameplay.CharacterComponents
 
         public void OnActionPerformed() => PerformAction(applyMovementAssist: false);
 
-        void PerformAction(bool applyMovementAssist)
+        void PerformAction(bool applyMovementAssist, float jumpForceMultiplier = 1f)
         {
             if (!CanKick)
                 return;
@@ -138,7 +140,7 @@ namespace Gameplay.CharacterComponents
             BeginKickAssistWindow();
             Kick();
             if (tutorialHeadBlockHop || (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd))
-                Jump(applyMovementAssist, tutorialHeadBlockHop);
+                Jump(applyMovementAssist, tutorialHeadBlockHop, jumpForceMultiplier);
         }
 
         public void OnActionCancelled()
@@ -154,7 +156,7 @@ namespace Gameplay.CharacterComponents
                 ReturnLeftLegToOriginalPosition();
         }
     
-        void Jump(bool applyMovementAssist, bool tutorialHeadBlockHop = false)
+        void Jump(bool applyMovementAssist, bool tutorialHeadBlockHop = false, float jumpForceMultiplier = 1f)
         {
             Vector2 jumpForce = transform.up * _entityData.JumpPower;
             if (applyMovementAssist)
@@ -165,7 +167,7 @@ namespace Gameplay.CharacterComponents
 
             if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
                 jumpForce.x = 0f;
-            _rigidbody.AddForce(jumpForce);
+            _rigidbody.AddForce(jumpForce * jumpForceMultiplier);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();

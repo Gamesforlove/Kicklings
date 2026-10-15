@@ -4029,6 +4029,7 @@ MonoBehaviour:
   _blockHeightAboveHead: 0.6
   _blockFlightDuration: 1.5
   _blockPassDistance: 2.5
+  _blockGrandpaJumpMultiplier: 0.5
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0

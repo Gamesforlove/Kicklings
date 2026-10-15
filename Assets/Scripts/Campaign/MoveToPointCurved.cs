@@ -20,12 +20,13 @@ public class MoveToPointCurved : MonoBehaviour
     bool _kickFlightActive;
     Vector2 _kickFlightStart, _kickFlightControlA, _kickFlightControlB, _kickFlightEnd;
 
-    public void StartCurveMove(Transform obj, Vector2 start, Vector2 mid, Vector2 end, float duration, float stopDistance)
+    public void StartCurveMove(Transform obj, Vector2 start, Vector2 mid, Vector2 end, float duration,
+        float stopDistance, bool snapToEnd = false)
     {
         StopCurveMove();
         this.obj = obj;
         this.duration = duration;
-        _moveCoroutine = StartCoroutine(MoveAlongCurve(start, mid, end, stopDistance));
+        _moveCoroutine = StartCoroutine(MoveAlongCurve(start, mid, end, stopDistance, snapToEnd));
     }
 
     public void StartCurveMove()
@@ -151,7 +152,8 @@ public class MoveToPointCurved : MonoBehaviour
     void OnDisable() => StopCurveMove();
 
     public bool Moving { get; private set; } = false;
-    IEnumerator MoveAlongCurve(Vector2 start, Vector2 mid, Vector2 end, float stopDistance = 1)
+    IEnumerator MoveAlongCurve(Vector2 start, Vector2 mid, Vector2 end, float stopDistance = 1,
+        bool snapToEnd = false)
     {
         Moving = true;
         float elapsed = 0f;
@@ -165,6 +167,8 @@ public class MoveToPointCurved : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        if (snapToEnd && obj != null)
+            obj.position = end;
         Moving = false;
         _moveCoroutine = null;
     }

@@ -25,6 +25,8 @@ public class TimedBallTutorial : MonoBehaviour
     [SerializeField, Min(0.1f)] float _blockFlightDuration = 1.5f;
     [SerializeField, Min(0f)] float _blockArcHeight = 2f;
     [SerializeField, Min(0.5f)] float _blockPassDistance = 2.5f;
+    [Tooltip("Grandpa's jump force during block feeds only; player jump strength is unchanged.")]
+    [SerializeField, Range(0f, 1f)] float _blockGrandpaJumpMultiplier = 0.5f;
     [SerializeField, Min(0.1f)] float _blockLandingTimeout = 8f;
 
     class ActionState
@@ -64,6 +66,7 @@ public class TimedBallTutorial : MonoBehaviour
     MatchManager _blockMatchManager;
     bool _blockMatchEventsCaptured;
     bool _previousBlockMatchEventSuppression;
+    readonly Dictionary<Rigidbody2D, RigidbodyInterpolation2D> _blockPlayerInterpolations = new();
 
     public bool Succeeded { get; private set; }
 
@@ -93,12 +96,13 @@ public class TimedBallTutorial : MonoBehaviour
             _blockMatchManager.SuppressGoalAndOutEvents = true;
             _blockMatchManager.StopAllCoroutines();
         }
-        PlaceBlockBallAtGrandpa(players, ball, grandpa);
+        PlaceBlockBallAtGrandpa(players, ball, grandpa, preserveKickArrival: true);
         _blockTransitionPrepared = true;
         return true;
     }
 
-    void PlaceBlockBallAtGrandpa(PlayersManager players, BallScript ball, GrandpaStage0 grandpa)
+    void PlaceBlockBallAtGrandpa(PlayersManager players, BallScript ball, GrandpaStage0 grandpa,
+        bool preserveKickArrival = false)
     {
         // A reset that started before the handoff must not keep blinking or re-enabling this ball.
         ball.StopAllCoroutines();
@@ -112,10 +116,13 @@ public class TimedBallTutorial : MonoBehaviour
         ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         ball.Rigidbody.linearVelocity = Vector2.zero;
         ball.Rigidbody.angularVelocity = 0f;
-        players.ResetPlayers();
+        // Reset the learner on the ground; Grandpa keeps his current position and pose.
+        PlaceBlockPlayerOnGround(players);
 
-        float direction = Mathf.Sign(players.Players[0].transform.position.x - grandpa.transform.position.x);
-        Vector2 feedPosition = (Vector2)grandpa.transform.position + new Vector2(direction * 1.25f, 1.5f);
+        Vector2 feedPosition = grandpa.GetTutorialFeedPosition(players.Players[0].transform.position.x);
+        // Hand off the exact completed kick position, even if Grandpa shifted during its flight.
+        if (preserveKickArrival && grandpa.TryTakeTutorialKickArrival(out Vector2 arrivedPosition))
+            feedPosition = arrivedPosition;
         Vector3 visiblePosition = new Vector3(feedPosition.x, feedPosition.y, ball.transform.position.z);
         ball.transform.SetPositionAndRotation(visiblePosition, Quaternion.identity);
         ball.Rigidbody.position = feedPosition;
@@ -125,8 +132,72 @@ public class TimedBallTutorial : MonoBehaviour
         ball.Collider.enabled = true;
     }
 
+    void PlaceBlockPlayerOnGround(PlayersManager players)
+    {
+        RestoreBlockPlayerInterpolation();
+        GameObject player = players.Players[0];
+        foreach (Rigidbody2D body in player.GetComponentsInChildren<Rigidbody2D>())
+        {
+            _blockPlayerInterpolations.Add(body, body.interpolation);
+            body.interpolation = RigidbodyInterpolation2D.None;
+        }
+
+        players.ResetMainPlayer();
+        Physics2D.SyncTransforms();
+
+        float feetY = float.PositiveInfinity;
+        float lowestBodyY = float.PositiveInfinity;
+        float topY = player.transform.position.y;
+        foreach (Collider2D bodyCollider in player.GetComponentsInChildren<Collider2D>())
+        {
+            if (!bodyCollider.enabled || bodyCollider.isTrigger)
+                continue;
+
+            Bounds bounds = bodyCollider.bounds;
+            lowestBodyY = Mathf.Min(lowestBodyY, bounds.min.y);
+            topY = Mathf.Max(topY, bounds.max.y);
+            string part = bodyCollider.gameObject.name;
+            if (part == "LeftLeg" || part == "RightLeg" || part == "Foot")
+                feetY = Mathf.Min(feetY, bounds.min.y);
+        }
+        if (float.IsPositiveInfinity(feetY))
+            feetY = lowestBodyY;
+
+        float groundY = float.NegativeInfinity;
+        Vector2 rayStart = new Vector2(player.transform.position.x, topY + 1f);
+        foreach (RaycastHit2D hit in Physics2D.RaycastAll(rayStart, Vector2.down, 100f))
+        {
+            if (hit.collider != null && hit.collider.CompareTag("Ground") && hit.normal.y > 0.5f)
+                groundY = Mathf.Max(groundY, hit.point.y);
+        }
+        if (!float.IsPositiveInfinity(feetY) && !float.IsNegativeInfinity(groundY))
+            player.transform.position += Vector3.up * (groundY + 0.02f - feetY);
+
+        Physics2D.SyncTransforms();
+        foreach (Rigidbody2D body in _blockPlayerInterpolations.Keys)
+        {
+            body.position = body.transform.position;
+            body.rotation = body.transform.eulerAngles.z;
+            body.linearVelocity = Vector2.zero;
+            body.angularVelocity = 0f;
+            body.WakeUp();
+        }
+        Physics2D.SyncTransforms();
+    }
+
+    void RestoreBlockPlayerInterpolation()
+    {
+        foreach (KeyValuePair<Rigidbody2D, RigidbodyInterpolation2D> entry in _blockPlayerInterpolations)
+        {
+            if (entry.Key != null)
+                entry.Key.interpolation = entry.Value;
+        }
+        _blockPlayerInterpolations.Clear();
+    }
+
     void RestoreBlockInterpolation()
     {
+        RestoreBlockPlayerInterpolation();
         if (_blockInterpolationCaptured && _blockTransitionBall != null)
             _blockTransitionBall.Rigidbody.interpolation = _blockPreviousInterpolation;
         _blockInterpolationCaptured = false;
@@ -305,8 +376,7 @@ public class TimedBallTutorial : MonoBehaviour
 
     Vector2 GetFeedPosition()
     {
-        float direction = Mathf.Sign(_player.transform.position.x - _grandpa.transform.position.x);
-        return (Vector2)_grandpa.transform.position + new Vector2(direction * 1.25f, 1.5f);
+        return _grandpa.GetTutorialFeedPosition(_player.transform.position.x);
     }
 
     void FeedBall(Collider2D targetCollider)
@@ -348,7 +418,8 @@ public class TimedBallTutorial : MonoBehaviour
 
     void FeedBlockBall(Collider2D headCollider)
     {
-        _blockArcStart = GetFeedPosition();
+        // Launch from the staged ball, including the exact position reached by the initial kick.
+        _blockArcStart = _ball.Rigidbody.position;
         Bounds standingHead = headCollider.bounds;
         float direction = Mathf.Sign(standingHead.center.x - _blockArcStart.x);
         _blockArcEnd = (Vector2)standingHead.center +
@@ -373,7 +444,7 @@ public class TimedBallTutorial : MonoBehaviour
 
         _grandpaActions.CanKick = true;
         _grandpaActions.DisableInput = false;
-        _grandpa.DoScriptedKick();
+        _grandpa.DoScriptedKick(_blockGrandpaJumpMultiplier);
         _grandpaActions.CanKick = false;
         _grandpaActions.DisableInput = true;
 
@@ -386,6 +457,7 @@ public class TimedBallTutorial : MonoBehaviour
         _ball.Rigidbody.gravityScale = 0f;
         if (_blockInterpolationCaptured)
             _ball.Rigidbody.interpolation = _blockPreviousInterpolation;
+        RestoreBlockPlayerInterpolation();
         _blockFeedElapsed = 0f;
         _blockFeedActive = true;
     }
