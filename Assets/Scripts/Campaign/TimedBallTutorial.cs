@@ -20,6 +20,12 @@ public class TimedBallTutorial : MonoBehaviour
     [SerializeField, Min(0f)] float _readyDelay = 0.5f;
     [SerializeField, Min(0f)] float _retryDelay = 1f;
     [SerializeField, Min(0f)] float _blockHeightAboveHead = 0.6f;
+    [Header("Manual Block Feed")]
+    [Tooltip("Time taken for the ball to reach the player's horizontal position.")]
+    [SerializeField, Min(0.1f)] float _blockFlightDuration = 1.5f;
+    [SerializeField, Min(0f)] float _blockArcHeight = 2f;
+    [SerializeField, Min(0.5f)] float _blockPassDistance = 2.5f;
+    [SerializeField, Min(0.1f)] float _blockLandingTimeout = 8f;
 
     class ActionState
     {
@@ -44,8 +50,97 @@ public class TimedBallTutorial : MonoBehaviour
     bool _attemptActive;
     bool _previousResetSuppression;
     bool _matchWasEnabled;
+    readonly ContactPoint2D[] _blockContacts = new ContactPoint2D[8];
+    bool _blockFeedActive;
+    float _blockFeedGravity;
+    float _blockFeedElapsed;
+    float _blockFeedDuration;
+    float _blockMissHeight;
+    Vector2 _blockArcStart, _blockArcMid, _blockArcEnd;
+    bool _blockTransitionPrepared;
+    bool _blockInterpolationCaptured;
+    RigidbodyInterpolation2D _blockPreviousInterpolation;
+    BallScript _blockTransitionBall;
+    MatchManager _blockMatchManager;
+    bool _blockMatchEventsCaptured;
+    bool _previousBlockMatchEventSuppression;
 
     public bool Succeeded { get; private set; }
+
+    public bool PrepareBlockTransition()
+    {
+        if (_running)
+            return false;
+
+        PlayersManager players = PlayersManager.Instance;
+        BallScript ball = BallManager.Instance != null ? BallManager.Instance.Ball : null;
+        GrandpaStage0 grandpa = GrandpaStage0.Instance;
+        if (players == null || players.Players.Count == 0 || ball == null || grandpa == null)
+        {
+            Debug.LogError("The block transition needs its player, ball, and Grandpa.", this);
+            return false;
+        }
+
+        // Keep the match enabled: CampaignGameplayExecution advances when it is disabled.
+        _blockMatchManager = MatchManager.Instance;
+        if (_blockMatchManager != null)
+        {
+            if (!_blockMatchEventsCaptured)
+            {
+                _previousBlockMatchEventSuppression = _blockMatchManager.SuppressGoalAndOutEvents;
+                _blockMatchEventsCaptured = true;
+            }
+            _blockMatchManager.SuppressGoalAndOutEvents = true;
+            _blockMatchManager.StopAllCoroutines();
+        }
+        PlaceBlockBallAtGrandpa(players, ball, grandpa);
+        _blockTransitionPrepared = true;
+        return true;
+    }
+
+    void PlaceBlockBallAtGrandpa(PlayersManager players, BallScript ball, GrandpaStage0 grandpa)
+    {
+        // A reset that started before the handoff must not keep blinking or re-enabling this ball.
+        ball.StopAllCoroutines();
+        if (!_blockInterpolationCaptured)
+        {
+            _blockPreviousInterpolation = ball.Rigidbody.interpolation;
+            _blockInterpolationCaptured = true;
+        }
+        _blockTransitionBall = ball;
+        ball.Rigidbody.interpolation = RigidbodyInterpolation2D.None;
+        ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        ball.Rigidbody.linearVelocity = Vector2.zero;
+        ball.Rigidbody.angularVelocity = 0f;
+        players.ResetPlayers();
+
+        float direction = Mathf.Sign(players.Players[0].transform.position.x - grandpa.transform.position.x);
+        Vector2 feedPosition = (Vector2)grandpa.transform.position + new Vector2(direction * 1.25f, 1.5f);
+        Vector3 visiblePosition = new Vector3(feedPosition.x, feedPosition.y, ball.transform.position.z);
+        ball.transform.SetPositionAndRotation(visiblePosition, Quaternion.identity);
+        ball.Rigidbody.position = feedPosition;
+        ball.Rigidbody.rotation = 0f;
+        ball.Rigidbody.simulated = true;
+        ball.Renderer.enabled = true;
+        ball.Collider.enabled = true;
+    }
+
+    void RestoreBlockInterpolation()
+    {
+        if (_blockInterpolationCaptured && _blockTransitionBall != null)
+            _blockTransitionBall.Rigidbody.interpolation = _blockPreviousInterpolation;
+        _blockInterpolationCaptured = false;
+        _blockTransitionPrepared = false;
+        _blockTransitionBall = null;
+    }
+
+    void RestoreBlockMatchEvents()
+    {
+        if (_blockMatchEventsCaptured && _blockMatchManager != null)
+            _blockMatchManager.SuppressGoalAndOutEvents = _previousBlockMatchEventSuppression;
+        _blockMatchEventsCaptured = false;
+        _blockMatchManager = null;
+    }
 
     public IEnumerator Run(PracticeType practiceType, TutorialFade prompt, MoveToPointCurved ballMove)
     {
@@ -73,13 +168,16 @@ public class TimedBallTutorial : MonoBehaviour
             yield break;
         }
 
+        if (practiceType == PracticeType.Block && !_blockTransitionPrepared && !PrepareBlockTransition())
+            yield break;
+
         _running = true;
         _practiceType = practiceType;
         _previousResetSuppression = _ballManager.SuppressAutomaticReset;
         _ballManager.SuppressAutomaticReset = true;
         _matchManager = MatchManager.Instance;
         _matchWasEnabled = _matchManager != null && _matchManager.enabled;
-        if (_matchManager != null)
+        if (_matchManager != null && _practiceType != PracticeType.Block)
             _matchManager.enabled = false;
 
         // Grandpa feeds deliberately; goal/out notifications must not interrupt a practice attempt.
@@ -109,6 +207,8 @@ public class TimedBallTutorial : MonoBehaviour
         _kickFlightMover = ballMove;
         ballMove?.StopCurveMove();
         _ball.ContactedPlayer += OnBallContactedPlayer;
+        if (_practiceType == PracticeType.Block)
+            _ball.CollisionEntered += OnBlockFeedCollision;
         TimeScaleManager.SetGameplayTimeScale();
         SetPrompt(false);
         prompt?.FadeIn();
@@ -119,24 +219,41 @@ public class TimedBallTutorial : MonoBehaviour
             {
                 _attemptActive = false;
                 _player.CanKick = false;
-                _ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
-                _ball.ResetWithoutBlink();
-                players.ResetPlayers();
-                _ball.Rigidbody.position = GetFeedPosition();
-                _ball.Renderer.enabled = true;
-                _ball.Collider.enabled = true;
+                if (_practiceType == PracticeType.Block)
+                {
+                    StopBlockFeed();
+                    if (_blockTransitionPrepared)
+                        _blockTransitionPrepared = false;
+                    else
+                        PlaceBlockBallAtGrandpa(players, _ball, _grandpa);
+                }
+                else
+                {
+                    _ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+                    _ball.ResetWithoutBlink();
+                    players.ResetPlayers();
+                    _ball.Rigidbody.position = GetFeedPosition();
+                    _ball.Renderer.enabled = true;
+                    _ball.Collider.enabled = true;
+                }
                 yield return new WaitForSeconds(_readyDelay);
 
                 if (!_running || _ball == null || _player == null || _grandpa == null)
                     yield break;
 
                 FeedBall(targetCollider);
+                if (_practiceType == PracticeType.Block)
+                {
+                    // The next real input must produce a head-block hop even if grounding is stale.
+                    _player.PrepareTutorialHeadBlockHop();
+                }
                 _player.CanKick = true;
                 _attemptActive = true;
                 float elapsed = 0f;
                 float attemptDuration = Mathf.Max(_attemptDuration, _flightDuration + 0.5f);
                 bool grandpaLegReturned = false;
-                while (!Succeeded && _running && _ball != null && elapsed < attemptDuration)
+                while (!Succeeded && _running && _ball != null &&
+                       (_practiceType == PracticeType.Block || elapsed < attemptDuration))
                 {
                     elapsed += Time.deltaTime;
                     if (!grandpaLegReturned && elapsed >= 0.2f)
@@ -144,12 +261,19 @@ public class TimedBallTutorial : MonoBehaviour
                         _grandpaActions.ReturnLeftLegToOriginalPosition();
                         grandpaLegReturned = true;
                     }
+                    if (_practiceType == PracticeType.Block && BlockBallHasDropped(elapsed))
+                        break;
                     yield return null;
                 }
 
                 _attemptActive = false;
                 if (!Succeeded && _running)
                 {
+                    if (_practiceType == PracticeType.Block)
+                    {
+                        _player.OnActionCancelled();
+                        _player.CanKick = false;
+                    }
                     SetPrompt(true);
                     yield return new WaitForSeconds(_retryDelay);
                 }
@@ -187,6 +311,12 @@ public class TimedBallTutorial : MonoBehaviour
 
     void FeedBall(Collider2D targetCollider)
     {
+        if (_practiceType == PracticeType.Block)
+        {
+            FeedBlockBall(targetCollider);
+            return;
+        }
+
         Vector2 start = GetFeedPosition();
         Vector2 target = targetCollider.bounds.center;
         if (_practiceType == PracticeType.Block)
@@ -214,6 +344,108 @@ public class TimedBallTutorial : MonoBehaviour
         _ball.Rigidbody.linearVelocity = (target - start - gravity * gravityFactor) / travelFactor;
         _ball.Rigidbody.angularVelocity = 0f;
         // After launch, normal physics and the player's usual action determine the result.
+    }
+
+    void FeedBlockBall(Collider2D headCollider)
+    {
+        _blockArcStart = GetFeedPosition();
+        Bounds standingHead = headCollider.bounds;
+        float direction = Mathf.Sign(standingHead.center.x - _blockArcStart.x);
+        _blockArcEnd = (Vector2)standingHead.center +
+                       Vector2.right * direction * Mathf.Max(0.5f, _blockPassDistance);
+
+        // The player intercepts the arc before its endpoint; an untouched shot continues behind them.
+        float totalDistance = Mathf.Max(0.1f, Mathf.Abs(_blockArcEnd.x - _blockArcStart.x));
+        float crossingT = Mathf.Clamp(
+            Mathf.Abs(standingHead.center.x - _blockArcStart.x) / totalDistance, 0.05f, 0.95f);
+        _blockFeedDuration = Mathf.Max(0.1f, _blockFlightDuration) / crossingT;
+        float crossingHeight = standingHead.max.y +
+                               _ball.Collider.bounds.extents.y + _blockHeightAboveHead;
+        float remainingT = 1f - crossingT;
+        float requiredMidHeight = (crossingHeight -
+                                   remainingT * remainingT * _blockArcStart.y -
+                                   crossingT * crossingT * _blockArcEnd.y) /
+                                  (2f * remainingT * crossingT);
+        _blockArcMid = (_blockArcStart + _blockArcEnd) * 0.5f;
+        _blockArcMid.y = Mathf.Max(requiredMidHeight,
+            Mathf.Max(_blockArcStart.y, _blockArcEnd.y) + _blockArcHeight);
+        _blockMissHeight = _player.transform.position.y - 3f;
+
+        _grandpaActions.CanKick = true;
+        _grandpaActions.DisableInput = false;
+        _grandpa.DoScriptedKick();
+        _grandpaActions.CanKick = false;
+        _grandpaActions.DisableInput = true;
+
+        _ball.Rigidbody.position = _blockArcStart;
+        _ball.Rigidbody.simulated = true;
+        _ball.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        _ball.Rigidbody.linearVelocity = Vector2.zero;
+        _ball.Rigidbody.angularVelocity = 0f;
+        _blockFeedGravity = _ball.Rigidbody.gravityScale;
+        _ball.Rigidbody.gravityScale = 0f;
+        if (_blockInterpolationCaptured)
+            _ball.Rigidbody.interpolation = _blockPreviousInterpolation;
+        _blockFeedElapsed = 0f;
+        _blockFeedActive = true;
+    }
+
+    void FixedUpdate()
+    {
+        if (!_running || !_attemptActive || _practiceType != PracticeType.Block ||
+            !_blockFeedActive || _ball == null)
+            return;
+
+        float flightDuration = _blockFeedDuration;
+        _blockFeedElapsed += Time.fixedDeltaTime;
+        float t = Mathf.Clamp01(_blockFeedElapsed / flightDuration);
+        Vector2 nextPosition = QuadraticCurve.Evaluate(_blockArcStart, _blockArcMid, _blockArcEnd, t);
+        // Follow the authored arc with a dynamic body so a real block can interrupt it.
+        _ball.Rigidbody.linearVelocity = (nextPosition - _ball.Rigidbody.position) / Time.fixedDeltaTime;
+        if (_blockFeedElapsed >= flightDuration)
+            StopBlockFeed();
+    }
+
+    void OnBlockFeedCollision() => StopBlockFeed();
+
+    void StopBlockFeed()
+    {
+        if (!_blockFeedActive)
+            return;
+
+        _blockFeedActive = false;
+        if (_ball != null)
+            _ball.Rigidbody.gravityScale = _blockFeedGravity;
+    }
+
+    bool BlockBallHasDropped(float elapsed)
+    {
+        if (_blockFeedActive)
+            return false;
+
+        int contactCount = _ball.Collider.GetContacts(_blockContacts);
+        for (int i = 0; i < contactCount; i++)
+        {
+            ContactPoint2D contact = _blockContacts[i];
+            if ((contact.collider != null && contact.collider.CompareTag("Ground")) ||
+                (contact.otherCollider != null && contact.otherCollider.CompareTag("Ground")))
+                return true;
+        }
+
+        // Recover if the miss falls below the field or the ball gets stuck off the ground.
+        return _ball.Collider.bounds.max.y < _blockMissHeight ||
+               elapsed >= _blockFeedDuration + _blockLandingTimeout;
+    }
+
+    public void CancelBlockPractice()
+    {
+        if (_running && _practiceType == PracticeType.Block)
+            RestorePracticeState();
+        else if (_blockTransitionPrepared)
+        {
+            RestoreBlockInterpolation();
+            RestoreBlockMatchEvents();
+        }
     }
 
     void OnBallContactedPlayer(PlayerActions actions, Collider2D bodyCollider)
@@ -306,13 +538,22 @@ public class TimedBallTutorial : MonoBehaviour
     {
         if (_promptText == null)
             return;
+        if (_practiceType == PracticeType.Block)
+        {
+            _promptText.text = "Press Z to block the ball";
+            return;
+        }
         string action = _practiceType == PracticeType.Kick ? "kick" : "block";
         _promptText.text = retry
             ? $"Try again: time your {action} with Z"
             : $"Time your {action} with Z";
     }
 
-    void OnDisable() => RestorePracticeState();
+    void OnDisable()
+    {
+        CancelBlockPractice();
+        RestorePracticeState();
+    }
 
     void RestorePracticeState()
     {
@@ -321,13 +562,25 @@ public class TimedBallTutorial : MonoBehaviour
 
         _running = false;
         _attemptActive = false;
+        if (_practiceType == PracticeType.Block)
+        {
+            StopBlockFeed();
+            if (_ball != null)
+            {
+                _ball.CollisionEntered -= OnBlockFeedCollision;
+                if (_ball.Rigidbody.bodyType == RigidbodyType2D.Kinematic)
+                    _ball.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            }
+            RestoreBlockInterpolation();
+            RestoreBlockMatchEvents();
+        }
         _kickFlightMover?.StopCurveMove();
         _kickFlightMover = null;
         if (_ball != null)
             _ball.ContactedPlayer -= OnBallContactedPlayer;
         if (_ballManager != null)
             _ballManager.SuppressAutomaticReset = _previousResetSuppression;
-        if (_matchManager != null)
+        if (_matchManager != null && _practiceType != PracticeType.Block)
             _matchManager.enabled = _matchWasEnabled;
         foreach (ActionState state in _actionStates)
         {

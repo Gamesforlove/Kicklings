@@ -1877,7 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f301c94d77c0a24d83c93e643cacb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToSet: Press Z to block
+  textToSet: Press Z to block the ball
   UIText: {fileID: 290816184}
 --- !u!114 &1104483541
 MonoBehaviour:
@@ -4027,6 +4027,8 @@ MonoBehaviour:
   _readyDelay: 0.5
   _retryDelay: 1
   _blockHeightAboveHead: 0.6
+  _blockFlightDuration: 1.5
+  _blockPassDistance: 2.5
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0
