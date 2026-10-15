@@ -522,6 +522,8 @@ MonoBehaviour:
   stopDistance: 0.15
   ballDropTarget: {fileID: 1344938872}
   ballMoveScript: {fileID: 373567317}
+  curveMidpointHeightOffset: 3
+  curveMoveDuration: 1.5
 --- !u!114 &373567314
 MonoBehaviour:
   m_ObjectHideFlags: 0
