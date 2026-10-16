@@ -105,6 +105,7 @@ namespace Gameplay.CharacterComponents
 
         public bool CanKick { get; set; } = true;
         public bool ForcedToHoldKick { get; set; } = false;
+        public float LowBallHopMultiplier { get; set; } = 1f;
         [field: SerializeField] public bool LockMovementToFacingDirection { get; set; } = false;
         public void ScriptedKick() => OnActionPerformed();
         public void ScriptedKick(float jumpForceMultiplier) =>
@@ -169,6 +170,8 @@ namespace Gameplay.CharacterComponents
 
             if (tutorialHeadBlockHop)
                 jumpForce.y = Mathf.Max(jumpForce.y, _entityData.JumpPower * 1.25f);
+            else if (applyMovementAssist)
+                ApplyLowBallHopAssist(ref jumpForce);
 
             if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
                 jumpForce.x = 0f;
@@ -176,6 +179,32 @@ namespace Gameplay.CharacterComponents
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();
+        }
+
+        void ApplyLowBallHopAssist(ref Vector2 jumpForce)
+        {
+            if (LowBallHopMultiplier >= 1f)
+                return;
+
+            BallScript ball = BallManager.Instance != null ? BallManager.Instance.Ball : null;
+            Collider2D kickingCollider = KickingContactCollider;
+            if (ball == null || ball.Collider == null || kickingCollider == null ||
+                ball.Rigidbody.bodyType != RigidbodyType2D.Dynamic)
+                return;
+
+            float predictionTime = _entityData?.KickAssist?.BallPredictionTime ?? 0.35f;
+            float nearRange = _entityData?.KickAssist?.MovementAssistRange ?? 3f;
+            Vector2 predictedPosition = ball.Rigidbody.position + ball.Rigidbody.linearVelocity * predictionTime;
+            predictedPosition.y += 0.5f * Physics2D.gravity.y * ball.Rigidbody.gravityScale *
+                                   predictionTime * predictionTime;
+            float lowBallHeight = kickingCollider.bounds.max.y + 0.25f;
+            bool staysLow = ball.Collider.bounds.max.y <= lowBallHeight &&
+                            predictedPosition.y + ball.Collider.bounds.extents.y <= lowBallHeight;
+            if (staysLow && Mathf.Abs(predictedPosition.x - _rigidbody.position.x) <= nearRange)
+            {
+                // Keep the foot near a rolling ball while preserving the usual horizontal control.
+                jumpForce.y *= Mathf.Clamp01(LowBallHopMultiplier);
+            }
         }
 
         void ApplyMovementAssist(ref Vector2 jumpForce, Vector2? movementTarget = null)

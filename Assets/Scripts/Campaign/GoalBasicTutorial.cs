@@ -12,11 +12,17 @@ public class GoalBasicTutorial : MonoBehaviour
 {
     [SerializeField] TutorialFade _tutorialFade;
     [SerializeField] UiManager _uiManager;
-    [SerializeField] Vector2 _neutralBallPosition = new Vector2(0f, -1.5f);
+    [Tooltip("Drop height; horizontal position is always halfway between the player and Grandpa.")]
+    [SerializeField] float _ballDropHeight = -1.5f;
+    [SerializeField] FieldSideType _firstDropSide = FieldSideType.Left;
+    [SerializeField] bool _alternateDropSide = true;
     [SerializeField, Min(0f)] float _introDelay = 1.5f;
     [SerializeField, Min(0f)] float _retryDelay = 1f;
     [SerializeField, Min(0f)] float _successDialogueDuration = 1.5f;
+    [Tooltip("Total wait before the end screen, including the success dialogue.")]
     [SerializeField, Min(0f)] float _completionDelay = 2f;
+    [Tooltip("Player's upward hop force near low balls during this lesson only.")]
+    [SerializeField, Range(0.1f, 1f)] float _playerLowBallHopMultiplier = 0.5f;
 
     [Header("Grandpa Practice AI")]
     [SerializeField] CpuDifficultyPreset _difficultyPreset;
@@ -59,7 +65,9 @@ public class GoalBasicTutorial : MonoBehaviour
     bool _previousMatchSuppression;
     bool _previousResetSuppression;
     bool _previousCpuEnabled;
-    Vector2? _previousResetPosition;
+    System.Func<Vector2> _previousResetPositionProvider;
+    FieldSideType? _previousResetSpin;
+    float _previousPlayerLowBallHopMultiplier;
 
     public void StartTutorial()
     {
@@ -87,11 +95,14 @@ public class GoalBasicTutorial : MonoBehaviour
         _succeeded = false;
         _previousMatchSuppression = _match.SuppressGoalAndOutEvents;
         _previousResetSuppression = _ballManager.SuppressAutomaticReset;
-        _previousResetPosition = _ballManager.ResetPositionOverride;
+        _previousResetPositionProvider = _ballManager.ResetPositionProvider;
+        _previousResetSpin = _ballManager.ResetSpinOverride;
+        _previousPlayerLowBallHopMultiplier = _player.LowBallHopMultiplier;
         _previousCpuEnabled = _grandpaCpu.enabled;
         // Keep the match enabled so campaign execution does not advance or rebuild it.
         _match.SuppressGoalAndOutEvents = true;
-        _ballManager.ResetPositionOverride = _neutralBallPosition;
+        _ballManager.ResetPositionProvider = GetBallDropPosition;
+        _player.LowBallHopMultiplier = _playerLowBallHopMultiplier;
         foreach (PlayerActions actions in _players.GetPlayerActions())
         {
             _actionStates.Add(new ActionState
@@ -125,6 +136,7 @@ public class GoalBasicTutorial : MonoBehaviour
     IEnumerator TutorialRoutine()
     {
         bool retry = false;
+        FieldSideType dropSide = _firstDropSide;
         while (_active && !_succeeded)
         {
             _roundActive = false;
@@ -134,7 +146,10 @@ public class GoalBasicTutorial : MonoBehaviour
             _ballManager.SuppressAutomaticReset = true;
             GoalsManager.Instance?.SetCollidersEnabled(false);
             _players.ResetPlayers();
-            _ballManager.ResetBall();
+            // Reuse the match serve's spin so ground contact creates the sideways bounce.
+            // Every drop resolves the current midpoint, including automatic fallback drops.
+            _ballManager.ResetSpinOverride = dropSide;
+            _ballManager.ResetBallWithSpin(dropSide);
             Stage0Scene2Tutorials dialogue = Stage0Scene2Tutorials.Instance;
             if (retry)
                 dialogue?.ShowGoalRetry(_tutorialFade);
@@ -157,6 +172,8 @@ public class GoalBasicTutorial : MonoBehaviour
             {
                 yield return WaitForDialogue(_retryDelay);
                 retry = true;
+                if (_alternateDropSide)
+                    dropSide = dropSide == FieldSideType.Left ? FieldSideType.Right : FieldSideType.Left;
             }
         }
 
@@ -165,16 +182,24 @@ public class GoalBasicTutorial : MonoBehaviour
 
         SetActionsEnabled(false);
         _ballManager.SuppressAutomaticReset = true;
-        _ball.StopAllCoroutines();
-        _ball.ResetWithoutBlink();
-        _ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        // Let the scored ball finish its flight and settle naturally in the net.
         _uiManager?.ChangeScore(1, 0);
         Stage0Scene2Tutorials.Instance?.ShowGoalSuccess(_tutorialFade);
-        yield return WaitForDialogue(_successDialogueDuration);
+        float completionDelay = Mathf.Max(0f, _completionDelay);
+        float dialogueDuration = Mathf.Clamp(_successDialogueDuration, 0f, completionDelay);
+        yield return WaitForDialogue(dialogueDuration);
         _tutorialFade?.FadeOut();
-        yield return WaitForDialogue(_completionDelay);
+        yield return WaitForDialogue(completionDelay - dialogueDuration);
         _routine = null;
         onTutorialDone?.Invoke();
+    }
+
+    Vector2 GetBallDropPosition()
+    {
+        float midpointX = _player != null && _grandpaActions != null
+            ? (_player.transform.position.x + _grandpaActions.transform.position.x) * 0.5f
+            : 0f;
+        return new Vector2(midpointX, _ballDropHeight);
     }
 
     void SetActionsEnabled(bool value)
@@ -327,7 +352,8 @@ public class GoalBasicTutorial : MonoBehaviour
         if (_ballManager != null)
         {
             _ballManager.SuppressAutomaticReset = _previousResetSuppression;
-            _ballManager.ResetPositionOverride = _previousResetPosition;
+            _ballManager.ResetPositionProvider = _previousResetPositionProvider;
+            _ballManager.ResetSpinOverride = _previousResetSpin;
         }
         if (_grandpaCpu != null)
         {
@@ -345,6 +371,9 @@ public class GoalBasicTutorial : MonoBehaviour
             state.Actions.LockMovementToFacingDirection = state.LockMovement;
         }
         _actionStates.Clear();
-        GoalsManager.Instance?.SetCollidersEnabled(true);
+        if (_player != null)
+            _player.LowBallHopMultiplier = _previousPlayerLowBallHopMultiplier;
+        if (GoalsManager.Instance != null)
+            GoalsManager.Instance.SetCollidersEnabled(true);
     }
 }

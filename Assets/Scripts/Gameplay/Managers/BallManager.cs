@@ -30,6 +30,9 @@ namespace Gameplay.Managers
         public bool SuppressAutomaticReset { get; set; }
         // A tutorial can choose a neutral drop without changing the match's normal spawn points.
         public Vector2? ResetPositionOverride { get; set; }
+        // Resolve moving tutorial targets when the drop actually starts.
+        public System.Func<Vector2> ResetPositionProvider { get; set; }
+        public FieldSideType? ResetSpinOverride { get; set; }
         void Awake()
         {
             Instance = this;
@@ -108,11 +111,25 @@ namespace Gameplay.Managers
     
         public void ResetBall()
         {
+            if (ResetSpinOverride.HasValue)
+            {
+                ResetBallWithSpin(ResetSpinOverride.Value);
+                return;
+            }
             MarkBallDropped();
-            if (ResetPositionOverride.HasValue && Ball != null)
+            PlaceBallForReset();
+            Ball?.Reset();
+        }
+
+        void PlaceBallForReset()
+        {
+            Vector2? resetPosition = ResetPositionProvider != null
+                ? ResetPositionProvider()
+                : ResetPositionOverride;
+            if (resetPosition.HasValue && Ball != null)
             {
                 Ball.StopAllCoroutines();
-                Vector2 position = ResetPositionOverride.Value;
+                Vector2 position = resetPosition.Value;
                 Ball.transform.SetPositionAndRotation(
                     new Vector3(position.x, position.y, Ball.transform.position.z), Quaternion.identity);
                 Ball.Rigidbody.position = position;
@@ -120,7 +137,6 @@ namespace Gameplay.Managers
             }
             else
                 _ballSpawner?.ResetBall();
-            Ball?.Reset();
         }
 
         public void ResetBall(FieldSideType sideType)
@@ -133,7 +149,7 @@ namespace Gameplay.Managers
         public void ResetBallWithSpin(FieldSideType sideType)
         {
             MarkBallDropped();
-            _ballSpawner?.ResetBall();
+            PlaceBallForReset();
             Ball?.ResetWithSpin(sideType);
         }
 
