@@ -14,11 +14,19 @@ namespace Gameplay.Managers
         }
 
         [SerializeField] Goal.Goal[] _goals;
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+                Instance = null;
+        }
+
         public void SetCollidersEnabled(bool value)
         {
             foreach (Goal.Goal goal in _goals)
             {
-                goal.SetColliderEnabled(value);
+                if (goal != null)
+                    goal.SetColliderEnabled(value);
             }
         }   
     }

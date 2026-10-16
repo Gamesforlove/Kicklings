@@ -5776,6 +5776,7 @@ MonoBehaviour:
   - {fileID: 1900634766}
   - {fileID: 1695908218}
   oneOnOneForCampaign: 0
+  _entityScaleMultiplier: 0.95
 --- !u!1 &1100506746
 GameObject:
   m_ObjectHideFlags: 0
@@ -7965,11 +7966,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 1710521119}
     m_Modifications:
     - target: {fileID: 239590692202284383, guid: b78e2f0bb12504f45915c50d83151d59, type: 3}
-      propertyPath: _redWinText
+      propertyPath: _leftWinText
       value: 
       objectReference: {fileID: 1475192709}
     - target: {fileID: 239590692202284383, guid: b78e2f0bb12504f45915c50d83151d59, type: 3}
-      propertyPath: _blueWinText
+      propertyPath: _rightWinText
       value: 
       objectReference: {fileID: 1895034964}
     - target: {fileID: 700530117238088625, guid: b78e2f0bb12504f45915c50d83151d59, type: 3}
@@ -8681,11 +8682,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 668931922}
     m_Modifications:
     - target: {fileID: 239590692202284383, guid: b78e2f0bb12504f45915c50d83151d59, type: 3}
-      propertyPath: _redWinText
+      propertyPath: _leftWinText
       value: 
       objectReference: {fileID: 1475192709}
     - target: {fileID: 239590692202284383, guid: b78e2f0bb12504f45915c50d83151d59, type: 3}
-      propertyPath: _blueWinText
+      propertyPath: _rightWinText
       value: 
       objectReference: {fileID: 1895034964}
     - target: {fileID: 700530117238088625, guid: b78e2f0bb12504f45915c50d83151d59, type: 3}
@@ -13476,11 +13477,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
-      propertyPath: _redWinText
+      propertyPath: _leftWinText
       value: 
       objectReference: {fileID: 1475192709}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
-      propertyPath: _blueWinText
+      propertyPath: _rightWinText
       value: 
       objectReference: {fileID: 1895034964}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
