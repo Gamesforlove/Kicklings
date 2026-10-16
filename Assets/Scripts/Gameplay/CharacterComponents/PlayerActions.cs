@@ -75,13 +75,18 @@ namespace Gameplay.CharacterComponents
 
         public void SetUp(EntityData entityData)
         {
-            _entityData = entityData;
+            SetActionData(entityData);
             _kickingDirectionMultiplier = transform.position.x > 0 ? -1 : 1;
+            ExpandAssistColliders();
+        }
+
+        public void SetActionData(EntityData entityData)
+        {
+            _entityData = entityData;
             float jumpCooldown = _entityData.JumpCooldown > Mathf.Epsilon
                 ? _entityData.JumpCooldown
                 : DefaultJumpCooldown;
             _jumpCdTimer.Reset(jumpCooldown);
-            ExpandAssistColliders();
         }
 
         public void OnKick(InputAction.CallbackContext context)

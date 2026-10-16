@@ -3963,6 +3963,8 @@ GameObject:
   - component: {fileID: 1928391808}
   - component: {fileID: 1928391809}
   - component: {fileID: 1928391810}
+  - component: {fileID: 1928391811}
+  - component: {fileID: 1928391812}
   m_Layer: 0
   m_Name: Stage0Scene2 - Tutorials Setup
   m_TagString: Untagged
@@ -4101,6 +4103,8 @@ MonoBehaviour:
   _uiManager: {fileID: 1617595365}
   _grandpaAi: {fileID: 1928391809}
   _playerLowBallHop: {fileID: 1928391810}
+  _playerAssist: {fileID: 1928391811}
+  _ballRecovery: {fileID: 1928391812}
   _ballDropHeight: -1.5
   _firstDropSide: 0
   _alternateDropSide: 1
@@ -4158,6 +4162,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hopMultiplier: 0.5
+--- !u!114 &1928391811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd047762a1e40dcb7c8f0a061384ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementAssistMultiplier: 2
+  _kickRescueMultiplier: 2
+  _contactWindowMultiplier: 1.75
+--- !u!114 &1928391812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48900923c6844d1aa5b4e227083bf5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _untouchedResetDelay: 8
+  _dropGracePeriod: 10
+  _warningDuration: 2
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ public class GoalBasicTutorial : MonoBehaviour
     [SerializeField] UiManager _uiManager;
     [SerializeField] TutorialGrandpaAi _grandpaAi;
     [SerializeField] TutorialLowBallHop _playerLowBallHop;
+    [SerializeField] TutorialPlayerAssist _playerAssist;
+    [SerializeField] TutorialBallRecovery _ballRecovery;
     [Tooltip("Drop height; horizontal position is always halfway between the player and Grandpa.")]
     [SerializeField] float _ballDropHeight = -1.5f;
     [SerializeField] FieldSideType _firstDropSide = FieldSideType.Left;
@@ -72,7 +74,8 @@ public class GoalBasicTutorial : MonoBehaviour
         GrandpaStage0 grandpa = GrandpaStage0.Instance;
         _grandpaActions = grandpa != null ? grandpa.GetComponent<PlayerActions>() : null;
         if (_match == null || _ball == null || _player == null ||
-            _grandpaActions == null || _grandpaAi == null || _playerLowBallHop == null)
+            _grandpaActions == null || _grandpaAi == null || _playerLowBallHop == null ||
+            _playerAssist == null || _ballRecovery == null)
         {
             Debug.LogError("The goal lesson needs its player, Grandpa, ball, match, and tutorial components.", this);
             return;
@@ -89,7 +92,9 @@ public class GoalBasicTutorial : MonoBehaviour
         // Keep the match enabled so campaign execution does not advance or rebuild it.
         _match.SuppressGoalAndOutEvents = true;
         _ballManager.ResetPositionProvider = GetBallDropPosition;
+        _playerAssist.BeginPractice(_player);
         _playerLowBallHop.BeginPractice(_player);
+        _ballRecovery.BeginPractice(_player);
         foreach (PlayerActions actions in _players.GetPlayerActions())
         {
             _actionStates.Add(new ActionState
@@ -130,6 +135,7 @@ public class GoalBasicTutorial : MonoBehaviour
             // Every drop resolves the current midpoint, including automatic fallback drops.
             _ballManager.ResetSpinOverride = dropSide;
             _ballManager.ResetBallWithSpin(dropSide);
+            _ballRecovery.NotifyBallDropped();
             Stage0Scene2Tutorials dialogue = Stage0Scene2Tutorials.Instance;
             if (retry)
                 dialogue?.ShowGoalRetry(_tutorialFade);
@@ -143,7 +149,8 @@ public class GoalBasicTutorial : MonoBehaviour
                 yield break;
 
             GoalsManager.Instance?.SetCollidersEnabled(true);
-            _ballManager.SuppressAutomaticReset = false;
+            // Tutorial recovery tracks the learner's touches rather than Grandpa's.
+            _ballManager.SuppressAutomaticReset = true;
             _roundActive = true;
             SetActionsEnabled(true);
             while (_active && _roundActive)
@@ -185,6 +192,7 @@ public class GoalBasicTutorial : MonoBehaviour
     void SetActionsEnabled(bool value)
     {
         _grandpaAi.SetPlaying(false);
+        _ballRecovery.SetPlaying(false);
         foreach (ActionState state in _actionStates)
         {
             state.Actions.ResetActionState();
@@ -192,7 +200,10 @@ public class GoalBasicTutorial : MonoBehaviour
             state.Actions.DisableInput = !value;
         }
         if (value)
+        {
             _grandpaAi.SetPlaying(true);
+            _ballRecovery.SetPlaying(true);
+        }
     }
 
     void OnGoal(GoalEvent payload)
@@ -218,6 +229,7 @@ public class GoalBasicTutorial : MonoBehaviour
         GoalsManager.Instance?.SetCollidersEnabled(false);
         // Stop any pending CPU reflex before another ball contact can start a return.
         _grandpaAi.SetPlaying(false);
+        _ballRecovery.SetPlaying(false);
     }
 
     void OnBallContactedPlayer(PlayerActions actions, Collider2D bodyCollider)
@@ -338,6 +350,10 @@ public class GoalBasicTutorial : MonoBehaviour
             _grandpaAi.EndPractice();
         if (_playerLowBallHop != null)
             _playerLowBallHop.EndPractice();
+        if (_playerAssist != null)
+            _playerAssist.EndPractice();
+        if (_ballRecovery != null)
+            _ballRecovery.EndPractice();
         foreach (ActionState state in _actionStates)
         {
             if (state.Actions == null)
