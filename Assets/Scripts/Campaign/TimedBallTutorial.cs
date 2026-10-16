@@ -31,6 +31,8 @@ public class TimedBallTutorial : MonoBehaviour
     [Header("Block Dialogue Timing")]
     [SerializeField, Min(0f)] float _blockIntroDialogueDelay = 1f;
     [SerializeField, Min(0f)] float _blockFeedbackDialogueDuration = 1.5f;
+    [Tooltip("Pause after the success dialogue before completing the block tutorial.")]
+    [SerializeField, Min(0f)] float _blockCompletionDelay;
 
     class ActionState
     {
@@ -119,8 +121,10 @@ public class TimedBallTutorial : MonoBehaviour
         ball.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         ball.Rigidbody.linearVelocity = Vector2.zero;
         ball.Rigidbody.angularVelocity = 0f;
-        // Reset the learner on the ground; Grandpa keeps his current position and pose.
-        PlaceBlockPlayerOnGround(players);
+        // Keep the learner's position and pose through the kick-to-block handoff.
+        // Only a failed block attempt returns the learner to the grounded reset position.
+        if (!preserveKickArrival)
+            PlaceBlockPlayerOnGround(players);
 
         Vector2 feedPosition = grandpa.GetTutorialFeedPosition(players.Players[0].transform.position.x);
         // Hand off the exact completed kick position, even if Grandpa shifted during its flight.
@@ -397,6 +401,11 @@ public class TimedBallTutorial : MonoBehaviour
                         yield return new WaitForSeconds(0.5f);
                 }
                 prompt?.FadeOut();
+                if (_practiceType == PracticeType.Block)
+                {
+                    // Keep practice reset/goal suppression active until the end screen is ready.
+                    yield return WaitForDialogue(_blockCompletionDelay);
+                }
             }
         }
         finally

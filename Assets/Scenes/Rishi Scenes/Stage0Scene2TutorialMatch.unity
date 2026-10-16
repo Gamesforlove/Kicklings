@@ -3497,6 +3497,34 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1617595367}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _useCustomHeading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeading
+      value: Good Job!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d4f08a37be7e8e74cb7f34a83658f71f, type: 2}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _preShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
@@ -4039,6 +4067,7 @@ MonoBehaviour:
   _blockGrandpaJumpMultiplier: 0.5
   _blockIntroDialogueDelay: 1
   _blockFeedbackDialogueDuration: 1.5
+  _blockCompletionDelay: 2
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0
