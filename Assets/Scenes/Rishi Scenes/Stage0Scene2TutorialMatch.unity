@@ -1913,9 +1913,9 @@ MonoBehaviour:
   onTutorialDone:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1029011212}
-        m_TargetAssemblyTypeName: Gameplay.Managers.MatchManager, Assembly-CSharp
-        m_MethodName: InstantWin
+      - m_Target: {fileID: 1928391805}
+        m_TargetAssemblyTypeName: Stage0Scene2Tutorials, Assembly-CSharp
+        m_MethodName: NextTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3961,6 +3961,7 @@ GameObject:
   - component: {fileID: 1928391806}
   - component: {fileID: 1928391805}
   - component: {fileID: 1928391807}
+  - component: {fileID: 1928391808}
   m_Layer: 0
   m_Name: Stage0Scene2 - Tutorials Setup
   m_TagString: Untagged
@@ -3987,6 +3988,9 @@ MonoBehaviour:
   BlockInstruction: Try and block my shot with Z.
   BlockSuccess: Very good!
   BlockFailure: So close, try again!
+  GoalInstruction: Now try to score one goal against me!
+  GoalRetry: Keep trying! Score one goal against me.
+  GoalSuccess: I'm proud you made a goal!
   KickTutorial:
     m_PersistentCalls:
       m_Calls:
@@ -4043,7 +4047,19 @@ MonoBehaviour:
         m_CallState: 2
   GoalTutorial:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1928391808}
+        m_TargetAssemblyTypeName: GoalBasicTutorial, Assembly-CSharp
+        m_MethodName: StartTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1928391807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4067,7 +4083,51 @@ MonoBehaviour:
   _blockGrandpaJumpMultiplier: 0.5
   _blockIntroDialogueDelay: 1
   _blockFeedbackDialogueDuration: 1.5
-  _blockCompletionDelay: 2
+  _blockCompletionDelay: 0
+--- !u!114 &1928391808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fc0196d12b4f6ab7ea95f794c9d854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialFade: {fileID: 1104483539}
+  _uiManager: {fileID: 1617595365}
+  _neutralBallPosition: {x: 0, y: -1.5}
+  _introDelay: 1.5
+  _retryDelay: 1
+  _successDialogueDuration: 1.5
+  _completionDelay: 2
+  _difficultyPreset: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
+  _difficulty: 0
+  _timeBetweenActions:
+    Min: 0.9
+    Max: 1.8
+  _grandpaMovementLimits: {x: 1.5, y: 8.5}
+  _grandpaApproachDistance: 4.5
+  _returnArcHeight: 0.65
+  _maximumReturnSpeed: 8
+  _receiveDistance: 1
+  onTutorialDone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1029011212}
+        m_TargetAssemblyTypeName: Gameplay.Managers.MatchManager, Assembly-CSharp
+        m_MethodName: InstantWin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0

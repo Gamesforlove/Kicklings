@@ -18,11 +18,17 @@ public class Stage0Scene2Tutorials : MonoBehaviour
     [FormerlySerializedAs("_blockInstruction"), TextArea] public string BlockInstruction;
     [FormerlySerializedAs("_blockSuccess"), TextArea] public string BlockSuccess;
     [FormerlySerializedAs("_blockFailure"), TextArea] public string BlockFailure;
+    [TextArea] public string GoalInstruction;
+    [TextArea] public string GoalRetry;
+    [TextArea] public string GoalSuccess;
 
     public void ShowKickPraise(TutorialFade fade) => ShowGrandpaDialogue(KickPraise, fade);
     public void ShowBlockInstruction(TutorialFade fade) => ShowGrandpaDialogue(BlockInstruction, fade);
     public void ShowBlockSuccess(TutorialFade fade) => ShowGrandpaDialogue(BlockSuccess, fade);
     public void ShowBlockFailure(TutorialFade fade) => ShowGrandpaDialogue(BlockFailure, fade);
+    public void ShowGoalInstruction(TutorialFade fade) => ShowGrandpaDialogue(GoalInstruction, fade);
+    public void ShowGoalRetry(TutorialFade fade) => ShowGrandpaDialogue(GoalRetry, fade);
+    public void ShowGoalSuccess(TutorialFade fade) => ShowGrandpaDialogue(GoalSuccess, fade);
 
     void ShowGrandpaDialogue(string line, TutorialFade fade)
     {

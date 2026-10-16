@@ -21,11 +21,12 @@ namespace Gameplay.CharacterComponents.Cpu
         }
 
 
-        public bool IsBallWithinRange(Rigidbody2D ballRigidbody)
+        public bool IsBallWithinRange(Rigidbody2D ballRigidbody, float minimumSpeedMultiplier = 0f)
         {
             if (_proximityPoints == null) return false;
             
-            float speedMultiplier = ballRigidbody.linearVelocity.magnitude / _speedNormalization;
+            float speedMultiplier = Mathf.Max(minimumSpeedMultiplier,
+                ballRigidbody.linearVelocity.magnitude / _speedNormalization);
             Vector3 ballPosition = ballRigidbody.transform.position;
             bool isWithinRange = false;
             

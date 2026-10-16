@@ -127,7 +127,11 @@ namespace Gameplay.CharacterComponents
 
         public void OnActionPerformed() => PerformAction(applyMovementAssist: false);
 
-        void PerformAction(bool applyMovementAssist, float jumpForceMultiplier = 1f)
+        public void PerformTutorialAction(Vector2 movementTarget) =>
+            PerformAction(applyMovementAssist: true, movementTarget: movementTarget);
+
+        void PerformAction(bool applyMovementAssist, float jumpForceMultiplier = 1f,
+            Vector2? movementTarget = null)
         {
             if (!CanKick)
                 return;
@@ -140,7 +144,7 @@ namespace Gameplay.CharacterComponents
             BeginKickAssistWindow();
             Kick();
             if (tutorialHeadBlockHop || (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd))
-                Jump(applyMovementAssist, tutorialHeadBlockHop, jumpForceMultiplier);
+                Jump(applyMovementAssist, tutorialHeadBlockHop, jumpForceMultiplier, movementTarget);
         }
 
         public void OnActionCancelled()
@@ -156,11 +160,12 @@ namespace Gameplay.CharacterComponents
                 ReturnLeftLegToOriginalPosition();
         }
     
-        void Jump(bool applyMovementAssist, bool tutorialHeadBlockHop = false, float jumpForceMultiplier = 1f)
+        void Jump(bool applyMovementAssist, bool tutorialHeadBlockHop = false, float jumpForceMultiplier = 1f,
+            Vector2? movementTarget = null)
         {
             Vector2 jumpForce = transform.up * _entityData.JumpPower;
             if (applyMovementAssist)
-                ApplyMovementAssist(ref jumpForce);
+                ApplyMovementAssist(ref jumpForce, movementTarget);
 
             if (tutorialHeadBlockHop)
                 jumpForce.y = Mathf.Max(jumpForce.y, _entityData.JumpPower * 1.25f);
@@ -173,15 +178,15 @@ namespace Gameplay.CharacterComponents
             _jumpCdTimer.Start();
         }
 
-        void ApplyMovementAssist(ref Vector2 jumpForce)
+        void ApplyMovementAssist(ref Vector2 jumpForce, Vector2? movementTarget = null)
         {
             EntityData.KickAssistSettings settings = _entityData?.KickAssist;
             BallScript ball = BallManager.Instance?.Ball;
             if (settings == null || ball == null || settings.MovementAssistRange <= 0f)
                 return;
 
-            Vector2 predictedBallPosition = (Vector2)ball.transform.position +
-                                            ball.Rigidbody.linearVelocity * settings.BallPredictionTime;
+            Vector2 predictedBallPosition = movementTarget ?? ((Vector2)ball.transform.position +
+                                            ball.Rigidbody.linearVelocity * settings.BallPredictionTime);
             Vector2 toBall = predictedBallPosition - _rigidbody.position;
             float nearRange = Mathf.Max(Mathf.Epsilon, settings.MovementAssistRange);
 
@@ -201,7 +206,9 @@ namespace Gameplay.CharacterComponents
                 return;
             }
 
-            float targetX = GetFarTravelTargetX(ball.Rigidbody, settings);
+            float targetX = movementTarget.HasValue
+                ? movementTarget.Value.x
+                : GetFarTravelTargetX(ball.Rigidbody, settings);
             float horizontalDistance = targetX - _rigidbody.position.x;
             float fullAssistDistance = Mathf.Max(
                 nearRange + Mathf.Epsilon,

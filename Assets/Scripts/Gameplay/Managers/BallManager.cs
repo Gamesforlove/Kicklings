@@ -28,6 +28,8 @@ namespace Gameplay.Managers
         
         public static BallManager Instance { get; private set; }
         public bool SuppressAutomaticReset { get; set; }
+        // A tutorial can choose a neutral drop without changing the match's normal spawn points.
+        public Vector2? ResetPositionOverride { get; set; }
         void Awake()
         {
             Instance = this;
@@ -107,7 +109,17 @@ namespace Gameplay.Managers
         public void ResetBall()
         {
             MarkBallDropped();
-            _ballSpawner?.ResetBall();
+            if (ResetPositionOverride.HasValue && Ball != null)
+            {
+                Ball.StopAllCoroutines();
+                Vector2 position = ResetPositionOverride.Value;
+                Ball.transform.SetPositionAndRotation(
+                    new Vector3(position.x, position.y, Ball.transform.position.z), Quaternion.identity);
+                Ball.Rigidbody.position = position;
+                Ball.Rigidbody.rotation = 0f;
+            }
+            else
+                _ballSpawner?.ResetBall();
             Ball?.Reset();
         }
 
