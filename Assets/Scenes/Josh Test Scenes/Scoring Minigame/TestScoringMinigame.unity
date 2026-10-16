@@ -427,6 +427,7 @@ MonoBehaviour:
   _pulseWhenUrgent: 1
   _pulseSpeed: 6
   _pulseScale: 0.06
+  _maxTime: 60
 --- !u!114 &430213183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,7 +700,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchBuilders:
-  - {fileID: 1324392073}
   - {fileID: 1324392073}
 --- !u!1 &1007675215
 GameObject:
@@ -1411,7 +1411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4339111864184791353, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39.997787
+      value: -39.997772
       objectReference: {fileID: 0}
     - target: {fileID: 4643076347865597527, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
