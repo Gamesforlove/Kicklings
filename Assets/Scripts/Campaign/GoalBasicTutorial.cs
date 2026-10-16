@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using CommonDataTypes;
 using EventBusSystem;
 using Gameplay.CharacterComponents;
-using Gameplay.CharacterComponents.Cpu;
 using Gameplay.Managers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +11,8 @@ public class GoalBasicTutorial : MonoBehaviour
 {
     [SerializeField] TutorialFade _tutorialFade;
     [SerializeField] UiManager _uiManager;
+    [SerializeField] TutorialGrandpaAi _grandpaAi;
+    [SerializeField] TutorialLowBallHop _playerLowBallHop;
     [Tooltip("Drop height; horizontal position is always halfway between the player and Grandpa.")]
     [SerializeField] float _ballDropHeight = -1.5f;
     [SerializeField] FieldSideType _firstDropSide = FieldSideType.Left;
@@ -21,18 +22,8 @@ public class GoalBasicTutorial : MonoBehaviour
     [SerializeField, Min(0f)] float _successDialogueDuration = 1.5f;
     [Tooltip("Total wait before the end screen, including the success dialogue.")]
     [SerializeField, Min(0f)] float _completionDelay = 2f;
-    [Tooltip("Player's upward hop force near low balls during this lesson only.")]
-    [SerializeField, Range(0.1f, 1f)] float _playerLowBallHopMultiplier = 0.5f;
 
-    [Header("Grandpa Practice AI")]
-    [SerializeField] CpuDifficultyPreset _difficultyPreset;
-    [SerializeField] DifficultyLevel _difficulty = DifficultyLevel.Easy1;
-    [SerializeField] CpuDifficultyPreset.FloatRange _timeBetweenActions =
-        new CpuDifficultyPreset.FloatRange { Min = 0.9f, Max = 1.8f };
-    [Tooltip("Horizontal area Grandpa can move toward when defending the goal.")]
-    [SerializeField] Vector2 _grandpaMovementLimits = new Vector2(1.5f, 8.5f);
-    [Tooltip("How far ahead Grandpa starts moving his body toward an approaching ball.")]
-    [SerializeField, Min(0f)] float _grandpaApproachDistance = 4.5f;
+    [Header("Grandpa Returns")]
     [SerializeField, Min(0.1f)] float _returnArcHeight = 0.65f;
     [SerializeField, Min(0.1f)] float _maximumReturnSpeed = 8f;
     [SerializeField, Min(0.1f)] float _receiveDistance = 1f;
@@ -55,7 +46,6 @@ public class GoalBasicTutorial : MonoBehaviour
     BallScript _ball;
     PlayerActions _player;
     PlayerActions _grandpaActions;
-    Cpu _grandpaCpu;
     Coroutine _routine;
     bool _active;
     bool _roundActive;
@@ -64,10 +54,8 @@ public class GoalBasicTutorial : MonoBehaviour
     bool _returningToPlayer;
     bool _previousMatchSuppression;
     bool _previousResetSuppression;
-    bool _previousCpuEnabled;
     System.Func<Vector2> _previousResetPositionProvider;
     FieldSideType? _previousResetSpin;
-    float _previousPlayerLowBallHopMultiplier;
 
     public void StartTutorial()
     {
@@ -83,13 +71,14 @@ public class GoalBasicTutorial : MonoBehaviour
             : null;
         GrandpaStage0 grandpa = GrandpaStage0.Instance;
         _grandpaActions = grandpa != null ? grandpa.GetComponent<PlayerActions>() : null;
-        _grandpaCpu = grandpa != null ? grandpa.GetComponent<Cpu>() : null;
         if (_match == null || _ball == null || _player == null ||
-            _grandpaActions == null || _grandpaCpu == null || _difficultyPreset == null)
+            _grandpaActions == null || _grandpaAi == null || _playerLowBallHop == null)
         {
-            Debug.LogError("The goal lesson needs its player, Grandpa CPU, ball, match, and difficulty preset.", this);
+            Debug.LogError("The goal lesson needs its player, Grandpa, ball, match, and tutorial components.", this);
             return;
         }
+        if (!_grandpaAi.BeginPractice(_grandpaActions))
+            return;
 
         _active = true;
         _succeeded = false;
@@ -97,12 +86,10 @@ public class GoalBasicTutorial : MonoBehaviour
         _previousResetSuppression = _ballManager.SuppressAutomaticReset;
         _previousResetPositionProvider = _ballManager.ResetPositionProvider;
         _previousResetSpin = _ballManager.ResetSpinOverride;
-        _previousPlayerLowBallHopMultiplier = _player.LowBallHopMultiplier;
-        _previousCpuEnabled = _grandpaCpu.enabled;
         // Keep the match enabled so campaign execution does not advance or rebuild it.
         _match.SuppressGoalAndOutEvents = true;
         _ballManager.ResetPositionProvider = GetBallDropPosition;
-        _player.LowBallHopMultiplier = _playerLowBallHopMultiplier;
+        _playerLowBallHop.BeginPractice(_player);
         foreach (PlayerActions actions in _players.GetPlayerActions())
         {
             _actionStates.Add(new ActionState
@@ -118,13 +105,6 @@ public class GoalBasicTutorial : MonoBehaviour
         // Free practice needs the normal ability to move back toward a returned ball.
         _player.LockMovementToFacingDirection = false;
 
-        CpuDifficultyPreset.DifficultySettings source = _difficultyPreset.GetSettingsForDifficulty(_difficulty);
-        _grandpaCpu.BeginTutorialPractice(new CpuDifficultyPreset.DifficultySettings
-        {
-            ReactionTime = source.ReactionTime,
-            ProximityPoints = source.ProximityPoints,
-            TimeBetweenKicks = _timeBetweenActions
-        }, _grandpaMovementLimits, _grandpaApproachDistance);
         EventBus<GoalEvent>.OnEvent += OnGoal;
         EventBus<OutEvent>.OnEvent += OnOut;
         _ball.ContactedPlayer += OnBallContactedPlayer;
@@ -204,15 +184,15 @@ public class GoalBasicTutorial : MonoBehaviour
 
     void SetActionsEnabled(bool value)
     {
-        _grandpaCpu.enabled = false;
-        _grandpaCpu.StopAllCoroutines();
+        _grandpaAi.SetPlaying(false);
         foreach (ActionState state in _actionStates)
         {
             state.Actions.ResetActionState();
             state.Actions.CanKick = value;
             state.Actions.DisableInput = !value;
         }
-        _grandpaCpu.enabled = value;
+        if (value)
+            _grandpaAi.SetPlaying(true);
     }
 
     void OnGoal(GoalEvent payload)
@@ -237,8 +217,7 @@ public class GoalBasicTutorial : MonoBehaviour
         _ballManager.SuppressAutomaticReset = true;
         GoalsManager.Instance?.SetCollidersEnabled(false);
         // Stop any pending CPU reflex before another ball contact can start a return.
-        _grandpaCpu.enabled = false;
-        _grandpaCpu.StopAllCoroutines();
+        _grandpaAi.SetPlaying(false);
     }
 
     void OnBallContactedPlayer(PlayerActions actions, Collider2D bodyCollider)
@@ -355,11 +334,10 @@ public class GoalBasicTutorial : MonoBehaviour
             _ballManager.ResetPositionProvider = _previousResetPositionProvider;
             _ballManager.ResetSpinOverride = _previousResetSpin;
         }
-        if (_grandpaCpu != null)
-        {
-            _grandpaCpu.EndTutorialPractice();
-            _grandpaCpu.enabled = _previousCpuEnabled;
-        }
+        if (_grandpaAi != null)
+            _grandpaAi.EndPractice();
+        if (_playerLowBallHop != null)
+            _playerLowBallHop.EndPractice();
         foreach (ActionState state in _actionStates)
         {
             if (state.Actions == null)
@@ -371,8 +349,6 @@ public class GoalBasicTutorial : MonoBehaviour
             state.Actions.LockMovementToFacingDirection = state.LockMovement;
         }
         _actionStates.Clear();
-        if (_player != null)
-            _player.LowBallHopMultiplier = _previousPlayerLowBallHopMultiplier;
         if (GoalsManager.Instance != null)
             GoalsManager.Instance.SetCollidersEnabled(true);
     }

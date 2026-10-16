@@ -9,10 +9,13 @@ namespace Gameplay.CharacterComponents.Cpu
         [SerializeField] float _speedNormalization = 8f;
         
         CpuDifficultyPreset.ProximityPoint[] _proximityPoints;
+        public CpuDifficultyPreset.ProximityPoint[] ProximityPoints => _proximityPoints;
 
         public void SetUp(CpuDifficultyPreset.ProximityPoint[] proximityPoints)
         {
             _proximityPoints = proximityPoints;
+            if (_proximityPoints == null)
+                return;
             // Ensure we have the same number of transforms as points
             if (_proximityTransforms.Length != _proximityPoints.Length)
             {

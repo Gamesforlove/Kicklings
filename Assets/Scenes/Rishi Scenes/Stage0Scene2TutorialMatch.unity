@@ -3961,6 +3961,8 @@ GameObject:
   - component: {fileID: 1928391805}
   - component: {fileID: 1928391807}
   - component: {fileID: 1928391808}
+  - component: {fileID: 1928391809}
+  - component: {fileID: 1928391810}
   m_Layer: 0
   m_Name: Stage0Scene2 - Tutorials Setup
   m_TagString: Untagged
@@ -4097,6 +4099,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tutorialFade: {fileID: 1104483539}
   _uiManager: {fileID: 1617595365}
+  _grandpaAi: {fileID: 1928391809}
+  _playerLowBallHop: {fileID: 1928391810}
   _ballDropHeight: -1.5
   _firstDropSide: 0
   _alternateDropSide: 1
@@ -4104,14 +4108,6 @@ MonoBehaviour:
   _retryDelay: 1
   _successDialogueDuration: 1.5
   _completionDelay: 2
-  _playerLowBallHopMultiplier: 0.5
-  _difficultyPreset: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
-  _difficulty: 0
-  _timeBetweenActions:
-    Min: 0.9
-    Max: 1.8
-  _grandpaMovementLimits: {x: 1.5, y: 8.5}
-  _grandpaApproachDistance: 4.5
   _returnArcHeight: 0.65
   _maximumReturnSpeed: 8
   _receiveDistance: 1
@@ -4130,6 +4126,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &1928391809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db3b11dd5b743cfba00a5ec912274af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _difficultyPreset: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
+  _difficulty: 0
+  _timeBetweenActions:
+    Min: 0.9
+    Max: 1.8
+  _movementLimits: {x: 1.5, y: 8.5}
+  _approachDistance: 4.5
+--- !u!114 &1928391810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54eb67130324b899b6694a79138a40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hopMultiplier: 0.5
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0
