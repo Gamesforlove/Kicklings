@@ -29,6 +29,7 @@ public class CampaignMatchBuilder : MonoBehaviour
             .WithRightShirtIndex(matchDataSO.MatchSettings.RightSideShirtIndex)
             .WithRightShoesIndex(matchDataSO.MatchSettings.RightSideShoesIndex)
             .WithRightCountryImageIndex(matchDataSO.MatchSettings.RightCountryImageIndex)
+            .WithSplitControls(true)
             .WithIsCampaignMatch(true)
             .Build();
 
@@ -46,6 +47,7 @@ public class CampaignMatchBuilder : MonoBehaviour
             .WithRightShirtIndex(matchDataSO.MatchSettings.RightSideShirtIndex)
             .WithRightShoesIndex(matchDataSO.MatchSettings.RightSideShoesIndex)
             .WithRightCountryImageIndex(matchDataSO.MatchSettings.RightCountryImageIndex)
+            .WithSplitControls(true)
             .WithLevelData(levelData)
             .WithIsCampaignMatch(true)
             .Build();

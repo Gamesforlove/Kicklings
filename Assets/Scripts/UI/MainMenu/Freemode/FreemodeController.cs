@@ -23,6 +23,7 @@ namespace UI.MainMenu.Freemode
                 .WithRightShoesIndex(_rightCharacterCustomizationController.ShoesIndex)
                 .WithRightCountryImageIndex(_rightCountryCustomizationController.TeamDataIndex)
                 .WithRightSkinToneValue(_rightCharacterCustomizationController.SkinToneValue)
+                .WithSplitControls(numberOfPlayers == 1)
                 .Build();
             
             MatchFlow.CreateMatch(matchSettings);
