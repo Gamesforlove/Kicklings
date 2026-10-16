@@ -10,6 +10,8 @@ public class Stage0Scene2Tutorials : MonoBehaviour
 {
     public static Stage0Scene2Tutorials Instance { get; private set; }
 
+    [SerializeField] GameObject _tutorialCanvas;
+
     [Header("Grandpa Dialogue")]
     [FormerlySerializedAs("_dialogueText")] public TextMeshProUGUI DialogueText;
     public string SpeakerName;
@@ -51,8 +53,39 @@ public class Stage0Scene2Tutorials : MonoBehaviour
         SetupForKickTutorial();
     }
 
-    enum TutorialState { KickTutorial, BlockTutorial, GoalTutorial }
+    enum TutorialState { KickTutorial, BlockTutorial, GoalTutorial, Finished }
     TutorialState tutorial;
+
+    public void InstantWin() => FinishTutorial(true);
+    public void InstantLose() => FinishTutorial(false);
+
+    void FinishTutorial(bool won)
+    {
+        if (tutorial == TutorialState.Finished)
+            return;
+
+        tutorial = TutorialState.Finished;
+        // Stop every lesson and ball mover, letting their OnDisable cleanup restore practice state.
+        gameObject.SetActive(false);
+        _tutorialCanvas?.SetActive(false);
+
+        MatchManager match = MatchManager.Instance;
+        match.StopAllCoroutines();
+        match.SuppressGoalAndOutEvents = true;
+        GoalsManager.Instance?.SetCollidersEnabled(false);
+        if (BallManager.Instance != null)
+        {
+            BallManager.Instance.SuppressAutomaticReset = true;
+            BallManager.Instance.Ball?.StopAllCoroutines();
+        }
+        TimeScaleManager.SetDefaultTimeScale();
+
+        if (won)
+            match.InstantWin();
+        else
+            match.InstantLose();
+    }
+
     public void NextTutorial()
     {
         if (tutorial == TutorialState.KickTutorial)
