@@ -8,7 +8,6 @@ using UnityEngine.Events;
 
 namespace Gameplay.Managers
 {
-
     public class ScoringChallengeManager : MonoBehaviour
     {
         [SerializeField] UiManager _uiManager;
@@ -22,16 +21,12 @@ namespace Gameplay.Managers
         int _score;
         float _timeRemaining;
         bool _challengeActive;
+        bool _playerSpawned;
 
         public static ScoringChallengeManager Instance { get; private set; }
         private void Awake() => Instance = this;
 
         public bool ChallengeDone { get; private set; }
-
-        void Start()
-        {
-            _playersManager?.SpawnSinglePlayer();
-        }
 
         void OnEnable()
         {
@@ -47,7 +42,22 @@ namespace Gameplay.Managers
 
         public void StartChallenge()
         {
-            Debug.Log("StartChallenge called");
+            // Spawned here, not in Start() - MinigameMatchBuilder sets enabled = true and
+            // calls StartChallenge() in the same method, before Unity's next Start() pass
+            // would fire. Spawning here guarantees the player exists before anything else
+            // (timer, launcher, goal colliders) goes live, instead of racing a frame behind.
+            if (!_playerSpawned)
+            {
+                _playersManager?.SpawnSinglePlayer();
+                _playerSpawned = true;
+            }
+            else
+            {
+                // Later rounds: the player already exists and has fully initialized,
+                // so reset it back to its spawn position/pose.
+                _playersManager?.ResetPlayers();
+            }
+
             _score = 0;
             _timeRemaining = _challengeDuration;
             _challengeActive = true;
@@ -56,12 +66,10 @@ namespace Gameplay.Managers
             _uiManager?.ChangeChallengeScore(_score, _scoreTarget);
             _uiManager?.InitializeChallengeTimer(_challengeDuration);
             _uiManager?.UpdateTimer(_timeRemaining);
-            
-            _playersManager?.ResetPlayers();
 
             _goalsManager?.SetCollidersEnabled(true);
             if (_ballLauncher != null) _ballLauncher.autoLaunch = true;
-            
+
             TimeScaleManager.SetGameplayTimeScale();
         }
 
@@ -77,14 +85,12 @@ namespace Gameplay.Managers
                 EndChallenge(won: false);
             }
         }
-        
 
-        
         #region OnGoal
         void OnGoalEvent(GoalEvent payload)
         {
             if (!_challengeActive) return;
-            
+
             _score++;
             _uiManager?.ChangeChallengeScore(_score, _scoreTarget);
 
@@ -102,7 +108,6 @@ namespace Gameplay.Managers
             TimeScaleManager.SlowMotion();
             yield return StartCoroutine(_uiManager.ShowGoalNotification(payload));
             TimeScaleManager.SetGameplayTimeScale();
-            _ballLauncher.DespawnBall();
         }
         #endregion
 
@@ -130,7 +135,7 @@ namespace Gameplay.Managers
             _goalsManager?.SetCollidersEnabled(false);
 
             TimeScaleManager.PauseGame();
-            //_uiManager?.ShowChallengeResult(won, _score, _scoreTarget);
+            _uiManager?.ShowChallengeResult(won, _score, _scoreTarget);
         }
 
         public void ExitToMenu()
