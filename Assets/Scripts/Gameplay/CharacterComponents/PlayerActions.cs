@@ -11,6 +11,10 @@ namespace Gameplay.CharacterComponents
     public class PlayerActions : MonoBehaviour
     {
         public bool DisableInput { get; set; }
+        public EntityData Data => _entityData;
+
+        public delegate void JumpForceModifier(ref Vector2 jumpForce);
+        public event JumpForceModifier ModifyJumpForce;
 
         EntityData _entityData;
         int _kickingDirectionMultiplier = 1;
@@ -22,6 +26,8 @@ namespace Gameplay.CharacterComponents
         bool _kickAssistAvailable;
         bool _assistCollidersExpanded;
         float _kickAssistTimeRemaining;
+        float _lastActionTime = float.NegativeInfinity;
+        bool _tutorialHeadBlockHopPending;
         
         [SerializeField] GameObject _kickingLeg;
         [SerializeField] Collider2D[] _kickingLegColliders;
@@ -34,6 +40,8 @@ namespace Gameplay.CharacterComponents
         Entity _entity;
         Collider2D[] _bodyColliders;
         Coroutine _stopKickingLegMotorCoroutine;
+        Coroutine _forceKickToHoldCoroutine;
+        Coroutine _tutorialKickFollowThroughCoroutine;
     
         void Awake()
         {
@@ -67,13 +75,18 @@ namespace Gameplay.CharacterComponents
 
         public void SetUp(EntityData entityData)
         {
-            _entityData = entityData;
+            SetActionData(entityData);
             _kickingDirectionMultiplier = transform.position.x > 0 ? -1 : 1;
+            ExpandAssistColliders();
+        }
+
+        public void SetActionData(EntityData entityData)
+        {
+            _entityData = entityData;
             float jumpCooldown = _entityData.JumpCooldown > Mathf.Epsilon
                 ? _entityData.JumpCooldown
                 : DefaultJumpCooldown;
             _jumpCdTimer.Reset(jumpCooldown);
-            ExpandAssistColliders();
         }
 
         public void OnKick(InputAction.CallbackContext context)
@@ -103,23 +116,44 @@ namespace Gameplay.CharacterComponents
         public bool ForcedToHoldKick { get; set; } = false;
         [field: SerializeField] public bool LockMovementToFacingDirection { get; set; } = false;
         public void ScriptedKick() => OnActionPerformed();
+        public void ScriptedKick(float jumpForceMultiplier) =>
+            PerformAction(applyMovementAssist: false, jumpForceMultiplier: Mathf.Clamp01(jumpForceMultiplier));
         public bool CanReceivePlayerAction => isActiveAndEnabled && CanKick && !DisableInput;
         public string CurrentControlScheme => _playerInput != null ? _playerInput.currentControlScheme : string.Empty;
         public int AttackingDirection => _kickingDirectionMultiplier;
+        public bool IsWithinActionContactWindow => Time.time - _lastActionTime <=
+            (_entityData?.KickAssist?.ContactAssistWindow ?? 0.45f);
+        public Collider2D KickingContactCollider => _kickingLeg.GetComponentsInChildren<Collider2D>()
+            .FirstOrDefault(collider => collider.enabled && !collider.isTrigger);
+        public Collider2D HeadContactCollider => _bodyColliders
+            .FirstOrDefault(collider => collider.gameObject.name == "Head" && !collider.isTrigger);
+
+        public bool IsKickingContact(Collider2D collider) => collider != null &&
+            collider.transform.IsChildOf(_kickingLeg.transform);
+
+        // The paused introductory block can accept input before grounded physics refreshes.
+        public void PrepareTutorialHeadBlockHop() => _tutorialHeadBlockHopPending = true;
 
         public void OnActionPerformed() => PerformAction(applyMovementAssist: false);
 
-        void PerformAction(bool applyMovementAssist)
+        public void PerformAssistedAction(Vector2 movementTarget) =>
+            PerformAction(applyMovementAssist: true, movementTarget: movementTarget);
+
+        void PerformAction(bool applyMovementAssist, float jumpForceMultiplier = 1f,
+            Vector2? movementTarget = null)
         {
             if (!CanKick)
                 return;
             if (DisableInput)
                 return;
 
+            bool tutorialHeadBlockHop = _tutorialHeadBlockHopPending;
+            _tutorialHeadBlockHopPending = false;
+            _lastActionTime = Time.time;
             BeginKickAssistWindow();
             Kick();
-            if (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd)
-                Jump(applyMovementAssist);
+            if (tutorialHeadBlockHop || (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd))
+                Jump(applyMovementAssist, tutorialHeadBlockHop, jumpForceMultiplier, movementTarget);
         }
 
         public void OnActionCancelled()
@@ -127,34 +161,43 @@ namespace Gameplay.CharacterComponents
             if (!CanKick)
                 return;
             if (ForcedToHoldKick)
-                StartCoroutine(forceKickToHold());
+            {
+                if (!inforceKickToHoldRoutine)
+                    _forceKickToHoldCoroutine = StartCoroutine(forceKickToHold());
+            }
             else
                 ReturnLeftLegToOriginalPosition();
         }
     
-        void Jump(bool applyMovementAssist)
+        void Jump(bool applyMovementAssist, bool tutorialHeadBlockHop = false, float jumpForceMultiplier = 1f,
+            Vector2? movementTarget = null)
         {
             Vector2 jumpForce = transform.up * _entityData.JumpPower;
             if (applyMovementAssist)
-                ApplyMovementAssist(ref jumpForce);
+                ApplyMovementAssist(ref jumpForce, movementTarget);
+
+            if (tutorialHeadBlockHop)
+                jumpForce.y = Mathf.Max(jumpForce.y, _entityData.JumpPower * 1.25f);
+            else if (applyMovementAssist)
+                ModifyJumpForce?.Invoke(ref jumpForce);
 
             if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
                 jumpForce.x = 0f;
-            _rigidbody.AddForce(jumpForce);
+            _rigidbody.AddForce(jumpForce * jumpForceMultiplier);
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();
         }
 
-        void ApplyMovementAssist(ref Vector2 jumpForce)
+        void ApplyMovementAssist(ref Vector2 jumpForce, Vector2? movementTarget = null)
         {
             EntityData.KickAssistSettings settings = _entityData?.KickAssist;
             BallScript ball = BallManager.Instance?.Ball;
             if (settings == null || ball == null || settings.MovementAssistRange <= 0f)
                 return;
 
-            Vector2 predictedBallPosition = (Vector2)ball.transform.position +
-                                            ball.Rigidbody.linearVelocity * settings.BallPredictionTime;
+            Vector2 predictedBallPosition = movementTarget ?? ((Vector2)ball.transform.position +
+                                            ball.Rigidbody.linearVelocity * settings.BallPredictionTime);
             Vector2 toBall = predictedBallPosition - _rigidbody.position;
             float nearRange = Mathf.Max(Mathf.Epsilon, settings.MovementAssistRange);
 
@@ -174,7 +217,9 @@ namespace Gameplay.CharacterComponents
                 return;
             }
 
-            float targetX = GetFarTravelTargetX(ball.Rigidbody, settings);
+            float targetX = movementTarget.HasValue
+                ? movementTarget.Value.x
+                : GetFarTravelTargetX(ball.Rigidbody, settings);
             float horizontalDistance = targetX - _rigidbody.position.x;
             float fullAssistDistance = Mathf.Max(
                 nearRange + Mathf.Epsilon,
@@ -340,6 +385,36 @@ namespace Gameplay.CharacterComponents
         {
             CancelKickingLegMotorStop();
             ApplyKickingPower(-1);
+        }
+
+        public void CompleteTutorialKick()
+        {
+            CancelForcedKickHold();
+            if (_tutorialKickFollowThroughCoroutine != null)
+                StopCoroutine(_tutorialKickFollowThroughCoroutine);
+
+            ForcedToHoldKick = false;
+            CanKick = false;
+            _tutorialKickFollowThroughCoroutine = StartCoroutine(TutorialKickFollowThrough());
+        }
+
+        IEnumerator TutorialKickFollowThrough()
+        {
+            // Contact marks success, but the normal motor still needs to finish the forward swing.
+            Kick();
+            yield return new WaitForSeconds(0.25f);
+            ReturnLeftLegToOriginalPosition();
+            _tutorialKickFollowThroughCoroutine = null;
+        }
+
+        void CancelForcedKickHold()
+        {
+            if (_forceKickToHoldCoroutine == null)
+                return;
+
+            StopCoroutine(_forceKickToHoldCoroutine);
+            _forceKickToHoldCoroutine = null;
+            inforceKickToHoldRoutine = false;
         }
         public void DisableKickingLeg()
         {
@@ -538,11 +613,21 @@ namespace Gameplay.CharacterComponents
         public void ResetActionState()
         {
             CancelKickingLegMotorStop();
+            CancelForcedKickHold();
+            if (_tutorialKickFollowThroughCoroutine != null)
+            {
+                StopCoroutine(_tutorialKickFollowThroughCoroutine);
+                _tutorialKickFollowThroughCoroutine = null;
+            }
             if (_entityData != null)
                 ApplyKickingPower(0f);
+            _jumpCdTimer?.Stop();
+            _jumpOnCd = false;
             _inputActionActive = false;
             _kickAssistAvailable = false;
             _kickAssistTimeRemaining = 0f;
+            _lastActionTime = float.NegativeInfinity;
+            _tutorialHeadBlockHopPending = false;
         }
 
         // used to scripted events, tutorials, in-game cutscenes, etc.
@@ -558,6 +643,7 @@ namespace Gameplay.CharacterComponents
             ReturnLeftLegToOriginalPosition();
             CanKick = prevCanKick;
             inforceKickToHoldRoutine = false;
+            _forceKickToHoldCoroutine = null;
         }
     }
 }

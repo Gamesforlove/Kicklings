@@ -8,7 +8,9 @@ namespace Gameplay.Goal
         
         public void SetColliderEnabled(bool value)
         {
-            _collider.enabled = value;
+            // Goal colliders can be destroyed before tutorial cleanup runs on scene unload.
+            if (_collider != null)
+                _collider.enabled = value;
         }
     }
 }

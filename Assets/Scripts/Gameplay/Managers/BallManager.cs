@@ -27,6 +27,12 @@ namespace Gameplay.Managers
         bool _resetWarningRendererWasEnabled;
         
         public static BallManager Instance { get; private set; }
+        public bool SuppressAutomaticReset { get; set; }
+        // A tutorial can choose a neutral drop without changing the match's normal spawn points.
+        public Vector2? ResetPositionOverride { get; set; }
+        // Resolve moving tutorial targets when the drop actually starts.
+        public System.Func<Vector2> ResetPositionProvider { get; set; }
+        public FieldSideType? ResetSpinOverride { get; set; }
         void Awake()
         {
             Instance = this;
@@ -42,7 +48,8 @@ namespace Gameplay.Managers
 
         void Update()
         {
-            if ((MatchManager.Instance != null && MatchManager.Instance.MatchDone) ||
+            if (SuppressAutomaticReset ||
+                (MatchManager.Instance != null && MatchManager.Instance.MatchDone) ||
                 Ball == null || Ball.Rigidbody == null ||
                 Ball.Rigidbody.bodyType != RigidbodyType2D.Dynamic ||
                 !Ball.Rigidbody.simulated)
@@ -104,9 +111,32 @@ namespace Gameplay.Managers
     
         public void ResetBall()
         {
+            if (ResetSpinOverride.HasValue)
+            {
+                ResetBallWithSpin(ResetSpinOverride.Value);
+                return;
+            }
             MarkBallDropped();
-            _ballSpawner?.ResetBall();
+            PlaceBallForReset();
             Ball?.Reset();
+        }
+
+        void PlaceBallForReset()
+        {
+            Vector2? resetPosition = ResetPositionProvider != null
+                ? ResetPositionProvider()
+                : ResetPositionOverride;
+            if (resetPosition.HasValue && Ball != null)
+            {
+                Ball.StopAllCoroutines();
+                Vector2 position = resetPosition.Value;
+                Ball.transform.SetPositionAndRotation(
+                    new Vector3(position.x, position.y, Ball.transform.position.z), Quaternion.identity);
+                Ball.Rigidbody.position = position;
+                Ball.Rigidbody.rotation = 0f;
+            }
+            else
+                _ballSpawner?.ResetBall();
         }
 
         public void ResetBall(FieldSideType sideType)
@@ -119,7 +149,7 @@ namespace Gameplay.Managers
         public void ResetBallWithSpin(FieldSideType sideType)
         {
             MarkBallDropped();
-            _ballSpawner?.ResetBall();
+            PlaceBallForReset();
             Ball?.ResetWithSpin(sideType);
         }
 

@@ -69,6 +69,7 @@ namespace Gameplay.Managers
         }
 
         public static MatchManager Instance { get; private set; }
+        public bool SuppressGoalAndOutEvents { get; set; }
         private void Awake() => Instance = this;
 
         bool ranStart = false;
@@ -121,6 +122,9 @@ namespace Gameplay.Managers
         public UnityEvent ScriptedGoalEventInstead;
         void OnGoalEvent(GoalEvent payload)
         {
+            if (SuppressGoalAndOutEvents)
+                return;
+
             _goalsManager.SetCollidersEnabled(false);
 
             if (ScriptedGoalEventInstead != null && ScriptedGoalEventInstead.GetPersistentEventCount() > 0)
@@ -152,6 +156,9 @@ namespace Gameplay.Managers
         #region OnOut
         void OnOutEvent(OutEvent payload)
         {
+            if (SuppressGoalAndOutEvents)
+                return;
+
             StartCoroutine(OnOutEventRoutine(payload));
         }
 

@@ -7,6 +7,8 @@ using Gameplay.CharacterComponents;
 public class BallScript : MonoBehaviour {
 
     public static event Action TouchedPlayer;
+    public event Action<PlayerActions, Collider2D> ContactedPlayer;
+    public event Action CollisionEntered;
     [field:SerializeField] public Rigidbody2D Rigidbody { get; private set; }
     [field:SerializeField] public Collider2D Collider { get; private set; }
     [field:SerializeField] public SpriteRenderer Renderer { get; private set; }
@@ -75,6 +77,7 @@ public class BallScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        CollisionEntered?.Invoke();
         if (((1 << collision.gameObject.layer) & PlayersLayers) != 0)
         {
             TouchedPlayer?.Invoke();
@@ -93,6 +96,8 @@ public class BallScript : MonoBehaviour {
             // The normal collision has already supplied the contact's vertical motion and spin.
             // Rescue, when eligible, is applied in this same physics callback before rendering.
             playerActions?.TryApplyBadKickRescue(Rigidbody, contactedBodyCollider);
+            if (playerActions != null)
+                ContactedPlayer?.Invoke(playerActions, contactedBodyCollider);
         }
     }
 }

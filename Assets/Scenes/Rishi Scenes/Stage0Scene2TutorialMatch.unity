@@ -232,7 +232,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 50}
+  m_SizeDelta: {x: 700, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290816184
 MonoBehaviour:
@@ -281,8 +281,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -515,6 +515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialDelay: 1
   TutorialFade: {fileID: 373567314}
+  timingPractice: {fileID: 1928391807}
   onTutorialDone:
     m_PersistentCalls:
       m_Calls: []
@@ -1749,7 +1750,7 @@ GameObject:
   - component: {fileID: 1039971357}
   - component: {fileID: 1039971358}
   m_Layer: 0
-  m_Name: Wall
+  m_Name: Tutorial Left Boundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1814,7 +1815,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 10}
+  m_Size: {x: 1, y: 30}
   m_EdgeRadius: 0
 --- !u!1 &1104483536
 GameObject:
@@ -1876,7 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f301c94d77c0a24d83c93e643cacb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToSet: Press Z to block
+  textToSet: Press Z to block the ball
   UIText: {fileID: 290816184}
 --- !u!114 &1104483541
 MonoBehaviour:
@@ -1908,12 +1909,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TutorialFade: {fileID: 1104483539}
+  timingPractice: {fileID: 1928391807}
   onTutorialDone:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1029011212}
-        m_TargetAssemblyTypeName: Gameplay.Managers.MatchManager, Assembly-CSharp
-        m_MethodName: InstantWin
+      - m_Target: {fileID: 1928391805}
+        m_TargetAssemblyTypeName: Stage0Scene2Tutorials, Assembly-CSharp
+        m_MethodName: NextTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3495,6 +3497,34 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1617595367}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _useCustomHeading
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeading
+      value: Good Job!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _customHeadingMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d4f08a37be7e8e74cb7f34a83658f71f, type: 2}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _preShowAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
@@ -3537,6 +3567,118 @@ PrefabInstance:
     - target: {fileID: 8662469398673913331, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -90.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1617595370}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1928391805}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideView
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: InstantLose
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Stage0Scene2Tutorials, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1617595371}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757916711692629588, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1617595370}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1928391805}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideView
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: InstantWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.UiSystem.Core.UIViewsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Stage0Scene2Tutorials, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1617595371}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UI.UiSystem.Core.UIView, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072565232447024140, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3585,6 +3727,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45f17bf0737c9b3418c0bb7b1a0736b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1617595370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1281346093593171976, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+  m_PrefabInstance: {fileID: 1617595364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d5b657dd1d93c44b9607f3813d3132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1617595371 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8206125276192974698, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+  m_PrefabInstance: {fileID: 1617595364}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69765e1e3a19498b9984210315c75f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1707277812
@@ -3679,7 +3843,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _goals:
   - {fileID: 1483672562}
-  - {fileID: 596995263}
 --- !u!1 &1731477538
 GameObject:
   m_ObjectHideFlags: 0
@@ -3930,6 +4093,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1928391806}
   - component: {fileID: 1928391805}
+  - component: {fileID: 1928391807}
+  - component: {fileID: 1928391808}
+  - component: {fileID: 1928391809}
+  - component: {fileID: 1928391810}
+  - component: {fileID: 1928391811}
+  - component: {fileID: 1928391812}
   m_Layer: 0
   m_Name: Stage0Scene2 - Tutorials Setup
   m_TagString: Untagged
@@ -3949,6 +4118,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078f531c9f4f5534ca0fb351f3381b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tutorialCanvas: {fileID: 467757598}
+  DialogueText: {fileID: 290816184}
+  SpeakerName: Grandpa
+  SpeakerColor: {r: 1, g: 0.8, b: 0.4, a: 1}
+  KickPraise: Good job hitting the ball!
+  BlockInstruction: Try and block my shot with Z.
+  BlockSuccess: Very good!
+  BlockFailure: So close, try again!
+  GoalInstruction: Now try to score one goal against me!
+  GoalRetry: Keep trying! Score one goal against me.
+  GoalSuccess: I'm proud you made a goal!
   KickTutorial:
     m_PersistentCalls:
       m_Calls:
@@ -3965,7 +4145,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 373567313}
-        m_TargetAssemblyTypeName: KickBlockTutorial, Assembly-CSharp
+        m_TargetAssemblyTypeName: KickBasicTutorial, Assembly-CSharp
         m_MethodName: StartTutorial
         m_Mode: 1
         m_Arguments:
@@ -4005,7 +4185,148 @@ MonoBehaviour:
         m_CallState: 2
   GoalTutorial:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1928391808}
+        m_TargetAssemblyTypeName: GoalBasicTutorial, Assembly-CSharp
+        m_MethodName: StartTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1928391807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84dafc412b634cbb98baf78e4979fb02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _promptText: {fileID: 290816184}
+  _flightDuration: 1.25
+  _attemptDuration: 4
+  _readyDelay: 0.5
+  _retryDelay: 1
+  _blockHeightAboveHead: 0.6
+  _blockFlightDuration: 1.5
+  _blockPassDistance: 2.5
+  _blockGrandpaJumpMultiplier: 0.5
+  _blockIntroDialogueDelay: 1
+  _blockFeedbackDialogueDuration: 1.5
+  _blockCompletionDelay: 0
+--- !u!114 &1928391808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81fc0196d12b4f6ab7ea95f794c9d854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialFade: {fileID: 1104483539}
+  _uiManager: {fileID: 1617595365}
+  _grandpaAi: {fileID: 1928391809}
+  _playerLowBallHop: {fileID: 1928391810}
+  _playerAssist: {fileID: 1928391811}
+  _ballRecovery: {fileID: 1928391812}
+  _ballDropHeight: -1.5
+  _firstDropSide: 0
+  _alternateDropSide: 1
+  _introDelay: 1.5
+  _retryDelay: 1
+  _successDialogueDuration: 1.5
+  _completionDelay: 2
+  _returnArcHeight: 0.65
+  _maximumReturnSpeed: 8
+  _receiveDistance: 1
+  onTutorialDone:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1928391805}
+        m_TargetAssemblyTypeName: Stage0Scene2Tutorials, Assembly-CSharp
+        m_MethodName: InstantWin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+--- !u!114 &1928391809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9db3b11dd5b743cfba00a5ec912274af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _difficultyPreset: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
+  _difficulty: 0
+  _timeBetweenActions:
+    Min: 0.9
+    Max: 1.8
+  _movementLimits: {x: 1.5, y: 8.5}
+  _approachDistance: 4.5
+--- !u!114 &1928391810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b54eb67130324b899b6694a79138a40b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hopMultiplier: 0.5
+--- !u!114 &1928391811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdd047762a1e40dcb7c8f0a061384ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementAssistMultiplier: 2
+  _kickRescueMultiplier: 2
+  _contactWindowMultiplier: 1.75
+--- !u!114 &1928391812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928391804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48900923c6844d1aa5b4e227083bf5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _untouchedResetDelay: 8
+  _dropGracePeriod: 10
+  _warningDuration: 2
 --- !u!4 &1928391806
 Transform:
   m_ObjectHideFlags: 0
@@ -4094,7 +4415,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 750, y: 125}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1956161389
 MonoBehaviour:
@@ -5142,7 +5463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8801889218114000943
 GameObject:
   m_ObjectHideFlags: 0
