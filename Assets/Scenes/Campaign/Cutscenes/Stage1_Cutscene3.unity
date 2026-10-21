@@ -287,6 +287,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cutscenes
       objectReference: {fileID: 0}
+    - target: {fileID: 2858232616570765978, guid: 5925e06645425764885fed844a3ef427, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858232616570765978, guid: 5925e06645425764885fed844a3ef427, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858232616570765978, guid: 5925e06645425764885fed844a3ef427, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858232616570765978, guid: 5925e06645425764885fed844a3ef427, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 3587387289433979521, guid: 5925e06645425764885fed844a3ef427, type: 3}
       propertyPath: m_IsActive
       value: 0
