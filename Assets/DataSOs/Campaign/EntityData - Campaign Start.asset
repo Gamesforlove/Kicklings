@@ -15,3 +15,15 @@ MonoBehaviour:
   JumpPower: 2100
   KickingPower: 1400
   StabilizationFactor: 25
+  KickAssist:
+    BallPredictionTime: 0.35
+    MovementAssistRange: 3
+    MovementAssistStrength: 0.12
+    ContactAssistWindow: 0.45
+    ForwardVelocityDeadZone: 0.35
+    MinimumForwardVelocity: 2.4
+    ForwardVelocityCorrectionStrength: 0.65
+    MaximumForwardVelocityAdded: 2.2
+    HeadColliderScale: 1.08
+    LegColliderScale: 1.1
+    FootColliderScale: 1.12
