@@ -28,12 +28,18 @@ namespace Gameplay.Managers
         void Awake()
         {
             Instance = this;
+            LoadControlSchemes();
+        }
+
+        void LoadControlSchemes()
+        {
+            if (_controlSchemes.Count > 0) return;
+
             InputActionAsset actionAsset = InputSystem.actions;
+            if (actionAsset == null) return;
 
             foreach (InputControlScheme scheme in actionAsset.controlSchemes)
-            {
                 _controlSchemes.Add(scheme);
-            }
         }
 
         public void SpawnEntities(MatchSettings matchSettings)
@@ -76,14 +82,20 @@ namespace Gameplay.Managers
             }
         }
 
-
         public void SpawnSinglePlayer()
         {
+            LoadControlSchemes(); // safe even if Awake hasn't run
+            if (_controlSchemes.Count == 0 || _spawnPoints.Length == 0)
+            {
+                Debug.LogError("No control schemes or spawn points; check Project Settings > Input System Package > Project-wide Actions, and _spawnPoints.", this);
+                return;
+            }
+
             GameObject player = _playersSpawner.SpawnChallengePlayer(_spawnPoints[0], _controlSchemes[0]);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
         }
-
+        
         void SpawnCpuMode()
         {
             int layer = LayerMask.NameToLayer(EntityLayer.Player1_GoalKeeper.ToString());
