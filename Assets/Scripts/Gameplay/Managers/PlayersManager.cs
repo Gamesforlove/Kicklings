@@ -263,6 +263,7 @@ namespace Gameplay.Managers
                 player.GetComponent<IEntity>()?.Reset();
                 player.transform.SetPositionAndRotation(_playersPositions[player],  Quaternion.identity);
             }
+            
         }
         public void DisablePlayers()
         {

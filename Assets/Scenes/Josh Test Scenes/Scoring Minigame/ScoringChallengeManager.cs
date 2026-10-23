@@ -17,6 +17,7 @@ namespace Gameplay.Managers
         [Header("Challenge Settings")]
         [SerializeField] int _scoreTarget = 10;
         [SerializeField] float _challengeDuration = 60f;
+        [SerializeField] MinigameCompletionUI minigameCompletionUI;
 
         int _score;
         float _timeRemaining;
@@ -83,6 +84,7 @@ namespace Gameplay.Managers
             if (_timeRemaining <= 0f)
             {
                 EndChallenge(won: false);
+                minigameCompletionUI.ShowCompletionGoal(_score);
             }
         }
 
@@ -97,10 +99,13 @@ namespace Gameplay.Managers
             if (_score >= _scoreTarget)
             {
                 EndChallenge(won: true);
+                minigameCompletionUI.ShowCompletionGoal(_score);
                 return;
             }
-
+            
+            _goalsManager.SetCollidersEnabled(false);
             StartCoroutine(OnGoalEventRoutine(payload));
+            
         }
 
         IEnumerator OnGoalEventRoutine(GoalEvent payload)
@@ -108,6 +113,9 @@ namespace Gameplay.Managers
             TimeScaleManager.SlowMotion();
             yield return StartCoroutine(_uiManager.ShowGoalNotification(payload));
             TimeScaleManager.SetGameplayTimeScale();
+            _playersManager.ResetPlayers();
+            _ballLauncher.DespawnAllBall();
+            _goalsManager.SetCollidersEnabled(true);
         }
         #endregion
 
