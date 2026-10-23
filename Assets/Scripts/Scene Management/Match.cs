@@ -108,43 +108,39 @@ namespace Scene_Management
             }
             //temp
 
-            if (IsReplayMatch)
-            {
-                EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignMap));
-                return;
-            }
-            else
-            {
-                uiManager.ShowMatchWinnerView(goalEvent);
-                CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
-            }
+            uiManager.ShowMatchWinnerView(goalEvent);
+            CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
+
         }
         public void ContinueCampaign()
         {
             if (IsPlayerWinner)
             {
-                if (Settings.LevelData.AfterMatchCutScene == SceneName.None)
-                {
-                    CampaignTracker.Instance.PlayNextlevel();
-                }
-                else
-                {
-                    CampaignTracker.Instance.TransitionToScene(Settings.LevelData.AfterMatchCutScene);
-                }
+                GoToNextScene(Settings.LevelData.AfterMatchCutScene);
             }
             else
             {
-                if (Settings.LevelData.AfterMatchDefeatCutScene == SceneName.None)
-                {
-                    CampaignTracker.Instance.PlayNextlevel();
-                }
-                else
-                {
-                    CampaignTracker.Instance.TransitionToScene(Settings.LevelData.AfterMatchDefeatCutScene);
-                }
+                GoToNextScene(Settings.LevelData.AfterMatchDefeatCutScene);
             }
 
 
+        }
+
+        private void GoToNextScene(SceneName _afterMatchCutScene)
+        {
+            if (_afterMatchCutScene == SceneName.None)
+            {
+                if (IsReplayMatch) 
+                {
+                    CampaignTracker.Instance.TransitionToScene(SceneName.CampaignMap);
+                    return;
+                }
+                CampaignTracker.Instance.PlayNextlevel();
+            }
+            else
+            {
+                CampaignTracker.Instance.TransitionToScene(_afterMatchCutScene);
+            }
         }
     }
 }

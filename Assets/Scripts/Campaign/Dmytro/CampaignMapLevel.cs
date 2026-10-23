@@ -2,13 +2,13 @@ using CommonDataTypes;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CampaignLevel : MonoBehaviour
+public class CampaignMapLevel : MonoBehaviour
 {
-    [SerializeField] private GameObject _opponent1, _opponent2;
     [SerializeField] private CampaignMapController _campaignController;
-    [SerializeField] private Button _startMatch, levelButton;
+    [SerializeField] private Button _startMatch, _levelButton;
     public RectTransform RectTransform;
     public RectTransform CharacterPoint;
+    public CampaignLevelData _data;
     private void Awake()
     {
         if (RectTransform == null)
@@ -16,7 +16,7 @@ public class CampaignLevel : MonoBehaviour
     }
     public void EnableLevel()
     {
-        levelButton.interactable = true;
+        _levelButton.interactable = true;
     }
     public void EnableStartButton()
     {
@@ -25,5 +25,13 @@ public class CampaignLevel : MonoBehaviour
     public void DisableStartButton()
     {
         _startMatch.gameObject.SetActive(false);
+    }
+    public void InitializeLevelData(CampaignLevelData data)
+    {
+        _data = data;
+    }
+    public void StartMatch()
+    {
+        _campaignController.StartMatch(_data);
     }
 }

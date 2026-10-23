@@ -37,7 +37,7 @@ public class CampaignMatchBuilder : MonoBehaviour
         Match match = MatchFlow.GetCampaignMatch(matchSettings);
         matchManager.SetNewMatch(match);
     }
-    public void BuildMatch(CampaignLevelData levelData)
+    public void BuildMatch(CampaignLevelData levelData, bool IsReplayMatch = false)
     {
         MatchSettings matchSettings = new MatchSettings.Builder()
             .WithNumberOfPlayers(matchDataSO.MatchSettings.NumberOfPlayers)
@@ -54,6 +54,7 @@ public class CampaignMatchBuilder : MonoBehaviour
 
         matchManager.enabled = true;
         Match match = MatchFlow.GetCampaignMatch(matchSettings);
+        match.IsReplayMatch = IsReplayMatch;
         matchManager.SetNewMatch(match);
     }
 }

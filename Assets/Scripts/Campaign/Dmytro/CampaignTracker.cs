@@ -77,10 +77,10 @@ public class CampaignTracker : MonoBehaviour
         if (_inTransition) return;
         StartCoroutine(LevelAfterCutSceneRoutine());
     }
-    public void ReplayLevel(int stage, int level)
+    public void ReplayLevel(CampaignLevelData data)
     {
         if (_inTransition) return;
-        //StartCoroutine(ReplayLevelRoutine());
+        StartCoroutine(NextlevelRoutine(data));
     }
     public void TransitionToScene(SceneName name)
     {
@@ -101,7 +101,7 @@ public class CampaignTracker : MonoBehaviour
             #endif
         }
     }
-    public void StartMatch(int numberOfPlayers)
+    public void StartMatch()
     {
         if (SaveLoadGame.DataIsLoaded)
         {
@@ -110,8 +110,8 @@ public class CampaignTracker : MonoBehaviour
             CampaignLevelData levelData = _campaign.GetLevelData(stage, playerLevel);
 
             MatchSettings matchSettings = new MatchSettings.Builder()
-            .WithGoalsToEndMatch(3) // replace with levelData.GoalsToWin
-            .WithNumberOfPlayers(numberOfPlayers)
+            .WithGoalsToEndMatch(levelData.GoalsToWin)
+            .WithNumberOfPlayers(1)
             .WithIsCampaignMatch(true)
             .WithLevelData(levelData)
             .Build();
@@ -126,6 +126,18 @@ public class CampaignTracker : MonoBehaviour
             return;
         }
     }
+    private void StartMatch(CampaignLevelData data, bool isReplayMatch = false)
+    {
+            MatchSettings matchSettings = new MatchSettings.Builder()
+            .WithGoalsToEndMatch(data.GoalsToWin) 
+            .WithNumberOfPlayers(1)
+            .WithSplitControls(true)
+            .WithIsCampaignMatch(true)
+            .WithLevelData(data)
+            .Build();
+
+            MatchFlow.CreateCampaignMatch(matchSettings, isReplayMatch: isReplayMatch);
+    }
     public void HandleEndgame(bool IsWinner)
     {
         if (!SaveLoadGame.DataIsLoaded)
@@ -135,10 +147,7 @@ public class CampaignTracker : MonoBehaviour
             #endif
         }
 
-        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch)
-        {
-            return;
-        }
+        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch) return;
 
         _campaign.CurrentStage.EndgameBehavior.Invoke(_campaign, IsWinner);        
     }
@@ -160,11 +169,13 @@ public class CampaignTracker : MonoBehaviour
     }
 
 
-    public IEnumerator NextlevelRoutine()
+    public IEnumerator NextlevelRoutine(CampaignLevelData data = null)
     {
         TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
-        StartMatch(1);
+
+        if (data) StartMatch(data, isReplayMatch: true);
+        else StartMatch();
     }
     private IEnumerator OnSceneLoadedRoutine()
     {

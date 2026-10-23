@@ -138,7 +138,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: Replay
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
   m_sharedMaterial: {fileID: 3428143943676615420, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
@@ -223,12 +223,12 @@ GameObject:
   - component: {fileID: 6349923945673932463}
   - component: {fileID: 9163972612684034757}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: ReplayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6027274521624294479
 RectTransform:
   m_ObjectHideFlags: 0
@@ -331,14 +331,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3261212315372333450}
-        m_TargetAssemblyTypeName: CampaignLevel, Assembly-CSharp
+      - m_Target: {fileID: 2275202693977235371}
+        m_TargetAssemblyTypeName: CampaignMapLevel, Assembly-CSharp
         m_MethodName: StartMatch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 3697880239177365038}
   - component: {fileID: 6891915288737381687}
   - component: {fileID: 1205637323278903294}
-  - component: {fileID: 3261212315372333450}
+  - component: {fileID: 2275202693977235371}
   m_Layer: 5
   m_Name: LevelContainer
   m_TagString: Untagged
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3261212315372333450
+--- !u!114 &2275202693977235371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -429,14 +429,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6352115283926046166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b4593f0eda48a4987da73067e14edc, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c3f33baa301844418ddffd12fad85a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _opponent1: {fileID: 2376744371114673242, guid: f970fc74da4754c4a8bbf43189ba2113, type: 3}
-  _opponent2: {fileID: 182907735906488021, guid: cc7dfcd1039daea4fb9328df3e307740, type: 3}
   _campaignController: {fileID: 0}
   _startMatch: {fileID: 9163972612684034757}
-  levelButton: {fileID: 2087463672508815933}
+  _levelButton: {fileID: 2087463672508815933}
   RectTransform: {fileID: 3697880239177365038}
   CharacterPoint: {fileID: 5632229618529706500}
 --- !u!1 &6873597800498096033
@@ -558,16 +556,4 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4061195310936275591}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: StageScrollController, Assembly-CSharp
-        m_MethodName: MoveCharacterAndScrollToLevel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []

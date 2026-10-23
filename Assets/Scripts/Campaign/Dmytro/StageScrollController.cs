@@ -10,7 +10,7 @@ public class StageScrollController : MonoBehaviour
 
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private MapCharacterController _character;
-    [SerializeField] private CampaignLevel[] _levels;
+    [SerializeField] private CampaignMapLevel[] _levels;
     [SerializeField] private float _xOffset = 960f;
     [SerializeField] private float _defaultScrollTime = 1f;
     [SerializeField] private CampaignStructure _campaign;
@@ -26,7 +26,7 @@ public class StageScrollController : MonoBehaviour
 
         if (_scrollRect != null && _scrollRect.content != null)
         {
-            _levels = _scrollRect.content.GetComponentsInChildren<CampaignLevel>();
+            _levels = _scrollRect.content.GetComponentsInChildren<CampaignMapLevel>();
         }
         _xMaxOffset = _scrollRect.content.offsetMin.x;
         _xMinOffset = -_scrollRect.content.offsetMax.x;
@@ -166,7 +166,7 @@ public class StageScrollController : MonoBehaviour
             _levels[i].EnableStartButton();
         }
     }
-    public void EnableLevels(int level, int stage)
+    public void EnableLevels(int level, int stage, CampaignStructure campaign)
     {
         int levelIndex = 0;
         int lastCompletedStage = (int)Mathf.Clamp01(stage - 1);
@@ -175,16 +175,20 @@ public class StageScrollController : MonoBehaviour
             int levelCount = _campaign.Stages[i].LevelCount;
             for (int j = 0; j <= levelCount; j++, levelIndex++)
             {
+                CampaignLevelData data = _campaign.Stages[i].Levels[j];
+
                 _levels[levelIndex].EnableLevel();
                 _levels[levelIndex].EnableStartButton();
-                //_levels[levelIndex].InitializeLevelData();
+                _levels[levelIndex].InitializeLevelData(data);
             }
         }
         for (int j = 0; j <= level; j++, levelIndex++)
         {
+            CampaignLevelData data = campaign.Stages[lastCompletedStage].Levels[j];
+
             _levels[levelIndex].EnableLevel();
             _levels[levelIndex].EnableStartButton();
-            //_levels[levelIndex].InitializeLevelData();
+            _levels[levelIndex].InitializeLevelData(data);
         }
     }
 }

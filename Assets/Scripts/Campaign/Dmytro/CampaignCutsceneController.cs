@@ -1,5 +1,4 @@
 using UnityEngine;
-using EventBusSystem;
 using CommonDataTypes;
 using Scene_Management;
 using Invictus.Art.Campaign;
@@ -31,6 +30,11 @@ public class CampaignCutsceneController : MonoBehaviour
     {
         if (MatchFlow.Match.IsFinished)
         {
+            if (MatchFlow.Match.IsReplayMatch)
+            {
+                CampaignTracker.Instance.TransitionToScene(SceneName.CampaignMap);
+                return;
+            }
             CampaignTracker.Instance.PlayNextlevel();
         }
         else

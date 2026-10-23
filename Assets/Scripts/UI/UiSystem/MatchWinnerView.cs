@@ -2,6 +2,7 @@
 using TMPro;
 using UI.UiSystem.Core;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.UiSystem
 {
@@ -9,6 +10,9 @@ namespace UI.UiSystem
     {
         [SerializeField] TextMeshProUGUI _text;
         [SerializeField] TextMeshProUGUI _nextLevelText;
+        [SerializeField] Image _buttonIcon;
+        [SerializeField] Sprite _nextLevelIcon;
+        [SerializeField] Sprite _replayIcon;
         [SerializeField] GameObject _leftWinText;
         [SerializeField] GameObject _rightWinText;
 
@@ -24,7 +28,7 @@ namespace UI.UiSystem
             bool useCustomHeading = _useCustomHeading && _text != null;
             if (useCustomHeading)
             {
-                if (_leftWinText != null)
+                if (_leftWinText != null) { }
                     _leftWinText.SetActive(false);
                 if (_rightWinText != null)
                     _rightWinText.SetActive(false);
@@ -41,11 +45,13 @@ namespace UI.UiSystem
                     if (!useCustomHeading)
                         _leftWinText.SetActive(true);
                     if (_nextLevelText) _nextLevelText.text = "Next Level";
+                    if (_nextLevelIcon) _buttonIcon.sprite = _nextLevelIcon;
                     break;
                 case FieldSideType.Right:
                     if (!useCustomHeading)
                         _rightWinText.SetActive(true);
                     if (_nextLevelText) _nextLevelText.text = "Restart";
+                    if (_replayIcon) _buttonIcon.sprite = _replayIcon;
                     break;
                 default: break;
             }
