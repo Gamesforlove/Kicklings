@@ -15,6 +15,7 @@
 
         // Cutscenes for campaign
         None,
-        Stage1_Cutscene3
+        Cutscene_1_1__1_2,
+        Cutscene_1_3,
     }
 }
