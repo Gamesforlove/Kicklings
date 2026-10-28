@@ -6,6 +6,7 @@ public class CampaignStartScreen : MonoBehaviour
 {
     [SerializeField] private GameObject _clearSaveDataText;
     [SerializeField] private Button _ContinueCampaignButton;
+    [SerializeField] private CampaignStructure _campaign;
     private void Start()
     {
         if (CampaignTracker.Instance)
@@ -15,51 +16,57 @@ public class CampaignStartScreen : MonoBehaviour
         }
         else
         {
-#if UNITY_EDITOR
-            Debug.LogError("CampaignTracker.Instance is null");
-#endif
+            #if UNITY_EDITOR
+                Debug.LogError("CampaignTracker.Instance is null");
+            #endif
         }
     }
     public void ContinueCampaign()
     {
-        if (CampaignTracker.Instance)
+        if (!LoadCampaign())
         {
-            //temp
-            if (SaveLoadGame.Load())
-            {
-                if (SaveLoadGame.LoadedData.PlayerLevel == 5)
-                {
-                    _clearSaveDataText.SetActive(true);
-                    return;
-                }
-            }
-            //temp
-            CampaignTracker.Instance.StartCampaign();
-        }
-        else
-        {
-            #if UNITY_EDITOR
-                        Debug.LogError("CampaignTracker.Instance is null");
-            #endif
+            _clearSaveDataText.SetActive(true);
         }
     }
     public void NewCampaign()
     {
-        if (CampaignTracker.Instance)
+        try
         {
             StorageData emptyData = new StorageData();
             SaveLoadGame.Save(emptyData);
-            if (SaveLoadGame.Load())
+            LoadCampaign();
+        }
+        catch (System.Exception e)
+        {
+            _clearSaveDataText.SetActive(true);
+
+            #if UNITY_EDITOR
+                Debug.LogError(e);
+                throw;
+            #endif
+        }
+    }
+    private bool LoadCampaign()
+    {
+        if (SaveLoadGame.Load())
+        {
+            if (_campaign.CurrentStage == null)// need to update endofcampaign check
             {
-                CampaignTracker.Instance.StartCampaign();
+                #if UNITY_EDITOR
+                    Debug.LogError("Current stage index is out of range");
+                #endif
+                return false;
             }
+            CampaignTracker.Instance.StartCampaign();
+            return true;
         }
         else
         {
-#if UNITY_EDITOR
-            Debug.LogError("CampaignTracker.Instance is null");
-#endif
+            #if UNITY_EDITOR
+                Debug.LogError("Could not load save file");
+            #endif
         }
+        return false;
     }
     public void ClearSaveData()
     {

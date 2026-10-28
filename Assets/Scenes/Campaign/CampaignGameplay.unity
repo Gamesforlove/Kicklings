@@ -841,7 +841,6 @@ Transform:
   - {fileID: 1838650758}
   - {fileID: 1033030648}
   - {fileID: 1643215862}
-  - {fileID: 1566580138}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &143673841 stripped
@@ -4228,7 +4227,11 @@ PrefabInstance:
     - target: {fileID: 8449737488535145335, guid: a6fc474c2d731e64e9baba1269dec253, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 69761a8882598e5499035b5467e1e3fc, type: 3}
+      objectReference: {fileID: 5546031073791829478, guid: 4f601ffab0490e142ae6cc87a6ee41c3, type: 3}
+    - target: {fileID: 8449737488535145335, guid: a6fc474c2d731e64e9baba1269dec253, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8921015530426476310, guid: a6fc474c2d731e64e9baba1269dec253, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.27829087
@@ -4626,6 +4629,7 @@ Transform:
   - {fileID: 1092957132}
   - {fileID: 1666742792}
   - {fileID: 5360846}
+  - {fileID: 1566580138}
   m_Father: {fileID: 142215919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1034515054
@@ -8065,6 +8069,7 @@ MonoBehaviour:
   _ballManager: {fileID: 1666742793}
   _goalsManager: {fileID: 5360847}
   _abilityTestingManager: {fileID: 151426784}
+  _groundLevelSetter: {fileID: 1566580139}
   _leftSideData: {fileID: 11400000, guid: db0948fa1f47a284caf61e4ed240ddcb, type: 2}
   _rightSideData: {fileID: 11400000, guid: 6eb6232da08fd47459ba39a47be9b4dc, type: 2}
   ScriptedGoalEventInstead:
@@ -8625,12 +8630,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566580137}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 142215919}
+  m_Father: {fileID: 1033030648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1566580139
 MonoBehaviour:
@@ -8647,6 +8652,7 @@ MonoBehaviour:
   _goal1: {fileID: 982542053}
   _goal2: {fileID: 559496278}
   _ground: {fileID: 569189201}
+  _ballSpawnPoint: {fileID: 275825335}
 --- !u!1 &1590148200
 GameObject:
   m_ObjectHideFlags: 0

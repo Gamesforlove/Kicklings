@@ -1,8 +1,6 @@
-using CommonDataTypes;
 using SaveSystem;
-using Scene_Management;
-using UI.Customization.Clothing;
 using UI.Customization.Countries;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class CampaignMapController : MonoBehaviour
@@ -10,8 +8,8 @@ public class CampaignMapController : MonoBehaviour
     [SerializeField] private CountryCustomizationController _leftCountryCustomizationController, _rightCountryCustomizationController;
     [SerializeField] private RectTransform _character;
     [SerializeField] private StageScrollController _currentStage;
-    [SerializeField] private CampaignLevelData _levelData;
     [SerializeField] private CampaignStructure _campaign;
+    [SerializeField] private GameObject _campaignEndPlaseholder;
 
     private void Start()
     {
@@ -51,7 +49,12 @@ public class CampaignMapController : MonoBehaviour
     }
     public void ResumeCampaign()
     {
-        if (CampaignTracker.Instance)
+
+        if (_campaign.CurrentStage == null)
+        {
+            _campaignEndPlaseholder?.SetActive(true);
+        }
+        else
         {
             CampaignTracker.Instance.PlayNextlevel();
         }

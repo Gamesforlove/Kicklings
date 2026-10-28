@@ -39,8 +39,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Rishi Scenes/FreeKickMinigame.unity
     guid: cc426c58a60720d429947af2125cf030
   - enabled: 1
-    path: Assets/Scenes/Campaign/Cutscenes/Stage1_Cutscene3.unity
-    guid: 49b7fd71184bc0d4cb0e8f99e2643223
+    path: Assets/Scenes/Campaign/Cutscenes/Cutscene_1_1__1_2.unity
+    guid: 43297c7a6b79f9747a981b937e393174
+  - enabled: 1
+    path: Assets/Scenes/Campaign/Cutscenes/1_3_EndGrandpaTutorial/Cutscene_1_3.unity
+    guid: 8a56e3dadf6af7e4489a5ee393b69cd2
+  - enabled: 1
+    path: Assets/Scenes/Campaign/Cutscenes/1_4_RivalMatch/Cutscene_1_4.unity
+    guid: 61522057a58c3964baed70f9bf837808
+  - enabled: 1
+    path: Assets/Scenes/Campaign/Cutscenes/1_5_WonRivalMatch/Cutscene_1_5.unity
+    guid: 2b4cdd4f7bcf012489810948996d12da
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

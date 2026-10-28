@@ -97,17 +97,6 @@ namespace Scene_Management
             IsFinished = true;
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
 
-            //temp
-            if (SaveLoadGame.DataIsLoaded && IsPlayerWinner)
-            {
-                if (SaveLoadGame.LoadedData.stage == 0 && SaveLoadGame.LoadedData.PlayerLevel == 5)
-                {
-                    uiManager.ShowCampaignEndPlaceholder();
-                    return;
-                }
-            }
-            //temp
-
             uiManager.ShowMatchWinnerView(goalEvent);
             CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
 

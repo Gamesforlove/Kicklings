@@ -23,6 +23,7 @@ namespace Gameplay.Managers
         [SerializeField] BallManager _ballManager;
         [SerializeField] GoalsManager _goalsManager;
         [SerializeField] AbilityTestingManager _abilityTestingManager;
+        [SerializeField] GroundLevelSetter _groundLevelSetter;
         [SerializeField] FieldSideData _leftSideData;
         [SerializeField] FieldSideData _rightSideData;
         
@@ -82,6 +83,7 @@ namespace Gameplay.Managers
                 _playersManager?.SetDifficulty(difficulty);
             }
 
+            _groundLevelSetter?.SetGroundLevel();
             _playersManager?.SpawnEntities(_match.Settings);
             _abilityTestingManager?.SetUpAbilityActors(_playersManager.GetAbilityActors());
             _ballManager?.SpawnBall();

@@ -1,3 +1,4 @@
+using Scene_Management;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -332,6 +333,11 @@ public sealed class FreeKickMinigameController : MonoBehaviour, IMinigameSkipTar
         interfaceView.FinishButton.interactable = false;
         interfaceView.BonusButton.interactable = false;
         onMinigameCompleted?.Invoke();
+
+        MatchFlow.Match.IsFinished = true;
+        MatchFlow.Match.IsPlayerWinner = true;
+        CampaignTracker.Instance.HandleEndgame();
+        CampaignTracker.Instance.ContinueCampaign();
     }
 
     private void RecordRequiredPerformance()

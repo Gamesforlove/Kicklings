@@ -2959,7 +2959,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2079180699}
+      - m_Target: {fileID: 1325224963}
         m_TargetAssemblyTypeName: CampaignCutsceneController, Assembly-CSharp
         m_MethodName: GoToNextScene
         m_Mode: 1

@@ -18,10 +18,10 @@ MonoBehaviour:
   <Opponent2>k__BackingField: {fileID: 2905904335335114112, guid: c833403b21679a94b9194a3e50150934, type: 3}
   <GoalsToWin>k__BackingField: 3
   <GroundLevelOffset>k__BackingField: -2
-  <Background>k__BackingField: {fileID: 21300000, guid: 69761a8882598e5499035b5467e1e3fc, type: 3}
-  <PreMatchCutScene>k__BackingField: 12
-  <AfterMatchCutScene>k__BackingField: 12
-  <AfterMatchDefeatCutScene>k__BackingField: 12
+  <Background>k__BackingField: {fileID: 21300000, guid: e249e4f1bdda3cc4bb243c1eb810e952, type: 3}
+  <PreMatchCutScene>k__BackingField: 10
+  <AfterMatchCutScene>k__BackingField: 10
+  <AfterMatchDefeatCutScene>k__BackingField: 10
   <TutorialMatch>k__BackingField: 0
   <LevelGameplayScene>k__BackingField: 4
   <CustomBehaviourAfterLevel>k__BackingField: 0

@@ -169,20 +169,20 @@ public class StageScrollController : MonoBehaviour
     public void EnableLevels(int level, int stage, CampaignStructure campaign)
     {
         int levelIndex = 0;
-        int lastCompletedStage = (int)Mathf.Clamp01(stage - 1);
-        for (int i = 0; i < lastCompletedStage; i++)
+        int lastCompletedStage = (int)Mathf.Clamp(stage - 1,0, campaign.StageCount);
+        for (int i = 0; i <= lastCompletedStage; i++)
         {
-            int levelCount = _campaign.Stages[i].LevelCount;
-            for (int j = 0; j <= levelCount; j++, levelIndex++)
+            int levelCount = campaign.Stages[i].LevelCount;
+            for (int j = 0; j < levelCount; j++, levelIndex++)
             {
-                CampaignLevelData data = _campaign.Stages[i].Levels[j];
+                CampaignLevelData data = campaign.Stages[i].Levels[j];
 
                 _levels[levelIndex].EnableLevel();
                 _levels[levelIndex].EnableStartButton();
                 _levels[levelIndex].InitializeLevelData(data);
             }
         }
-        for (int j = 0; j <= level; j++, levelIndex++)
+        for (int j = 0; j <= level && levelIndex < _levels.Length; j++, levelIndex++)
         {
             CampaignLevelData data = campaign.Stages[lastCompletedStage].Levels[j];
 
