@@ -18,7 +18,7 @@
         "com.invictus.art.common": "1.0.0",
         "com.unity.ugui": "2.0.0"
       },
-      "hash": "24464ed6dec582482f76b7ca0fc69da1b6de8d17"
+      "hash": "e71f174042fe1fbc2397697bc3130e3dc2997b7c"
     },
     "com.invictus.art.common": {
       "version": "https://github.com/Gamesforlove/Kickling-Art.git?path=/KicklingsArt/Assets/Runtime-Assets/Common#main",
@@ -28,7 +28,7 @@
         "com.unity.render-pipelines.universal": "17.0.4",
         "com.unity.ugui": "2.0.0"
       },
-      "hash": "24464ed6dec582482f76b7ca0fc69da1b6de8d17"
+      "hash": "e71f174042fe1fbc2397697bc3130e3dc2997b7c"
     },
     "com.unity.2d.animation": {
       "version": "10.2.2",
