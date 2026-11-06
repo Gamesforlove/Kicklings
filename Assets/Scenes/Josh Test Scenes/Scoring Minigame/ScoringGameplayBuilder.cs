@@ -11,7 +11,7 @@ public class ScoringGameplayBuilder : MonoBehaviour
 {
     public List<MinigameMatchBuilder> matchBuilders;
 
-    void Awake()
+    void Start()
     {
         StartCoroutine(executeMatchesAndTransitions());
     }

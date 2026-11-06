@@ -29,5 +29,6 @@ namespace Gameplay.Managers
                     goal.SetColliderEnabled(value);
             }
         }   
+        
     }
 }

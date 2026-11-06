@@ -1,5 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Gameplay.Managers;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class BallLauncher : MonoBehaviour
 {
@@ -29,16 +34,16 @@ public class BallLauncher : MonoBehaviour
     public GameObject go;
 
     public RigidbodyUnityEvent onBeforeLaunch;
-
+    
     private float nextLaunchTime;
+    
+    public List<GameObject> activeBalls = new List<GameObject>();
 
+    private float ballsLaunched = 0;
     private void Start()
     {
         if (launchPoint == null) launchPoint = transform;
         ScheduleNextLaunch();
-        go = Instantiate(_ballPrefab);
-        go.SetActive(false);
-        _ball = go.GetComponent<Rigidbody2D>();
         
     }
 
@@ -54,20 +59,33 @@ public class BallLauncher : MonoBehaviour
 
     private void ScheduleNextLaunch()
     {
-        nextLaunchTime = Time.time + Random.Range(minDelay, maxDelay);
+        float delay = maxDelay - ballsLaunched;
+        if (delay >= minDelay)
+        {
+            nextLaunchTime = Time.time + delay; 
+        } else { nextLaunchTime = Time.time + minDelay; }
     }
 
 
     public void Fire()
     {
+        go = Instantiate(_ballPrefab);
+        go.SetActive(false);
+        _ball = go.GetComponent<Rigidbody2D>();
         go.SetActive(true);
+
+        activeBalls.Add(go);
+
+        ballsLaunched += 1;
+        spreadDegrees += 1;
+        
         if (_ball == null || target == null)
         {
             return;
         }
 
-        arcHeight = Random.Range(minArc, maxArc);
-        launchSpeed = Random.Range(minLaunchSpeed, maxLaunchSpeed);
+        arcHeight = Random.Range(minArc, maxArc + ballsLaunched);
+        launchSpeed = Random.Range(minLaunchSpeed , maxLaunchSpeed + ballsLaunched);
 
         _ball.position = launchPoint.position;
         _ball.linearVelocity = Vector3.zero;
@@ -78,11 +96,15 @@ public class BallLauncher : MonoBehaviour
         _ball.linearVelocity = velocity;
 
         onLaunch?.Invoke(velocity);
+        Destroy(go, 10);
     }
 
-    public void DespawnBall()
+    public void DespawnAllBall()
     {
-        go.SetActive(false);
+        foreach (var ball in activeBalls)
+        {
+            Destroy(ball);
+        }
     }
 
     private Vector3 CalculateVelocity(Vector3 origin, Vector3 destination, float speed, float height)

@@ -60,7 +60,8 @@ namespace UI.Gameplay
                 transform.localScale = Vector3.one;
             }
         }
-
+        
+        
         void Update()
         {
             if (!_pulseWhenUrgent || !_isUrgent || _fillImage == null) return;

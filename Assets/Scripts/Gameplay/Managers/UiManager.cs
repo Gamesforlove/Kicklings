@@ -16,7 +16,7 @@ namespace Gameplay.Managers
         [SerializeField] ScoreBoard _scoreBoard;
 
         [Header("Scoring Challenge")]
-        //[SerializeField] ChallengeResultView _challengeResultView;
+        [SerializeField] ChallengeResultPanel _challengeResultPanel;
         [SerializeField] ChallengeTimerView _challengeTimerView;
         [SerializeField] ChallengeScoreBoard _challengeScoreBoard;
 
@@ -76,10 +76,10 @@ namespace Gameplay.Managers
             _challengeTimerView?.SetTime(timeRemaining);
         }
 
-        // public void ShowChallengeResult(bool won, int score, int target)
-        // {
-        //     _uiViewsManager.ShowView(_challengeResultView, new ChallengeResultData(won, score, target));
-        // }
+        public void ShowChallengeResult(bool won, int score, int target)
+        {
+            _challengeResultPanel?.Show(won, score, target);
+        }
         #endregion
     }
 }

@@ -22,7 +22,15 @@ public sealed class MinigameCompletionUI : MonoBehaviour
     [Min(0f)] public float bRankTime = 22f;
     [Tooltip("Maximum completion time for C, inclusive. Set this at or above the B time. Slower results are unranked.")]
     [Min(0f)] public float cRankTime = 36f;
-
+    
+    [Header("Rank Scores (Goals)")]
+    [Tooltip("Minimum goals for A, inclusive. Higher goals are better.")]
+    [Min(0f)] public float aGoalCutoff = 7f;
+    [Tooltip("Minimum goals for B, inclusive. Set this at or below the A cutoff.")]
+    [Min(0f)] public float bGoalCutoff = 5f;
+    [Tooltip("Minimum goals for C, inclusive. Set this at or below the B cutoff. Lower goals are unranked")]
+    [Min(0f)] public float cGoalCutoff = 3f;
+    
     [Header("UI References")]
     [Tooltip("The popup root, including its backdrop. If omitted, this component's GameObject is shown and hidden instead.")]
     public GameObject completionPanel;
@@ -99,6 +107,37 @@ public sealed class MinigameCompletionUI : MonoBehaviour
         if (completionPanel != null)
             completionPanel.SetActive(true);
     }
+    
+    public void ShowCompletionGoal(float goals)
+    {
+        Initialize();
+
+        CompletionTime = goals; 
+        CurrentRank = CompletionRankGoal(goals);
+
+        if (titleText != null)
+            titleText.text = completionTitle;
+
+        if (timeText != null)
+            timeText.text = IsValidTime(goals)
+                ? $"{goals:0.##} goals"
+                : "-- goals";
+
+        if (rankText != null)
+        {
+            rankText.text = CurrentRank == CompletionRank.None
+                ? unrankedLabel
+                : CurrentRank.ToString();
+
+            rankText.color = GetRankColor(CurrentRank);
+        }
+
+        isShowingCompletion = true;
+        gameObject.SetActive(true);
+
+        if (completionPanel != null)
+            completionPanel.SetActive(true);
+    }
 
     public CompletionRank CalculateRank(float elapsedSeconds)
     {
@@ -114,6 +153,27 @@ public sealed class MinigameCompletionUI : MonoBehaviour
         if (elapsedSeconds <= bMaximum)
             return CompletionRank.B;
         return elapsedSeconds <= cMaximum ? CompletionRank.C : CompletionRank.None;
+    }
+    
+    public CompletionRank CompletionRankGoal(float goals)
+    {
+        if (!IsValidTime(goals))
+            return CompletionRank.None;
+
+        float aMinimum = Mathf.Max(0f, aGoalCutoff);
+        float bMinimum = Mathf.Min(aMinimum, bGoalCutoff);
+        float cMinimum = Mathf.Min(bMinimum, cGoalCutoff);
+
+        if (goals >= aMinimum)
+            return CompletionRank.A;
+
+        if (goals >= bMinimum)
+            return CompletionRank.B;
+
+        if (goals >= cMinimum)
+            return CompletionRank.C;
+
+        return CompletionRank.None;
     }
 
     public void Hide()
