@@ -97,54 +97,39 @@ namespace Scene_Management
             IsFinished = true;
             IsPlayerWinner = goalEvent.ScoringSideData.SideType == FieldSideType.Left;
 
-            //temp
-            if (SaveLoadGame.DataIsLoaded && IsPlayerWinner)
-            {
-                if (SaveLoadGame.LoadedData.stage == 0 && SaveLoadGame.LoadedData.PlayerLevel == 5)
-                {
-                    uiManager.ShowCampaignEndPlaceholder();
-                    return;
-                }
-            }
-            //temp
+            uiManager.ShowMatchWinnerView(goalEvent);
+            CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
 
-            if (IsReplayMatch)
-            {
-                EventBus<OnLoadScene>.Raise(new OnLoadScene(SceneName.CampaignMap));
-                return;
-            }
-            else
-            {
-                uiManager.ShowMatchWinnerView(goalEvent);
-                CampaignTracker.Instance.HandleEndgame(IsPlayerWinner);
-            }
         }
         public void ContinueCampaign()
         {
             if (IsPlayerWinner)
             {
-                if (Settings.LevelData.AfterMatchCutScene == SceneName.None)
-                {
-                    CampaignTracker.Instance.PlayNextlevel();
-                }
-                else
-                {
-                    CampaignTracker.Instance.TransitionToScene(Settings.LevelData.AfterMatchCutScene);
-                }
+                GoToNextScene(Settings.LevelData.AfterMatchCutScene);
             }
             else
             {
-                if (Settings.LevelData.AfterMatchDefeatCutScene == SceneName.None)
-                {
-                    CampaignTracker.Instance.PlayNextlevel();
-                }
-                else
-                {
-                    CampaignTracker.Instance.TransitionToScene(Settings.LevelData.AfterMatchDefeatCutScene);
-                }
+                GoToNextScene(Settings.LevelData.AfterMatchDefeatCutScene);
             }
 
 
+        }
+
+        private void GoToNextScene(SceneName _afterMatchCutScene)
+        {
+            if (_afterMatchCutScene == SceneName.None)
+            {
+                if (IsReplayMatch) 
+                {
+                    CampaignTracker.Instance.TransitionToScene(SceneName.CampaignMap);
+                    return;
+                }
+                CampaignTracker.Instance.PlayNextlevel();
+            }
+            else
+            {
+                CampaignTracker.Instance.TransitionToScene(_afterMatchCutScene);
+            }
         }
     }
 }

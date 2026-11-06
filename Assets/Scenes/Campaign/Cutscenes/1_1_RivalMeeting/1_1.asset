@@ -1,0 +1,776 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e875fe3734115e47800e0a313e076cd, type: 3}
+  m_Name: 1_1
+  m_EditorClassIdentifier: 
+  cutsceneSequence:
+  - cutsceneAction: 2
+    dialoguePresentationMode: 0
+    speakerName: 
+    targetActor: {fileID: 0}
+    nameplateColor: {r: 0, g: 0, b: 0, a: 0}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 0
+    overrideFadeSettings: 1
+    fadeDuration: 1
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Ellie
+    targetActor: {fileID: 11400000, guid: cf63c0754fdf35249a9b226580670d96, type: 2}
+    nameplateColor: {r: 0.7735849, g: 0.38336954, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 87eb3acb244d6624eb610effdea2260b, type: 2}
+    dialogueGroup:
+    - C'mon, pass it already!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Xavier
+    targetActor: {fileID: 11400000, guid: bd9a3864a7751ad4da3956e9dde439c0, type: 2}
+    nameplateColor: {r: 0.011618334, g: 0.38679248, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: d26a0607d52f6a1429205aa8bd521705, type: 2}
+    dialogueGroup:
+    - Alright, alright...
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 1
+    dialoguePresentationMode: 0
+    speakerName: Player
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 0, g: 0.4203006, b: 0.7264151, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips:
+    - {fileID: 7400000, guid: 7d42f90bfba776f469d8b0c3e430005a, type: 2}
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 3
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 0}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 2
+    musicClip: {fileID: 8300000, guid: ec7b46479d89a1345a5f30d8918821f8, type: 3}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Angry Kid
+    targetActor: {fileID: 11400000, guid: 7eaa431c8f1b73e4c886ad19917de53d, type: 2}
+    nameplateColor: {r: 0.6509434, g: 0.0064422893, b: 0, a: 1}
+    overrideSpeakerName: 1
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 15007ff2bb1bf9c489c1f7c19c4e0174, type: 2}
+    - {fileID: 7400000, guid: c6589408f5112e44bb43e0e6c36cfbfb, type: 2}
+    - {fileID: 7400000, guid: c3ec15e72ce860846a1a1a4eff8b6c92, type: 2}
+    - {fileID: 7400000, guid: b19dd36fd0443634cad2b790adcdba54, type: 2}
+    dialogueGroup:
+    - Hey! This is MY spot. Get out of here!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Ellie
+    targetActor: {fileID: 11400000, guid: cf63c0754fdf35249a9b226580670d96, type: 2}
+    nameplateColor: {r: 0.77254903, g: 0.38431373, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 3c9c54a4d5d244548935f7abfb0759e7, type: 2}
+    dialogueGroup:
+    - Huh? Who are YOU?
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: 7eaa431c8f1b73e4c886ad19917de53d, type: 2}
+    nameplateColor: {r: 0.6509804, g: 0.007843138, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: e66e477137f44b94fa5d4e0475ca9c4e, type: 2}
+    dialogueGroup:
+    - I'm <color=red>Leo.</color> And I thought I told you to leave already!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Ellie
+    targetActor: {fileID: 11400000, guid: cf63c0754fdf35249a9b226580670d96, type: 2}
+    nameplateColor: {r: 0.77254903, g: 0.38431373, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 3c9c54a4d5d244548935f7abfb0759e7, type: 2}
+    dialogueGroup:
+    - You can't just make us leave! We were here first!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Xavier
+    targetActor: {fileID: 11400000, guid: bd9a3864a7751ad4da3956e9dde439c0, type: 2}
+    nameplateColor: {r: 0.011764706, g: 0.3882353, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: d26a0607d52f6a1429205aa8bd521705, type: 2}
+    dialogueGroup:
+    - Um, can't we all play together...?
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: 7eaa431c8f1b73e4c886ad19917de53d, type: 2}
+    nameplateColor: {r: 0.6509804, g: 0.007843138, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 4e2680540bdf14442a13752e22ce78f6, type: 2}
+    dialogueGroup:
+    - Ha! Yeah, right. I saw you guys practicing, and I think playing with you would
+      actually make me WORSE.
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Ellie
+    targetActor: {fileID: 11400000, guid: cf63c0754fdf35249a9b226580670d96, type: 2}
+    nameplateColor: {r: 0.77254903, g: 0.38431373, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 9eb6076b40a1d76408a90c415d8dc440, type: 2}
+    dialogueGroup:
+    - Well, we don't want to play with a jerk like you either!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 1
+    dialoguePresentationMode: 0
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 0.6509804, g: 0.007843138, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 3c9c54a4d5d244548935f7abfb0759e7, type: 2}
+    dialogueGroup:
+    - ...Alright. You're on!
+    animationClips:
+    - {fileID: 7400000, guid: 483582942f7cbc649bac2225638f1652, type: 2}
+    - {fileID: 7400000, guid: acdc73435a4d61e47a203718993bc2d0, type: 2}
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Player
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 0, g: 0.5377358, b: 0.4839623, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: ceca709776a324047b3ab806e63067ae, type: 2}
+    dialogueGroup:
+    - Why don't we make a deal? If you make this shot, we'll leave. If not, then
+      you leave.
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: 7eaa431c8f1b73e4c886ad19917de53d, type: 2}
+    nameplateColor: {r: 0.6509804, g: 0.007843138, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: e66e477137f44b94fa5d4e0475ca9c4e, type: 2}
+    dialogueGroup:
+    - ...Huh? Are you actually trying to challenge ME?
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: 7eaa431c8f1b73e4c886ad19917de53d, type: 2}
+    nameplateColor: {r: 0.6509804, g: 0.007843138, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 15007ff2bb1bf9c489c1f7c19c4e0174, type: 2}
+    dialogueGroup:
+    - Alright. You're on!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 1
+    dialoguePresentationMode: 0
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 0.6509804, g: 0.007843138, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 3c9c54a4d5d244548935f7abfb0759e7, type: 2}
+    dialogueGroup:
+    - ...Alright. You're on!
+    animationClips:
+    - {fileID: 7400000, guid: 3fd8440b2b0d3a044a556420b3d2c1af, type: 2}
+    - {fileID: 7400000, guid: fa2870a59067eca49bb748e163e7a54d, type: 2}
+    - {fileID: 7400000, guid: d59f0cee1c164fe498d1480b8b618dde, type: 2}
+    - {fileID: 7400000, guid: 03a3362ffc5d4ec4e946a900b391b85a, type: 2}
+    - {fileID: 7400000, guid: 76556ef198d6fab4193b6726a776dd15, type: 2}
+    playSoundEffect: 1
+    soundEffect: {fileID: 8300000, guid: c7e5167e547ec8543a0f8e58d91cc5f8, type: 3}
+    soundEffectDelay: 0.75
+    soundEffectVolume: 0.2
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 0
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 0}
+    fadeSpeed: 0
+    targetAlpha: 0
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Leo
+    targetActor: {fileID: 11400000, guid: 7eaa431c8f1b73e4c886ad19917de53d, type: 2}
+    nameplateColor: {r: 0.5566038, g: 0.010681977, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 5768dfccb3d8be543b28e0ab11c32a77, type: 2}
+    dialogueGroup:
+    - "SHOOT! I didn't mean to\u2014that wasn't..."
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 2
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Ellie
+    targetActor: {fileID: 11400000, guid: cf63c0754fdf35249a9b226580670d96, type: 2}
+    nameplateColor: {r: 1, g: 0.7464502, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: ef339b8959c529f49b4e57b83df66c57, type: 2}
+    dialogueGroup:
+    - '[playerName]! Are you okay?!'
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 2
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: Xavier
+    targetActor: {fileID: 11400000, guid: bd9a3864a7751ad4da3956e9dde439c0, type: 2}
+    nameplateColor: {r: 0.0018786755, g: 0.38679248, b: 0, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 51562da2b8b0d1c43a8189aae382b8b1, type: 2}
+    dialogueGroup:
+    - C'mon, let's just get out of here!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 2
+    fadeSettingsMode: 0
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 2
+    dialoguePresentationMode: 0
+    speakerName: 
+    targetActor: {fileID: 0}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    actorVoice: {fileID: 0}
+    actorVoicePitch: 1
+    overrideActorVoice: 0
+    overrideActorVoicePitch: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    musicTransitionPreset: 0
+    musicClip: {fileID: 0}
+    musicVolume: 0.15
+    musicLoop: 1
+    musicDelay: 0
+    musicWaitForCompletion: 0
+    musicStopCurrentOnly: 0
+    musicFadeInDuration: 0.5
+    musicFadeOutDuration: 0.5
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 1
+    fadeDuration: 1

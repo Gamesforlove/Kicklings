@@ -23,6 +23,7 @@ namespace Gameplay.Managers
         [SerializeField] BallManager _ballManager;
         [SerializeField] GoalsManager _goalsManager;
         [SerializeField] AbilityTestingManager _abilityTestingManager;
+        [SerializeField] GroundLevelSetter _groundLevelSetter;
         [SerializeField] FieldSideData _leftSideData;
         [SerializeField] FieldSideData _rightSideData;
         
@@ -69,6 +70,7 @@ namespace Gameplay.Managers
         }
 
         public static MatchManager Instance { get; private set; }
+        public bool SuppressGoalAndOutEvents { get; set; }
         private void Awake() => Instance = this;
 
         bool ranStart = false;
@@ -81,6 +83,7 @@ namespace Gameplay.Managers
                 _playersManager?.SetDifficulty(difficulty);
             }
 
+            _groundLevelSetter?.SetGroundLevel();
             _playersManager?.SpawnEntities(_match.Settings);
             _abilityTestingManager?.SetUpAbilityActors(_playersManager.GetAbilityActors());
             _ballManager?.SpawnBall();
@@ -121,6 +124,9 @@ namespace Gameplay.Managers
         public UnityEvent ScriptedGoalEventInstead;
         void OnGoalEvent(GoalEvent payload)
         {
+            if (SuppressGoalAndOutEvents)
+                return;
+
             _goalsManager.SetCollidersEnabled(false);
 
             if (ScriptedGoalEventInstead != null && ScriptedGoalEventInstead.GetPersistentEventCount() > 0)
@@ -152,6 +158,9 @@ namespace Gameplay.Managers
         #region OnOut
         void OnOutEvent(OutEvent payload)
         {
+            if (SuppressGoalAndOutEvents)
+                return;
+
             StartCoroutine(OnOutEventRoutine(payload));
         }
 

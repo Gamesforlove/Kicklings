@@ -10,8 +10,10 @@ public class CampaignTracker : MonoBehaviour
 {
     public static CampaignTracker Instance;
     [SerializeField] private CampaignStructure _campaign;
+
     [Header("Transition")]
     [SerializeField] private GameObject _transitionCanvas;
+    [SerializeField] private bool _inTransition = false;
     [SerializeField] private Animator _transition;
     [SerializeField] private float _waitAfterSlideIn;
     [SerializeField] private float _waitBeforeSlideOut;
@@ -40,6 +42,7 @@ public class CampaignTracker : MonoBehaviour
     }
     public void StartCampaign() 
     {
+        if (_inTransition) return;
         if (SaveLoadGame.Load())
         {
             #if UNITY_EDITOR
@@ -61,26 +64,32 @@ public class CampaignTracker : MonoBehaviour
     }
     public void ContinueCampaign()
     {
+        if (_inTransition) return;
         MatchFlow.ContinueCampaign();
     }
     public void PlayNextlevel()
     {
+        if (_inTransition) return;
         StartCoroutine(NextlevelRoutine());
     }
     public void PlaylevelAfterCutScene()
     {
+        if (_inTransition) return;
         StartCoroutine(LevelAfterCutSceneRoutine());
     }
-    public void ReplayLevel(int stage, int level)
+    public void ReplayLevel(CampaignLevelData data)
     {
-        //StartCoroutine(ReplayLevelRoutine());
+        if (_inTransition) return;
+        StartCoroutine(NextlevelRoutine(data));
     }
     public void TransitionToScene(SceneName name)
     {
+        if (_inTransition) return;
         StartCoroutine(TransitionToSceneRoutine(name));
     }
     public void TransitionToScene(string SceneName)
     {
+        if (_inTransition) return;
         if (Enum.TryParse(SceneName, out SceneName name))
         {
             StartCoroutine(TransitionToSceneRoutine(name));
@@ -92,7 +101,7 @@ public class CampaignTracker : MonoBehaviour
             #endif
         }
     }
-    public void StartMatch(int numberOfPlayers)
+    public void StartMatch()
     {
         if (SaveLoadGame.DataIsLoaded)
         {
@@ -101,8 +110,8 @@ public class CampaignTracker : MonoBehaviour
             CampaignLevelData levelData = _campaign.GetLevelData(stage, playerLevel);
 
             MatchSettings matchSettings = new MatchSettings.Builder()
-            .WithGoalsToEndMatch(3) // replace with levelData.GoalsToWin
-            .WithNumberOfPlayers(numberOfPlayers)
+            .WithGoalsToEndMatch(levelData.GoalsToWin)
+            .WithNumberOfPlayers(1)
             .WithIsCampaignMatch(true)
             .WithLevelData(levelData)
             .Build();
@@ -117,6 +126,18 @@ public class CampaignTracker : MonoBehaviour
             return;
         }
     }
+    private void StartMatch(CampaignLevelData data, bool isReplayMatch = false)
+    {
+            MatchSettings matchSettings = new MatchSettings.Builder()
+            .WithGoalsToEndMatch(data.GoalsToWin) 
+            .WithNumberOfPlayers(1)
+            .WithSplitControls(true)
+            .WithIsCampaignMatch(true)
+            .WithLevelData(data)
+            .Build();
+
+            MatchFlow.CreateCampaignMatch(matchSettings, isReplayMatch: isReplayMatch);
+    }
     public void HandleEndgame(bool IsWinner)
     {
         if (!SaveLoadGame.DataIsLoaded)
@@ -126,10 +147,7 @@ public class CampaignTracker : MonoBehaviour
             #endif
         }
 
-        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch)
-        {
-            return;
-        }
+        if (MatchFlow.Match == null || MatchFlow.Match.IsReplayMatch) return;
 
         _campaign.CurrentStage.EndgameBehavior.Invoke(_campaign, IsWinner);        
     }
@@ -151,31 +169,29 @@ public class CampaignTracker : MonoBehaviour
     }
 
 
-    public IEnumerator NextlevelRoutine()
+    public IEnumerator NextlevelRoutine(CampaignLevelData data = null)
     {
-        _transitionCanvas.SetActive(true);
         TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
-        StartMatch(1);
+
+        if (data) StartMatch(data, isReplayMatch: true);
+        else StartMatch();
     }
     private IEnumerator OnSceneLoadedRoutine()
     {
         if (_transitionState == TransitionState.SlidedOut) yield break;
 
-        _transitionCanvas.SetActive(true);
         yield return new WaitForSeconds(_waitBeforeSlideOut);
         TransitionSlideOut();
     }
     private IEnumerator LevelAfterCutSceneRoutine()
     {
-        _transitionCanvas.SetActive(true);
         TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
         EventBus<OnLoadScene>.Raise(new OnLoadScene(MatchFlow.Match.Settings.LevelData.LevelGameplayScene));
     }
     private IEnumerator TransitionToSceneRoutine(SceneName name)
     {
-        _transitionCanvas.SetActive(true);
         TransitionSlideIn();
         yield return new WaitForSeconds(_waitAfterSlideIn);
         EventBus<OnLoadScene>.Raise(new OnLoadScene(name));
@@ -184,13 +200,17 @@ public class CampaignTracker : MonoBehaviour
 
     private void TransitionSlideIn()
     {
+        _inTransition = true;
+        _transitionCanvas.SetActive(true);
         _transitionState = TransitionState.SlidedIn;
         _transition.SetTrigger("SlideIn");
     }
     private void TransitionSlideOut()
     {
+        _transitionCanvas.SetActive(true);
         _transitionState = TransitionState.SlidedOut;
         _transition.SetTrigger("SlideOut");
+        _inTransition = false;
     }
     private void OnApplicationQuit()
     {

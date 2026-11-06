@@ -9,10 +9,13 @@ namespace Gameplay.CharacterComponents.Cpu
         [SerializeField] float _speedNormalization = 8f;
         
         CpuDifficultyPreset.ProximityPoint[] _proximityPoints;
+        public CpuDifficultyPreset.ProximityPoint[] ProximityPoints => _proximityPoints;
 
         public void SetUp(CpuDifficultyPreset.ProximityPoint[] proximityPoints)
         {
             _proximityPoints = proximityPoints;
+            if (_proximityPoints == null)
+                return;
             // Ensure we have the same number of transforms as points
             if (_proximityTransforms.Length != _proximityPoints.Length)
             {
@@ -21,11 +24,12 @@ namespace Gameplay.CharacterComponents.Cpu
         }
 
 
-        public bool IsBallWithinRange(Rigidbody2D ballRigidbody)
+        public bool IsBallWithinRange(Rigidbody2D ballRigidbody, float minimumSpeedMultiplier = 0f)
         {
             if (_proximityPoints == null) return false;
             
-            float speedMultiplier = ballRigidbody.linearVelocity.magnitude / _speedNormalization;
+            float speedMultiplier = Mathf.Max(minimumSpeedMultiplier,
+                ballRigidbody.linearVelocity.magnitude / _speedNormalization);
             Vector3 ballPosition = ballRigidbody.transform.position;
             bool isWithinRange = false;
             

@@ -29,6 +29,7 @@ public class CampaignMatchBuilder : MonoBehaviour
             .WithRightShirtIndex(matchDataSO.MatchSettings.RightSideShirtIndex)
             .WithRightShoesIndex(matchDataSO.MatchSettings.RightSideShoesIndex)
             .WithRightCountryImageIndex(matchDataSO.MatchSettings.RightCountryImageIndex)
+            .WithSplitControls(true)
             .WithIsCampaignMatch(true)
             .Build();
 
@@ -36,7 +37,7 @@ public class CampaignMatchBuilder : MonoBehaviour
         Match match = MatchFlow.GetCampaignMatch(matchSettings);
         matchManager.SetNewMatch(match);
     }
-    public void BuildMatch(CampaignLevelData levelData)
+    public void BuildMatch(CampaignLevelData levelData, bool IsReplayMatch = false)
     {
         MatchSettings matchSettings = new MatchSettings.Builder()
             .WithNumberOfPlayers(matchDataSO.MatchSettings.NumberOfPlayers)
@@ -46,12 +47,14 @@ public class CampaignMatchBuilder : MonoBehaviour
             .WithRightShirtIndex(matchDataSO.MatchSettings.RightSideShirtIndex)
             .WithRightShoesIndex(matchDataSO.MatchSettings.RightSideShoesIndex)
             .WithRightCountryImageIndex(matchDataSO.MatchSettings.RightCountryImageIndex)
+            .WithSplitControls(true)
             .WithLevelData(levelData)
             .WithIsCampaignMatch(true)
             .Build();
 
         matchManager.enabled = true;
         Match match = MatchFlow.GetCampaignMatch(matchSettings);
+        match.IsReplayMatch = IsReplayMatch;
         matchManager.SetNewMatch(match);
     }
 }
