@@ -777,7 +777,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -100
-  m_Sprite: {fileID: 21300000, guid: 26926083e414fa64281b0cd2d8347443, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e249e4f1bdda3cc4bb243c1eb810e952, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -885,6 +885,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ballSpawner: {fileID: 1756289070}
+  _unreachableFallbackDelay: 10
+  _dropFallbackGracePeriod: 12
+  _reachableHorizontalLimit: 8.75
+  _minimumReachableHeight: -3
+  _maximumReachableHeight: 4.5
+  _reachabilityPredictionTime: 1.25
+  _reachabilityPredictionSteps: 4
 --- !u!1 &1295270893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,6 +1285,7 @@ MonoBehaviour:
   - {fileID: 550765043}
   oneOnOneForCampaign: 0
   justPlayerForCampaign: 1
+  _entityScaleMultiplier: 1
 --- !u!1001 &1617595364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1393,6 +1401,10 @@ PrefabInstance:
     - target: {fileID: 2717047145020686302, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -463.79993
+      objectReference: {fileID: 0}
+    - target: {fileID: 2782955773610857262, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3009524080778388325, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1568,6 +1580,7 @@ MonoBehaviour:
   onBeforeLaunch:
     m_PersistentCalls:
       m_Calls: []
+  activeBalls: []
 --- !u!1 &1676534567 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: 64d589e8cc2a9b744896616497a07f54, type: 3}

@@ -22,5 +22,6 @@
         //minigames
         FreeKickMinigame,
         DribblesMinigame,
+        TestScoringMinigame
     }
 }

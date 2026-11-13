@@ -170,7 +170,7 @@ public class StageScrollController : MonoBehaviour
     {
         int levelIndex = 0;
         int lastCompletedStage = (int)Mathf.Clamp(stage - 1,0, campaign.StageCount);
-        for (int i = 0; i <= lastCompletedStage; i++)
+        for (int i = 0; i < lastCompletedStage; i++)
         {
             int levelCount = campaign.Stages[i].LevelCount;
             for (int j = 0; j < levelCount; j++, levelIndex++)
