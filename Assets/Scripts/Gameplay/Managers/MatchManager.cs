@@ -42,7 +42,7 @@ namespace Gameplay.Managers
             TimeScaleManager.SetGameplayTimeScale();
         }
 
-        public void SetNewMatch(Match match) { _match = match; if (ranStart) ResetGame();}
+        public virtual void SetNewMatch(Match match) { _match = match; if (ranStart) ResetGame();}
 
         public void EndGame()
         {

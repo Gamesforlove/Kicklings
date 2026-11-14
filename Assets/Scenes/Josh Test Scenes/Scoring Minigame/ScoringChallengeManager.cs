@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 namespace Gameplay.Managers
 {
-    public class ScoringChallengeManager : MonoBehaviour
+    public class ScoringChallengeManager : MatchManager
     {
         [SerializeField] UiManager _uiManager;
         [SerializeField] PlayersManager _playersManager;  
@@ -41,12 +41,14 @@ namespace Gameplay.Managers
             EventBus<OutEvent>.OnEvent -= OnOutEvent;
         }
 
+        public override void SetNewMatch(Match match)
+        {
+            StartChallenge();
+        }
+
         public void StartChallenge()
         {
-            // Spawned here, not in Start() - MinigameMatchBuilder sets enabled = true and
-            // calls StartChallenge() in the same method, before Unity's next Start() pass
-            // would fire. Spawning here guarantees the player exists before anything else
-            // (timer, launcher, goal colliders) goes live, instead of racing a frame behind.
+
             if (!_playerSpawned)
             {
                 _playersManager?.SpawnSinglePlayer();
@@ -54,8 +56,6 @@ namespace Gameplay.Managers
             }
             else
             {
-                // Later rounds: the player already exists and has fully initialized,
-                // so reset it back to its spawn position/pose.
                 _playersManager?.ResetPlayers();
             }
 
