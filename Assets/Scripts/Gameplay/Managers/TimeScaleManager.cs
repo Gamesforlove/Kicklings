@@ -6,6 +6,8 @@ namespace Gameplay.Managers
     {
         const float GameplayTimeScale = 1.5f;
         const float SlowMotionTimeScale = 0.2f;
+        public static float GameplayScale => GameplayTimeScale;
+        public static float SlowMotionScale => SlowMotionTimeScale;
         public static void PauseGame()
         {
             Time.timeScale = 0;

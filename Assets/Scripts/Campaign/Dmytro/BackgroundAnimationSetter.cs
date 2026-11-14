@@ -13,11 +13,18 @@ public class BackgroundAnimationSetter : MonoBehaviour
     }
     public void SetBackground(Sprite sprite, RuntimeAnimatorController AC = null)
     {
-        _spriteRenderer.sprite = sprite;
-        if (AC) _animator.runtimeAnimatorController = AC;
+        if (AC)
+        {
+            _animator.runtimeAnimatorController = AC;
+        }
         else
         {
-            //_animator.runtimeAnimatorController = null;
+            if (sprite)
+            {
+                _spriteRenderer.sprite = sprite;
+                return;
+            }
         }
+        _animator.enabled = true;
     }
 }

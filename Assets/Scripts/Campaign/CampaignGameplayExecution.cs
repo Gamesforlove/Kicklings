@@ -10,13 +10,14 @@ using UnityEngine;
 public class CampaignGameplayExecution : MonoBehaviour
 {
     public List<CampaignMatchBuilder> matchBuilders;
+    private MatchManager mm => MatchManager.Instance;
+    private bool IsReplayMatch = false;
 
     void Awake()
     {
+        IsReplayMatch = MatchFlow.Match.IsReplayMatch;
         StartCoroutine(executeMatchesAndTransitions());
     }
-
-    private MatchManager mm => MatchManager.Instance;
     IEnumerator executeMatchesAndTransitions()
     {
         foreach (CampaignMatchBuilder builder in matchBuilders)
@@ -28,7 +29,7 @@ public class CampaignGameplayExecution : MonoBehaviour
                         yield return action.Execute();
             }
 
-            builder.BuildMatch(MatchFlow.Match.Settings.LevelData);
+            builder.BuildMatch(MatchFlow.Match.Settings.LevelData, IsReplayMatch);
             yield return null;
             yield return new WaitUntil(() => mm == null || !mm.enabled || mm.MatchDone);
 

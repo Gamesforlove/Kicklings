@@ -1323,7 +1323,7 @@ MonoBehaviour:
   _leftSidePosition: {fileID: 1100506747}
   _rightSidePosition: {fileID: 380435335}
   _centerPosition: {fileID: 525425364}
-  _ballPrefab: {fileID: 100004, guid: f847417e53b4a824abb1e6990987c385, type: 3}
+  _ballPrefab: {fileID: 100004, guid: b4f2c9d1e7a84653a0d8c1f5b9e2746a, type: 3}
   OnlyPutOnLeft: 0
 --- !u!1 &298618930
 GameObject:
@@ -1991,6 +1991,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &355411174 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2795837562579951926, guid: 766bda474e260d44f944a6f070fa24a6, type: 3}
+  m_PrefabInstance: {fileID: 355411169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &380435334
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2027,7 @@ Transform:
   m_GameObject: {fileID: 380435334}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8, y: 3.5, z: 0}
+  m_LocalPosition: {x: 1.8, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2537,7 +2548,7 @@ Transform:
   m_GameObject: {fileID: 525425363}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4213,6 +4224,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TourneyBackgroundAnimated
       objectReference: {fileID: 0}
+    - target: {fileID: 8449737488535145335, guid: a6fc474c2d731e64e9baba1269dec253, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5546031073791829478, guid: 4f601ffab0490e142ae6cc87a6ee41c3, type: 3}
+    - target: {fileID: 8449737488535145335, guid: a6fc474c2d731e64e9baba1269dec253, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8921015530426476310, guid: a6fc474c2d731e64e9baba1269dec253, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.27829087
@@ -4610,6 +4629,7 @@ Transform:
   - {fileID: 1092957132}
   - {fileID: 1666742792}
   - {fileID: 5360846}
+  - {fileID: 1566580138}
   m_Father: {fileID: 142215919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1034515054
@@ -5244,6 +5264,7 @@ MonoBehaviour:
   - {fileID: 1695908218}
   oneOnOneForCampaign: 0
   justPlayerForCampaign: 0
+  _entityScaleMultiplier: 1
 --- !u!1 &1100506746
 GameObject:
   m_ObjectHideFlags: 0
@@ -5269,7 +5290,7 @@ Transform:
   m_GameObject: {fileID: 1100506746}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8, y: 3.5, z: 0}
+  m_LocalPosition: {x: -1.8, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8048,6 +8069,7 @@ MonoBehaviour:
   _ballManager: {fileID: 1666742793}
   _goalsManager: {fileID: 5360847}
   _abilityTestingManager: {fileID: 151426784}
+  _groundLevelSetter: {fileID: 1566580139}
   _leftSideData: {fileID: 11400000, guid: db0948fa1f47a284caf61e4ed240ddcb, type: 2}
   _rightSideData: {fileID: 11400000, guid: 6eb6232da08fd47459ba39a47be9b4dc, type: 2}
   ScriptedGoalEventInstead:
@@ -8583,6 +8605,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!1 &1566580137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1566580138}
+  - component: {fileID: 1566580139}
+  m_Layer: 0
+  m_Name: GroundLevelSetter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1566580138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566580137}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1033030648}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1566580139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566580137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9f85b208299e246996d6fec894c160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _goal1: {fileID: 982542053}
+  _goal2: {fileID: 559496278}
+  _ground: {fileID: 569189201}
+  _ballSpawnPoint: {fileID: 275825335}
 --- !u!1 &1590148200
 GameObject:
   m_ObjectHideFlags: 0
@@ -9183,6 +9253,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ballSpawner: {fileID: 275825336}
+  _unreachableFallbackDelay: 10
+  _dropFallbackGracePeriod: 12
+  _reachableHorizontalLimit: 8.75
+  _minimumReachableHeight: -3
+  _maximumReachableHeight: 4.5
+  _reachabilityPredictionTime: 1.25
+  _reachabilityPredictionSteps: 4
 --- !u!1 &1678485071
 GameObject:
   m_ObjectHideFlags: 0
@@ -9854,6 +9931,8 @@ MonoBehaviour:
   <GoalkeeperData>k__BackingField: {fileID: 11400000, guid: 7e8d6b8dcb18b4840a336d836933fcbe, type: 2}
   <CpuDifficultyPreset>k__BackingField: {fileID: 11400000, guid: 66016127bd3fbe94cbcf40d43157bc3d, type: 2}
   <CurrentDifficulty>k__BackingField: 3
+  _challengePlayerPrefab: {fileID: 0}
+  <ChallengePlayerData>k__BackingField: {fileID: 0}
 --- !u!4 &1805551016
 Transform:
   m_ObjectHideFlags: 0
@@ -12075,9 +12154,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _buttonIcon
+      value: 
+      objectReference: {fileID: 355411174}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _redWinText
       value: 
       objectReference: {fileID: 1475192709}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _replayIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 330e83ea916211c4faf3c355630ce043, type: 3}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _blueWinText
       value: 
@@ -12090,6 +12177,10 @@ PrefabInstance:
       propertyPath: _rightWinText
       value: 
       objectReference: {fileID: 1895034964}
+    - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
+      propertyPath: _nextLevelIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 09f4afc85aef0a74f9ab41ac58ce74c8, type: 3}
     - target: {fileID: 5369556635558174905, guid: 1d3aa5d38e62dce40b00e9abef6ec51b, type: 3}
       propertyPath: _nextLevelText
       value: 

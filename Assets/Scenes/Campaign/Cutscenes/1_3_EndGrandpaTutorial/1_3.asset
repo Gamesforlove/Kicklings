@@ -1,0 +1,286 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e875fe3734115e47800e0a313e076cd, type: 3}
+  m_Name: 1_3
+  m_EditorClassIdentifier: 
+  cutsceneSequence:
+  - cutsceneAction: 2
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 0}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 0
+    overrideFadeSettings: 1
+    fadeDuration: 1
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: b60601842b5d358449ed6f47059e167d, type: 2}
+    dialogueGroup:
+    - That... that was AWESOME! Soccer is so awesome!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: 139a79475f9f25444822ee986bdf2f29, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 802fcedd60f1620408d0fada6164bd92, type: 2}
+    dialogueGroup:
+    - Listen to me, [playerName]. You've got what it takes, and I'm not just saying
+      that because I'm your grandpa. I can't wait to see what you'll achieve.
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: b60601842b5d358449ed6f47059e167d, type: 2}
+    dialogueGroup:
+    - Thank you so much, Grandpa!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: 139a79475f9f25444822ee986bdf2f29, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 802fcedd60f1620408d0fada6164bd92, type: 2}
+    dialogueGroup:
+    - Just keep practicing, and maybe one day...
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: 139a79475f9f25444822ee986bdf2f29, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 60b8a46477e4b4e40840d7eddcb46b7a, type: 2}
+    dialogueGroup:
+    - You'll even be as good as me.
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: b60601842b5d358449ed6f47059e167d, type: 2}
+    dialogueGroup:
+    - I'll be even better than you, Grandpa, just watch!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: 139a79475f9f25444822ee986bdf2f29, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations:
+    - {fileID: 7400000, guid: 2e242b2a8aa630a4eaa6a0637b88eb41, type: 2}
+    - {fileID: 7400000, guid: 9930bba6265feed4b9056a3c85c0c500, type: 2}
+    dialogueGroup:
+    - Ha! Those are some big words, kiddo! Don't worry, I'll be right here watching.
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 1
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 0}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips:
+    - {fileID: 7400000, guid: 9918dc9e91d816943b42d10ffdc4c61d, type: 2}
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: f9c89e580971320458a31329a1e18458, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations: []
+    dialogueGroup:
+    - Love you, Grandpa.
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 0
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 11400000, guid: 139a79475f9f25444822ee986bdf2f29, type: 2}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations: []
+    dialogueGroup:
+    - I love you too, [playerName]. Now get back out there and have some fun!
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 0
+    fadeDuration: 0.5
+  - cutsceneAction: 2
+    dialoguePresentationMode: 1
+    speakerName: 
+    targetActor: {fileID: 0}
+    nameplateColor: {r: 1, g: 1, b: 1, a: 1}
+    overrideSpeakerName: 0
+    overrideNameplateColor: 0
+    dialogueAnimations: []
+    dialogueGroup: []
+    animationClips: []
+    playSoundEffect: 0
+    soundEffect: {fileID: 0}
+    soundEffectDelay: 0
+    soundEffectVolume: 1
+    screenEffect: 2
+    fadeSettingsMode: 1
+    overlayColor: {r: 0, g: 0, b: 0, a: 1}
+    fadeSpeed: 0.5
+    targetAlpha: 1
+    overrideFadeSettings: 1
+    fadeDuration: 1
