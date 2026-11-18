@@ -40,9 +40,9 @@ MonoBehaviour:
     VerticalAssistFullBallHeight: 2.5
     ContactAssistWindow: 0.55
     ForwardVelocityDeadZone: 0.45
-    MinimumForwardVelocity: 3
+    MinimumForwardVelocity: 3.4
     ForwardVelocityCorrectionStrength: 0.8
-    MaximumForwardVelocityAdded: 3.2
+    MaximumForwardVelocityAdded: 3.5
     HeadContactAssistMultiplier: 1.5
     TorsoContactAssistMultiplier: 1.35
     KickingLegReturnMotorDuration: 0.4
