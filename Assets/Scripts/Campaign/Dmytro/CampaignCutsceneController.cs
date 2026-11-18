@@ -9,24 +9,34 @@ public class CampaignCutsceneController : MonoBehaviour
     [SerializeField] private GameObject _cutsceneEndedNotification;
     [SerializeField] private CutsceneManager _cutsceneManager;
     [SerializeField] private CutsceneBuilder _cutsceneBuilder;
+
+    private CampaignCutsceneSkip _skip;
+    internal GameObject NextSceneButton => _nextSceneButton;
+
     private void Start()
     {
         if (_cutsceneManager)
         {
             StartCutscene();
         }
+
+        _skip = CampaignCutsceneSkip.Attach(this, _cutsceneBuilder);
     }
     private void OnEnable()
     {
         if (_cutsceneManager) _cutsceneManager.CutsceneEnded += OnCutsceneEnded;
         
         if (_cutsceneBuilder) _cutsceneBuilder.CutsceneEnded += OnCutsceneEnded;
+
+        _skip?.Enable();
     }
     private void OnDisable()
     {
         if (_cutsceneManager) _cutsceneManager.CutsceneEnded -= OnCutsceneEnded;
 
         if (_cutsceneBuilder) _cutsceneBuilder.CutsceneEnded -= OnCutsceneEnded;
+
+        _skip?.Disable();
     }
     public void GoToNextScene()
     {
