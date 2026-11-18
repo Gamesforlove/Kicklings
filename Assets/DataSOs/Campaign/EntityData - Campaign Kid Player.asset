@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpPower: 2150
   JumpCooldown: 0.75
+  MinimumKickHopSpeed: 1.6
   KickingPower: 1050
   StabilizationFactor: 26
   StabilizationDeadZoneDegrees: 2

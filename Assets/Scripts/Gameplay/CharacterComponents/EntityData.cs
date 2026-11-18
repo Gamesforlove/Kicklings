@@ -75,6 +75,8 @@ namespace Gameplay.CharacterComponents
         public float JumpPower = 3000f;
         [Tooltip("Minimum time between grounded jumps. Lower values make a missed input recover sooner without increasing jump force.")]
         [Min(0f)] public float JumpCooldown = 1f;
+        [Tooltip("Minimum upward speed of the whole character after a kick, in world units per second. Zero keeps the normal jump rules.")]
+        [Min(0f)] public float MinimumKickHopSpeed = 0f;
         [Tooltip( "Amount of force applied to the character when kicking, the higher the value, the harder the kick" )]
         public float KickingPower = 800f;
         [Tooltip( "Amount of stabilization force applied to the character, the higher the value, the more stiff the character will be" )]

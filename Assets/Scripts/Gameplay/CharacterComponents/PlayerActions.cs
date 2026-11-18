@@ -20,6 +20,8 @@ namespace Gameplay.CharacterComponents
         int _kickingDirectionMultiplier = 1;
 
         const float DefaultJumpCooldown = 1f;
+        float _pendingKickHopSpeed;
+        bool _pendingKickHopEvent;
         bool _jumpOnCd;
         CountdownTimer _jumpCdTimer;
         bool _inputActionActive;
@@ -39,6 +41,7 @@ namespace Gameplay.CharacterComponents
         PlayerInput _playerInput;
         Entity _entity;
         Collider2D[] _bodyColliders;
+        Rigidbody2D[] _bodyRigidbodies;
         Coroutine _stopKickingLegMotorCoroutine;
         Coroutine _forceKickToHoldCoroutine;
         Coroutine _tutorialKickFollowThroughCoroutine;
@@ -49,6 +52,7 @@ namespace Gameplay.CharacterComponents
             _playerInput = GetComponent<PlayerInput>();
             _entity = GetComponent<Entity>();
             _bodyColliders = GetComponentsInChildren<Collider2D>(includeInactive: true);
+            _bodyRigidbodies = GetComponentsInChildren<Rigidbody2D>(includeInactive: true);
             _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
             _kickingLegJointMotor = _kickingLegJoint.motor;
             _jumpCdTimer = new CountdownTimer(DefaultJumpCooldown);
@@ -71,6 +75,22 @@ namespace Gameplay.CharacterComponents
             _kickAssistTimeRemaining -= Time.deltaTime;
             if (_kickAssistTimeRemaining <= 0f)
                 _kickAssistAvailable = false;
+        }
+
+        void FixedUpdate()
+        {
+            float minimumHopSpeed = _pendingKickHopSpeed;
+            bool raiseJumpEvent = _pendingKickHopEvent;
+            _pendingKickHopSpeed = 0f;
+            _pendingKickHopEvent = false;
+            if (minimumHopSpeed > 0f)
+                ApplyKickHop(minimumHopSpeed, raiseJumpEvent);
+        }
+
+        void OnDisable()
+        {
+            _pendingKickHopSpeed = 0f;
+            _pendingKickHopEvent = false;
         }
 
         public void SetUp(EntityData entityData)
@@ -152,8 +172,18 @@ namespace Gameplay.CharacterComponents
             _lastActionTime = Time.time;
             BeginKickAssistWindow();
             Kick();
-            if (tutorialHeadBlockHop || (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd))
+            bool grounded = _groundChecks.Any(gc => gc.IsGrounded);
+            bool jumping = tutorialHeadBlockHop || (grounded && !_jumpOnCd);
+            if (jumping)
                 Jump(applyMovementAssist, tutorialHeadBlockHop, jumpForceMultiplier, movementTarget);
+
+            // The minimum hop is independent of grounding, the full-jump cooldown and tutorial modifiers.
+            float minimumHopSpeed = _entityData.MinimumKickHopSpeed * jumpForceMultiplier;
+            if (minimumHopSpeed > 0f)
+            {
+                _pendingKickHopSpeed = Mathf.Max(_pendingKickHopSpeed, minimumHopSpeed);
+                _pendingKickHopEvent |= grounded && !jumping;
+            }
         }
 
         public void OnActionCancelled()
@@ -188,6 +218,43 @@ namespace Gameplay.CharacterComponents
             _jumpOnCd = true;
             _jumpCdTimer.Start();
         }
+
+        void ApplyKickHop(float minimumHopSpeed, bool raiseJumpEvent)
+        {
+            float totalMass = 0f;
+            float verticalMomentum = 0f;
+            foreach (Rigidbody2D body in _bodyRigidbodies)
+            {
+                if (!IsKickHopBody(body))
+                    continue;
+
+                // Include the normal jump already queued for this step, so stronger jumps are not boosted.
+                float verticalAcceleration = body.totalForce.y / body.mass +
+                    Physics2D.gravity.y * body.gravityScale;
+                float nextVerticalSpeed = body.linearVelocity.y + verticalAcceleration * Time.fixedDeltaTime;
+                totalMass += body.mass;
+                verticalMomentum += nextVerticalSpeed * body.mass;
+            }
+            if (totalMass <= 0f)
+                return;
+
+            float speedToAdd = minimumHopSpeed - verticalMomentum / totalMass;
+            if (speedToAdd <= 0f)
+                return;
+
+            // Lift the connected body parts together instead of asking the torso to pull up the rig.
+            foreach (Rigidbody2D body in _bodyRigidbodies)
+            {
+                if (IsKickHopBody(body))
+                    body.AddForce(Vector2.up * (speedToAdd * body.mass), ForceMode2D.Impulse);
+            }
+            if (raiseJumpEvent)
+                EventBus<PlayerJumped>.Raise(new PlayerJumped());
+        }
+
+        static bool IsKickHopBody(Rigidbody2D body) =>
+            body != null && body.gameObject.activeInHierarchy && body.simulated &&
+            body.bodyType == RigidbodyType2D.Dynamic;
 
         void ApplyMovementAssist(ref Vector2 jumpForce, Vector2? movementTarget = null)
         {
@@ -628,6 +695,8 @@ namespace Gameplay.CharacterComponents
             _kickAssistTimeRemaining = 0f;
             _lastActionTime = float.NegativeInfinity;
             _tutorialHeadBlockHopPending = false;
+            _pendingKickHopSpeed = 0f;
+            _pendingKickHopEvent = false;
         }
 
         // used to scripted events, tutorials, in-game cutscenes, etc.

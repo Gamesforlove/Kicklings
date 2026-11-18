@@ -13,11 +13,13 @@ namespace Gameplay.CharacterComponents
         [SerializeField] GroundCheck[] _groundChecks;
 
         Rigidbody2D _rigidBody;
+        PlayerActions _playerActions;
         bool _isRecovering;
 
         void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
+            _playerActions = GetComponent<PlayerActions>();
         }
 
         void FixedUpdate()
@@ -56,7 +58,10 @@ namespace Gameplay.CharacterComponents
                 Mathf.Abs(_rigidBody.angularVelocity) <= _entityData.GroundedAngularVelocityDeadZone)
                 _rigidBody.angularVelocity = 0f;
 
-            if (_entityData.GroundedLinearVelocityDeadZone > 0f &&
+            bool kickHopActive = _entityData.MinimumKickHopSpeed > 0f &&
+                                 _playerActions != null && _playerActions.IsWithinActionContactWindow;
+            // Ground sensors can still overlap during takeoff. Do not settle an intentional hop.
+            if (!kickHopActive && _entityData.GroundedLinearVelocityDeadZone > 0f &&
                 _rigidBody.linearVelocity.sqrMagnitude <=
                 _entityData.GroundedLinearVelocityDeadZone * _entityData.GroundedLinearVelocityDeadZone)
                 _rigidBody.linearVelocity = Vector2.zero;
