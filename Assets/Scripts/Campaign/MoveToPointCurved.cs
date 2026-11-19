@@ -136,7 +136,7 @@ public class MoveToPointCurved : MonoBehaviour
             ReleaseKickFlight();
     }
 
-    void OnKickFlightCollision() => ReleaseKickFlight();
+    void OnKickFlightCollision(Collision2D _) => ReleaseKickFlight();
 
     void ReleaseKickFlight()
     {

@@ -8,7 +8,7 @@ public class BallScript : MonoBehaviour {
 
     public static event Action TouchedPlayer;
     public event Action<PlayerActions, Collider2D> ContactedPlayer;
-    public event Action CollisionEntered;
+    public event Action<Collision2D> CollisionEntered;
     [field:SerializeField] public Rigidbody2D Rigidbody { get; private set; }
     [field:SerializeField] public Collider2D Collider { get; private set; }
     [field:SerializeField] public SpriteRenderer Renderer { get; private set; }
@@ -82,7 +82,7 @@ public class BallScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CollisionEntered?.Invoke();
+        CollisionEntered?.Invoke(collision);
         HandlePlayerContact(collision, firstContact: true);
     }
 
