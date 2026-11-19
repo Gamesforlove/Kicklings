@@ -32,12 +32,15 @@ namespace Gameplay.CharacterComponents
         bool _tutorialHeadBlockHopPending;
         
         [SerializeField] GameObject _kickingLeg;
+        [Tooltip("Gently bring the released leg back to its standing angle, including after a collision or reset.")]
+        [SerializeField] bool _centerReleasedLeg;
         [SerializeField] Collider2D[] _kickingLegColliders;
         [SerializeField] GroundCheck[] _groundChecks;
     
         Rigidbody2D _rigidbody;
         HingeJoint2D _kickingLegJoint;
         JointMotor2D _kickingLegJointMotor;
+        bool _legAtRest = true;
         PlayerInput _playerInput;
         Entity _entity;
         Collider2D[] _bodyColliders;
@@ -79,6 +82,9 @@ namespace Gameplay.CharacterComponents
 
         void FixedUpdate()
         {
+            if (_centerReleasedLeg && _legAtRest && _entityData != null)
+                CenterReleasedLeg();
+
             float minimumHopSpeed = _pendingKickHopSpeed;
             bool raiseJumpEvent = _pendingKickHopEvent;
             _pendingKickHopSpeed = 0f;
@@ -89,6 +95,11 @@ namespace Gameplay.CharacterComponents
 
         void OnDisable()
         {
+            if (_centerReleasedLeg)
+            {
+                CancelKickingLegMotorStop();
+                _legAtRest = true;
+            }
             _pendingKickHopSpeed = 0f;
             _pendingKickHopEvent = false;
         }
@@ -501,8 +512,23 @@ namespace Gameplay.CharacterComponents
         
         void ApplyKickingPower(float direction)
         {
+            _legAtRest = direction == 0f;
             _kickingLegJointMotor.motorSpeed = _entityData.KickingPower * _kickingDirectionMultiplier * direction;
             _kickingLegJoint.motor = _kickingLegJointMotor;
+        }
+
+        void CenterReleasedLeg()
+        {
+            // jointAngle is signed in the hinge's own frame; zero is the authored stance on either team.
+            float error = Mathf.DeltaAngle(_kickingLegJoint.jointAngle, 0f);
+            JointMotor2D motor = _kickingLegJointMotor;
+            motor.maxMotorTorque = Mathf.Min(motor.maxMotorTorque, 24f);
+            motor.motorSpeed = Mathf.Abs(error) <= 1.5f ? 0f : Mathf.Clamp(error * 10f, -180f, 180f);
+
+            JointMotor2D current = _kickingLegJoint.motor;
+            if (!Mathf.Approximately(current.motorSpeed, motor.motorSpeed) ||
+                !Mathf.Approximately(current.maxMotorTorque, motor.maxMotorTorque))
+                _kickingLegJoint.motor = motor;
         }
 
         void ScheduleKickingLegMotorStop()
@@ -510,7 +536,11 @@ namespace Gameplay.CharacterComponents
             CancelKickingLegMotorStop();
             EntityData.KickAssistSettings settings = _entityData?.KickAssist;
             if (settings == null || settings.KickingLegReturnMotorDuration <= 0f)
+            {
+                if (_centerReleasedLeg)
+                    ApplyKickingPower(0f);
                 return;
+            }
 
             _stopKickingLegMotorCoroutine = StartCoroutine(StopKickingLegMotorAtRest(settings));
         }
