@@ -11,23 +11,38 @@ namespace Gameplay.CharacterComponents
         EntityData _entityData;
         
         [SerializeField] GroundCheck[] _groundChecks;
+        [Tooltip("Solid body contact with these layers also supports upright recovery, at any tilt.")]
+        [SerializeField] LayerMask _bodySupportLayers;
 
         Rigidbody2D _rigidBody;
         PlayerActions _playerActions;
-        bool _isRecovering;
+        Collider2D[] _solidBodyColliders;
+        ContactFilter2D _bodySupportFilter;
 
         void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
             _playerActions = GetComponent<PlayerActions>();
+            if (_bodySupportLayers.value != 0)
+            {
+                _bodySupportFilter.SetLayerMask(_bodySupportLayers);
+                _bodySupportFilter.useTriggers = false;
+                _solidBodyColliders = GetComponentsInChildren<Collider2D>(true)
+                    .Where(collider => !collider.isTrigger && collider.attachedRigidbody != null)
+                    .ToArray();
+            }
         }
 
         void FixedUpdate()
         {
-            if (_entityData != null && _groundChecks.Any(check => check.IsGrounded))
+            bool bodySupported = HasBodySupport();
+            if (_entityData != null && (bodySupported || _groundChecks.Any(check => check.IsGrounded)))
             {
-                StabilizeRotation(_entityData.StabilizationFactor);
-                SettleGroundedMotion();
+                float tilt = Mathf.DeltaAngle(0f, _rigidBody.rotation);
+                if (Mathf.Abs(tilt) <= _entityData.StabilizationDeadZoneDegrees)
+                    SettleGroundedMotion();
+                else if (bodySupported || Mathf.Abs(tilt) < MaxForwardRotation)
+                    StabilizeRotation(tilt);
             }
              
             _rigidBody.angularVelocity = Mathf.Clamp(_rigidBody.angularVelocity, -40f, 40f);
@@ -38,22 +53,26 @@ namespace Gameplay.CharacterComponents
             _entityData = entityData;
         }
 
-        void StabilizeRotation(float factor)
+        bool HasBodySupport()
         {
-            float signedRotation = Mathf.DeltaAngle(0f, transform.rotation.eulerAngles.z);
-            if (Mathf.Abs(signedRotation) <= _entityData.StabilizationDeadZoneDegrees)
-                return;
+            if (_solidBodyColliders == null) return false;
 
-            if (Mathf.Abs(signedRotation) < MaxForwardRotation)
-                ApplyStabilizingTorque(-factor * (signedRotation / RotationFactor));
+            foreach (var collider in _solidBodyColliders)
+            {
+                if (collider != null && collider.isActiveAndEnabled && collider.IsTouching(_bodySupportFilter))
+                    return true;
+            }
+            return false;
+        }
+
+        void StabilizeRotation(float tilt)
+        {
+            float correction = Mathf.Clamp(tilt, -MaxForwardRotation, MaxForwardRotation);
+            _rigidBody.AddTorque(-_entityData.StabilizationFactor * (correction / RotationFactor));
         }
 
         void SettleGroundedMotion()
         {
-            float signedRotation = Mathf.DeltaAngle(0f, transform.rotation.eulerAngles.z);
-            if (Mathf.Abs(signedRotation) > _entityData.StabilizationDeadZoneDegrees)
-                return;
-
             if (_entityData.GroundedAngularVelocityDeadZone > 0f &&
                 Mathf.Abs(_rigidBody.angularVelocity) <= _entityData.GroundedAngularVelocityDeadZone)
                 _rigidBody.angularVelocity = 0f;
@@ -67,6 +86,5 @@ namespace Gameplay.CharacterComponents
                 _rigidBody.linearVelocity = Vector2.zero;
         }
 
-        void ApplyStabilizingTorque(float torque) => _rigidBody.AddTorque(torque);
     }
 }
