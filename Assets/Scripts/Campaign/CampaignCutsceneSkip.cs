@@ -10,29 +10,21 @@ internal sealed class CampaignCutsceneSkip
     private readonly CutsceneBuilder _builder;
     private CutsceneHoldToSkip _control;
     private Button _sceneExit;
+    private int? _fadeToken;
     private bool _skipRequested;
     private ProcessCutsceneInput _suppressedInput;
     private TextboxTextAnimation _suppressedText;
 
-    internal bool CanSkip => !_skipRequested && _sceneExit != null &&
-        _builder != null && _builder.isActiveAndEnabled &&
+    internal bool CanSkip => !_skipRequested && !_fadeToken.HasValue && _sceneExit != null &&
+        _builder != null && _builder.isActiveAndEnabled && !_builder.IsSequenceFinished &&
+        !_controller.IsAwaitingContinue &&
         CampaignTracker.Instance != null && !CampaignTracker.Instance.IsTransitioning &&
         MatchFlow.Match is CampaignMatch;
 
-    private CampaignCutsceneSkip(CampaignCutsceneController controller, CutsceneBuilder builder)
+    internal CampaignCutsceneSkip(CampaignCutsceneController controller, CutsceneBuilder builder)
     {
         _controller = controller;
         _builder = builder;
-    }
-
-    internal static CampaignCutsceneSkip Attach(CampaignCutsceneController controller, CutsceneBuilder builder)
-    {
-        if (builder == null)
-            return null;
-
-        var skip = new CampaignCutsceneSkip(controller, builder);
-        skip.Enable();
-        return skip;
     }
 
     internal void Enable()
@@ -51,10 +43,16 @@ internal sealed class CampaignCutsceneSkip
 
         _control = Object.Instantiate(prefab, canvas.transform, false).GetComponent<CutsceneHoldToSkip>();
         _control.Bind(this);
+        CutsceneBuilder.ExecutePlayScreenEffect += OnFadeStarted;
+        FadeCutsceneScript.PlayScreenEffectFinished += OnFadeFinished;
+        RefreshVisibility();
     }
 
     internal void Disable()
     {
+        CutsceneBuilder.ExecutePlayScreenEffect -= OnFadeStarted;
+        FadeCutsceneScript.PlayScreenEffectFinished -= OnFadeFinished;
+        _fadeToken = null;
         RestoreDialogueInput();
         if (_control != null)
         {
@@ -62,6 +60,32 @@ internal sealed class CampaignCutsceneSkip
             Object.Destroy(_control.gameObject);
         }
         _control = null;
+    }
+
+    private void OnFadeStarted(int token, CutsceneFadeRequest _)
+    {
+        if (CutsceneBuilder.ActiveInstance != _builder)
+            return;
+
+        _fadeToken = token;
+        RefreshVisibility();
+    }
+
+    private void OnFadeFinished(int token)
+    {
+        // A subsequent fade can already have started in this completion callback.
+        if (_fadeToken == token)
+            _fadeToken = null;
+    }
+
+    internal void RefreshVisibility()
+    {
+        if (_control == null)
+            return;
+
+        bool visible = CanSkip;
+        if (_control.gameObject.activeSelf != visible)
+            _control.gameObject.SetActive(visible);
     }
 
     private Button FindSceneExit()

@@ -32,13 +32,11 @@ public sealed class CutsceneHoldToSkip : MonoBehaviour, IPointerDownHandler, IPo
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Left ||
-            eventData is not ExtendedPointerEventData { device: Mouse mouse } || skip == null)
+            eventData is not ExtendedPointerEventData { device: Mouse mouse } ||
+            skip == null || !skip.CanSkip || !Application.isFocused || heldMouse != null)
             return;
 
         skip.SuppressDialogueClick();
-        if (!skip.CanSkip || !Application.isFocused || heldMouse != null)
-            return;
-
         heldMouse = mouse;
         heldPointer = eventData.pointerId;
         holdStartTime = Time.unscaledTime;
