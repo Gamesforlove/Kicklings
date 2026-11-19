@@ -302,9 +302,15 @@ namespace Gameplay.CharacterComponents
                 return;
             }
 
-            float targetX = movementTarget.HasValue
-                ? movementTarget.Value.x
-                : GetFarTravelTargetX(ball.Rigidbody, settings);
+            float targetX;
+            if (movementTarget.HasValue)
+                targetX = movementTarget.Value.x;
+            else
+            {
+                PlayerActions teammate = PlayersManager.Instance?.GetTeammate(this);
+                settings = GetFarTravelSettings(teammate, settings, out bool coversGoal);
+                targetX = GetFarTravelTargetX(ball.Rigidbody, settings, teammate, coversGoal);
+            }
             float horizontalDistance = targetX - _rigidbody.position.x;
             float fullAssistDistance = Mathf.Max(
                 nearRange + Mathf.Epsilon,
@@ -388,17 +394,34 @@ namespace Gameplay.CharacterComponents
             jumpForce.x += targetDirection * Mathf.Min(requestedAssist, maximumCorrection);
         }
 
-        float GetFarTravelTargetX(
-            Rigidbody2D ballRigidbody,
-            EntityData.KickAssistSettings settings
-        )
+        EntityData.KickAssistSettings GetFarTravelSettings(PlayerActions teammate,
+            EntityData.KickAssistSettings settings, out bool coversGoal)
+        {
+            bool isGoalkeeper = _entity != null && _entity.PlayerType == PlayerType.Goalkeeper;
+            coversGoal = isGoalkeeper;
+            if (!settings.ShareTravelRolesByPosition)
+                return settings;
+
+            EntityData.KickAssistSettings teammateSettings = teammate?.Data?.KickAssist;
+            if (teammateSettings == null || !teammateSettings.ShareTravelRolesByPosition)
+            {
+                coversGoal = false;
+                return settings;
+            }
+
+            float lead = (_rigidbody.position.x - teammate._rigidbody.position.x) * _kickingDirectionMultiplier;
+            // Side by side, the designated goalie covers until one teammate pulls ahead.
+            coversGoal = Mathf.Approximately(lead, 0f) ? isGoalkeeper : lead < 0f;
+            return coversGoal == isGoalkeeper ? settings : teammateSettings;
+        }
+
+        float GetFarTravelTargetX(Rigidbody2D ballRigidbody, EntityData.KickAssistSettings settings,
+            PlayerActions teammate, bool coversGoal)
         {
             float predictionTime = GetBallLandingPredictionTime(ballRigidbody, settings);
             float targetX = ballRigidbody.position.x +
                             ballRigidbody.linearVelocity.x * predictionTime;
-            bool isGoalkeeper = _entity != null && _entity.PlayerType == PlayerType.Goalkeeper;
-
-            if (isGoalkeeper && settings.GoalkeeperSupportOffset > 0f)
+            if (coversGoal && settings.GoalkeeperSupportOffset > 0f)
             {
                 targetX -= _kickingDirectionMultiplier * settings.GoalkeeperSupportOffset;
                 if (settings.GoalkeeperStayInOwnHalf)
@@ -409,7 +432,6 @@ namespace Gameplay.CharacterComponents
                 }
             }
 
-            PlayerActions teammate = PlayersManager.Instance?.GetTeammate(this);
             if (teammate != null && settings.TeammateSeparationDistance > 0f)
             {
                 float teammateOffset = _rigidbody.position.x - teammate._rigidbody.position.x;
@@ -418,7 +440,7 @@ namespace Gameplay.CharacterComponents
                 {
                     float separationDirection = teammateDistance > Mathf.Epsilon
                         ? Mathf.Sign(teammateOffset)
-                        : (isGoalkeeper ? -_kickingDirectionMultiplier : _kickingDirectionMultiplier);
+                        : (coversGoal ? -_kickingDirectionMultiplier : _kickingDirectionMultiplier);
                     float separationWeight = 1f - teammateDistance / settings.TeammateSeparationDistance;
                     targetX += separationDirection *
                                settings.TeammateSeparationTargetOffset *
