@@ -59,6 +59,8 @@ namespace Gameplay.CharacterComponents
             [Min(1f)] public float HeadContactAssistMultiplier = 1f;
             [Tooltip("Additional bad-kick rescue applied when the intentional contact comes from the root torso collider.")]
             [Min(1f)] public float TorsoContactAssistMultiplier = 1f;
+            [Tooltip("Maximum time a held kick drives at full power before gently holding extension. Zero keeps the full-speed motor.")]
+            [Min(0f)] public float FullPowerKickDuration = 0f;
             [Tooltip("Maximum time the return motor may run before it is stopped at rest. Zero preserves the legacy continuously-driven motor.")]
             [Min(0f)] public float KickingLegReturnMotorDuration = 0f;
             [Tooltip("The return motor stops early when the leg is this close to its zero-angle resting pose.")]

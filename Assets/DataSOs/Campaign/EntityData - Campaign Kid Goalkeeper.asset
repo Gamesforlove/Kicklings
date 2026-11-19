@@ -46,6 +46,7 @@ MonoBehaviour:
     MaximumForwardVelocityAdded: 3.5
     HeadContactAssistMultiplier: 1.5
     TorsoContactAssistMultiplier: 1.35
+    FullPowerKickDuration: 0.16
     KickingLegReturnMotorDuration: 0.4
     KickingLegRestAngleTolerance: 4
     HeadColliderScale: 1.18

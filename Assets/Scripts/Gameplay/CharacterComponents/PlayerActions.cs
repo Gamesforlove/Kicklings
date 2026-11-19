@@ -41,6 +41,8 @@ namespace Gameplay.CharacterComponents
         HingeJoint2D _kickingLegJoint;
         JointMotor2D _kickingLegJointMotor;
         bool _legAtRest = true;
+        float? _heldKickAngle;
+        float _fullKickTimeRemaining;
         PlayerInput _playerInput;
         Entity _entity;
         Collider2D[] _bodyColliders;
@@ -82,8 +84,10 @@ namespace Gameplay.CharacterComponents
 
         void FixedUpdate()
         {
-            if (_centerReleasedLeg && _legAtRest && _entityData != null)
-                CenterReleasedLeg();
+            if (_heldKickAngle.HasValue)
+                UpdateHeldKick(_heldKickAngle.Value);
+            else if (_centerReleasedLeg && _legAtRest && _entityData != null)
+                HoldLegAtAngle(0f);
 
             float minimumHopSpeed = _pendingKickHopSpeed;
             bool raiseJumpEvent = _pendingKickHopEvent;
@@ -95,10 +99,13 @@ namespace Gameplay.CharacterComponents
 
         void OnDisable()
         {
-            if (_centerReleasedLeg)
+            if (_centerReleasedLeg || _heldKickAngle.HasValue)
             {
                 CancelKickingLegMotorStop();
+                _heldKickAngle = null;
                 _legAtRest = true;
+                if (_kickingLegJoint != null)
+                    HoldLegAtAngle(_kickingLegJoint.jointAngle);
             }
             _pendingKickHopSpeed = 0f;
             _pendingKickHopEvent = false;
@@ -463,6 +470,29 @@ namespace Gameplay.CharacterComponents
         {
             CancelKickingLegMotorStop();
             ApplyKickingPower(-1);
+            _fullKickTimeRemaining = _entityData.KickAssist?.FullPowerKickDuration ?? 0f;
+            if (_fullKickTimeRemaining > 0f && _kickingLegJoint.useLimits)
+            {
+                JointAngleLimits2D limits = _kickingLegJoint.limits;
+                float stop = _kickingLegJointMotor.motorSpeed < 0f ? limits.min : limits.max;
+                // Hold just inside the stop so the motor and the hinge limit don't fight.
+                _heldKickAngle = Mathf.MoveTowards(stop, 0f, 3f);
+            }
+        }
+
+        void UpdateHeldKick(float targetAngle)
+        {
+            float travelRemaining = (targetAngle - _kickingLegJoint.jointAngle) * Mathf.Sign(_kickingLegJointMotor.motorSpeed);
+            float travelPerStep = Mathf.Abs(_kickingLegJointMotor.motorSpeed) * Time.fixedDeltaTime;
+            if (_fullKickTimeRemaining > 0f && travelRemaining > travelPerStep)
+            {
+                _fullKickTimeRemaining -= Time.fixedDeltaTime;
+                return;
+            }
+
+            // Once the strike ends, contact can deflect the foot without restarting a full-power kick.
+            _fullKickTimeRemaining = 0f;
+            HoldLegAtAngle(targetAngle);
         }
 
         public void CompleteTutorialKick()
@@ -512,15 +542,15 @@ namespace Gameplay.CharacterComponents
         
         void ApplyKickingPower(float direction)
         {
+            _heldKickAngle = null;
             _legAtRest = direction == 0f;
             _kickingLegJointMotor.motorSpeed = _entityData.KickingPower * _kickingDirectionMultiplier * direction;
             _kickingLegJoint.motor = _kickingLegJointMotor;
         }
 
-        void CenterReleasedLeg()
+        void HoldLegAtAngle(float targetAngle)
         {
-            // jointAngle is signed in the hinge's own frame; zero is the authored stance on either team.
-            float error = Mathf.DeltaAngle(_kickingLegJoint.jointAngle, 0f);
+            float error = Mathf.DeltaAngle(_kickingLegJoint.jointAngle, targetAngle);
             JointMotor2D motor = _kickingLegJointMotor;
             motor.maxMotorTorque = Mathf.Min(motor.maxMotorTorque, 24f);
             motor.motorSpeed = Mathf.Abs(error) <= 1.5f ? 0f : Mathf.Clamp(error * 10f, -180f, 180f);
