@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60537cea90538a4d91ffd6b1f120d4c, type: 3}
   m_Name: EntityData - Campaign Kid Goalkeeper
   m_EditorClassIdentifier: 
-  JumpPower: 2350
+  JumpPower: 2152.5
   JumpCooldown: 0.75
   MinimumKickHopSpeed: 1.6
   KickingPower: 1000
@@ -33,6 +33,7 @@ MonoBehaviour:
     WrongWayMovementDamping: 0.6
     GoalkeeperSupportOffset: 1.5
     GoalkeeperStayInOwnHalf: 1
+    ShareTravelRolesByPosition: 1
     PlayableHorizontalLimit: 8.5
     TeammateSeparationDistance: 1.5
     TeammateSeparationTargetOffset: 1.25
