@@ -4324,8 +4324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48900923c6844d1aa5b4e227083bf5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _untouchedResetDelay: 8
-  _dropGracePeriod: 10
+  _untouchedResetDelay: 12
+  _dropGracePeriod: 14
   _warningDuration: 2
 --- !u!4 &1928391806
 Transform:
