@@ -410,7 +410,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.3
+  m_AngularDamping: 0.25
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -555,6 +555,11 @@ MonoBehaviour:
   _groundChecks:
   - {fileID: 5588305525187344252}
   - {fileID: 8374246201076789711}
+  _bodySupportLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  _fallRecoveryBrakeTime: 0.35
+  _idleSwingDegrees: 9
 --- !u!114 &6268269522887735352
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -161,6 +161,7 @@ namespace Gameplay.CharacterComponents
         public int AttackingDirection => _kickingDirectionMultiplier;
         public bool IsWithinActionContactWindow => Time.time - _lastActionTime <=
             (_entityData?.KickAssist?.ContactAssistWindow ?? 0.45f);
+        internal bool IsBetweenKicks => _legAtRest && !IsWithinActionContactWindow;
         public Collider2D KickingContactCollider => _kickingLeg.GetComponentsInChildren<Collider2D>()
             .FirstOrDefault(collider => collider.enabled && !collider.isTrigger);
         public Collider2D HeadContactCollider => _bodyColliders

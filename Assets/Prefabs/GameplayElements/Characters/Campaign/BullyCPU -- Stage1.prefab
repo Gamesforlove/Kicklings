@@ -216,10 +216,6 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 0.93
       objectReference: {fileID: 0}
-    - target: {fileID: 3657086176910940897, guid: e17763db34c455a42909640d42b18f62, type: 3}
-      propertyPath: _bodySupportLayers.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

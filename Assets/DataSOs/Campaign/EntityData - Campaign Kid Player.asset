@@ -19,7 +19,7 @@ MonoBehaviour:
   StabilizationFactor: 26
   StabilizationDeadZoneDegrees: 2
   GroundedLinearVelocityDeadZone: 0.25
-  GroundedAngularVelocityDeadZone: 5
+  GroundedAngularVelocityDeadZone: 2
   KickAssist:
     BallPredictionTime: 0.35
     MovementAssistRange: 3.5
