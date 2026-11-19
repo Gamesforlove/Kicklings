@@ -33,6 +33,8 @@ namespace Gameplay.CharacterComponents
             [Min(0f)] public float GoalkeeperSupportOffset = 0f;
             [Tooltip("When enabled, far travel keeps a goalkeeper on its own half of the field.")]
             public bool GoalkeeperStayInOwnHalf = false;
+            [Tooltip("When both teammates enable this, the player closer to their own goal uses the goalkeeper's far-travel assist and the other uses the fielder's.")]
+            public bool ShareTravelRolesByPosition;
             [Tooltip("Horizontal field limit used to keep assisted travel targets out of goal and boundary geometry.")]
             [Min(0f)] public float PlayableHorizontalLimit = 8.5f;
             [Tooltip("Teammates closer than this distance receive a press-time target offset away from one another during far travel.")]
