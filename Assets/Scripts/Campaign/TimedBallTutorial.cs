@@ -60,6 +60,7 @@ public class TimedBallTutorial : MonoBehaviour
     bool _previousResetSuppression;
     bool _matchWasEnabled;
     readonly ContactPoint2D[] _blockContacts = new ContactPoint2D[8];
+    readonly List<Collider2D> _blockPlayerColliders = new();
     bool _blockFeedActive;
     bool _blockShotInPlay;
     bool _blockContactPending;
@@ -161,9 +162,9 @@ public class TimedBallTutorial : MonoBehaviour
         float feetY = float.PositiveInfinity;
         float lowestBodyY = float.PositiveInfinity;
         float topY = player.transform.position.y;
-        foreach (Collider2D bodyCollider in player.GetComponentsInChildren<Collider2D>())
+        foreach (Collider2D bodyCollider in _blockPlayerColliders)
         {
-            if (!bodyCollider.enabled || bodyCollider.isTrigger)
+            if (bodyCollider == null || !bodyCollider.isActiveAndEnabled || bodyCollider.isTrigger)
                 continue;
 
             Bounds bounds = bodyCollider.bounds;
@@ -292,7 +293,10 @@ public class TimedBallTutorial : MonoBehaviour
         ballMove?.StopCurveMove();
         _ball.ContactedPlayer += OnBallContactedPlayer;
         if (_practiceType == PracticeType.Block)
+        {
+            _player.GetComponentsInChildren(true, _blockPlayerColliders);
             _ball.CollisionEntered += OnBlockFeedCollision;
+        }
         TimeScaleManager.SetGameplayTimeScale();
         SetPrompt(false);
         prompt?.FadeIn();
@@ -532,7 +536,7 @@ public class TimedBallTutorial : MonoBehaviour
         {
             _blockContactPending = false;
             float outgoingForwardSpeed = _ball.Rigidbody.linearVelocityX * _blockShotDirection;
-            Succeeded = _blockShotInPlay && !BlockShotPassedPlayer() && outgoingForwardSpeed <= BlockStoppedForwardSpeed;
+            Succeeded = _blockShotInPlay && outgoingForwardSpeed <= BlockStoppedForwardSpeed;
         }
 
         if (_blockFeedActive)
@@ -569,8 +573,18 @@ public class TimedBallTutorial : MonoBehaviour
 
     bool BlockShotPassedPlayer()
     {
-        float distanceBehindPlayer = (_ball.Rigidbody.position.x - _player.transform.position.x) * _blockShotDirection;
-        return distanceBehindPlayer > _ball.Collider.bounds.extents.x;
+        Bounds ball = _ball.Collider.bounds;
+        bool movingRight = _blockShotDirection > 0f;
+        foreach (Collider2D part in _blockPlayerColliders)
+        {
+            if (part == null || !part.isActiveAndEnabled || part.isTrigger || part.attachedRigidbody is { simulated: false })
+                continue;
+
+            Bounds body = part.bounds;
+            if (movingRight ? ball.min.x <= body.max.x : ball.max.x >= body.min.x)
+                return false;
+        }
+        return true;
     }
 
     void StopBlockFeed()
@@ -620,7 +634,8 @@ public class TimedBallTutorial : MonoBehaviour
 
         if (_practiceType == PracticeType.Block)
         {
-            if (_blockShotInPlay && _blockIncomingForwardSpeed > BlockStoppedForwardSpeed && !BlockShotPassedPlayer())
+            // Physics already reported contact with this limb. Judge the deflection on the next step.
+            if (_blockShotInPlay && _blockIncomingForwardSpeed > BlockStoppedForwardSpeed)
                 _blockContactPending = true;
             return;
         }
@@ -733,6 +748,7 @@ public class TimedBallTutorial : MonoBehaviour
         if (_practiceType == PracticeType.Block)
         {
             StopBlockFeed();
+            _blockPlayerColliders.Clear();
             if (_ball != null)
             {
                 _ball.CollisionEntered -= OnBlockFeedCollision;
