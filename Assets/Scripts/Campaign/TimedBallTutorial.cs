@@ -576,15 +576,13 @@ public class TimedBallTutorial : MonoBehaviour
         if (Succeeded || !_attemptActive || actions != _player || !actions.IsWithinActionContactWindow)
             return;
 
-        bool correctContact = _practiceType == PracticeType.Kick
-            ? actions.IsKickingContact(bodyCollider)
-            : bodyCollider == actions.HeadContactCollider;
-        if (correctContact)
-        {
-            Succeeded = true;
-            if (_practiceType == PracticeType.Kick)
-                BeginSuccessfulKick(actions, _ball, _kickFlightMover);
-        }
+        // This event is a physical contact with the learner. Only the kick drill requires a specific limb.
+        if (_practiceType == PracticeType.Kick && !actions.IsKickingContact(bodyCollider))
+            return;
+
+        Succeeded = true;
+        if (_practiceType == PracticeType.Kick)
+            BeginSuccessfulKick(actions, _ball, _kickFlightMover);
     }
 
     public static void BeginSuccessfulKick(PlayerActions actions, BallScript ball, MoveToPointCurved flightMover)
