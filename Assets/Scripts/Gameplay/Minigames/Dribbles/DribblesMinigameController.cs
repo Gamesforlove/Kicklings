@@ -1,3 +1,4 @@
+using Gameplay;
 using Scene_Management;
 using System.Collections.Generic;
 using TMPro;
@@ -164,7 +165,7 @@ public sealed class DribblesMinigameController : MonoBehaviour, IMinigameSkipTar
             return;
         }
 
-        HandleMouseInput();
+        HandlePointerControl();
         PulseActiveCheckpoint();
         RefreshInterface();
     }
@@ -497,7 +498,7 @@ public sealed class DribblesMinigameController : MonoBehaviour, IMinigameSkipTar
         }
     }
 
-    private void HandleMouseInput()
+    private void HandlePointerControl()
     {
         Camera gameplayCamera = cameraController.GameplayCamera;
         if (isCourseComplete || gameplayCamera == null)
@@ -507,7 +508,7 @@ public sealed class DribblesMinigameController : MonoBehaviour, IMinigameSkipTar
         pointerScreenPosition.z = -gameplayCamera.transform.position.z;
         Vector2 pointerWorldPosition = gameplayCamera.ScreenToWorldPoint(pointerScreenPosition);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || (!isPointerControlActive && SoloGameplayInput.WasPressedThisFrame))
         {
             float selectionRadius = PlayerRadius * 1.25f;
             if ((pointerWorldPosition - playerBody.position).sqrMagnitude <= selectionRadius * selectionRadius)

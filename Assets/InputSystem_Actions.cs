@@ -120,7 +120,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboardPlayer2"",
+                    ""groups"": ""KeyboardPlayer2;KeyboardSolo"",
                     ""action"": ""Kick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -131,7 +131,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""KeyboardPlayer1"",
+                    ""groups"": ""KeyboardPlayer1;KeyboardSolo"",
                     ""action"": ""Kick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -164,7 +164,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";KeyboardPlayer1"",
+                    ""groups"": "";KeyboardPlayer1;KeyboardSolo"",
                     ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -775,6 +775,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""KeyboardSolo"",
+            ""bindingGroup"": ""KeyboardSolo"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -1223,6 +1234,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         {
             if (m_KeyboardPlayer4SchemeIndex == -1) m_KeyboardPlayer4SchemeIndex = asset.FindControlSchemeIndex("KeyboardPlayer4");
             return asset.controlSchemes[m_KeyboardPlayer4SchemeIndex];
+        }
+    }
+    private int m_KeyboardSoloSchemeIndex = -1;
+    /// <summary>
+    /// Provides access to the input control scheme.
+    /// </summary>
+    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+    public InputControlScheme KeyboardSoloScheme
+    {
+        get
+        {
+            if (m_KeyboardSoloSchemeIndex == -1) m_KeyboardSoloSchemeIndex = asset.FindControlSchemeIndex("KeyboardSolo");
+            return asset.controlSchemes[m_KeyboardSoloSchemeIndex];
         }
     }
     /// <summary>

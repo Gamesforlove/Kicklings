@@ -1,3 +1,4 @@
+using Gameplay;
 using Scene_Management;
 using UnityEngine;
 using UnityEngine.Events;
@@ -241,8 +242,7 @@ public sealed class FreeKickMinigameController : MonoBehaviour, IMinigameSkipTar
 
     private static bool WasKickPressed()
     {
-        return Input.GetKeyDown(KeyCode.Z) ||
-               Input.GetKeyDown(KeyCode.Space);
+        return SoloGameplayInput.WasPressedThisFrame || Input.GetKeyDown(KeyCode.Space);
     }
 
     private void ShowRequiredCompletionPopup()

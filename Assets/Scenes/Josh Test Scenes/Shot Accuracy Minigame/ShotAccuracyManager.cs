@@ -52,7 +52,7 @@ namespace Gameplay.ShotAccuracy
 
         void BeginShot()
         {
-            _ui?.ClearFeedback();
+            _ui?.ShowAimPrompt();
             _ui?.UpdateShots(_shotsUsed, _totalShots);
 
             _target?.Randomize();
@@ -67,7 +67,7 @@ namespace Gameplay.ShotAccuracy
         void Update()
         {
             if (_phase == Phase.Idle || _phase == Phase.Finished) return;
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (SoloGameplayInput.WasPressedThisFrame || Input.GetKeyDown(KeyCode.Space))
             {
                 StopCurrentLine();
             }
@@ -130,6 +130,7 @@ namespace Gameplay.ShotAccuracy
         void EndRound()
         {
             if (_phase == Phase.Finished) return;
+            if (_phase == Phase.AimingX || _phase == Phase.AimingY) _ui?.ClearFeedback();
             _phase = Phase.Finished;
 
             _horizontalSweep?.Hide();

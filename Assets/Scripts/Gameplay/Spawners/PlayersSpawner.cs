@@ -84,6 +84,7 @@ namespace Gameplay.Spawners
 
             go.GetComponent<Player>()?.SetUp(ChallengePlayerData, PlayerType.Normal);
             go.GetComponent<AbilityActor>()?.SetUp(team, PlayerType.Normal);
+            EnsurePlayerIndicator(go);
 
             return go;
         }

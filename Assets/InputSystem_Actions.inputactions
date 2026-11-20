@@ -32,7 +32,7 @@
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardPlayer2",
+                    "groups": "KeyboardPlayer2;KeyboardSolo",
                     "action": "Kick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -43,7 +43,7 @@
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardPlayer1",
+                    "groups": "KeyboardPlayer1;KeyboardSolo",
                     "action": "Kick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -76,7 +76,7 @@
                     "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";KeyboardPlayer1",
+                    "groups": ";KeyboardPlayer1;KeyboardSolo",
                     "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -670,6 +670,17 @@
         {
             "name": "KeyboardPlayer4",
             "bindingGroup": "KeyboardPlayer4",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "KeyboardSolo",
+            "bindingGroup": "KeyboardSolo",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
