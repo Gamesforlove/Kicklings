@@ -30,6 +30,10 @@ namespace Gameplay.CharacterComponents
         float _kickAssistTimeRemaining;
         float _lastActionTime = float.NegativeInfinity;
         bool _tutorialHeadBlockHopPending;
+        double _headerTakeoffTime = double.NegativeInfinity;
+        bool _leftGroundOnJump;
+        internal bool IsOnHeaderJump => _headerTakeoffTime != double.NegativeInfinity &&
+            (!_leftGroundOnJump || !_groundChecks.Any(check => check.IsGrounded));
         
         [SerializeField] GameObject _kickingLeg;
         [Tooltip("Gently bring the released leg back to its standing angle, including after a collision or reset.")]
@@ -84,6 +88,15 @@ namespace Gameplay.CharacterComponents
 
         void FixedUpdate()
         {
+            if (_headerTakeoffTime != double.NegativeInfinity)
+            {
+                if (!_groundChecks.Any(check => check.IsGrounded))
+                    _leftGroundOnJump = true;
+                else if (_leftGroundOnJump || (Time.fixedTimeAsDouble > _headerTakeoffTime + Time.fixedDeltaTime &&
+                         _rigidbody.linearVelocityY <= 0f))
+                    _headerTakeoffTime = double.NegativeInfinity;
+            }
+
             if (_heldKickAngle.HasValue)
                 UpdateHeldKick(_heldKickAngle.Value);
             else if (_centerReleasedLeg && _legAtRest && _entityData != null)
@@ -99,6 +112,7 @@ namespace Gameplay.CharacterComponents
 
         void OnDisable()
         {
+            _headerTakeoffTime = double.NegativeInfinity;
             if (_centerReleasedLeg || _heldKickAngle.HasValue)
             {
                 CancelKickingLegMotorStop();
@@ -171,6 +185,8 @@ namespace Gameplay.CharacterComponents
         public bool IsKickingContact(Collider2D collider) => collider != null &&
             collider.transform.IsChildOf(_kickingLeg.transform);
 
+        internal bool IsSwingingKickOutward => _kickingLegJoint.jointSpeed * _kickingDirectionMultiplier < -1f;
+
         // The paused introductory block can accept input before grounded physics refreshes.
         public void PrepareTutorialHeadBlockHop() => _tutorialHeadBlockHopPending = true;
 
@@ -234,6 +250,8 @@ namespace Gameplay.CharacterComponents
             if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
                 jumpForce.x = 0f;
             _rigidbody.AddForce(jumpForce * jumpForceMultiplier);
+            if (jumpForce.y * jumpForceMultiplier > 0f)
+                MarkHeaderTakeoff();
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();
@@ -268,8 +286,15 @@ namespace Gameplay.CharacterComponents
                 if (IsKickHopBody(body))
                     body.AddForce(Vector2.up * (speedToAdd * body.mass), ForceMode2D.Impulse);
             }
+            MarkHeaderTakeoff();
             if (raiseJumpEvent)
                 EventBus<PlayerJumped>.Raise(new PlayerJumped());
+        }
+
+        void MarkHeaderTakeoff()
+        {
+            _headerTakeoffTime = Time.timeAsDouble;
+            _leftGroundOnJump = !_groundChecks.Any(check => check.IsGrounded);
         }
 
         static bool IsKickHopBody(Rigidbody2D body) =>
@@ -780,6 +805,7 @@ namespace Gameplay.CharacterComponents
             _kickAssistTimeRemaining = 0f;
             _lastActionTime = float.NegativeInfinity;
             LastKickTime = double.NegativeInfinity;
+            _headerTakeoffTime = double.NegativeInfinity;
             _tutorialHeadBlockHopPending = false;
             _pendingKickHopSpeed = 0f;
             _pendingKickHopEvent = false;

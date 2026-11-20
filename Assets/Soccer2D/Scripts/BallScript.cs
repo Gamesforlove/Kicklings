@@ -111,7 +111,10 @@ public class BallScript : MonoBehaviour {
     private void HandlePlayerContact(Collision2D collision, bool firstContact)
     {
         if (((1 << collision.gameObject.layer) & PlayersLayers) == 0)
+        {
+            _teammatePass?.OnFieldContact(collision);
             return;
+        }
 
         if (firstContact)
             TouchedPlayer?.Invoke();

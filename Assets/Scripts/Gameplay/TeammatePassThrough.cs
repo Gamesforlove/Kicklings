@@ -15,14 +15,17 @@ namespace Gameplay
         sealed class Participant
         {
             internal readonly PlayerActions Actions;
+            internal readonly Rigidbody2D Body;
             internal readonly Collider2D[] Parts;
             internal readonly Collider2D Head;
             internal Participant Teammate;
             internal double LastShotKick;
+            internal PassContact Contact;
 
             internal Participant(PlayerActions actions)
             {
                 Actions = actions;
+                Body = actions.GetComponent<Rigidbody2D>();
                 Parts = actions.GetComponentsInChildren<Collider2D>(true);
                 Head = actions.HeadContactCollider;
                 LastShotKick = actions.LastKickTime;
@@ -31,11 +34,12 @@ namespace Gameplay
 
         readonly BallScript _ball;
         readonly Dictionary<PlayerActions, Participant> _team = new(4);
-        readonly List<(Collider2D part, int teamDirection)> _ignored = new();
+        readonly List<(Collider2D part, Participant owner)> _ignored = new();
         readonly HashSet<Collider2D> _needed = new();
+        readonly HashSet<Collider2D> _intended = new();
         Participant _receiver;
-        double _launchTime;
-        float _incomingVelocityX;
+        Vector2 _incomingVelocity;
+        bool _hasContacts, _hitBoundary;
 
         TeammatePassThrough(BallScript ball) => _ball = ball;
 
@@ -65,39 +69,115 @@ namespace Gameplay
         internal void OnPlayerContact(PlayerActions actions, Collider2D part, bool assistedKick,
             Collision2D collision, bool firstContact)
         {
-            if (!_team.TryGetValue(actions, out var actor))
+            if (!_team.TryGetValue(actions, out var actor) || _ball.Rigidbody.bodyType != RigidbodyType2D.Dynamic)
                 return;
 
-            // All contacts in one solver step see the same outgoing velocity. A trailing
-            // callback from the other team must not cancel a clearance confirmed this step.
-            if (_receiver != null && actor != _receiver.Teammate && _launchTime != Time.fixedTimeAsDouble)
-                _receiver = null;
-
-            if (_ball.Rigidbody.bodyType != RigidbodyType2D.Dynamic ||
-                _ball.Rigidbody.linearVelocityX * actions.AttackingDirection <= Physics2D.linearSleepTolerance)
-                return;
-
-            bool kicked = HasUnusedKick(actor) && (assistedKick || part == actor.Head || actions.IsKickingContact(part));
-            if (kicked)
-                actor.LastShotKick = actions.LastKickTime;
-            else
+            // Unity reuses Collision2D. Copy only the evidence for this step; deciding the
+            // passer in a callback would let the last limb reported overwrite a real clearance.
+            ref var hit = ref actor.Contact;
+            bool impact = false;
+            int direction = actions.AttackingDirection;
+            for (int i = 0; i < collision.contactCount; i++)
             {
-                // A new impact can send the ball upfield off any body part. A continuing
-                // contact can also turn it upfield, but must not restart the receiver's timing window.
-                bool wasMovingUpfield = _incomingVelocityX * actions.AttackingDirection > Physics2D.linearSleepTolerance;
-                if ((wasMovingUpfield && (!firstContact || _receiver == actor.Teammate)) || !HasImpact(collision))
-                    return;
+                var point = collision.GetContact(i);
+                if (point.normalImpulse <= _ball.Rigidbody.mass * Physics2D.linearSleepTolerance)
+                    continue;
+                var normal = point.normal;
+                if (Vector2.Dot(normal, (Vector2)_ball.Collider.bounds.center - point.point) < 0f)
+                    normal = -normal;
+                float normalImpulseX = direction * normal.x * point.normalImpulse;
+                float frictionX = Mathf.Abs(normal.y * point.tangentImpulse);
+                hit.RecordImpulse(point.point.x * direction, normalImpulseX, frictionX);
+                float surfaceSpeed = part.attachedRigidbody.GetPointVelocity(point.point).x * direction;
+                hit.UpfieldSurfaceSpeed = Mathf.Max(hit.UpfieldSurfaceSpeed, surfaceSpeed);
+                impact = true;
             }
-            _receiver = actor.Teammate;
-            _launchTime = Time.fixedTimeAsDouble;
+            if (!assistedKick && !impact)
+                return;
+
+            if (!hit.Touched)
+                hit.ContactDepth = part.bounds.center.x * direction;
+            hit.Touched = true;
+            _hasContacts = true;
+            hit.Entered |= firstContact;
+            bool intended = _intended.Contains(part) || IsReceivingStrike(actor, part, _ball.Collider.Distance(part), _incomingVelocity);
+            if (assistedKick || intended)
+            {
+                hit.Played = true;
+                hit.KickTime = actions.LastKickTime;
+            }
+            hit.CanLaunch |= hit.Played || firstContact || _incomingVelocity.x * direction <= Physics2D.linearSleepTolerance;
         }
 
-        static bool HasImpact(Collision2D collision)
+        internal void OnFieldContact(Collision2D collision)
         {
             for (int i = 0; i < collision.contactCount; i++)
-                if (collision.GetContact(i).normalImpulse > 0f)
-                    return true;
-            return false;
+            {
+                var point = collision.GetContact(i);
+                float horizontalImpulse = Mathf.Abs(point.normal.x) * point.normalImpulse +
+                    Mathf.Abs(point.normal.y * point.tangentImpulse);
+                if (horizontalImpulse > Physics2D.linearSleepTolerance * _ball.Rigidbody.mass)
+                    _hitBoundary = true;
+            }
+        }
+
+        void ResolveContacts()
+        {
+            if (_hasContacts)
+            {
+                Participant source = null;
+                bool interrupted = false;
+                Participant first = null, second = null;
+                int touched = 0;
+                foreach (var actor in _team.Values)
+                {
+                    if (!actor.Contact.Touched || actor.Actions == null)
+                        continue;
+                    if (touched == 0) first = actor;
+                    else second = actor;
+                    touched++;
+                    float impulseThreshold = _ball.Rigidbody.mass * Physics2D.linearSleepTolerance;
+                    bool changedTravel = (actor.Contact.MinImpulse > impulseThreshold || actor.Contact.MaxImpulse < -impulseThreshold) &&
+                        Mathf.Abs(_ball.Rigidbody.linearVelocityX - _incomingVelocity.x) > Physics2D.linearSleepTolerance;
+                    interrupted |= _receiver != null && actor != _receiver.Teammate &&
+                                   (actor.Contact.Entered || actor.Contact.Played || changedTravel);
+                }
+                if (!_hitBoundary && touched == 2 && first.Teammate == second)
+                    RecoverDoubleRebound(first, second);
+                foreach (var actor in _team.Values)
+                {
+                    if (actor.Actions == null || !actor.Contact.CanLaunch ||
+                        _ball.Rigidbody.linearVelocityX * actor.Actions.AttackingDirection <= Physics2D.linearSleepTolerance)
+                        continue;
+                    // A deliberate reception takes precedence. For simultaneous passive
+                    // impacts the goal-side contact feeds the teammate along the outgoing path.
+                    if (source == null || actor.Contact.Precedes(source.Contact,
+                        (actor.Body.position.x - source.Body.position.x) * actor.Actions.AttackingDirection))
+                        source = actor;
+                }
+                if (source != null)
+                {
+                    _receiver = source.Teammate;
+                    if (source.Contact.Played)
+                        source.LastShotKick = source.Contact.KickTime;
+                }
+                else if (interrupted)
+                    _receiver = null;
+                foreach (var actor in _team.Values)
+                    actor.Contact = default;
+            }
+            _hasContacts = _hitBoundary = false;
+        }
+
+        void RecoverDoubleRebound(Participant first, Participant second)
+        {
+            var rear = first.Contact.ContactDepth <= second.Contact.ContactDepth ? first : second;
+            int direction = rear.Actions.AttackingDirection;
+            float outgoing = _ball.Rigidbody.linearVelocityX * direction;
+            float corrected = rear.Contact.ClearanceSpeed(rear.Teammate.Contact, _incomingVelocity.x * direction,
+                outgoing, _ball.Rigidbody.mass, _incomingVelocity.magnitude, Physics2D.linearSleepTolerance);
+            if (corrected != outgoing)
+                _ball.Rigidbody.linearVelocityX = direction * corrected;
         }
 
         internal void BeforePhysicsStep()
@@ -109,12 +189,14 @@ namespace Gameplay
                 return;
             }
 
-            _incomingVelocityX = _ball.Rigidbody.linearVelocityX;
+            ResolveContacts();
+            _incomingVelocity = _ball.Rigidbody.linearVelocity;
             _needed.Clear();
+            _intended.Clear();
             if (_receiver != null && _receiver.Actions != null && _receiver.Actions.isActiveAndEnabled &&
                 _ball.Rigidbody.linearVelocityX * _receiver.Actions.AttackingDirection > Physics2D.linearSleepTolerance)
             {
-                if (CheckReceiver(_receiver, _launchTime, _ball.Rigidbody.linearVelocity))
+                if (CheckReceiver(_receiver, _ball.Rigidbody.linearVelocity))
                     _receiver = null;
             }
             else
@@ -122,6 +204,7 @@ namespace Gameplay
 
             if (_receiver == null)
                 ProtectPointBlankKick();
+            ProtectCrowdedRebound();
             RestorePairs(force: false);
         }
 
@@ -144,8 +227,8 @@ namespace Gameplay
             Vector2 launchVelocity = Vector2.zero;
             foreach (var actor in _team.Values)
             {
-                if (actor.Actions == null || !actor.Actions.isActiveAndEnabled || !HasUnusedKick(actor) ||
-                    Time.fixedTimeAsDouble - actor.Actions.LastKickTime > ReceiveStrikeWindow || !TeammateIsAhead(actor))
+                if (actor.Actions == null || !actor.Actions.isActiveAndEnabled || !TeammateIsAhead(actor) ||
+                    (!HasUnusedKick(actor) && !actor.Actions.IsOnHeaderJump))
                     continue;
 
                 foreach (var part in actor.Parts)
@@ -153,7 +236,8 @@ namespace Gameplay
                     if (!IsSolid(part) || (part != actor.Head && !actor.Actions.IsKickingContact(part)))
                         continue;
                     var gap = _ball.Collider.Distance(part);
-                    if (!gap.isValid || gap.distance > 2f * Physics2D.defaultContactOffset)
+                    if (!gap.isValid || gap.distance > 2f * Physics2D.defaultContactOffset ||
+                        !IsReceivingStrike(actor, part, gap, _ball.Rigidbody.linearVelocity))
                         continue;
 
                     Vector2 outgoing = _ball.Rigidbody.linearVelocity;
@@ -176,21 +260,50 @@ namespace Gameplay
                 }
             }
             // Keep the second defender solid on an incoming shot until the ball actually turns.
-            if (striker != null && _incomingVelocityX * striker.Actions.AttackingDirection >= 0f)
-                CheckReceiver(striker.Teammate, striker.Actions.LastKickTime, launchVelocity);
+            if (striker != null && _incomingVelocity.x * striker.Actions.AttackingDirection >= 0f)
+                CheckReceiver(striker.Teammate, launchVelocity);
         }
 
         static bool IsSolid(Collider2D part) => part != null && part.isActiveAndEnabled && !part.isTrigger &&
             part.attachedRigidbody != null && part.attachedRigidbody.simulated;
 
+        void ProtectCrowdedRebound()
+        {
+            // Before the solver, keep every potential inbound save solid. Only a limb
+            // already on the exit side and separating from the incoming ball may be bypassed.
+            var incoming = _ball.Rigidbody.linearVelocity;
+            foreach (var rear in _team.Values)
+            {
+                if (rear.Actions == null || !rear.Actions.isActiveAndEnabled || !TeammateIsAhead(rear))
+                    continue;
+                int direction = rear.Actions.AttackingDirection;
+                if (incoming.x * direction >= -Physics2D.linearSleepTolerance)
+                    continue;
+                foreach (var part in rear.Parts)
+                {
+                    if (!IsSolid(part) || Physics2D.GetIgnoreCollision(_ball.Collider, part))
+                        continue;
+                    var gap = _ball.Collider.Distance(part);
+                    if (!gap.isValid || gap.normal.x * direction <= 0f || !CanMeetNextStep(part, gap, incoming))
+                        continue;
+
+                    var body = part.attachedRigidbody;
+                    float approach = Vector2.Dot(body.GetPointVelocity(gap.pointB) - incoming, gap.normal);
+                    float massShare = body.bodyType == RigidbodyType2D.Dynamic ? body.mass / (body.mass + _ball.Rigidbody.mass) : 1f;
+                    float bounce = Mathf.Max(_ball.Collider.bounciness, part.bounciness);
+                    Vector2 rebound = incoming + gap.normal * (Mathf.Max(0f, approach) * (1f + bounce) * massShare);
+                    if (rebound.x * direction > Physics2D.linearSleepTolerance)
+                        CheckReceiver(rear.Teammate, rebound, exitSideOnly: true);
+                }
+            }
+        }
+
         // Returns true once the entire ball has cleared every solid part of the receiver.
-        bool CheckReceiver(Participant receiver, double launchTime, Vector2 ballVelocity)
+        bool CheckReceiver(Participant receiver, Vector2 ballVelocity, bool exitSideOnly = false)
         {
             Bounds ballBounds = _ball.Collider.bounds;
             bool cleared = true;
             var actions = receiver.Actions;
-            bool freshStrike = actions.LastKickTime >= launchTime - Time.fixedDeltaTime &&
-                Time.fixedTimeAsDouble - actions.LastKickTime <= ReceiveStrikeWindow;
             foreach (var part in receiver.Parts)
             {
                 if (!IsSolid(part))
@@ -201,32 +314,56 @@ namespace Gameplay
                     continue;
                 cleared = false;
 
-                if (freshStrike && actions.IsKickingContact(part))
-                    continue;
-                // A jump already rising into an overhead ball can be a header. Merely landing
-                // on the shot from an earlier jump is a passive obstruction.
-                if (part == receiver.Head)
-                {
-                    bool aboveHead = ballBounds.center.y >= bounds.center.y;
-                    bool risingHeader = aboveHead && actions.IsWithinActionContactWindow && part.attachedRigidbody.linearVelocityY > 0f;
-                    if (risingHeader || (freshStrike && (aboveHead || part.attachedRigidbody.linearVelocityY >= 0f)))
-                        continue;
-                }
-
                 var separation = _ball.Collider.Distance(part);
-                if (separation.isValid && CanMeetNextStep(part, separation, ballVelocity))
+                if (!separation.isValid || !CanMeetNextStep(part, separation, ballVelocity))
+                    continue;
+                if (exitSideOnly && (separation.distance > 0f || separation.normal.x * actions.AttackingDirection >= 0f ||
+                    Vector2.Dot(_ball.Rigidbody.linearVelocity - part.attachedRigidbody.GetPointVelocity(separation.pointB),
+                        separation.normal) <= Physics2D.linearSleepTolerance))
+                    continue;
+                if (IsReceivingStrike(receiver, part, separation, ballVelocity))
                 {
-                    _needed.Add(part);
-                    if (!Physics2D.GetIgnoreCollision(_ball.Collider, part))
-                    {
-                        Physics2D.IgnoreCollision(_ball.Collider, part);
-                        var pair = (part, actions.AttackingDirection);
-                        if (!_ignored.Contains(pair))
-                            _ignored.Add(pair);
-                    }
+                    _intended.Add(part);
+                    continue;
+                }
+                _needed.Add(part);
+                if (!Physics2D.GetIgnoreCollision(_ball.Collider, part))
+                {
+                    Physics2D.IgnoreCollision(_ball.Collider, part);
+                    var pair = (part, receiver);
+                    if (!_ignored.Contains(pair))
+                        _ignored.Add(pair);
                 }
             }
             return cleared;
+        }
+
+        bool IsReceivingStrike(Participant actor, Collider2D part, ColliderDistance2D gap, Vector2 ballVelocity)
+        {
+            if (!gap.isValid)
+                return false;
+            Vector2 normal = gap.normal; // from the limb toward the ball
+            Vector2 limbVelocity = part.attachedRigidbody.GetPointVelocity(gap.pointB);
+            float closing = Vector2.Dot(limbVelocity - ballVelocity, normal);
+            bool embedded = gap.distance < -Physics2D.defaultContactOffset;
+            if (embedded && closing <= Physics2D.linearSleepTolerance)
+                return false;
+
+            if (part == actor.Head)
+            {
+                // A falling ball can meet a jumping head at its apex or on early descent.
+                return actor.Actions.IsOnHeaderJump && _ball.Collider.bounds.center.y >= part.bounds.center.y &&
+                       closing >= -Physics2D.linearSleepTolerance;
+            }
+
+            double age = Time.fixedTimeAsDouble - actor.Actions.LastKickTime;
+            if (!actor.Actions.IsKickingContact(part) || age > ReceiveStrikeWindow)
+                return false;
+            Vector2 swing = limbVelocity - actor.Body.GetPointVelocity(gap.pointB);
+            // The motor may not have moved yet on the input step. Inside an existing
+            // overlap, require an actual swing into the ball before restoring the pair.
+            return (actor.Actions.IsSwingingKickOutward && Vector2.Dot(swing, normal) > Physics2D.linearSleepTolerance) ||
+                   (!embedded && age <= Time.fixedDeltaTime);
         }
 
         bool CanMeetNextStep(Collider2D part, ColliderDistance2D separation, Vector2 ballVelocity)
@@ -255,17 +392,18 @@ namespace Gameplay
         {
             for (int i = _ignored.Count - 1; i >= 0; i--)
             {
-                var (part, teamDirection) = _ignored[i];
+                var (part, owner) = _ignored[i];
                 if (part != null && part.isActiveAndEnabled && _ball.Collider != null && _ball.Collider.isActiveAndEnabled)
                 {
-                    if (!force && _ball.Rigidbody.linearVelocityX * teamDirection >= 0f)
+                    if (!force)
                     {
-                        if (_needed.Contains(part))
+                        if (_needed.Contains(part) && !_intended.Contains(part))
                             continue;
-                        // Allow an outward ball to separate cleanly. A reversal restores
-                        // defensive contact immediately, even with the ball still inside the player.
+                        // Direction can change while embedded. Restore untouched limbs
+                        // immediately; let a passive overlap drain safely in either direction.
                         var separation = _ball.Collider.Distance(part);
-                        if (separation.isValid && separation.distance < -Physics2D.defaultContactOffset)
+                        if (separation.isValid && separation.distance < -Physics2D.defaultContactOffset &&
+                            (owner.Actions == null || !IsReceivingStrike(owner, part, separation, _ball.Rigidbody.linearVelocity)))
                             continue;
                     }
                     Physics2D.IgnoreCollision(_ball.Collider, part, false);
@@ -277,12 +415,17 @@ namespace Gameplay
         internal void Reset()
         {
             _receiver = null;
-            _incomingVelocityX = 0f;
+            _incomingVelocity = Vector2.zero;
+            _hasContacts = _hitBoundary = false;
             _needed.Clear();
+            _intended.Clear();
             RestorePairs(force: true);
             foreach (var actor in _team.Values)
+            {
+                actor.Contact = default;
                 if (actor.Actions != null)
                     actor.LastShotKick = actor.Actions.LastKickTime;
+            }
         }
     }
 }
