@@ -370,6 +370,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scoringSideData: {fileID: 0}
   _scoredSideData: {fileID: 0}
+  _playerNetInset: 0.75
+  _playerNetWidthScale: 0.75
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 0

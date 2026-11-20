@@ -254,7 +254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Z to kick
+  m_text: Press X to kick
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
   m_sharedMaterial: {fileID: 3428143943676615420, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f301c94d77c0a24d83c93e643cacb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToSet: Press Z to kick
+  textToSet: Press X to kick
   UIText: {fileID: 290816184}
 --- !u!114 &373567317
 MonoBehaviour:
@@ -1877,7 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f301c94d77c0a24d83c93e643cacb19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToSet: Press Z to block the ball
+  textToSet: Press X to block the ball
   UIText: {fileID: 290816184}
 --- !u!114 &1104483541
 MonoBehaviour:
@@ -4123,7 +4123,7 @@ MonoBehaviour:
   SpeakerName: Grandpa
   SpeakerColor: {r: 1, g: 0.8, b: 0.4, a: 1}
   KickPraise: Good job hitting the ball!
-  BlockInstruction: Try and block my shot with Z.
+  BlockInstruction: Try and block my shot with X.
   BlockSuccess: Very good!
   BlockFailure: So close, try again!
   GoalInstruction: Now try to score one goal against me!
@@ -4324,8 +4324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48900923c6844d1aa5b4e227083bf5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _untouchedResetDelay: 8
-  _dropGracePeriod: 10
+  _untouchedResetDelay: 12
+  _dropGracePeriod: 14
   _warningDuration: 2
 --- !u!4 &1928391806
 Transform:

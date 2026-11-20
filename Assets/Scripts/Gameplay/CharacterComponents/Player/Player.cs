@@ -5,6 +5,8 @@ namespace Gameplay.CharacterComponents.Player
 {
     public class Player : Entity
     {
+        [field: SerializeField, Tooltip("Optional placement for the shared control prompt when this prefab has no indicator of its own.")]
+        public Transform IndicatorAnchor { get; private set; }
         public PlayerActions _playerActions { get; private set; }
 
         void Awake()

@@ -84,6 +84,7 @@ namespace Gameplay.Spawners
 
             go.GetComponent<Player>()?.SetUp(ChallengePlayerData, PlayerType.Normal);
             go.GetComponent<AbilityActor>()?.SetUp(team, PlayerType.Normal);
+            EnsurePlayerIndicator(go);
 
             return go;
         }
@@ -137,11 +138,11 @@ namespace Gameplay.Spawners
                 if (template == null)
                     return;
 
-                indicator = Instantiate(template, player.transform);
+                Transform anchor = player.GetComponent<Player>()?.IndicatorAnchor;
+                indicator = Instantiate(template, anchor != null ? anchor : player.transform, false);
                 indicator.name = template.name;
-                indicator.transform.localPosition = template.transform.localPosition;
-                indicator.transform.localRotation = template.transform.localRotation;
-                indicator.transform.localScale = template.transform.localScale;
+                if (anchor != null)
+                    indicator.transform.localPosition = Vector3.zero;
             }
 
             indicator.SetUp(playerInput);

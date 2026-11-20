@@ -82,6 +82,8 @@ namespace Gameplay.Managers
             }
         }
 
+        InputControlScheme SoloControlScheme => _controlSchemes.Find(scheme => scheme.name == SoloGameplayInput.ControlScheme);
+
         public void SpawnSinglePlayer()
         {
             LoadControlSchemes(); // safe even if Awake hasn't run
@@ -91,7 +93,7 @@ namespace Gameplay.Managers
                 return;
             }
 
-            GameObject player = _playersSpawner.SpawnChallengePlayer(_spawnPoints[0], _controlSchemes[0]);
+            GameObject player = _playersSpawner.SpawnChallengePlayer(_spawnPoints[0], SoloControlScheme);
             _players.Add(player);
             _playersPositions.Add(player, player.transform.position);
         }
@@ -248,11 +250,11 @@ namespace Gameplay.Managers
         {
             if (justPlayerForCampaign)
             {
-                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], SoloControlScheme);
             }
             else if (oneOnOneForCampaign)
             {
-                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], _controlSchemes[0]);
+                SpawnPlayer(PlayersSpawner.PlayerType.Goalkeeper, _spawnPoints[0], SoloControlScheme);
                 SpawnCpu(PlayersSpawner.PlayerType.Normal, _spawnPoints[1]);
             }
             else

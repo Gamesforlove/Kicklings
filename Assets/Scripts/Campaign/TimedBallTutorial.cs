@@ -11,6 +11,8 @@ public class TimedBallTutorial : MonoBehaviour
     const float SuccessfulKickSlowMotionDuration = 1.5f;
     const float KickSpeedRecoveryDuration = 0.35f;
     const float SuccessfulKickFlightDuration = 2.5f;
+    // Allow a little horizontal drift on a shot knocked straight up or dropped at the learner's feet.
+    const float BlockStoppedForwardSpeed = 0.1f;
 
     public enum PracticeType { Kick, Block }
 
@@ -58,7 +60,12 @@ public class TimedBallTutorial : MonoBehaviour
     bool _previousResetSuppression;
     bool _matchWasEnabled;
     readonly ContactPoint2D[] _blockContacts = new ContactPoint2D[8];
+    readonly List<Collider2D> _blockPlayerColliders = new();
     bool _blockFeedActive;
+    bool _blockShotInPlay;
+    bool _blockContactPending;
+    float _blockShotDirection;
+    float _blockIncomingForwardSpeed;
     float _blockFeedGravity;
     float _blockFeedElapsed;
     float _blockFeedDuration;
@@ -155,9 +162,9 @@ public class TimedBallTutorial : MonoBehaviour
         float feetY = float.PositiveInfinity;
         float lowestBodyY = float.PositiveInfinity;
         float topY = player.transform.position.y;
-        foreach (Collider2D bodyCollider in player.GetComponentsInChildren<Collider2D>())
+        foreach (Collider2D bodyCollider in _blockPlayerColliders)
         {
-            if (!bodyCollider.enabled || bodyCollider.isTrigger)
+            if (bodyCollider == null || !bodyCollider.isActiveAndEnabled || bodyCollider.isTrigger)
                 continue;
 
             Bounds bounds = bodyCollider.bounds;
@@ -286,7 +293,10 @@ public class TimedBallTutorial : MonoBehaviour
         ballMove?.StopCurveMove();
         _ball.ContactedPlayer += OnBallContactedPlayer;
         if (_practiceType == PracticeType.Block)
+        {
+            _player.GetComponentsInChildren(true, _blockPlayerColliders);
             _ball.CollisionEntered += OnBlockFeedCollision;
+        }
         TimeScaleManager.SetGameplayTimeScale();
         SetPrompt(false);
         prompt?.FadeIn();
@@ -472,9 +482,9 @@ public class TimedBallTutorial : MonoBehaviour
         // Launch from the staged ball, including the exact position reached by the initial kick.
         _blockArcStart = _ball.Rigidbody.position;
         Bounds standingHead = headCollider.bounds;
-        float direction = Mathf.Sign(standingHead.center.x - _blockArcStart.x);
+        _blockShotDirection = Mathf.Sign(standingHead.center.x - _blockArcStart.x);
         _blockArcEnd = (Vector2)standingHead.center +
-                       Vector2.right * direction * Mathf.Max(0.5f, _blockPassDistance);
+                       Vector2.right * _blockShotDirection * Mathf.Max(0.5f, _blockPassDistance);
 
         // The player intercepts the arc before its endpoint; an untouched shot continues behind them.
         float totalDistance = Mathf.Max(0.1f, Mathf.Abs(_blockArcEnd.x - _blockArcStart.x));
@@ -510,15 +520,38 @@ public class TimedBallTutorial : MonoBehaviour
             _ball.Rigidbody.interpolation = _blockPreviousInterpolation;
         RestoreBlockPlayerInterpolation();
         _blockFeedElapsed = 0f;
+        _blockIncomingForwardSpeed = 0f;
+        _blockShotInPlay = true;
+        _blockContactPending = false;
         _blockFeedActive = true;
     }
 
     void FixedUpdate()
     {
-        if (!_running || !_attemptActive || _practiceType != PracticeType.Block ||
-            !_blockFeedActive || _ball == null)
+        if (!_running || !_attemptActive || _practiceType != PracticeType.Block || _ball == null)
             return;
 
+        // All contacts and kick assists from the previous physics step have now been applied.
+        if (_blockContactPending)
+        {
+            _blockContactPending = false;
+            float outgoingForwardSpeed = _ball.Rigidbody.linearVelocityX * _blockShotDirection;
+            Succeeded = _blockShotInPlay && outgoingForwardSpeed <= BlockStoppedForwardSpeed;
+        }
+
+        if (_blockFeedActive)
+            AdvanceBlockFeed();
+
+        if (_blockShotInPlay)
+        {
+            _blockIncomingForwardSpeed = _ball.Rigidbody.linearVelocityX * _blockShotDirection;
+            if (BlockShotPassedPlayer())
+                _blockShotInPlay = false;
+        }
+    }
+
+    void AdvanceBlockFeed()
+    {
         float flightDuration = _blockFeedDuration;
         _blockFeedElapsed += Time.fixedDeltaTime;
         float t = Mathf.Clamp01(_blockFeedElapsed / flightDuration);
@@ -529,7 +562,30 @@ public class TimedBallTutorial : MonoBehaviour
             StopBlockFeed();
     }
 
-    void OnBlockFeedCollision() => StopBlockFeed();
+    void OnBlockFeedCollision(Collision2D collision)
+    {
+        StopBlockFeed();
+        // Grandpa can make physical contact at launch. A rebound off the field ends the shot.
+        if (_blockShotInPlay && !collision.transform.IsChildOf(_grandpaActions.transform) &&
+            !collision.transform.IsChildOf(_player.transform))
+            _blockShotInPlay = false;
+    }
+
+    bool BlockShotPassedPlayer()
+    {
+        Bounds ball = _ball.Collider.bounds;
+        bool movingRight = _blockShotDirection > 0f;
+        foreach (Collider2D part in _blockPlayerColliders)
+        {
+            if (part == null || !part.isActiveAndEnabled || part.isTrigger || part.attachedRigidbody is { simulated: false })
+                continue;
+
+            Bounds body = part.bounds;
+            if (movingRight ? ball.min.x <= body.max.x : ball.max.x >= body.min.x)
+                return false;
+        }
+        return true;
+    }
 
     void StopBlockFeed()
     {
@@ -543,7 +599,7 @@ public class TimedBallTutorial : MonoBehaviour
 
     bool BlockBallHasDropped(float elapsed)
     {
-        if (_blockFeedActive)
+        if (_blockFeedActive || _blockContactPending)
             return false;
 
         int contactCount = _ball.Collider.GetContacts(_blockContacts);
@@ -576,15 +632,19 @@ public class TimedBallTutorial : MonoBehaviour
         if (Succeeded || !_attemptActive || actions != _player || !actions.IsWithinActionContactWindow)
             return;
 
-        bool correctContact = _practiceType == PracticeType.Kick
-            ? actions.IsKickingContact(bodyCollider)
-            : bodyCollider == actions.HeadContactCollider;
-        if (correctContact)
+        if (_practiceType == PracticeType.Block)
         {
-            Succeeded = true;
-            if (_practiceType == PracticeType.Kick)
-                BeginSuccessfulKick(actions, _ball, _kickFlightMover);
+            // Physics already reported contact with this limb. Judge the deflection on the next step.
+            if (_blockShotInPlay && _blockIncomingForwardSpeed > BlockStoppedForwardSpeed)
+                _blockContactPending = true;
+            return;
         }
+
+        if (!actions.IsKickingContact(bodyCollider))
+            return;
+
+        Succeeded = true;
+        BeginSuccessfulKick(actions, _ball, _kickFlightMover);
     }
 
     public static void BeginSuccessfulKick(PlayerActions actions, BallScript ball, MoveToPointCurved flightMover)
@@ -663,13 +723,13 @@ public class TimedBallTutorial : MonoBehaviour
             return;
         if (_practiceType == PracticeType.Block)
         {
-            _promptText.text = "Press Z to block the ball";
+            _promptText.text = "Press X to block the ball";
             return;
         }
         string action = _practiceType == PracticeType.Kick ? "kick" : "block";
         _promptText.text = retry
-            ? $"Try again: time your {action} with Z"
-            : $"Time your {action} with Z";
+            ? $"Try again: time your {action} with X"
+            : $"Time your {action} with X";
     }
 
     void OnDisable()
@@ -688,6 +748,7 @@ public class TimedBallTutorial : MonoBehaviour
         if (_practiceType == PracticeType.Block)
         {
             StopBlockFeed();
+            _blockPlayerColliders.Clear();
             if (_ball != null)
             {
                 _ball.CollisionEntered -= OnBlockFeedCollision;

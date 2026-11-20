@@ -65,6 +65,7 @@ namespace Gameplay.CharacterComponents.Player
                     _text.text = "Z";
                     colorIndex = 0;
                     break;
+                case SoloGameplayInput.ControlScheme:
                 case "KeyboardPlayer2":
                     _text.text = "X";
                     colorIndex = 1;

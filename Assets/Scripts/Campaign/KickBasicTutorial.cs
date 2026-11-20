@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using Gameplay;
 using Gameplay.Managers;
 using Gameplay.CharacterComponents;
 
@@ -18,7 +19,7 @@ public class KickBasicTutorial : MonoBehaviour
         StartCoroutine(tutorialRoutine());
     }
 
-    KeyCode kick = KeyCode.Z;
+    static bool IsKickPressed() => SoloGameplayInput.WasPressedThisFrame || SoloGameplayInput.IsHeld;
     public float stopDistance;
     public Transform ballDropTarget;
     public MoveToPointCurved ballMoveScript;
@@ -38,7 +39,7 @@ public class KickBasicTutorial : MonoBehaviour
         bool kicked = false;
         bool prompted = false;
         float startDistance = distance();
-        while (ball != null && /*!Input.GetKeyDown(KeyCode.Z) && *//*Vector2.Distance(ball.transform.position, ballDropTarget.position) > stopDistance && */Time.timeScale > 0f)
+        while (ball != null && Time.timeScale > 0f)
         {
             if (Time.timeScale < 0.13f && !prompted)
             {
@@ -47,7 +48,7 @@ public class KickBasicTutorial : MonoBehaviour
                 prompted = true;
             }
 
-            if (prompted && (Input.GetKeyDown(kick) || Input.GetKey(kick)))
+            if (prompted && IsKickPressed())
             {
                 ToggleForceKickToHold(true);
                 kicked = true;
@@ -64,7 +65,7 @@ public class KickBasicTutorial : MonoBehaviour
             ToggleForceKickToHold(true);
             ToggleKickAllowed(true);
             TutorialFade?.FadeIn();
-            yield return new WaitUntil(() => (Input.GetKeyDown(kick) || Input.GetKey(kick)));
+            yield return new WaitUntil(IsKickPressed);
         }
 
         yield return new WaitForSecondsRealtime(0.3f);

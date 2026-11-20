@@ -20,6 +20,8 @@ namespace Gameplay.CharacterComponents
         int _kickingDirectionMultiplier = 1;
 
         const float DefaultJumpCooldown = 1f;
+        float _pendingKickHopSpeed;
+        bool _pendingKickHopEvent;
         bool _jumpOnCd;
         CountdownTimer _jumpCdTimer;
         bool _inputActionActive;
@@ -28,17 +30,27 @@ namespace Gameplay.CharacterComponents
         float _kickAssistTimeRemaining;
         float _lastActionTime = float.NegativeInfinity;
         bool _tutorialHeadBlockHopPending;
+        double _headerTakeoffTime = double.NegativeInfinity;
+        bool _leftGroundOnJump;
+        internal bool IsOnHeaderJump => _headerTakeoffTime != double.NegativeInfinity &&
+            (!_leftGroundOnJump || !_groundChecks.Any(check => check.IsGrounded));
         
         [SerializeField] GameObject _kickingLeg;
+        [Tooltip("Gently bring the released leg back to its standing angle, including after a collision or reset.")]
+        [SerializeField] bool _centerReleasedLeg;
         [SerializeField] Collider2D[] _kickingLegColliders;
         [SerializeField] GroundCheck[] _groundChecks;
     
         Rigidbody2D _rigidbody;
         HingeJoint2D _kickingLegJoint;
         JointMotor2D _kickingLegJointMotor;
+        bool _legAtRest = true;
+        float? _heldKickAngle;
+        float _fullKickTimeRemaining;
         PlayerInput _playerInput;
         Entity _entity;
         Collider2D[] _bodyColliders;
+        Rigidbody2D[] _bodyRigidbodies;
         Coroutine _stopKickingLegMotorCoroutine;
         Coroutine _forceKickToHoldCoroutine;
         Coroutine _tutorialKickFollowThroughCoroutine;
@@ -49,6 +61,7 @@ namespace Gameplay.CharacterComponents
             _playerInput = GetComponent<PlayerInput>();
             _entity = GetComponent<Entity>();
             _bodyColliders = GetComponentsInChildren<Collider2D>(includeInactive: true);
+            _bodyRigidbodies = GetComponentsInChildren<Rigidbody2D>(includeInactive: true);
             _kickingLegJoint = _kickingLeg.GetComponent<HingeJoint2D>();
             _kickingLegJointMotor = _kickingLegJoint.motor;
             _jumpCdTimer = new CountdownTimer(DefaultJumpCooldown);
@@ -71,6 +84,45 @@ namespace Gameplay.CharacterComponents
             _kickAssistTimeRemaining -= Time.deltaTime;
             if (_kickAssistTimeRemaining <= 0f)
                 _kickAssistAvailable = false;
+        }
+
+        void FixedUpdate()
+        {
+            if (_headerTakeoffTime != double.NegativeInfinity)
+            {
+                if (!_groundChecks.Any(check => check.IsGrounded))
+                    _leftGroundOnJump = true;
+                else if (_leftGroundOnJump || (Time.fixedTimeAsDouble > _headerTakeoffTime + Time.fixedDeltaTime &&
+                         _rigidbody.linearVelocityY <= 0f))
+                    _headerTakeoffTime = double.NegativeInfinity;
+            }
+
+            if (_heldKickAngle.HasValue)
+                UpdateHeldKick(_heldKickAngle.Value);
+            else if (_centerReleasedLeg && _legAtRest && _entityData != null)
+                HoldLegAtAngle(0f);
+
+            float minimumHopSpeed = _pendingKickHopSpeed;
+            bool raiseJumpEvent = _pendingKickHopEvent;
+            _pendingKickHopSpeed = 0f;
+            _pendingKickHopEvent = false;
+            if (minimumHopSpeed > 0f)
+                ApplyKickHop(minimumHopSpeed, raiseJumpEvent);
+        }
+
+        void OnDisable()
+        {
+            _headerTakeoffTime = double.NegativeInfinity;
+            if (_centerReleasedLeg || _heldKickAngle.HasValue)
+            {
+                CancelKickingLegMotorStop();
+                _heldKickAngle = null;
+                _legAtRest = true;
+                if (_kickingLegJoint != null)
+                    HoldLegAtAngle(_kickingLegJoint.jointAngle);
+            }
+            _pendingKickHopSpeed = 0f;
+            _pendingKickHopEvent = false;
         }
 
         public void SetUp(EntityData entityData)
@@ -121,8 +173,10 @@ namespace Gameplay.CharacterComponents
         public bool CanReceivePlayerAction => isActiveAndEnabled && CanKick && !DisableInput;
         public string CurrentControlScheme => _playerInput != null ? _playerInput.currentControlScheme : string.Empty;
         public int AttackingDirection => _kickingDirectionMultiplier;
+        internal double LastKickTime { get; private set; } = double.NegativeInfinity;
         public bool IsWithinActionContactWindow => Time.time - _lastActionTime <=
             (_entityData?.KickAssist?.ContactAssistWindow ?? 0.45f);
+        internal bool IsBetweenKicks => _legAtRest && !IsWithinActionContactWindow;
         public Collider2D KickingContactCollider => _kickingLeg.GetComponentsInChildren<Collider2D>()
             .FirstOrDefault(collider => collider.enabled && !collider.isTrigger);
         public Collider2D HeadContactCollider => _bodyColliders
@@ -130,6 +184,8 @@ namespace Gameplay.CharacterComponents
 
         public bool IsKickingContact(Collider2D collider) => collider != null &&
             collider.transform.IsChildOf(_kickingLeg.transform);
+
+        internal bool IsSwingingKickOutward => _kickingLegJoint.jointSpeed * _kickingDirectionMultiplier < -1f;
 
         // The paused introductory block can accept input before grounded physics refreshes.
         public void PrepareTutorialHeadBlockHop() => _tutorialHeadBlockHopPending = true;
@@ -152,8 +208,18 @@ namespace Gameplay.CharacterComponents
             _lastActionTime = Time.time;
             BeginKickAssistWindow();
             Kick();
-            if (tutorialHeadBlockHop || (_groundChecks.Any(gc => gc.IsGrounded) && !_jumpOnCd))
+            bool grounded = _groundChecks.Any(gc => gc.IsGrounded);
+            bool jumping = tutorialHeadBlockHop || (grounded && !_jumpOnCd);
+            if (jumping)
                 Jump(applyMovementAssist, tutorialHeadBlockHop, jumpForceMultiplier, movementTarget);
+
+            // The minimum hop is independent of grounding, the full-jump cooldown and tutorial modifiers.
+            float minimumHopSpeed = _entityData.MinimumKickHopSpeed * jumpForceMultiplier;
+            if (minimumHopSpeed > 0f)
+            {
+                _pendingKickHopSpeed = Mathf.Max(_pendingKickHopSpeed, minimumHopSpeed);
+                _pendingKickHopEvent |= grounded && !jumping;
+            }
         }
 
         public void OnActionCancelled()
@@ -184,10 +250,56 @@ namespace Gameplay.CharacterComponents
             if (LockMovementToFacingDirection && Mathf.Sign(jumpForce.x) != Mathf.Sign(_kickingDirectionMultiplier))
                 jumpForce.x = 0f;
             _rigidbody.AddForce(jumpForce * jumpForceMultiplier);
+            if (jumpForce.y * jumpForceMultiplier > 0f)
+                MarkHeaderTakeoff();
             EventBus<PlayerJumped>.Raise(new PlayerJumped());
             _jumpOnCd = true;
             _jumpCdTimer.Start();
         }
+
+        void ApplyKickHop(float minimumHopSpeed, bool raiseJumpEvent)
+        {
+            float totalMass = 0f;
+            float verticalMomentum = 0f;
+            foreach (Rigidbody2D body in _bodyRigidbodies)
+            {
+                if (!IsKickHopBody(body))
+                    continue;
+
+                // Include the normal jump already queued for this step, so stronger jumps are not boosted.
+                float verticalAcceleration = body.totalForce.y / body.mass +
+                    Physics2D.gravity.y * body.gravityScale;
+                float nextVerticalSpeed = body.linearVelocity.y + verticalAcceleration * Time.fixedDeltaTime;
+                totalMass += body.mass;
+                verticalMomentum += nextVerticalSpeed * body.mass;
+            }
+            if (totalMass <= 0f)
+                return;
+
+            float speedToAdd = minimumHopSpeed - verticalMomentum / totalMass;
+            if (speedToAdd <= 0f)
+                return;
+
+            // Lift the connected body parts together instead of asking the torso to pull up the rig.
+            foreach (Rigidbody2D body in _bodyRigidbodies)
+            {
+                if (IsKickHopBody(body))
+                    body.AddForce(Vector2.up * (speedToAdd * body.mass), ForceMode2D.Impulse);
+            }
+            MarkHeaderTakeoff();
+            if (raiseJumpEvent)
+                EventBus<PlayerJumped>.Raise(new PlayerJumped());
+        }
+
+        void MarkHeaderTakeoff()
+        {
+            _headerTakeoffTime = Time.timeAsDouble;
+            _leftGroundOnJump = !_groundChecks.Any(check => check.IsGrounded);
+        }
+
+        static bool IsKickHopBody(Rigidbody2D body) =>
+            body != null && body.gameObject.activeInHierarchy && body.simulated &&
+            body.bodyType == RigidbodyType2D.Dynamic;
 
         void ApplyMovementAssist(ref Vector2 jumpForce, Vector2? movementTarget = null)
         {
@@ -217,9 +329,15 @@ namespace Gameplay.CharacterComponents
                 return;
             }
 
-            float targetX = movementTarget.HasValue
-                ? movementTarget.Value.x
-                : GetFarTravelTargetX(ball.Rigidbody, settings);
+            float targetX;
+            if (movementTarget.HasValue)
+                targetX = movementTarget.Value.x;
+            else
+            {
+                PlayerActions teammate = PlayersManager.Instance?.GetTeammate(this);
+                settings = GetFarTravelSettings(teammate, settings, out bool coversGoal);
+                targetX = GetFarTravelTargetX(ball.Rigidbody, settings, teammate, coversGoal);
+            }
             float horizontalDistance = targetX - _rigidbody.position.x;
             float fullAssistDistance = Mathf.Max(
                 nearRange + Mathf.Epsilon,
@@ -303,17 +421,34 @@ namespace Gameplay.CharacterComponents
             jumpForce.x += targetDirection * Mathf.Min(requestedAssist, maximumCorrection);
         }
 
-        float GetFarTravelTargetX(
-            Rigidbody2D ballRigidbody,
-            EntityData.KickAssistSettings settings
-        )
+        EntityData.KickAssistSettings GetFarTravelSettings(PlayerActions teammate,
+            EntityData.KickAssistSettings settings, out bool coversGoal)
+        {
+            bool isGoalkeeper = _entity != null && _entity.PlayerType == PlayerType.Goalkeeper;
+            coversGoal = isGoalkeeper;
+            if (!settings.ShareTravelRolesByPosition)
+                return settings;
+
+            EntityData.KickAssistSettings teammateSettings = teammate?.Data?.KickAssist;
+            if (teammateSettings == null || !teammateSettings.ShareTravelRolesByPosition)
+            {
+                coversGoal = false;
+                return settings;
+            }
+
+            float lead = (_rigidbody.position.x - teammate._rigidbody.position.x) * _kickingDirectionMultiplier;
+            // Side by side, the designated goalie covers until one teammate pulls ahead.
+            coversGoal = Mathf.Approximately(lead, 0f) ? isGoalkeeper : lead < 0f;
+            return coversGoal == isGoalkeeper ? settings : teammateSettings;
+        }
+
+        float GetFarTravelTargetX(Rigidbody2D ballRigidbody, EntityData.KickAssistSettings settings,
+            PlayerActions teammate, bool coversGoal)
         {
             float predictionTime = GetBallLandingPredictionTime(ballRigidbody, settings);
             float targetX = ballRigidbody.position.x +
                             ballRigidbody.linearVelocity.x * predictionTime;
-            bool isGoalkeeper = _entity != null && _entity.PlayerType == PlayerType.Goalkeeper;
-
-            if (isGoalkeeper && settings.GoalkeeperSupportOffset > 0f)
+            if (coversGoal && settings.GoalkeeperSupportOffset > 0f)
             {
                 targetX -= _kickingDirectionMultiplier * settings.GoalkeeperSupportOffset;
                 if (settings.GoalkeeperStayInOwnHalf)
@@ -324,7 +459,6 @@ namespace Gameplay.CharacterComponents
                 }
             }
 
-            PlayerActions teammate = PlayersManager.Instance?.GetTeammate(this);
             if (teammate != null && settings.TeammateSeparationDistance > 0f)
             {
                 float teammateOffset = _rigidbody.position.x - teammate._rigidbody.position.x;
@@ -333,7 +467,7 @@ namespace Gameplay.CharacterComponents
                 {
                     float separationDirection = teammateDistance > Mathf.Epsilon
                         ? Mathf.Sign(teammateOffset)
-                        : (isGoalkeeper ? -_kickingDirectionMultiplier : _kickingDirectionMultiplier);
+                        : (coversGoal ? -_kickingDirectionMultiplier : _kickingDirectionMultiplier);
                     float separationWeight = 1f - teammateDistance / settings.TeammateSeparationDistance;
                     targetX += separationDirection *
                                settings.TeammateSeparationTargetOffset *
@@ -383,8 +517,32 @@ namespace Gameplay.CharacterComponents
 
         public void Kick()
         {
+            LastKickTime = Time.timeAsDouble;
             CancelKickingLegMotorStop();
             ApplyKickingPower(-1);
+            _fullKickTimeRemaining = _entityData.KickAssist?.FullPowerKickDuration ?? 0f;
+            if (_fullKickTimeRemaining > 0f && _kickingLegJoint.useLimits)
+            {
+                JointAngleLimits2D limits = _kickingLegJoint.limits;
+                float stop = _kickingLegJointMotor.motorSpeed < 0f ? limits.min : limits.max;
+                // Hold just inside the stop so the motor and the hinge limit don't fight.
+                _heldKickAngle = Mathf.MoveTowards(stop, 0f, 3f);
+            }
+        }
+
+        void UpdateHeldKick(float targetAngle)
+        {
+            float travelRemaining = (targetAngle - _kickingLegJoint.jointAngle) * Mathf.Sign(_kickingLegJointMotor.motorSpeed);
+            float travelPerStep = Mathf.Abs(_kickingLegJointMotor.motorSpeed) * Time.fixedDeltaTime;
+            if (_fullKickTimeRemaining > 0f && travelRemaining > travelPerStep)
+            {
+                _fullKickTimeRemaining -= Time.fixedDeltaTime;
+                return;
+            }
+
+            // Once the strike ends, contact can deflect the foot without restarting a full-power kick.
+            _fullKickTimeRemaining = 0f;
+            HoldLegAtAngle(targetAngle);
         }
 
         public void CompleteTutorialKick()
@@ -434,8 +592,23 @@ namespace Gameplay.CharacterComponents
         
         void ApplyKickingPower(float direction)
         {
+            _heldKickAngle = null;
+            _legAtRest = direction == 0f;
             _kickingLegJointMotor.motorSpeed = _entityData.KickingPower * _kickingDirectionMultiplier * direction;
             _kickingLegJoint.motor = _kickingLegJointMotor;
+        }
+
+        void HoldLegAtAngle(float targetAngle)
+        {
+            float error = Mathf.DeltaAngle(_kickingLegJoint.jointAngle, targetAngle);
+            JointMotor2D motor = _kickingLegJointMotor;
+            motor.maxMotorTorque = Mathf.Min(motor.maxMotorTorque, 24f);
+            motor.motorSpeed = Mathf.Abs(error) <= 1.5f ? 0f : Mathf.Clamp(error * 10f, -180f, 180f);
+
+            JointMotor2D current = _kickingLegJoint.motor;
+            if (!Mathf.Approximately(current.motorSpeed, motor.motorSpeed) ||
+                !Mathf.Approximately(current.maxMotorTorque, motor.maxMotorTorque))
+                _kickingLegJoint.motor = motor;
         }
 
         void ScheduleKickingLegMotorStop()
@@ -443,7 +616,11 @@ namespace Gameplay.CharacterComponents
             CancelKickingLegMotorStop();
             EntityData.KickAssistSettings settings = _entityData?.KickAssist;
             if (settings == null || settings.KickingLegReturnMotorDuration <= 0f)
+            {
+                if (_centerReleasedLeg)
+                    ApplyKickingPower(0f);
                 return;
+            }
 
             _stopKickingLegMotorCoroutine = StartCoroutine(StopKickingLegMotorAtRest(settings));
         }
@@ -627,7 +804,11 @@ namespace Gameplay.CharacterComponents
             _kickAssistAvailable = false;
             _kickAssistTimeRemaining = 0f;
             _lastActionTime = float.NegativeInfinity;
+            LastKickTime = double.NegativeInfinity;
+            _headerTakeoffTime = double.NegativeInfinity;
             _tutorialHeadBlockHopPending = false;
+            _pendingKickHopSpeed = 0f;
+            _pendingKickHopEvent = false;
         }
 
         // used to scripted events, tutorials, in-game cutscenes, etc.

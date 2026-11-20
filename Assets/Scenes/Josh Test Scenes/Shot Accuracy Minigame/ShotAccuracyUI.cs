@@ -50,6 +50,11 @@ namespace Gameplay.ShotAccuracy
             else _feedbackText.text = "Miss";
         }
 
+        public void ShowAimPrompt()
+        {
+            if (_feedbackText != null) _feedbackText.text = "Press X to stop each line";
+        }
+
         public void ClearFeedback()
         {
             if (_feedbackText != null) _feedbackText.text = string.Empty;

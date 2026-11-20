@@ -644,7 +644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#FFFFFF>MOVE CURSOR TO PLAYER</color>\\n<color=#FFD23A>THEN CLICK TO START</color>"
+  m_text: "<color=#FFFFFF>MOVE CURSOR TO PLAYER</color>\\n<color=#FFD23A>THEN PRESS X TO START</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
   m_sharedMaterial: {fileID: 3428143943676615420, guid: 1e8251e46d3088746b87ce1be9be0a70, type: 2}
