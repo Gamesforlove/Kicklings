@@ -172,3 +172,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3840
   _resetTorgueForce: 50
+  _maxPlayerHitRise: 4
+  _maxHeaderRise: 2.5

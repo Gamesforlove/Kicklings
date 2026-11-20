@@ -33,6 +33,8 @@ namespace Gameplay.CharacterComponents
             [Min(0f)] public float GoalkeeperSupportOffset = 0f;
             [Tooltip("When enabled, far travel keeps a goalkeeper on its own half of the field.")]
             public bool GoalkeeperStayInOwnHalf = false;
+            [Tooltip("When both teammates enable this, the player closer to their own goal uses the goalkeeper's far-travel assist and the other uses the fielder's.")]
+            public bool ShareTravelRolesByPosition;
             [Tooltip("Horizontal field limit used to keep assisted travel targets out of goal and boundary geometry.")]
             [Min(0f)] public float PlayableHorizontalLimit = 8.5f;
             [Tooltip("Teammates closer than this distance receive a press-time target offset away from one another during far travel.")]
@@ -59,6 +61,8 @@ namespace Gameplay.CharacterComponents
             [Min(1f)] public float HeadContactAssistMultiplier = 1f;
             [Tooltip("Additional bad-kick rescue applied when the intentional contact comes from the root torso collider.")]
             [Min(1f)] public float TorsoContactAssistMultiplier = 1f;
+            [Tooltip("Maximum time a held kick drives at full power before gently holding extension. Zero keeps the full-speed motor.")]
+            [Min(0f)] public float FullPowerKickDuration = 0f;
             [Tooltip("Maximum time the return motor may run before it is stopped at rest. Zero preserves the legacy continuously-driven motor.")]
             [Min(0f)] public float KickingLegReturnMotorDuration = 0f;
             [Tooltip("The return motor stops early when the leg is this close to its zero-angle resting pose.")]
@@ -75,6 +79,8 @@ namespace Gameplay.CharacterComponents
         public float JumpPower = 3000f;
         [Tooltip("Minimum time between grounded jumps. Lower values make a missed input recover sooner without increasing jump force.")]
         [Min(0f)] public float JumpCooldown = 1f;
+        [Tooltip("Minimum upward speed of the whole character after a kick, in world units per second. Zero keeps the normal jump rules.")]
+        [Min(0f)] public float MinimumKickHopSpeed = 0f;
         [Tooltip( "Amount of force applied to the character when kicking, the higher the value, the harder the kick" )]
         public float KickingPower = 800f;
         [Tooltip( "Amount of stabilization force applied to the character, the higher the value, the more stiff the character will be" )]
