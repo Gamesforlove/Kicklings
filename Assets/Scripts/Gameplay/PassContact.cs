@@ -10,7 +10,7 @@ namespace Gameplay
     internal struct PassContact
     {
         internal bool Touched, Entered, CanLaunch, Played;
-        internal double KickTime;
+        internal double? KickTime;
         internal float ContactDepth, MinImpulse, MaxImpulse, UpfieldSurfaceSpeed;
 
         internal void RecordImpulse(float depth, float normalImpulse, float frictionBound)

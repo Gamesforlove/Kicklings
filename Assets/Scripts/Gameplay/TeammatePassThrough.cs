@@ -101,12 +101,12 @@ namespace Gameplay
             _hasContacts = true;
             hit.Entered |= firstContact;
             bool intended = _intended.Contains(part) || IsReceivingStrike(actor, part, _ball.Collider.Distance(part), _incomingVelocity);
+            // A rescue nudge can launch the ball off a torso. Only a receiving kick or
+            // header takes priority over a teammate's clearance in the same step.
+            hit.Played |= intended;
             if (assistedKick || intended)
-            {
-                hit.Played = true;
                 hit.KickTime = actions.LastKickTime;
-            }
-            hit.CanLaunch |= hit.Played || firstContact || _incomingVelocity.x * direction <= Physics2D.linearSleepTolerance;
+            hit.CanLaunch |= hit.KickTime.HasValue || firstContact || _incomingVelocity.x * direction <= Physics2D.linearSleepTolerance;
         }
 
         internal void OnFieldContact(Collision2D collision)
@@ -140,7 +140,7 @@ namespace Gameplay
                     bool changedTravel = (actor.Contact.MinImpulse > impulseThreshold || actor.Contact.MaxImpulse < -impulseThreshold) &&
                         Mathf.Abs(_ball.Rigidbody.linearVelocityX - _incomingVelocity.x) > Physics2D.linearSleepTolerance;
                     interrupted |= _receiver != null && actor != _receiver.Teammate &&
-                                   (actor.Contact.Entered || actor.Contact.Played || changedTravel);
+                                   (actor.Contact.Entered || actor.Contact.KickTime.HasValue || changedTravel);
                 }
                 if (!_hitBoundary && touched == 2 && first.Teammate == second)
                     RecoverDoubleRebound(first, second);
@@ -158,8 +158,8 @@ namespace Gameplay
                 if (source != null)
                 {
                     _receiver = source.Teammate;
-                    if (source.Contact.Played)
-                        source.LastShotKick = source.Contact.KickTime;
+                    if (source.Contact.KickTime is double kickTime)
+                        source.LastShotKick = kickTime;
                 }
                 else if (interrupted)
                     _receiver = null;
