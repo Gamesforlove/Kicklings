@@ -159,6 +159,7 @@ namespace Gameplay.CharacterComponents
         public bool CanReceivePlayerAction => isActiveAndEnabled && CanKick && !DisableInput;
         public string CurrentControlScheme => _playerInput != null ? _playerInput.currentControlScheme : string.Empty;
         public int AttackingDirection => _kickingDirectionMultiplier;
+        internal double LastKickTime { get; private set; } = double.NegativeInfinity;
         public bool IsWithinActionContactWindow => Time.time - _lastActionTime <=
             (_entityData?.KickAssist?.ContactAssistWindow ?? 0.45f);
         internal bool IsBetweenKicks => _legAtRest && !IsWithinActionContactWindow;
@@ -491,6 +492,7 @@ namespace Gameplay.CharacterComponents
 
         public void Kick()
         {
+            LastKickTime = Time.timeAsDouble;
             CancelKickingLegMotorStop();
             ApplyKickingPower(-1);
             _fullKickTimeRemaining = _entityData.KickAssist?.FullPowerKickDuration ?? 0f;
@@ -777,6 +779,7 @@ namespace Gameplay.CharacterComponents
             _kickAssistAvailable = false;
             _kickAssistTimeRemaining = 0f;
             _lastActionTime = float.NegativeInfinity;
+            LastKickTime = double.NegativeInfinity;
             _tutorialHeadBlockHopPending = false;
             _pendingKickHopSpeed = 0f;
             _pendingKickHopEvent = false;
