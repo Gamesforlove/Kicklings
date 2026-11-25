@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using CommonDataTypes;
+
 namespace Gameplay.Managers
 {
     public class GoalsManager : MonoBehaviour
@@ -19,6 +21,16 @@ namespace Gameplay.Managers
         {
             if (Instance == this)
                 Instance = null;
+        }
+
+        public void ConfigurePlayerNet(MatchSettings settings)
+        {
+            bool playerDefendsLeft = settings != null && (settings.IsCampaignMatch || settings.NumberOfPlayers == 1);
+            foreach (Goal.Goal goal in _goals)
+            {
+                if (goal != null)
+                    goal.GetComponentInChildren<Goal.GoalTrigger>(true)?.ConfigurePlayerNet(playerDefendsLeft);
+            }
         }
 
         public void SetCollidersEnabled(bool value)

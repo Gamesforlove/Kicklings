@@ -587,6 +587,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1993308099095218115, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 2709629707568692013, guid: be2b37d53c028644fa82ac303acaecd2, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -722,6 +726,7 @@ MonoBehaviour:
   _rightSideColor: {r: 0, g: 0, b: 0, a: 0}
   _leftPatternColor: {r: 0, g: 0, b: 0, a: 0}
   _rightPatternColor: {r: 0, g: 0, b: 0, a: 0}
+  _entityDataOverride: {fileID: 0}
 --- !u!114 &1635068816246698979
 MonoBehaviour:
   m_ObjectHideFlags: 0

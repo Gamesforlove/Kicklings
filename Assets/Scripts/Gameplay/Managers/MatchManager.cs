@@ -43,7 +43,12 @@ namespace Gameplay.Managers
             TimeScaleManager.SetGameplayTimeScale();
         }
 
-        public void SetNewMatch(Match match) { _match = match; if (ranStart) ResetGame();}
+        public void SetNewMatch(Match match)
+        {
+            _match = match;
+            _goalsManager?.ConfigurePlayerNet(match?.Settings);
+            if (ranStart) ResetGame();
+        }
 
         public void EndGame()
         {
@@ -76,7 +81,7 @@ namespace Gameplay.Managers
         bool ranStart = false;
         async void Start()
         {
-            _match = MatchFlow.Match;
+            SetNewMatch(MatchFlow.Match);
             if (_match is TournamentMatch tournamentMatch)
             {
                 DifficultyLevel difficulty = tournamentMatch.Tournament.GetDifficultyForRound();

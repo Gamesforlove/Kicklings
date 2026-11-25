@@ -20,6 +20,9 @@ public class CampaignTracker : MonoBehaviour
     
     private TransitionState _transitionState = TransitionState.BehindTheScreen;
 
+    public bool IsTransitioning => _inTransition;
+
+
     private void Awake()
     {
         if (Instance == null)
