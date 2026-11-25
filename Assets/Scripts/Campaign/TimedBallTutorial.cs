@@ -723,13 +723,13 @@ public class TimedBallTutorial : MonoBehaviour
             return;
         if (_practiceType == PracticeType.Block)
         {
-            _promptText.text = "Press Z to block the ball";
+            _promptText.text = "Press X to block the ball";
             return;
         }
         string action = _practiceType == PracticeType.Kick ? "kick" : "block";
         _promptText.text = retry
-            ? $"Try again: time your {action} with Z"
-            : $"Time your {action} with Z";
+            ? $"Try again: time your {action} with X"
+            : $"Time your {action} with X";
     }
 
     void OnDisable()

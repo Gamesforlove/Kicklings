@@ -92,6 +92,7 @@ namespace Gameplay.Managers
             _playersManager?.SpawnEntities(_match.Settings);
             _abilityTestingManager?.SetUpAbilityActors(_playersManager.GetAbilityActors());
             _ballManager?.SpawnBall();
+            _ballManager?.Ball?.ConfigureTeammatePassThrough(_playersManager);
             _goalsManager?.SetCollidersEnabled(true);
             _leftScore = 0;
             _rightScore = 0;

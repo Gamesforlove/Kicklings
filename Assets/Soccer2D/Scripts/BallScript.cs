@@ -2,7 +2,9 @@
 using UnityEngine;
 using System.Collections;
 using CommonDataTypes;
+using Gameplay;
 using Gameplay.CharacterComponents;
+using Gameplay.Managers;
 
 public class BallScript : MonoBehaviour {
 
@@ -21,6 +23,7 @@ public class BallScript : MonoBehaviour {
     [Tooltip("Lower rise limit for a rebound off the top of the head. Zero uses the general player hit limit.")]
     [SerializeField, Min(0f)] private float _maxHeaderRise;
     sbyte sideMultiplier = 0;
+    TeammatePassThrough _teammatePass;
 
     void Awake()
     {
@@ -28,6 +31,15 @@ public class BallScript : MonoBehaviour {
         Collider = GetComponent<Collider2D>();
         Renderer = GetComponent<SpriteRenderer>();
     }
+
+    internal void ConfigureTeammatePassThrough(PlayersManager players)
+    {
+        _teammatePass?.Reset();
+        _teammatePass = TeammatePassThrough.ForMatch(this, players);
+    }
+
+    void FixedUpdate() => _teammatePass?.BeforePhysicsStep();
+    void OnDisable() => _teammatePass?.Reset();
 
     // Use this for initialization
 /*	void Start () {
@@ -38,6 +50,7 @@ public class BallScript : MonoBehaviour {
 
     public void Reset()
     {
+        _teammatePass?.Reset();
         Rigidbody.linearVelocity = Vector2.zero;
         Rigidbody.angularVelocity = 0;
         sideMultiplier = 0;
@@ -47,6 +60,7 @@ public class BallScript : MonoBehaviour {
     }
     public void ResetWithSpin(FieldSideType fieldSideType)
     {
+        _teammatePass?.Reset();
         Rigidbody.linearVelocity = Vector2.zero;
         Rigidbody.angularVelocity = 0;
         sideMultiplier = (sbyte)(fieldSideType == FieldSideType.Right ? -1 : 1);
@@ -76,6 +90,7 @@ public class BallScript : MonoBehaviour {
 
     public void ResetWithoutBlink() // for special cases
     {
+        _teammatePass?.Reset();
         Rigidbody.linearVelocity = Vector2.zero;
         Rigidbody.angularVelocity = 0;
     }
@@ -89,14 +104,17 @@ public class BallScript : MonoBehaviour {
     private void OnCollisionStay2D(Collision2D collision)
     {
         // A player can jump under a ball that is already resting on their head.
-        if (_maxPlayerHitRise > 0f && Rigidbody.linearVelocityY > 0f)
+        if (_teammatePass != null || (_maxPlayerHitRise > 0f && Rigidbody.linearVelocityY > 0f))
             HandlePlayerContact(collision, firstContact: false);
     }
 
     private void HandlePlayerContact(Collision2D collision, bool firstContact)
     {
         if (((1 << collision.gameObject.layer) & PlayersLayers) == 0)
+        {
+            _teammatePass?.OnFieldContact(collision);
             return;
+        }
 
         if (firstContact)
             TouchedPlayer?.Invoke();
@@ -111,10 +129,9 @@ public class BallScript : MonoBehaviour {
         if (player == null)
             return;
 
-        if (firstContact)
-            player.TryApplyBadKickRescue(Rigidbody, bodyPart);
-
+        bool assistedKick = firstContact && player.TryApplyBadKickRescue(Rigidbody, bodyPart);
         LimitPlayerHitRise(collision, player, bodyPart);
+        _teammatePass?.OnPlayerContact(player, bodyPart, assistedKick, collision, firstContact);
         if (firstContact)
             ContactedPlayer?.Invoke(player, bodyPart);
     }
